@@ -26,3 +26,6 @@ out/
 .env
 .env.*
 !.env.example
+
+# Local reports
+docs/service-design/effort-growth-visualization-future-report.md

@@ -38,3 +38,4 @@ docs/service-design/effort-growth-visualization-future-report.md
 !/app/assets/builds/.keep
 
 /node_modules
+/tmp/

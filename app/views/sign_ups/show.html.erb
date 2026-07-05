@@ -1,5 +1,11 @@
 <h1><%= t('.title') %></h1>
 
+<% if flash[:danger] %>
+  <div class="rounded-xl bg-red-600 px-4 py-3 text-white" role="alert">
+    <%= flash[:danger] %>
+  </div>
+<% end %>
+
 <%= form_with model: @user, url: sign_up_path do |form| %>
   <% if form.object.errors.any? %>
     <div>Error: <%= form.object.errors.full_messages.first %></div>

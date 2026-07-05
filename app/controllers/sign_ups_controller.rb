@@ -8,11 +8,11 @@ class SignUpsController < ApplicationController
   def create
     @user = User.new(sign_up_params)
     if @user.save
-        start_new_session_for(@user)
-        redirect_to root_path, notice: "Signed up successfully"
+      start_new_session_for(@user)
+      redirect_to root_path, success: I18n.t("sign_ups.create.success")
     else
-        flash.now[:alert] = "Failed to sign up"
-        render :show, status: :unprocessable_entity
+      flash.now[:danger] = I18n.t("sign_ups.create.danger")
+      render :show, status: :unprocessable_entity
     end
   end
 

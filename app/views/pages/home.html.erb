@@ -1,5 +1,11 @@
 <main class="min-h-screen bg-slate-100 px-6 py-16 text-slate-900">
   <div class="mx-auto max-w-4xl">
+    <% if flash[:success] %>
+      <div class="mb-6 rounded-xl bg-green-600 px-4 py-3 text-white" role="alert">
+        <%= flash[:success] %>
+      </div>
+    <% end %>
+
     <section class="overflow-hidden rounded-2xl bg-white shadow-xl ring-1 ring-slate-200">
       <div class="bg-blue-600 px-8 py-12 sm:px-12">
         <span class="inline-flex rounded-full bg-blue-500 px-3 py-1 text-sm font-semibold text-white ring-1 ring-inset ring-blue-400">

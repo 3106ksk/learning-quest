@@ -1,0 +1,27 @@
+ja:
+  helpers:
+    submit:
+      create: カウントを作成する
+      submit: 保存
+      update: 更新
+    label:
+      email_address: E-mailアドレス
+      password: パスワード
+  sessions:
+    new:
+      title: ログイン
+      login: ログイン
+      email_placeholder: メールアドレスを入力してください
+      password_placeholder: パスワードを入力してください
+      to_register_page: 新規アカウント作成ページへ
+      password_forget: パスワードをお忘れの方はこちら
+    create:
+      login: ログイン
+      password_forget: パスワードをお忘れの方はこちら
+  sign_ups:
+    show:
+      title: ユーザー登録
+      to_login_page: ログインページへ
+    create:
+      success: ユーザー登録が完了しました
+      danger: ユーザー登録に失敗しました

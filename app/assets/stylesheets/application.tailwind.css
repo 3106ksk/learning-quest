@@ -1,1 +1,236 @@
 @import "tailwindcss";
+
+@theme {
+
+  --color-*: initial;
+
+  /* Paper */
+  --color-paper: #faf9f5;
+  --color-paper-line: rgba(38, 36, 31, 0.12);
+  --color-paper-line-strong: rgba(38, 36, 31, 0.26);
+  --color-line-control: rgba(38, 36, 31, 0.52);
+
+  /* Ink */
+  --color-ink-900: #26241f;
+  --color-ink-600: #5c584e;
+  --color-ink-500: #6e695d;
+  --color-ink-400: #908b7d;
+
+  /* Signature green */
+  --color-green-700: #24503f;
+  --color-green-600: #2d5d4b;
+  --color-green-tint: rgba(45, 93, 75, 0.08);
+
+  /* Kincha */
+  --color-kincha-600: #8a6224;
+  --color-kincha-500: #a97a2f;
+  --color-kincha-tint: rgba(169, 122, 47, 0.1);
+
+  /* Semantic */
+  --color-error-600: #a8402c;
+  --color-error-tint: rgba(168, 64, 44, 0.08);
+  --color-scrim: rgba(38, 36, 31, 0.32);
+
+  /* Type */
+  --font-serif: "Hiragino Mincho ProN", "Yu Mincho", YuMincho, serif;
+  --font-sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", YuGothic, Meiryo, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, monospace;
+
+  /* Shape（--radius-*は@themeの通常の名前付き名前空間なので安全に上書きできる） */
+  --radius-box: 2px;
+}
+
+/*
+ * Spacing/border/type複合値はプレーンなCSS変数として保持する。
+ * 理由: Tailwind v4のp-5等の数値ユーティリティは --spacing 単一値のcalc(var(--spacing) * N)で
+ * 動的生成される仕組みで、個別ステップ（--spacing-5等）の上書きができない。
+ * 本トークン(4/8/12/16/24/32/48/64px)は等差が5段目以降で崩れるため、その仕組みに乗せられない。
+ * よって @theme の外側で素のCSS変数として定義し、@layer components 側から参照する
+ * （`tech-decisions.md` §7 2026-07-08追記）。
+ */
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  --content-max: 960px;
+  --column-main-max: 640px;
+  --page-pad-pc: 48px;
+  --page-pad-mobile: 20px;
+
+  --border-hair: 1px solid var(--color-paper-line);
+  --border-box: 1px solid var(--color-paper-line-strong);
+  --border-control: 1px solid var(--color-line-control);
+  --focus-ring: 3px solid var(--color-green-600);
+}
+
+@layer base {
+  html {
+    min-width: 0;
+    background: var(--color-paper);
+    color: var(--color-ink-900);
+    font-family: var(--font-sans);
+  }
+
+  body {
+    min-width: 0;
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  :focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  a {
+    color: var(--color-green-600);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  a:hover {
+    color: var(--color-green-700);
+  }
+
+  h1,
+  h2 {
+    margin-block: 0;
+    font-family: var(--font-serif);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  h1 {
+    font-size: clamp(22px, 3vw, 28px);
+    line-height: 1.4;
+  }
+}
+
+/*
+ * 共通フォームシェル（screen-specifications.md §1.1）。AUTH/GOAL/REWARDの
+ * 作成・編集画面で共通利用する前提のため、単一画面用の使い捨てにせず
+ * ここに置く（`components.css` §「共通ルール」「§WO-A1b」相当の移植）。
+ */
+@layer components {
+  .form-shell {
+    width: min(100%, var(--column-main-max));
+    margin-inline: auto;
+  }
+
+  .public-page {
+    width: min(100%, calc(var(--content-max) + (var(--page-pad-pc) * 2)));
+    margin-inline: auto;
+    padding: var(--page-pad-pc);
+  }
+
+  @media (max-width: 767px) {
+    .public-page {
+      padding: var(--space-6) var(--page-pad-mobile) var(--space-7);
+    }
+  }
+
+  .section {
+    padding-top: var(--space-5);
+    border-top: var(--border-hair);
+  }
+
+  .form-stack > * + * {
+    margin-top: var(--space-5);
+  }
+
+  .form-help {
+    margin-top: var(--space-2);
+    color: var(--color-ink-600);
+    font-size: 14px;
+  }
+
+  .field-label {
+    display: block;
+    margin-bottom: var(--space-2);
+    color: var(--color-ink-600);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .field-control {
+    width: 100%;
+    min-height: 44px;
+    border: var(--border-control);
+    border-radius: var(--radius-box);
+    background: var(--color-paper);
+    color: var(--color-ink-900);
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .field-control::placeholder {
+    color: var(--color-ink-500);
+  }
+
+  .field-control.has-error {
+    border-color: var(--color-error-600);
+  }
+
+  .group-error {
+    color: var(--color-error-600);
+    font-size: 14px;
+  }
+
+  .btn {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-box);
+    padding: var(--space-2) var(--space-4);
+    cursor: pointer;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 100ms, color 100ms, border-color 100ms;
+  }
+
+  .btn-primary {
+    border: var(--border-control);
+    border-color: var(--color-green-600);
+    background: var(--color-green-600);
+    color: var(--color-paper);
+  }
+
+  .btn-primary:hover {
+    border-color: var(--color-green-700);
+    background: var(--color-green-700);
+  }
+
+  .btn-secondary {
+    border: var(--border-control);
+    background: var(--color-paper);
+    color: var(--color-ink-900);
+  }
+
+  .btn-secondary:hover {
+    background: var(--color-green-tint);
+  }
+
+  .error-banner {
+    border: var(--border-box);
+    border-color: var(--color-error-600);
+    border-radius: var(--radius-box);
+    background: var(--color-error-tint);
+    color: var(--color-error-600);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .small {
+    color: var(--color-ink-600);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}

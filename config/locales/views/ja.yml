@@ -5,8 +5,10 @@ ja:
       submit: 保存
       update: 更新
     label:
+      name: お名前
       email_address: E-mailアドレス
       password: パスワード
+      password_confirmation: パスワード（確認）
   sessions:
     new:
       title: ログイン
@@ -21,6 +23,7 @@ ja:
   sign_ups:
     show:
       title: ユーザー登録
+      submit: 登録する
       to_login_page: ログインページへ
     create:
       success: ユーザー登録が完了しました

@@ -1,37 +1,61 @@
-<h1><%= t('.title') %></h1>
+<main class="public-page">
+  <div class="form-shell">
+    <h1><%= t('.title') %></h1>
 
-<% if flash[:danger] %>
-  <div class="rounded-xl bg-red-600 px-4 py-3 text-white" role="alert">
-    <%= flash[:danger] %>
+    <% if flash[:danger].present? %>
+      <div class="error-banner" role="alert" style="margin-top: var(--space-5)">
+        <%= flash[:danger] %>
+      </div>
+    <% end %>
+
+    <%= form_with model: @user, url: sign_up_path, class: "section form-stack", style: "margin-top: var(--space-5)" do |form| %>
+      <% %i[name email_address password password_confirmation].each do |field| %>
+        <% if form.object.errors[field].any? %>
+          <div class="group-error" id="<%= field %>-error"><%= form.object.errors.full_messages_for(field).first %></div>
+        <% end %>
+      <% end %>
+
+      <div>
+        <%= form.label :name, class: "field-label" %>
+        <%= form.text_field :name,
+              required: true,
+              autocomplete: "family-name",
+              class: "field-control#{' has-error' if form.object.errors[:name].any?}",
+              aria: { describedby: ("name-error" if form.object.errors[:name].any?) } %>
+      </div>
+
+      <div>
+        <%= form.label :email_address, class: "field-label" %>
+        <%= form.email_field :email_address,
+              required: true,
+              autocomplete: "email",
+              class: "field-control#{' has-error' if form.object.errors[:email_address].any?}",
+              aria: { describedby: ("email_address-error" if form.object.errors[:email_address].any?) } %>
+      </div>
+
+      <div>
+        <%= form.label :password, class: "field-label" %>
+        <%= form.password_field :password,
+              required: true,
+              autocomplete: "new-password",
+              class: "field-control#{' has-error' if form.object.errors[:password].any?}",
+              aria: { describedby: ("password-error" if form.object.errors[:password].any?) } %>
+      </div>
+
+      <div>
+        <%= form.label :password_confirmation, class: "field-label" %>
+        <%= form.password_field :password_confirmation,
+              required: true,
+              autocomplete: "new-password",
+              class: "field-control#{' has-error' if form.object.errors[:password_confirmation].any?}",
+              aria: { describedby: ("password_confirmation-error" if form.object.errors[:password_confirmation].any?) } %>
+      </div>
+
+      <%= form.submit t('.submit'), class: "btn btn-primary" %>
+
+      <p class="small">
+        <%= link_to t('.to_login_page'), new_session_path %>
+      </p>
+    <% end %>
   </div>
-<% end %>
-
-<%= form_with model: @user, url: sign_up_path do |form| %>
-  <% if form.object.errors.any? %>
-    <div>Error: <%= form.object.errors.full_messages.first %></div>
-  <% end %>
-
-  <div>
-    <%= form.label :name %>
-    <%= form.text_field :name, required: true, autocomplete: "family-name" %>
-  </div>
-
-  <div>
-    <%= form.label :email_address %>
-    <%= form.email_field :email_address, required: true, autocomplete: "email" %>
-  </div>
-
-  <div>
-    <%= form.label :password %>
-    <%= form.password_field :password, required: true, autocomplete: "new-password" %>
-  </div>
-
-  <div>
-    <%= form.label :password_confirmation %>
-    <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password" %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</main>

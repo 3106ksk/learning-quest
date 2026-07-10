@@ -18,11 +18,13 @@ ja:
       login: ログイン
       email_placeholder: メールアドレスを入力してください
       password_placeholder: パスワードを入力してください
-      to_register_page: 新規アカウント作成ページへ
+      to_register_notice: アカウントをお持ちでない方は
+      to_register_page: 登録する
       password_forget: パスワードをお忘れの方はこちら
     create:
       login: ログイン
       password_forget: パスワードをお忘れの方はこちら
+      danger: メールアドレスまたはパスワードが正しくありません
   sign_ups:
     show:
       title: ユーザー登録

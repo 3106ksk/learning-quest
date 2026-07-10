@@ -1,12 +1,46 @@
-<h1><%= t('.title') %></h1>
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
-<%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
+<main class="public-page">
+  <div class="form-shell">
+    <h1><%= t('.title') %></h1>
 
-<%= form_with url: session_path do |form| %>
-  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: t('.email_placeholder'), value: params[:email_address] %><br>
-  <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: t('.password_placeholder'), maxlength: 72 %><br>
-  <%= form.submit t('.login') %>
-<% end %>
-<br>
+    <% if flash[:danger].present? %>
+      <div class="error-banner" role="alert" style="margin-top: var(--space-5)">
+        <%= flash[:danger] %>
+      </div>
+    <% end %>
 
-<%= link_to t('.password_forget'), new_password_path %>
+    <%# パスワード再設定案内・完了用の成功通知 %>
+    <% if flash[:notice].present? %>
+      <div class="notice-banner" role="status" style="margin-top: var(--space-5)">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+
+    <%= form_with url: session_path, class: "section form-stack", style: "margin-top: var(--space-5)" do |form| %>
+      <div>
+        <%= form.label :email_address, class: "field-label" %>
+        <%= form.email_field :email_address,
+              autofocus: true,
+              autocomplete: "username",
+              class: "field-control" %>
+      </div>
+
+      <div>
+        <%= form.label :password, class: "field-label" %>
+        <%= form.password_field :password,
+              autocomplete: "current-password",
+              maxlength: 72,
+              class: "field-control" %>
+      </div>
+
+      <%= form.submit t('.login'), class: "btn btn-primary" %>
+
+      <p class="small">
+        <%= link_to t('.password_forget'), new_password_path %>
+      </p>
+
+      <p class="small">
+        <%= t('.to_register_notice') %> <%= link_to t('.to_register_page'), sign_up_path %>
+      </p>
+    <% end %>
+  </div>
+</main>

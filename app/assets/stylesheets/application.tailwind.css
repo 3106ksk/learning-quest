@@ -228,6 +228,15 @@
     padding: var(--space-3) var(--space-4);
   }
 
+  .notice-banner {
+    border: var(--border-box);
+    border-color: var(--color-green-600);
+    border-radius: var(--radius-box);
+    background: var(--color-green-tint);
+    color: var(--color-green-600);
+    padding: var(--space-3) var(--space-4);
+  }
+
   .small {
     color: var(--color-ink-600);
     font-size: 14px;

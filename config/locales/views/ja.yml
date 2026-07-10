@@ -23,6 +23,7 @@ ja:
     create:
       login: ログイン
       password_forget: パスワードをお忘れの方はこちら
+      danger: メールアドレスまたはパスワードが正しくありません
   sign_ups:
     show:
       title: ユーザー登録

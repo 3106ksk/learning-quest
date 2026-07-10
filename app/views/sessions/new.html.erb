@@ -1,8 +1,12 @@
 <main class="public-page">
   <div class="form-shell">
     <h1><%= t('.title') %></h1>
-    <%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
-    <%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
+
+    <% if flash[:danger].present? %>
+      <div class="error-banner" role="alert" style="margin-top: var(--space-5)">
+        <%= flash[:danger] %>
+      </div>
+    <% end %>
 
     <%= form_with url: session_path, class: "section form-stack", style: "margin-top: var(--space-5)" do |form| %>
       <div>

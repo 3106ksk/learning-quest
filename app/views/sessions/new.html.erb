@@ -8,6 +8,13 @@
       </div>
     <% end %>
 
+    <%# パスワード再設定案内・完了用の成功通知 %>
+    <% if flash[:notice].present? %>
+      <div class="notice-banner" role="status" style="margin-top: var(--space-5)">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+
     <%= form_with url: session_path, class: "section form-stack", style: "margin-top: var(--space-5)" do |form| %>
       <div>
         <%= form.label :email_address, class: "field-label" %>

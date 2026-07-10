@@ -27,7 +27,7 @@
     <header>
       <nav>
         <%= link_to "Home", root_path %>
-        <%= button_to "Log out", session_path, method: :delete if authenticated? %>
+        <%= button_to t(".logout"), session_path, method: :delete if authenticated? %>
       </nav>
     </header>
 

@@ -9,6 +9,9 @@ ja:
       email_address: E-mailアドレス
       password: パスワード
       password_confirmation: パスワード（確認）
+  layouts:
+    application:
+      logout: ログアウト
   sessions:
     new:
       title: ログイン

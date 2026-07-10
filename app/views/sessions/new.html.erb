@@ -37,6 +37,10 @@
       <p class="small">
         <%= link_to t('.password_forget'), new_password_path %>
       </p>
+
+      <p class="small">
+        <%= t('.to_register_notice') %> <%= link_to t('.to_register_page'), sign_up_path %>
+      </p>
     <% end %>
   </div>
 </main>

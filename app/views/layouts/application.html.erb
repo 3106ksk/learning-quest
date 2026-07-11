@@ -24,14 +24,16 @@
   </head>
 
   <body>
-    <% if authenticated? %>
-      <%= render "shared/sidebar" %>
-    <% else %>
-      <%= render "shared/header" %>
-    <% end %>
+    <%= tag.div class: ("app-shell" if authenticated?) do %>
+      <% if authenticated? %>
+        <%= render "shared/sidebar" %>
+      <% else %>
+        <%= render "shared/header" %>
+      <% end %>
 
-    <main>
-      <%= yield %>
-    </main>
+      <main>
+        <%= yield %>
+      </main>
+    <% end %>
   </body>
 </html>

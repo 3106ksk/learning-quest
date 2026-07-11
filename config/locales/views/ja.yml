@@ -12,6 +12,16 @@ ja:
   layouts:
     application:
       logout: ログアウト
+      brand: きづき
+  static_pages:
+    home:
+      brand: きづき
+      headline: 学ぶほど、じぶんの取扱説明書ができていく。
+      caption: 気づくたびに、築かれていく。
+      body: 疲れていても始められた日も、集中が切れた日も。努力は記録され、あなたの型になります。
+      cta_primary: 無料で始める
+      cta_login: ログイン
+      footer_signature: きづき KIZUKI
   sessions:
     new:
       title: ログイン

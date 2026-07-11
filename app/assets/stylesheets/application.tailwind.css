@@ -242,4 +242,44 @@
     font-size: 14px;
     line-height: 1.6;
   }
+
+  /*
+   * 公開ヘッダー（LP・登録・ログイン・パスワード再設定の未認証全画面共通）。
+   * prototype/components.css .public-header/.public-actions/.brand の移植
+   * （--paper系トークンを本ファイルの--color-*命名に合わせて置換）。
+   */
+  .public-header {
+    display: flex;
+    min-height: 72px;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    border-bottom: var(--border-hair);
+    padding: var(--space-3) max(var(--page-pad-mobile), calc((100% - var(--content-max)) / 2));
+  }
+
+  .public-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .brand {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    color: var(--color-ink-900);
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+  }
+
+  .public-actions > a:not(.btn) {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+  }
 }

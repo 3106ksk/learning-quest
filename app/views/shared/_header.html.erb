@@ -1,0 +1,7 @@
+<header class="public-header">
+  <%= link_to t(".brand"), root_path, class: "brand" %>
+  <nav class="public-actions" aria-label="アカウント">
+    <%= link_to t(".login"), new_session_path %>
+    <%= link_to t(".sign_up"), sign_up_path, class: "btn btn-primary" %>
+  </nav>
+</header>

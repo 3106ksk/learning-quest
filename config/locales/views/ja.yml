@@ -9,10 +9,14 @@ ja:
       email_address: E-mailアドレス
       password: パスワード
       password_confirmation: パスワード（確認）
-  layouts:
-    application:
-      logout: ログアウト
+  shared:
+    header:
       brand: きづき
+      login: ログイン
+      sign_up: 無料で始める
+    sidebar:
+      brand: きづき
+      logout: ログアウト
   static_pages:
     home:
       brand: きづき

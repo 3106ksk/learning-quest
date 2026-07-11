@@ -1,6 +1,36 @@
-<aside>
-  <nav>
-    <%= link_to t(".brand"), home_path %>
-    <%= button_to t(".logout"), session_path, method: :delete %>
-  </nav>
-</aside>
+<nav class="side-nav" aria-label="目次">
+  <%= link_to t(".brand"), home_path, class: "brand" %>
+
+  <ul class="nav-list">
+    <li>
+      <%= link_to home_path, class: "nav-link" do %>
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 11.5 12 4.5l7.5 7V20h-5v-5.5h-5V20h-5z"/></svg>
+        <%= t(".nav_home") %>
+      <% end %>
+    </li>
+    <li>
+      <%= link_to "#", class: "nav-link study" do %>
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        <%= t(".nav_study") %>
+      <% end %>
+    </li>
+    <li>
+      <%= link_to "#", class: "nav-link" do %>
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 3.5h13v17h-13z"/><path d="M8.5 8h7M8.5 11.5h7M8.5 15h4.5"/></svg>
+        <%= t(".nav_history") %>
+      <% end %>
+    </li>
+    <li>
+      <%= link_to "#", class: "nav-link" do %>
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 3.5v2.5M12 18v2.5M3.5 12H6M18 12h2.5M6 6l1.8 1.8M16.2 16.2 18 18M18 6l-1.8 1.8M7.8 16.2 6 18"/></svg>
+        <%= t(".nav_settings") %>
+      <% end %>
+    </li>
+  </ul>
+
+  <%= link_to "#", class: "account-label" do %>
+    <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c0-4.7 3.4-7.5 7.5-7.5s7.5 2.8 7.5 7.5z"/></svg>
+    <%= Current.user.name %>
+  <% end %>
+  <%= button_to t(".logout"), session_path, method: :delete %>
+</nav>

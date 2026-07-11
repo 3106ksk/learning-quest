@@ -67,6 +67,8 @@
   --border-box: 1px solid var(--color-paper-line-strong);
   --border-control: 1px solid var(--color-line-control);
   --focus-ring: 3px solid var(--color-green-600);
+
+  --nav-width: 220px;
 }
 
 @layer base {
@@ -281,5 +283,87 @@
     display: inline-flex;
     min-height: 44px;
     align-items: center;
+  }
+
+  /*
+   * 認証後サイドバー（PC）。prototype/components.css .app-shell/.side-nav/
+   * .nav-list/.nav-link/.account-label/.nav-icon の移植（--paper系トークンを
+   * 本ファイルの--color-*命名に合わせて置換）。
+   */
+  .app-shell {
+    min-height: 100vh;
+    padding-left: var(--nav-width);
+  }
+
+  .side-nav {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 10;
+    display: flex;
+    width: var(--nav-width);
+    flex-direction: column;
+    border-right: var(--border-hair);
+    background: var(--color-paper);
+    padding: var(--space-6) var(--space-5);
+  }
+
+  .nav-list {
+    padding: 0;
+    margin: var(--space-7) 0 0;
+    list-style: none;
+  }
+
+  .nav-link {
+    position: relative;
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    color: var(--color-ink-600);
+    font-size: 14px;
+    text-decoration: none;
+  }
+
+  .nav-link:hover {
+    background: var(--color-green-tint);
+  }
+
+  .nav-link[aria-current="page"] {
+    color: var(--color-green-600);
+    font-weight: 600;
+  }
+
+  .nav-link[aria-current="page"]::before {
+    content: "";
+    position: absolute;
+    inset: 8px auto 8px -24px;
+    width: 2px;
+    background: var(--color-green-600);
+  }
+
+  .nav-icon {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: butt;
+    stroke-width: 1.5;
+  }
+
+  .nav-link[aria-current="page"] .nav-icon,
+  .nav-link.study .nav-icon {
+    fill: currentColor;
+  }
+
+  .account-label {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--color-ink-500);
+    font-size: 12px;
+    text-decoration: none;
   }
 }

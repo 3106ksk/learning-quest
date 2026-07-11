@@ -9,8 +9,8 @@ ja:
       email_address: E-mailアドレス
       password: パスワード
       password_confirmation: パスワード（確認）
-  layouts:
-    application:
+  shared:
+    header:
       logout: ログアウト
       brand: きづき
   static_pages:

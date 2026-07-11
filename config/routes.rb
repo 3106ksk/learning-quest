@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
+  get "home", to: "home#index", as: :home
+  root "static_pages#home"
   resource :session
   resources :passwords, param: :token
   resource :sign_up
-  root "pages#home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

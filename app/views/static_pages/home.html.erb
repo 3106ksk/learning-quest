@@ -1,0 +1,24 @@
+<% content_for(:title, "#{t('.brand')} — #{t('.headline')}") %>
+
+<main class="public-page">
+  <div class="form-shell">
+    <p class="small" style="font-family: var(--font-serif); color: var(--color-green-600)">
+      <%= t('.brand') %>
+    </p>
+
+    <h1 style="margin-top: var(--space-4)"><%= t('.headline') %></h1>
+
+    <p style="margin-top: var(--space-3); color: var(--color-green-600)">
+      <%= t('.caption') %>
+    </p>
+
+    <p class="small" style="margin-top: var(--space-5)">
+      <%= t('.body') %>
+    </p>
+
+    <p style="margin-top: var(--space-6)">
+      <%= link_to t('.cta_primary'), sign_up_path, class: "btn btn-primary" %>
+      <%= link_to t('.cta_login'), new_session_path, class: "small", style: "margin-left: var(--space-4)" %>
+    </p>
+  </div>
+</main>

@@ -26,7 +26,7 @@
   <body>
     <header>
       <nav>
-        <%= link_to "Home", root_path %>
+        <%= link_to t('.brand'), root_path %>
         <%= button_to t(".logout"), session_path, method: :delete if authenticated? %>
       </nav>
     </header>

@@ -1,6 +1,9 @@
 <header>
   <nav>
-    <%= link_to t(".brand"), authenticated? ? home_path : root_path %>
-    <%= button_to t(".logout"), session_path, method: :delete if authenticated? %>
+    <%= link_to t(".brand"), root_path %>
+    <ul>
+      <li><%= link_to t(".login"), session_path %></li>
+      <li><%= link_to t(".sign_up"), sign_up_path %></li>
+    </ul>
   </nav>
 </header>

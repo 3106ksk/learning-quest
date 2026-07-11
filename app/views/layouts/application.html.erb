@@ -24,7 +24,11 @@
   </head>
 
   <body>
-    <%= render "shared/header" %>
+    <% if authenticated? %>
+      <%= render "shared/sidebar" %>
+    <% else %>
+      <%= render "shared/header" %>
+    <% end %>
 
     <main>
       <%= yield %>

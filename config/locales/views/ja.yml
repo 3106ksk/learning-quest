@@ -11,8 +11,12 @@ ja:
       password_confirmation: パスワード（確認）
   shared:
     header:
-      logout: ログアウト
       brand: きづき
+      login: ログイン
+      sign_up: ユーザー登録
+    sidebar:
+      brand: きづき
+      logout: ログアウト
   static_pages:
     home:
       brand: きづき

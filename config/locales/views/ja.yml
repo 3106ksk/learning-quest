@@ -17,6 +17,10 @@ ja:
     sidebar:
       brand: きづき
       logout: ログアウト
+      nav_home: ホーム
+      nav_history: 履歴
+      nav_study: 学習する
+      nav_settings: 設定
   static_pages:
     home:
       brand: きづき

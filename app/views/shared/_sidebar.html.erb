@@ -1,6 +1,33 @@
 <aside>
   <nav>
     <%= link_to t(".brand"), home_path %>
+
+    <ul class="nav-list">
+      <li>
+        <%= link_to home_path, class: "nav-link" do %>
+          <%= t(".nav_home") %>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to "#", class: "nav-link" do %>
+          <%= t(".nav_study") %>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to "#", class: "nav-link" do %>
+          <%= t(".nav_history") %>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to "#", class: "nav-link" do %>
+          <%= t(".nav_settings") %>
+        <% end %>
+      </li>
+    </ul>
+
+    <%= link_to "#", class: "account-label" do %>
+      <%= Current.user.name %>
+    <% end %>
     <%= button_to t(".logout"), session_path, method: :delete %>
   </nav>
 </aside>

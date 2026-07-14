@@ -34,4 +34,48 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe "メールアドレスのバリデーション" do
+    context "有効なメールアドレスの場合" do
+      it "有効である" do
+        expect(build(:user, email_address: "test@example.com")).to be_valid
+      end
+    end
+
+    context "メールアドレスがない場合" do
+      it "無効である" do
+        expect(build(:user, email_address: nil)).not_to be_valid
+      end
+    end
+
+    context "メールアドレスの形式が正しくない場合" do
+      it "無効である" do
+        expect(build(:user, email_address: "invalid-email")).not_to be_valid
+      end
+    end
+
+    context "メールアドレスが256文字の場合" do
+      it "無効である" do
+        email_address = "a" * 244 + "@example.com"
+
+        expect(build(:user, email_address: email_address)).not_to be_valid
+      end
+    end
+
+    context "メールアドレスがすでに使われている場合" do
+      it "大文字小文字が違っても無効である" do
+        create(:user, email_address: "test@example.com")
+
+        expect(build(:user, email_address: "TEST@EXAMPLE.COM")).not_to be_valid
+      end
+    end
+  end
+
+  describe "メールアドレスの正規化" do
+    it "前後の空白を除去し、小文字に変換する" do
+      user = build(:user, email_address: "  TEST@EXAMPLE.COM  ")
+
+      expect(user.email_address).to eq("test@example.com")
+    end
+  end
 end

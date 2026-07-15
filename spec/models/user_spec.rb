@@ -79,6 +79,42 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe "パスワードのバリデーション" do
+    context "パスワードがない場合" do
+      it "無効である" do
+        expect(build(:user, password: nil, password_confirmation: nil)).not_to be_valid
+      end
+    end
+
+    context "パスワード確認が一致しない場合" do
+      it "無効である" do
+        user = build(
+          :user,
+          password: "Password123!",
+          password_confirmation: "DifferentPassword123!"
+        )
+
+        expect(user).not_to be_valid
+      end
+    end
+
+    context "正しいパスワードの場合" do
+      it "認証できる" do
+        user = create(:user, password: "Password123!", password_confirmation: "Password123!")
+
+        expect(user.authenticate("Password123!")).to eq(user)
+      end
+    end
+
+    context "誤ったパスワードの場合" do
+      it "認証できない" do
+        user = create(:user, password: "Password123!", password_confirmation: "Password123!")
+
+        expect(user.authenticate("WrongPassword123!")).to be(false)
+      end
+    end
+  end
+
   describe "セッションとの関連" do
     it "ユーザーを削除すると、紐づくセッションも削除される" do
       user = create(:user)

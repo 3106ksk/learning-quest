@@ -50,7 +50,17 @@ RSpec.describe User, type: :model do
 
     context "メールアドレスの形式が正しくない場合" do
       it "無効である" do
-        expect(build(:user, email_address: "invalid-email")).not_to be_valid
+        invalid_email_addresses = [
+          "user",
+          "user@example",
+          "user@ example.com",
+          "user@example,com"
+        ]
+
+        invalid_email_addresses.each do |email_address|
+          expect(build(:user, email_address: email_address)).not_to be_valid,
+            "#{email_address.inspect} は無効である必要があります"
+        end
       end
     end
 

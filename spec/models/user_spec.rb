@@ -78,4 +78,14 @@ RSpec.describe User, type: :model do
       expect(user.email_address).to eq("test@example.com")
     end
   end
+
+  describe "セッションとの関連" do
+    it "ユーザーを削除すると、紐づくセッションも削除される" do
+      user = create(:user)
+      session = user.sessions.create!
+
+      expect { user.destroy }.to change(Session, :count).by(-1)
+      expect(Session.exists?(session.id)).to be_falsey
+    end
+  end
 end

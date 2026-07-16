@@ -1,4 +1,14 @@
 <%= form_with model: @study_record, url: study_records_path do |form| %>
+  <% if @study_record.errors.any? %>
+    <div class="error-banner" role="alert">
+      <ul>
+        <% @study_record.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
   <div>
     <%= form.label :planned_minutes %>
     <%= form.number_field :planned_minutes %>

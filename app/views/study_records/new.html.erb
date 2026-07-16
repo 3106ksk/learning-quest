@@ -1,0 +1,13 @@
+<%= form_with model: @study_record, url: study_records_path do |form| %>
+  <div>
+    <%= form.label :planned_minutes %>
+    <%= form.number_field :planned_minutes %>
+  </div>
+
+  <div>
+    <%= form.label :activity %>
+    <%= form.text_field :activity %>
+  </div>
+
+  <%= form.submit %>
+<% end %>

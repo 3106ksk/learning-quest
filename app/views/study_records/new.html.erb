@@ -9,15 +9,23 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :planned_minutes %>
-    <%= form.number_field :planned_minutes %>
-  </div>
+  <fieldset>
+    <legend class="field-label">時間を選ぶ</legend>
+
+    <div class="segments">
+      <% StudyRecord::ALLOWED_PLANNED_MINUTES.each do |minutes| %>
+        <%= form.radio_button :planned_minutes, minutes, class: "segment-input" %>
+        <%= form.label :planned_minutes, value: minutes, class: "segment-label" do %>
+          <span class="num"><%= minutes %></span>分
+        <% end %>
+      <% end %>
+    </div>
+  </fieldset>
 
   <div>
     <%= form.label :activity %>
     <%= form.text_field :activity %>
   </div>
 
-  <%= form.submit %>
+  <%= form.submit "学習を開始する" %>
 <% end %>

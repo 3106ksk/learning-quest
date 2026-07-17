@@ -1,3 +1,4 @@
+<%= turbo_frame_tag "study-form" do %>
 <%= form_with model: @study_record, url: study_records_path do |form| %>
   <fieldset>
     <legend class="field-label">時間を選ぶ</legend>
@@ -28,4 +29,5 @@
   </div>
 
   <%= form.submit "学習を開始する" %>
+<% end %>
 <% end %>

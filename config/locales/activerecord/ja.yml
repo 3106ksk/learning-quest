@@ -1,10 +1,13 @@
-ja:
-  activerecord:
-    models:
-      user: ユーザー
-    attributes:
-      user:
-        email_address: E-mailアドレス
-        name: ユーザー名
-        password: パスワード
-        password_confirmation: パスワード確認
+  ja:
+    activerecord:
+      models:
+        user: ユーザー
+      attributes:
+        user:
+          email_address: E-mailアドレス
+          name: ユーザー名
+          password: パスワード
+          password_confirmation: パスワード確認
+        study_record:
+          planned_minutes: 学習時間
+          activity: 今回やること

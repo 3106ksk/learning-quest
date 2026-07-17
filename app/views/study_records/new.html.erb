@@ -1,16 +1,11 @@
 <%= form_with model: @study_record, url: study_records_path do |form| %>
-  <% if @study_record.errors.any? %>
-    <div class="error-banner" role="alert">
-      <ul>
-        <% @study_record.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <fieldset>
     <legend class="field-label">時間を選ぶ</legend>
+    <% if @study_record.errors[:planned_minutes].any? %>
+      <p class="group-error">
+        <%= @study_record.errors.full_messages_for(:planned_minutes).first %>
+      </p>
+    <% end %>
 
     <div class="segments">
       <% StudyRecord::ALLOWED_PLANNED_MINUTES.each do |minutes| %>
@@ -25,6 +20,11 @@
   <div>
     <%= form.label :activity %>
     <%= form.text_field :activity %>
+    <% if @study_record.errors[:activity].any? %>
+      <p class="group-error">
+        <%= @study_record.errors.full_messages_for(:activity).first %>
+      </p>
+    <% end %>
   </div>
 
   <%= form.submit "学習を開始する" %>

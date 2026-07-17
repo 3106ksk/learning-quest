@@ -10,7 +10,7 @@
 
         t.timestamps
       end
-  
+
       add_index :study_records, :user_id,
                 unique: true,
                 where: "status IN ('running', 'paused', 'awaiting_extend_or_finish', 'awaiting_evaluation')",

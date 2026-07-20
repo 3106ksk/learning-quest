@@ -369,8 +369,8 @@
 
   /*
    * 認証後ページの共通シェル（STUDY-01ほか）。prototype/components.css .page の
-   * 移植。今回は.document-grid/.margin-column（欄外注の2カラム）を含まない単純版
-   * （STUDY-01は#43時点で欄外注コンテンツを持たないため）。
+   * 移植。内容は単一カラム（最大640px・中央）——欄外注カラムは2026-07-17に全廃
+   * （visual-design-spec.md §3.7）。中央寄せは既存の .form-shell を併用する。
    */
   .page {
     width: min(100%, calc(var(--content-max) + (var(--page-pad-pc) * 2)));

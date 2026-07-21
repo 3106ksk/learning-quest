@@ -366,4 +366,63 @@
     font-size: 12px;
     text-decoration: none;
   }
+
+  /*
+   * 認証後ページの共通シェル（STUDY-01ほか）。prototype/components.css .page の
+   * 移植。内容は単一カラム（最大640px・中央）——欄外注カラムは2026-07-17に全廃
+   * （visual-design-spec.md §3.7）。中央寄せは既存の .form-shell を併用する。
+   */
+  .page {
+    width: min(100%, calc(var(--content-max) + (var(--page-pad-pc) * 2)));
+    margin-inline: auto;
+    padding: var(--page-pad-pc);
+  }
+
+  @media (max-width: 767px) {
+    .page {
+      padding: var(--space-6) var(--page-pad-mobile) var(--space-7);
+    }
+  }
+
+  /*
+   * セグメント選択（時間選択 5/15/25/50分）。prototype/components.css
+   * .segments/.segment-input/.segment-label の移植（visual-design-spec.md §3.2）。
+   * 選択状態はcolorだけでなく::beforeのチェックマークでも示す（色単独伝達の禁止）。
+   */
+  .segments {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .segment-input {
+    position: absolute;
+    opacity: 0;
+  }
+
+  .segment-label {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    border: var(--border-control);
+    border-radius: 0;
+    margin-left: -1px;
+    padding: var(--space-2) var(--space-4);
+    cursor: pointer;
+  }
+
+  .segment-input:checked + .segment-label {
+    background: var(--color-green-600);
+    color: var(--color-paper);
+  }
+
+  .segment-input:checked + .segment-label::before {
+    margin-right: var(--space-1);
+    content: "✓";
+  }
+
+  .segment-input:focus-visible + .segment-label {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+    z-index: 1;
+  }
 }

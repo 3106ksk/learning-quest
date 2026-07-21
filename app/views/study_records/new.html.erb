@@ -41,7 +41,9 @@
           <% end %>
         </div>
 
-        <%= form.submit "学習を開始する", class: "btn btn-primary" %>
+        <%= form.submit "学習を開始する",
+              data: { turbo_submits_with: "学習を開始します..." },
+              class: "btn btn-primary disabled:cursor-not-allowed disabled:opacity-60" %>
       <% end %>
     </div>
   </div>

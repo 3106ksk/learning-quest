@@ -6,7 +6,6 @@
     enum :status, {
       running: "running",
       paused: "paused",
-      awaiting_extend_or_finish: "awaiting_extend_or_finish",
       awaiting_evaluation: "awaiting_evaluation"
     }, validate: true
 
@@ -14,6 +13,6 @@
     validates :activity, presence: true, length: { maximum: 100 }
     validates :started_at, presence: true
     validates :user_id, uniqueness: {
-      conditions: -> { where(status: %w[running paused awaiting_extend_or_finish awaiting_evaluation]) }
+      conditions: -> { where(status: %w[running paused awaiting_evaluation]) }
     }
   end

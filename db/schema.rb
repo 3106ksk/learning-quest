@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_16_000001) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_24_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -25,7 +25,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_16_000001) do
 
   create_table "study_records", force: :cascade do |t|
     t.string "activity", limit: 100
+    t.integer "actual_seconds"
     t.datetime "created_at", null: false
+    t.datetime "current_pause_started_at"
+    t.datetime "ended_at"
+    t.datetime "expires_at", null: false
+    t.integer "pause_count", default: 0, null: false
+    t.integer "paused_seconds", default: 0, null: false
     t.integer "planned_minutes", null: false
     t.datetime "started_at", null: false
     t.string "status", default: "running", null: false

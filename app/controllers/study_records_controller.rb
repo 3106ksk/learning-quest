@@ -38,6 +38,12 @@ class StudyRecordsController < ApplicationController
     redirect_to @study_record
   end
 
+  def resume
+    @study_record = Current.user.study_records.find(params[:id])
+    @study_record.start_resume!
+    redirect_to @study_record, status: :see_other
+  end
+
   def destroy
   end
 

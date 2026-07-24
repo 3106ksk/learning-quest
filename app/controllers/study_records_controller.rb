@@ -1,4 +1,6 @@
 class StudyRecordsController < ApplicationController
+  layout "focus", only: :show
+
   def index
   end
 

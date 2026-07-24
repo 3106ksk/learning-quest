@@ -32,6 +32,12 @@ class StudyRecordsController < ApplicationController
   def update
   end
 
+  def pause
+    @study_record = Current.user.study_records.find(params[:id])
+    @study_record.start_pause!
+    redirect_to @study_record
+  end
+
   def destroy
   end
 

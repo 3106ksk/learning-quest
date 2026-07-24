@@ -35,13 +35,23 @@ class StudyRecordsController < ApplicationController
   def pause
     @study_record = Current.user.study_records.find(params[:id])
     @study_record.start_pause!
-    redirect_to @study_record
+
+    if turbo_frame_request?
+      render partial: "study_records/countdown", locals: { study_record: @study_record }
+    else
+      redirect_to @study_record, status: :see_other
+    end
   end
 
   def resume
     @study_record = Current.user.study_records.find(params[:id])
     @study_record.start_resume!
-    redirect_to @study_record, status: :see_other
+
+    if turbo_frame_request?
+      render partial: "study_records/countdown", locals: { study_record: @study_record }
+    else
+      redirect_to @study_record, status: :see_other
+    end
   end
 
   def destroy

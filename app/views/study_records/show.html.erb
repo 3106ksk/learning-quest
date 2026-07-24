@@ -1,0 +1,24 @@
+<div class="page">
+  <div class="form-shell">
+    <h1>学習中</h1>
+
+    <section class="section" style="margin-top: var(--space-5)">
+      <dl class="form-stack">
+        <div>
+          <dt class="field-label">今回やること</dt>
+          <dd><%= @study_record.activity %></dd>
+        </div>
+
+        <div>
+          <dt class="field-label">終了予定時刻</dt>
+          <dd><%= l(@study_record.expires_at, format: :short) %></dd>
+        </div>
+      </dl>
+
+      <div class="flex gap-3" style="margin-top: var(--space-5)">
+        <%= button_tag "一時停止", type: "button", class: "btn btn-secondary" %>
+        <%= button_tag "完了する", type: "button", class: "btn btn-primary" %>
+      </div>
+    </section>
+  </div>
+</div>

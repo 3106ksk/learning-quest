@@ -6,6 +6,10 @@ class StudyRecordsController < ApplicationController
     @study_record = StudyRecord.new
   end
 
+  def show
+    @study_record = Current.user.study_records.find(params[:id])
+  end
+
   def create
     Rails.logger.info "=== 学習記録の作成リクエスト開始 ==="
 
@@ -16,7 +20,7 @@ class StudyRecordsController < ApplicationController
     Rails.logger.info "バリデーション実行前"
     if @study_record.save
       Rails.logger.info "学習記録の保存成功: id=#{@study_record.id}"
-      redirect_to home_path
+      redirect_to @study_record, status: :see_other
     else
       Rails.logger.info "バリデーションエラー: この#{@study_record.errors.full_messages.join(', ')}"
       render :new, status: :unprocessable_entity

@@ -10,17 +10,39 @@
           <dt class="field-label">今回やること</dt>
           <dd><%= @study_record.activity %></dd>
         </div>
-
-        <div>
-          <dt class="field-label">終了予定時刻</dt>
-          <dd><%= l(@study_record.expires_at, format: :short) %></dd>
-        </div>
       </dl>
 
-      <div class="flex gap-3" style="margin-top: var(--space-5)">
-        <%= button_tag "一時停止", type: "button", class: "btn btn-secondary" %>
-        <%= button_tag "完了する", type: "button", class: "btn btn-primary" %>
-      </div>
+      <%= turbo_frame_tag "countdown-#{@study_record.id}" do %>
+        <% if @study_record.running? %>
+          <dl class="form-stack">
+            <div data-controller="timer" data-timer-expires-at-value="<%= @study_record.expires_at.to_i %>">
+              <dt class="field-label">残り時間</dt>
+              <dd data-timer-target="remaining"></dd>
+            </div>
+          </dl>
+
+          <div class="flex gap-3" style="margin-top: var(--space-5)">
+            <%= button_to "一時停止",
+                  pause_study_record_path(@study_record),
+                  method: :patch,
+                  class: "btn btn-secondary" %>
+          </div>
+        <% elsif @study_record.paused? %>
+          <dl class="form-stack">
+            <div>
+              <dt class="field-label">一時停止中</dt>
+              <dd>分</dd>
+            </div>
+          </dl>
+
+          <div class="flex gap-3" style="margin-top: var(--space-5)">
+            <%= button_to "再開",
+                  resume_study_record_path(@study_record),
+                  method: :patch,
+                  class: "btn btn-secondary" %>
+          </div>
+        <% end %>
+      <% end %>
     </section>
   </div>
 </div>

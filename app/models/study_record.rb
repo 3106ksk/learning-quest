@@ -37,6 +37,10 @@ class StudyRecord < ApplicationRecord
     )
   end
 
+  def frozen_remaining_seconds
+    (expires_at - current_pause_started_at).to_i
+  end
+
   private
 
   def set_expires_at

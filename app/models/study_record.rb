@@ -21,7 +21,19 @@ class StudyRecord < ApplicationRecord
   def start_pause!
     update!(
       status: :paused,
-      current_pause_started_at: Time.current
+      current_pause_started_at: Time.current,
+      pause_count: pause_count + 1
+    )
+  end
+
+  def start_resume!
+    pause_duration = Time.current - current_pause_started_at
+
+    update!(
+      status: :running,
+      expires_at: expires_at + pause_duration,
+      paused_seconds: paused_seconds + pause_duration.to_i,
+      current_pause_started_at: nil
     )
   end
 

@@ -31,7 +31,7 @@
           <dl class="form-stack">
             <div>
               <dt class="field-label">一時停止中</dt>
-              <dd><%= @study_record.frozen_remaining_seconds %>秒</dd>
+              <dd><%= format_countdown(@study_record.frozen_remaining_seconds) %></dd>
             </div>
           </dl>
 

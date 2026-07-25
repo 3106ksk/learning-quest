@@ -3,7 +3,7 @@
     <div class="form-shell">
       <h1>学習を始める</h1>
 
-      <%= form_with model: @study_record, url: study_records_path, class: "section form-stack", style: "margin-top: var(--space-5)" do |form| %>
+      <%= form_with model: @study_record, url: study_records_path,  data: { turbo_frame: "_top"}, class: "section form-stack", style: "margin-top: var(--space-5)" do |form| %>
         <% if @study_record.errors[:user_id].any? %>
           <p class="group-error" role="alert">
             すでに学習中の記録があります

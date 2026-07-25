@@ -1,0 +1,18 @@
+<% content_for :title, "学習中" %>
+
+<div class="page">
+  <div class="form-shell">
+    <h1>学習中</h1>
+
+    <section class="section" style="margin-top: var(--space-5)">
+      <dl class="form-stack">
+        <div>
+          <dt class="field-label">今回やること</dt>
+          <dd><%= @study_record.activity %></dd>
+        </div>
+      </dl>
+
+      <%= render "countdown", study_record: @study_record %>
+    </section>
+  </div>
+</div>

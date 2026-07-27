@@ -27,7 +27,10 @@ class StudyRecord < ApplicationRecord
   end
 
   def start_resume!
-    pause_duration = Time.current - current_pause_started_at
+    raise "一時停止中の記録だけ再開できます" unless paused?
+
+    now = Time.current
+    pause_duration = calculate_pause_duration(now)
 
     update!(
       status: :running,
@@ -37,11 +40,34 @@ class StudyRecord < ApplicationRecord
     )
   end
 
+  def complete!
+    raise "実行中または一時停止中の記録だけ完了できます" unless running? || paused?
+
+    now = Time.current
+    pause_duration = paused? ? calculate_pause_duration(now) : 0
+    new_paused_seconds = paused_seconds + pause_duration.to_i
+    actual_seconds = (now - started_at).to_i - new_paused_seconds
+
+    update!(
+      status: :awaiting_evaluation,
+      ended_at: now,
+      paused_seconds: new_paused_seconds,
+      actual_seconds: actual_seconds,
+      current_pause_started_at: nil
+    )
+  end
+
   def frozen_remaining_seconds
     (expires_at - current_pause_started_at).to_i
   end
 
   private
+
+  def calculate_pause_duration(now)
+    raise "一時停止開始時刻がありません" if current_pause_started_at.nil?
+
+    now - current_pause_started_at
+  end
 
   def set_expires_at
     self.expires_at = started_at + planned_minutes.minutes

@@ -1,9 +1,10 @@
 class StudyRecordsController < ApplicationController
   layout "focus", only: :show
 
-  before_action :set_study_record, only: %i[show pause resume]
+  before_action :set_study_record, only: %i[show pause resume complete]
   before_action :ensure_running, only: :pause
   before_action :ensure_paused, only: :resume
+  before_action :ensure_running_or_paused, only: :complete
 
   def index
   end
@@ -50,6 +51,11 @@ class StudyRecordsController < ApplicationController
     end
   end
 
+  def complete
+    @study_record.complete!
+    redirect_to home_path, status: :see_other
+  end
+
   def destroy
   end
 
@@ -67,6 +73,12 @@ class StudyRecordsController < ApplicationController
 
   def ensure_paused
     return if @study_record.paused?
+
+    redirect_to @study_record, status: :see_other
+  end
+
+  def ensure_running_or_paused
+    return if @study_record.running? || @study_record.paused?
 
     redirect_to @study_record, status: :see_other
   end

@@ -10,7 +10,15 @@ class StudyRecordsController < ApplicationController
   end
 
   def new
-    @study_record = StudyRecord.new
+    active_record = Current.user.study_records.active.take
+
+    if active_record
+      destination = active_record.awaiting_evaluation? ? home_path : active_record
+
+      redirect_to destination
+    else
+      @study_record = StudyRecord.new
+    end
   end
 
   def show

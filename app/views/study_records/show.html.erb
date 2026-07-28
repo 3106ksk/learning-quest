@@ -1,25 +1,14 @@
 <% content_for :title, "学習中" %>
 
-<div class="page">
-  <div class="form-shell">
-    <h1>学習中</h1>
+<div class="timer-panel">
+  <p class="small"><%= @study_record.activity %></p>
 
-    <section class="section" style="margin-top: var(--space-5)">
-      <dl class="form-stack">
-        <div>
-          <dt class="field-label">今回やること</dt>
-          <dd><%= @study_record.activity %></dd>
-        </div>
-      </dl>
+  <%= render "countdown", study_record: @study_record %>
 
-      <%= render "countdown", study_record: @study_record %>
-
-        <div class="flex gap-3" style="margin-top: var(--space-5)">
+  <div class="timer-actions">
     <%= button_to "学習を終了",
           complete_study_record_path(@study_record),
           method: :patch,
           class: "btn btn-text" %>
-  </div>
-    </section>
   </div>
 </div>

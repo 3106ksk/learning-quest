@@ -69,6 +69,10 @@
   --focus-ring: 3px solid var(--color-green-600);
 
   --nav-width: 220px;
+
+  --text-display-size: clamp(56px, 12vw, 88px);
+  --text-display-line: 1.05;
+  --text-display: 500 var(--text-display-size) / var(--text-display-line) var(--font-mono);
 }
 
 @layer base {
@@ -424,5 +428,54 @@
     outline: var(--focus-ring);
     outline-offset: 2px;
     z-index: 1;
+  }
+
+  /*
+   * カウントダウン画面（STUDY-02）専用シェル。prototype/components.css
+   * .timer-page/.timer-panel/.timer-status/.timer-display/.timer-actions/
+   * .btn-text の移植（#49）。水平残量線（.timer-track/.timer-remaining）は
+   * MVP後のため移植しない。
+   */
+  .focus-layout main {
+    display: grid;
+    min-height: 100vh;
+    padding: var(--page-pad-mobile);
+    place-items: center;
+  }
+
+  .timer-panel {
+    width: min(100%, var(--column-main-max));
+    text-align: center;
+  }
+
+  .timer-status {
+    min-height: 28px;
+    color: var(--color-ink-600);
+  }
+
+  .timer-display {
+    margin-block: var(--space-5);
+    font: var(--text-display);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .timer-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-top: var(--space-7);
+  }
+
+  .btn-text {
+    min-height: 44px;
+    border: 0;
+    background: var(--color-paper);
+    color: var(--color-green-600);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .btn-text:hover {
+    color: var(--color-green-700);
   }
 }

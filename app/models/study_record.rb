@@ -11,6 +11,8 @@ class StudyRecord < ApplicationRecord
 
   before_create :set_expires_at
 
+  scope :active, -> { where(status: %w[running paused awaiting_evaluation]) }
+
   validates :planned_minutes, presence: true, inclusion: { in: ALLOWED_PLANNED_MINUTES }
   validates :activity, presence: true, length: { maximum: 100 }
   validates :started_at, presence: true

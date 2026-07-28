@@ -448,6 +448,33 @@
     text-align: center;
   }
 
+  .timer-activity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
+    color: var(--color-ink-900);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.6;
+  }
+
+  .timer-activity-text {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .timer-activity svg {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: butt;
+  }
+
   .timer-status {
     min-height: 28px;
     color: var(--color-ink-600);

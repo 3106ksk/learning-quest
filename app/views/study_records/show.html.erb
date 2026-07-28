@@ -1,7 +1,12 @@
 <% content_for :title, "学習中" %>
 
 <div class="timer-panel">
-  <p class="small"><%= @study_record.activity %></p>
+  <p class="timer-activity">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M16.5 4.5 19.5 7.5 8 19 4 20 5 16 Z"></path>
+    </svg>
+    <span class="timer-activity-text"><%= @study_record.activity %></span>
+  </p>
 
   <%= render "countdown", study_record: @study_record %>
 

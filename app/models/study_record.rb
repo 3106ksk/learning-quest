@@ -1,5 +1,6 @@
 class StudyRecord < ApplicationRecord
   ALLOWED_PLANNED_MINUTES = [ 5, 15, 25, 50 ].freeze
+  ACTIVE_STATUSES = %w[running paused awaiting_evaluation].freeze
 
   belongs_to :user
 
@@ -11,13 +12,13 @@ class StudyRecord < ApplicationRecord
 
   before_create :set_expires_at
 
-  scope :active, -> { where(status: %w[running paused awaiting_evaluation]) }
+  scope :active, -> { where(status: ACTIVE_STATUSES) }
 
   validates :planned_minutes, presence: true, inclusion: { in: ALLOWED_PLANNED_MINUTES }
   validates :activity, presence: true, length: { maximum: 100 }
   validates :started_at, presence: true
   validates :user_id, uniqueness: {
-    conditions: -> { where(status: %w[running paused awaiting_evaluation]) }
+    conditions: -> { where(status: ACTIVE_STATUSES) }
   }
 
   def start_pause!

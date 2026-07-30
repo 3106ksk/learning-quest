@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       patch :resume
       patch :complete
     end
+
+    resource :evaluation, only: [ :new, :create ]
   end
   get "up" => "rails/health#show", as: :rails_health_check
 end

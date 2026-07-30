@@ -3,6 +3,7 @@ class StudyRecord < ApplicationRecord
   ACTIVE_STATUSES = %w[running paused awaiting_evaluation].freeze
 
   belongs_to :user
+  has_one :evaluation, dependent: :destroy
 
   enum :status, {
     running: "running",

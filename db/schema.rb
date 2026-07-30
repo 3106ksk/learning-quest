@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_24_000001) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_30_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "focus_options", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "description"
+    t.string "label", null: false
+    t.integer "point", null: false
+    t.integer "position", null: false
+    t.string "result_code", null: false
+    t.datetime "updated_at", null: false
+    t.index ["result_code"], name: "index_focus_options_on_result_code", unique: true
+    t.check_constraint "point >= 1 AND point <= 3", name: "focus_options_point_range"
+  end
 
   create_table "sessions", force: :cascade do |t|
     t.datetime "created_at", null: false

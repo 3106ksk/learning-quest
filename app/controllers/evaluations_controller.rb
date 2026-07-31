@@ -8,6 +8,10 @@ class EvaluationsController < ApplicationController
     @challenge_options = ChallengeOption.display_order
   end
 
+  def create
+    redirect_to home_path, status: :see_other
+  end
+
   private
 
   def set_study_record
@@ -18,5 +22,9 @@ class EvaluationsController < ApplicationController
     return if @study_record.awaiting_evaluation?
 
     redirect_to @study_record, status: :see_other
+  end
+
+  def evaluation_params
+    params.require(:evaluation).permit(:focus_option_id, :challenge_option_id)
   end
 end

@@ -1,0 +1,40 @@
+<div class="page">
+  <div class="form-shell">
+    <h1>学習を評価する</h1>
+
+    <%= form_with model: @evaluation,
+          url: study_record_evaluation_path(@study_record),
+          class: "section form-stack",
+          style: "margin-top: var(--space-5)" do |form| %>
+      <fieldset>
+        <legend class="field-label">集中</legend>
+
+        <% @focus_options.each do |option| %>
+          <div>
+            <%= form.radio_button :focus_option_id, option.id %>
+            <%= form.label :focus_option_id, value: option.id do %>
+              <span><%= option.label %></span>
+              <span><%= option.description %></span>
+            <% end %>
+          </div>
+        <% end %>
+      </fieldset>
+
+      <fieldset>
+        <legend class="field-label">チャレンジ</legend>
+
+        <% @challenge_options.each do |option| %>
+          <div>
+            <%= form.radio_button :challenge_option_id, option.id %>
+            <%= form.label :challenge_option_id, value: option.id do %>
+              <span><%= option.label %></span>
+              <span><%= option.description %></span>
+            <% end %>
+          </div>
+        <% end %>
+      </fieldset>
+
+      <%= form.submit "評価する", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

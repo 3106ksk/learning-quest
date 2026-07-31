@@ -1,4 +1,6 @@
 class FocusOption < ApplicationRecord
+  scope :display_order, -> { order(:position) }
+
   validates :result_code, presence: true, uniqueness: true
   validates :label, presence: true
   validates :point, presence: true, inclusion: { in: 1..3 }

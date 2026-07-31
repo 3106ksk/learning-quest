@@ -5,6 +5,7 @@ class StudyRecordsController < ApplicationController
   before_action :ensure_running, only: :pause
   before_action :ensure_paused, only: :resume
   before_action :ensure_running_or_paused, only: :complete
+  before_action :redirect_to_evaluation_if_awaiting, only: :show
 
   def index
   end
@@ -13,7 +14,7 @@ class StudyRecordsController < ApplicationController
     active_record = Current.user.study_records.active.take
 
     if active_record
-      destination = active_record.awaiting_evaluation? ? home_path : active_record
+      destination = active_record.awaiting_evaluation? ? new_study_record_evaluation_path(active_record) : active_record
 
       redirect_to destination
     else
@@ -61,7 +62,7 @@ class StudyRecordsController < ApplicationController
 
   def complete
     @study_record.complete!
-    redirect_to home_path, status: :see_other
+    redirect_to new_study_record_evaluation_path(@study_record), status: :see_other
   end
 
   def destroy
@@ -89,6 +90,13 @@ class StudyRecordsController < ApplicationController
     return if @study_record.running? || @study_record.paused?
 
     redirect_to @study_record, status: :see_other
+  end
+
+  def redirect_to_evaluation_if_awaiting
+    return unless @study_record.awaiting_evaluation?
+
+    redirect_to new_study_record_evaluation_path(@study_record),
+    status: :see_other
   end
 
   def study_record_params

@@ -13,7 +13,7 @@ class StudyRecordsController < ApplicationController
     active_record = Current.user.study_records.active.take
 
     if active_record
-      destination = active_record.awaiting_evaluation? ? home_path : active_record
+      destination = active_record.awaiting_evaluation? ? new_study_record_evaluation_path(active_record) : active_record
 
       redirect_to destination
     else
@@ -61,7 +61,7 @@ class StudyRecordsController < ApplicationController
 
   def complete
     @study_record.complete!
-    redirect_to home_path, status: :see_other
+    redirect_to new_study_record_evaluation_path(@study_record), status: :see_other
   end
 
   def destroy

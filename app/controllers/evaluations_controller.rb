@@ -9,7 +9,12 @@ class EvaluationsController < ApplicationController
   end
 
   def create
-    redirect_to home_path, status: :see_other
+      @evaluation = @study_record.build_evaluation(evaluation_params)
+      if @evaluation.save
+        redirect_to home_path, status: :see_other
+      else
+        render :new, status: :unprocessable_entity
+      end
   end
 
   private

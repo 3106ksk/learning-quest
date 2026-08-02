@@ -431,14 +431,23 @@
   }
 
   /*
-   * カウントダウン画面（STUDY-02）専用シェル。prototype/components.css
-   * .timer-page/.timer-panel/.timer-status/.timer-display/.timer-actions/
-   * .btn-text の移植（#49）。水平残量線（.timer-track/.timer-remaining）は
-   * MVP後のため移植しない。
+   * layouts/focus（サイドバー・ヘッダーを持たない全画面）の共通シェル。
+   * STUDY-02（カウントダウン・.timer-panel）とSTUDY-03（評価入力・.page、#55）が使う。
+   * レイアウトファイルの責務はchromeの有無までとし、上下中央寄せは
+   * .timer-panelを持つ画面だけの見た目なので:has()で限定する
+   * （.pageは自前でPC/モバイル別paddingを持つため、二重paddingを避ける）。
+   * :has()はallow_browser versions: :modern が前提とする機能。
+   *
+   * prototype/components.css .timer-page/.timer-panel/.timer-status/
+   * .timer-display/.timer-actions/.btn-text の移植（#49）。水平残量線
+   * （.timer-track/.timer-remaining）はMVP後のため移植しない。
    */
   .focus-layout main {
-    display: grid;
     min-height: 100vh;
+  }
+
+  .focus-layout main:has(.timer-panel) {
+    display: grid;
     padding: var(--page-pad-mobile);
     place-items: center;
   }

@@ -1,6 +1,6 @@
 class EvaluationsController < ApplicationController
   before_action :set_study_record
-  before_action :ensure_awaiting_evaluation, only: :new
+  before_action :ensure_awaiting_evaluation, only: %i[new create]
 
   def new
     @evaluation = Evaluation.new
@@ -12,7 +12,7 @@ class EvaluationsController < ApplicationController
     @evaluation = Evaluation.new(evaluation_params)
     @evaluation.study_record = @study_record
 
-    if @evaluation.save
+    if save_evaluation_and_mark_study_record_as_evaluated
       redirect_to home_path, status: :see_other
     else
       set_evaluation_options
@@ -41,5 +41,11 @@ class EvaluationsController < ApplicationController
   def set_evaluation_options
     @focus_options = FocusOption.display_order
     @challenge_options = ChallengeOption.display_order
+  end
+
+  def save_evaluation_and_mark_study_record_as_evaluated
+    StudyRecord.transaction do
+      @evaluation.save && @study_record.mark_as_evaluated!
+    end
   end
 end

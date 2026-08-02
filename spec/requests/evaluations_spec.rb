@@ -89,6 +89,17 @@ RSpec.describe "Evaluations", type: :request do
         expect(response).to redirect_to(home_path)
         expect(response).to have_http_status(:see_other)
       end
+
+      it "評価の保存に失敗した場合は評価待ちのままにする" do
+        expect {
+          post study_record_evaluation_path(study_record), params: {
+            evaluation: { focus_option_id: focus_option.id }
+          }
+        }.not_to change(Evaluation, :count)
+
+        expect(study_record.reload).to be_awaiting_evaluation
+        expect(response).to have_http_status(:unprocessable_content)
+      end
     end
 
     context "学習記録が評価済みの場合" do

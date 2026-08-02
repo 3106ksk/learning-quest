@@ -53,6 +53,22 @@ RSpec.describe "StudyRecords", type: :request do
     end
   end
 
+  describe "GET /study_records/new" do
+    it "評価済みの学習記録があっても新規学習フォームを表示する" do
+      StudyRecord.create!(
+        user: user,
+        planned_minutes: 25,
+        activity: "完了した学習",
+        started_at: Time.current,
+        status: :evaluated
+      )
+
+      get new_study_record_path
+
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
   def sign_in(user)
     post session_path, params: {
       email_address: user.email_address,

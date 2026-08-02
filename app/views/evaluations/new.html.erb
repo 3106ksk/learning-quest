@@ -42,15 +42,6 @@
       </section>
 
       <%= form_with model: @evaluation, url: study_record_evaluation_path(@study_record) do |form| %>
-        <%# #140以降、評価保存とevaluatedへの遷移が同一トランザクションのため通常は到達しない。
-            レースコンディション時のrescue経路(RecordNotUnique)はリダイレクトするのでここも通らないが、
-            将来status遷移の仕様が変わった場合の保険として残す。 %>
-        <% if @evaluation.errors[:study_record_id].any? %>
-          <p class="group-error" role="alert">
-            <%= @evaluation.errors.full_messages_for(:study_record_id).first %>
-          </p>
-        <% end %>
-
         <div class="eval-columns">
           <fieldset<%= ' aria-describedby="focus-option-error"'.html_safe if @evaluation.errors[:focus_option].any? %>>
             <legend><h2>集中</h2></legend>

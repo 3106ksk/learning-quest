@@ -8,7 +8,8 @@ class StudyRecord < ApplicationRecord
   enum :status, {
     running: "running",
     paused: "paused",
-    awaiting_evaluation: "awaiting_evaluation"
+    awaiting_evaluation: "awaiting_evaluation",
+    evaluated: "evaluated"
   }, validate: true
 
   before_create :set_expires_at
@@ -59,6 +60,12 @@ class StudyRecord < ApplicationRecord
       actual_seconds: actual_seconds,
       current_pause_started_at: nil
     )
+  end
+
+  def mark_as_evaluated!
+    raise "評価待ちの記録だけ評価完了にできます" unless awaiting_evaluation?
+
+    update!(status: :evaluated)
   end
 
   def frozen_remaining_seconds

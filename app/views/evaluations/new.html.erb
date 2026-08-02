@@ -6,8 +6,20 @@
           url: study_record_evaluation_path(@study_record),
           class: "section form-stack",
           style: "margin-top: var(--space-5)" do |form| %>
+      <% if @evaluation.errors[:study_record_id].any? %>
+        <p class="group-error" role="alert">
+          <%= @evaluation.errors.full_messages_for(:study_record_id).first %>
+        </p>
+      <% end %>
+
       <fieldset>
         <legend class="field-label">集中</legend>
+
+        <% if @evaluation.errors[:focus_option].any? %>
+          <p class="group-error" role="alert">
+            <%= @evaluation.errors.full_messages_for(:focus_option).first %>
+          </p>
+        <% end %>
 
         <% @focus_options.each do |option| %>
           <div>
@@ -22,6 +34,12 @@
 
       <fieldset>
         <legend class="field-label">チャレンジ</legend>
+
+        <% if @evaluation.errors[:challenge_option].any? %>
+          <p class="group-error" role="alert">
+            <%= @evaluation.errors.full_messages_for(:challenge_option).first %>
+          </p>
+        <% end %>
 
         <% @challenge_options.each do |option| %>
           <div>

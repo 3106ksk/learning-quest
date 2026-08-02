@@ -18,6 +18,8 @@ class EvaluationsController < ApplicationController
       set_evaluation_options
       render :new, status: :unprocessable_entity
     end
+  rescue ActiveRecord::RecordNotUnique
+    redirect_to home_path, status: :see_other
   end
 
   private

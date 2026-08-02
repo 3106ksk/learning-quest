@@ -5,7 +5,7 @@ class StudyRecordsController < ApplicationController
   before_action :ensure_running, only: :pause
   before_action :ensure_paused, only: :resume
   before_action :ensure_running_or_paused, only: :complete
-  before_action :redirect_to_evaluation_if_awaiting, only: :show
+  before_action :redirect_by_status, only: :show
 
   def index
   end
@@ -92,11 +92,12 @@ class StudyRecordsController < ApplicationController
     redirect_to @study_record, status: :see_other
   end
 
-  def redirect_to_evaluation_if_awaiting
-    return unless @study_record.awaiting_evaluation?
-
-    redirect_to new_study_record_evaluation_path(@study_record),
-    status: :see_other
+  def redirect_by_status
+    if @study_record.awaiting_evaluation?
+      redirect_to new_study_record_evaluation_path(@study_record), status: :see_other
+    elsif @study_record.evaluated?
+      redirect_to home_path, status: :see_other
+    end
   end
 
   def study_record_params

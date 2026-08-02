@@ -505,4 +505,110 @@
   .btn-text:hover {
     color: var(--color-green-700);
   }
+
+  /*
+   * 学習後評価画面
+   */
+  .num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .caption {
+    color: var(--color-ink-600);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+  }
+
+  .margin-note {
+    color: var(--color-ink-500);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .section + .section {
+    margin-top: var(--space-7);
+  }
+
+  .button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  @media (max-width: 767px) {
+    .button-row .btn {
+      width: 100%;
+    }
+  }
+
+  .choice-list {
+    border-top: var(--border-hair);
+  }
+
+  .choice-input {
+    position: absolute;
+    opacity: 0;
+  }
+
+  .choice-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: var(--space-3);
+    border-bottom: var(--border-hair);
+    padding: var(--space-4);
+    cursor: pointer;
+  }
+
+  .choice-input:focus-visible + .choice-row {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  .choice-input:checked + .choice-row {
+    border-left: 2px solid var(--color-green-600);
+    background: var(--color-green-tint);
+  }
+
+  .choice-mark {
+    width: 16px;
+    height: 16px;
+    border: var(--border-control);
+    border-radius: 50%;
+    margin-top: 5px;
+  }
+
+  .choice-input:checked + .choice-row .choice-mark {
+    border: 4px solid var(--color-green-600);
+  }
+
+  .choice-list.has-error {
+    border-top-color: var(--color-error-600);
+  }
+
+  .choice-list.has-error .choice-row {
+    border-bottom-color: var(--color-error-600);
+  }
+
+  .eval-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+    margin-top: var(--space-6);
+  }
+
+  .eval-columns fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  @media (max-width: 767px) {
+    .eval-columns {
+      grid-template-columns: 1fr;
+      gap: var(--space-7);
+    }
+  }
 }

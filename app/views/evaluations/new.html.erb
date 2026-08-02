@@ -1,25 +1,47 @@
 <div class="page">
   <div class="form-shell">
-    <header>
-      <h1>タイマー完了</h1>
-      <p style="margin-top: var(--space-2)">
-        <span class="num"><%= @study_record.planned_minutes %></span>分 / <%= @study_record.activity %>
-      </p>
+    <section aria-labelledby="evaluation-prompt-title">
+      <h2 id="evaluation-prompt-title" class="evaluation-prompt">
+        <svg class="fumi fumi-s" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M6 19c0-6.5 4.5-11 10.5-11 4.5 0 8 3.2 8 7.5 0 5.5-4.5 9.5-10.5 9.5-1.6 0-3.2-.3-4.6-1"/>
+          <path d="M24.2 13.5l3.8-1.2-2.8 3"/>
+          <circle class="fumi-eye" cx="21.5" cy="13.5" r="1"/>
+          <path d="M6.5 20.5L2 24.5M7.5 23L3.5 27"/>
+          <path d="M13 25.5v3.5M17.5 25.8v3.2"/>
+          <path d="M12 14.5c2.5-1 5.5-1 8 .5"/>
+        </svg>
+        今回の学習は、どのような時間でしたか。
+      </h2>
+      <p class="small" style="margin-top: var(--space-2)">実感に近いものを1つずつ選んでください。</p>
+      <p class="caption" style="margin-top: var(--space-2)">この振り返りは、ふみが読む記録になります。</p>
+    </section>
+
+    <header style="margin-top: var(--space-5)">
+      <dl class="definition-list">
+        <div class="definition-row">
+          <dt>学習した内容</dt>
+          <dd><%= @study_record.activity %></dd>
+        </div>
+        <div class="definition-row">
+          <dt>予定時間</dt>
+          <dd class="num"><%= @study_record.planned_minutes %>分</dd>
+        </div>
+        <div class="definition-row">
+          <dt>実時間</dt>
+          <dd class="num"><%= @study_record.actual_minutes %>分</dd>
+        </div>
+      </dl>
     </header>
 
     <section class="section" style="margin-top: var(--space-5)">
-      <h2>今回の学習を振り返ってください</h2>
-      <p class="small" style="margin-top: var(--space-2)">実感に近いものを1つずつ選んでください。</p>
-      <p class="caption" style="margin-top: var(--space-2)">この振り返りは、ふみが読む記録になります。</p>
-
-      <section class="evaluation-start" style="margin-top: var(--space-6)" aria-labelledby="start-title">
-        <h3 id="start-title">着手</h3>
+      <section class="evaluation-start" aria-labelledby="start-title">
+        <h2 id="start-title">着手</h2>
         <p style="margin-top: var(--space-2)">
-          学習を開始したことは自動で記録されています。 <span class="caption">自動記録</span>
+          学習を開始したことは自動で記録されています
         </p>
       </section>
 
-      <%= form_with model: @evaluation, url: study_record_evaluation_path(@study_record), style: "margin-top: var(--space-6)" do |form| %>
+      <%= form_with model: @evaluation, url: study_record_evaluation_path(@study_record) do |form| %>
         <%# #140以降、評価保存とevaluatedへの遷移が同一トランザクションのため通常は到達しない。
             レースコンディション時のrescue経路(RecordNotUnique)はリダイレクトするのでここも通らないが、
             将来status遷移の仕様が変わった場合の保険として残す。 %>
@@ -31,7 +53,7 @@
 
         <div class="eval-columns">
           <fieldset<%= ' aria-describedby="focus-option-error"'.html_safe if @evaluation.errors[:focus_option].any? %>>
-            <legend><h3>集中</h3></legend>
+            <legend><h2>集中</h2></legend>
 
             <% if @evaluation.errors[:focus_option].any? %>
               <p class="group-error" id="focus-option-error" role="alert">
@@ -54,7 +76,7 @@
           </fieldset>
 
           <fieldset<%= ' aria-describedby="challenge-option-error"'.html_safe if @evaluation.errors[:challenge_option].any? %>>
-            <legend><h3>チャレンジ</h3></legend>
+            <legend><h2>チャレンジ</h2></legend>
 
             <% if @evaluation.errors[:challenge_option].any? %>
               <p class="group-error" id="challenge-option-error" role="alert">

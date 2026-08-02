@@ -523,6 +523,40 @@
     font-variant-numeric: tabular-nums;
   }
 
+  /*
+   * 定義リスト（ラベル・値の2カラム）。prototype/components.css
+   * .definition-list/.definition-row の移植。HISTORY-02（学習記録の詳細）と
+   * STUDY-03（#55）で使う——「学習した記録を見る」という同じ性質の表示に、
+   * 同じ部品を当てる。
+   */
+  .definition-list {
+    margin: 0;
+    border-top: var(--border-hair);
+  }
+
+  .definition-row {
+    display: grid;
+    grid-template-columns: minmax(120px, 1fr) minmax(0, 2fr);
+    gap: var(--space-4);
+    border-bottom: var(--border-hair);
+    padding-block: var(--space-3);
+  }
+
+  .definition-row dt {
+    font-weight: 600;
+  }
+
+  .definition-row dd {
+    margin: 0;
+  }
+
+  @media (max-width: 767px) {
+    .definition-row {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+    }
+  }
+
   .caption {
     color: var(--color-ink-600);
     font-size: 12px;
@@ -576,6 +610,42 @@
     text-align: center;
   }
 
+  /*
+   * ふみ（文鳥・線画）。prototype/components.css .fumi/.fumi-eye/.fumi-s の
+   * 移植（visual-design-spec.md §3.10）。塗りなし・stroke 1.5px・線端butt・
+   * 単色currentColor。.fumi-l/.fumi-linkはMANUAL系専用のためSTUDY-03では
+   * 移植しない。
+   */
+  .fumi {
+    display: inline-block;
+    vertical-align: -5px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: butt;
+    color: var(--color-ink-900);
+  }
+
+  .fumi .fumi-eye {
+    fill: currentColor;
+    stroke: none;
+  }
+
+  .fumi-s {
+    width: 22px;
+    height: 22px;
+  }
+
+  /*
+   * ふみの問い（STUDY-03）。prototype/reflect.html（MANUAL-03検証の問い手）の
+   * 前例に倣い、線画を本文の先頭・同じ行内に置く。§3.10の右下配置は
+   * メモ署名（手紙の結び）用途のルールで、「問いかけ」の場面はこちらの
+   * 前例が別に成立している。
+   */
+  .evaluation-prompt .fumi {
+    margin-right: var(--space-2);
+  }
+
   .choice-list {
     border-top: var(--border-hair);
   }
@@ -625,17 +695,34 @@
     border-bottom-color: var(--color-error-600);
   }
 
+  /*
+   * margin-topはプロトタイプの--space-6から--space-7へ広げている。
+   * 着手セクションに下罫線を足した分（プロトタイプには無い）、
+   * 罫線と集中/チャレンジの間に余白が要るため。
+   */
   .eval-columns {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-6);
-    margin-top: var(--space-6);
+    margin-top: var(--space-7);
   }
 
   .eval-columns fieldset {
     border: 0;
     padding: 0;
     margin: 0;
+  }
+
+  /*
+   * 集中/チャレンジの見出しを着手（.evaluation-start）と同じ中央寄せに揃える。
+   * legendだけを対象にし、fieldset自体には掛けない——choice-list（選択肢の
+   * ラベル・補足文）まで中央寄せが継承されると、左寄せの罫線リスト行という
+   * 意匠が崩れるため。
+   */
+  .eval-columns legend {
+    width: 100%;
+    margin-bottom: var(--space-4);
+    text-align: center;
   }
 
   @media (max-width: 767px) {

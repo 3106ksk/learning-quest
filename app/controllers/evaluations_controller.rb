@@ -3,18 +3,21 @@ class EvaluationsController < ApplicationController
   before_action :ensure_awaiting_evaluation, only: :new
 
   def new
-    @evaluation = @study_record.build_evaluation
-    @focus_options = FocusOption.display_order
-    @challenge_options = ChallengeOption.display_order
+    @evaluation = Evaluation.new
+    @evaluation.study_record = @study_record
+    set_evaluation_options
   end
 
   def create
-      @evaluation = @study_record.build_evaluation(evaluation_params)
-      if @evaluation.save
-        redirect_to home_path, status: :see_other
-      else
-        render :new, status: :unprocessable_entity
-      end
+    @evaluation = Evaluation.new(evaluation_params)
+    @evaluation.study_record = @study_record
+
+    if @evaluation.save
+      redirect_to home_path, status: :see_other
+    else
+      set_evaluation_options
+      render :new, status: :unprocessable_entity
+    end
   end
 
   private
@@ -31,5 +34,10 @@ class EvaluationsController < ApplicationController
 
   def evaluation_params
     params.require(:evaluation).permit(:focus_option_id, :challenge_option_id)
+  end
+
+  def set_evaluation_options
+    @focus_options = FocusOption.display_order
+    @challenge_options = ChallengeOption.display_order
   end
 end

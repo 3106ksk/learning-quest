@@ -1,4 +1,6 @@
 class EvaluationsController < ApplicationController
+  layout "focus"
+
   before_action :set_study_record
   before_action :ensure_awaiting_evaluation, only: %i[new create]
 

@@ -431,14 +431,23 @@
   }
 
   /*
-   * カウントダウン画面（STUDY-02）専用シェル。prototype/components.css
-   * .timer-page/.timer-panel/.timer-status/.timer-display/.timer-actions/
-   * .btn-text の移植（#49）。水平残量線（.timer-track/.timer-remaining）は
-   * MVP後のため移植しない。
+   * layouts/focus（サイドバー・ヘッダーを持たない全画面）の共通シェル。
+   * STUDY-02（カウントダウン・.timer-panel）とSTUDY-03（評価入力・.page、#55）が使う。
+   * レイアウトファイルの責務はchromeの有無までとし、上下中央寄せは
+   * .timer-panelを持つ画面だけの見た目なので:has()で限定する
+   * （.pageは自前でPC/モバイル別paddingを持つため、二重paddingを避ける）。
+   * :has()はallow_browser versions: :modern が前提とする機能。
+   *
+   * prototype/components.css .timer-page/.timer-panel/.timer-status/
+   * .timer-display/.timer-actions/.btn-text の移植（#49）。水平残量線
+   * （.timer-track/.timer-remaining）はMVP後のため移植しない。
    */
   .focus-layout main {
-    display: grid;
     min-height: 100vh;
+  }
+
+  .focus-layout main:has(.timer-panel) {
+    display: grid;
     padding: var(--page-pad-mobile);
     place-items: center;
   }
@@ -504,5 +513,222 @@
 
   .btn-text:hover {
     color: var(--color-green-700);
+  }
+
+  /*
+   * 学習後評価画面
+   */
+  .num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /*
+   * 定義リスト（ラベル・値の2カラム）。prototype/components.css
+   * .definition-list/.definition-row の移植。HISTORY-02（学習記録の詳細）と
+   * STUDY-03（#55）で使う——「学習した記録を見る」という同じ性質の表示に、
+   * 同じ部品を当てる。
+   */
+  .definition-list {
+    margin: 0;
+    border-top: var(--border-hair);
+  }
+
+  .definition-row {
+    display: grid;
+    grid-template-columns: minmax(120px, 1fr) minmax(0, 2fr);
+    gap: var(--space-4);
+    border-bottom: var(--border-hair);
+    padding-block: var(--space-3);
+  }
+
+  .definition-row dt {
+    font-weight: 600;
+  }
+
+  .definition-row dd {
+    margin: 0;
+  }
+
+  @media (max-width: 767px) {
+    .definition-row {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+    }
+  }
+
+  .caption {
+    color: var(--color-ink-600);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+  }
+
+  .margin-note {
+    color: var(--color-ink-500);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .section + .section {
+    margin-top: var(--space-7);
+  }
+
+  .button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  @media (max-width: 767px) {
+    .button-row .btn {
+      width: 100%;
+    }
+  }
+
+  /*
+   * 評価送信ボタンの中央寄せ（STUDY-03）。screen-specifications.md §8.1の
+   * ワイヤーフレームが中央配置で描かれているため、それに合わせる。
+   * .button-row自体は左寄せが既定（プロトタイプ全画面で共通）なので、
+   * timer.htmlの `class="button-row timer-actions"` と同じモディファイア方式で
+   * この画面だけに限定する。
+   */
+  .evaluation-actions {
+    justify-content: center;
+  }
+
+  /*
+   * 着手セクション（STUDY-03）。見出し「着手」と説明文を縦の中心線で揃え、
+   * 送信ボタンの中央配置と紙面の軸を合わせる。
+   * 下罫線は visual-screen-wireframes.md §8 が着手と集中/チャレンジの間に
+   * 引いている区切り線。カードではなく罫線で面を分ける原則
+   * （visual-design-spec.md）に従い --border-hair を使う。
+   */
+  .evaluation-start {
+    border-bottom: var(--border-hair);
+    padding-bottom: var(--space-6);
+    text-align: center;
+  }
+
+  /*
+   * ふみ（文鳥・線画）。prototype/components.css .fumi/.fumi-eye/.fumi-s の
+   * 移植（visual-design-spec.md §3.10）。塗りなし・stroke 1.5px・線端butt・
+   * 単色currentColor。.fumi-l/.fumi-linkはMANUAL系専用のためSTUDY-03では
+   * 移植しない。
+   */
+  .fumi {
+    display: inline-block;
+    vertical-align: -5px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: butt;
+    color: var(--color-ink-900);
+  }
+
+  .fumi .fumi-eye {
+    fill: currentColor;
+    stroke: none;
+  }
+
+  .fumi-s {
+    width: 22px;
+    height: 22px;
+  }
+
+  /*
+   * ふみの問い（STUDY-03）。prototype/reflect.html（MANUAL-03検証の問い手）の
+   * 前例に倣い、線画を本文の先頭・同じ行内に置く。§3.10の右下配置は
+   * メモ署名（手紙の結び）用途のルールで、「問いかけ」の場面はこちらの
+   * 前例が別に成立している。
+   */
+  .evaluation-prompt .fumi {
+    margin-right: var(--space-2);
+  }
+
+  .choice-list {
+    border-top: var(--border-hair);
+  }
+
+  .choice-input {
+    position: absolute;
+    opacity: 0;
+  }
+
+  .choice-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: var(--space-3);
+    border-bottom: var(--border-hair);
+    padding: var(--space-4);
+    cursor: pointer;
+  }
+
+  .choice-input:focus-visible + .choice-row {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  .choice-input:checked + .choice-row {
+    border-left: 2px solid var(--color-green-600);
+    background: var(--color-green-tint);
+  }
+
+  .choice-mark {
+    width: 16px;
+    height: 16px;
+    border: var(--border-control);
+    border-radius: 50%;
+    margin-top: 5px;
+  }
+
+  .choice-input:checked + .choice-row .choice-mark {
+    border: 4px solid var(--color-green-600);
+  }
+
+  .choice-list.has-error {
+    border-top-color: var(--color-error-600);
+  }
+
+  .choice-list.has-error .choice-row {
+    border-bottom-color: var(--color-error-600);
+  }
+
+  /*
+   * margin-topはプロトタイプの--space-6から--space-7へ広げている。
+   * 着手セクションに下罫線を足した分（プロトタイプには無い）、
+   * 罫線と集中/チャレンジの間に余白が要るため。
+   */
+  .eval-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+    margin-top: var(--space-7);
+  }
+
+  .eval-columns fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  /*
+   * 集中/チャレンジの見出しを着手（.evaluation-start）と同じ中央寄せに揃える。
+   * legendだけを対象にし、fieldset自体には掛けない——choice-list（選択肢の
+   * ラベル・補足文）まで中央寄せが継承されると、左寄せの罫線リスト行という
+   * 意匠が崩れるため。
+   */
+  .eval-columns legend {
+    width: 100%;
+    margin-bottom: var(--space-4);
+    text-align: center;
+  }
+
+  @media (max-width: 767px) {
+    .eval-columns {
+      grid-template-columns: 1fr;
+      gap: var(--space-7);
+    }
   }
 }

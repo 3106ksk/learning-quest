@@ -1,58 +1,99 @@
 <div class="page">
   <div class="form-shell">
-    <h1>学習を評価する</h1>
+    <section aria-labelledby="evaluation-prompt-title">
+      <h2 id="evaluation-prompt-title" class="evaluation-prompt">
+        <svg class="fumi fumi-s" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M6 19c0-6.5 4.5-11 10.5-11 4.5 0 8 3.2 8 7.5 0 5.5-4.5 9.5-10.5 9.5-1.6 0-3.2-.3-4.6-1"/>
+          <path d="M24.2 13.5l3.8-1.2-2.8 3"/>
+          <circle class="fumi-eye" cx="21.5" cy="13.5" r="1"/>
+          <path d="M6.5 20.5L2 24.5M7.5 23L3.5 27"/>
+          <path d="M13 25.5v3.5M17.5 25.8v3.2"/>
+          <path d="M12 14.5c2.5-1 5.5-1 8 .5"/>
+        </svg>
+        今回の学習は、どのような時間でしたか。
+      </h2>
+      <p class="small" style="margin-top: var(--space-2)">実感に近いものを1つずつ選んでください。</p>
+      <p class="caption" style="margin-top: var(--space-2)">この振り返りは、ふみが読む記録になります。</p>
+    </section>
 
-    <%= form_with model: @evaluation,
-          url: study_record_evaluation_path(@study_record),
-          class: "section form-stack",
-          style: "margin-top: var(--space-5)" do |form| %>
-      <% if @evaluation.errors[:study_record_id].any? %>
-        <p class="group-error" role="alert">
-          <%= @evaluation.errors.full_messages_for(:study_record_id).first %>
+    <header style="margin-top: var(--space-5)">
+      <dl class="definition-list">
+        <div class="definition-row">
+          <dt>学習した内容</dt>
+          <dd><%= @study_record.activity %></dd>
+        </div>
+        <div class="definition-row">
+          <dt>予定時間</dt>
+          <dd class="num"><%= @study_record.planned_minutes %>分</dd>
+        </div>
+        <div class="definition-row">
+          <dt>実時間</dt>
+          <dd class="num"><%= @study_record.actual_minutes %>分</dd>
+        </div>
+      </dl>
+    </header>
+
+    <section class="section" style="margin-top: var(--space-5)">
+      <section class="evaluation-start" aria-labelledby="start-title">
+        <h2 id="start-title">着手</h2>
+        <p style="margin-top: var(--space-2)">
+          学習を開始したことは自動で記録されています
         </p>
+      </section>
+
+      <%= form_with model: @evaluation, url: study_record_evaluation_path(@study_record) do |form| %>
+        <div class="eval-columns">
+          <fieldset<%= ' aria-describedby="focus-option-error"'.html_safe if @evaluation.errors[:focus_option].any? %>>
+            <legend><h2>集中</h2></legend>
+
+            <% if @evaluation.errors[:focus_option].any? %>
+              <p class="group-error" id="focus-option-error" role="alert">
+                <%= @evaluation.errors.full_messages_for(:focus_option).first %>
+              </p>
+            <% end %>
+
+            <div class="choice-list<%= ' has-error' if @evaluation.errors[:focus_option].any? %>">
+              <% @focus_options.each do |option| %>
+                <%= form.radio_button :focus_option_id, option.id, class: "choice-input" %>
+                <%= form.label :focus_option_id, value: option.id, class: "choice-row" do %>
+                  <span class="choice-mark" aria-hidden="true"></span>
+                  <span>
+                    <strong><%= option.label %></strong><br>
+                    <span class="small"><%= option.description %></span>
+                  </span>
+                <% end %>
+              <% end %>
+            </div>
+          </fieldset>
+
+          <fieldset<%= ' aria-describedby="challenge-option-error"'.html_safe if @evaluation.errors[:challenge_option].any? %>>
+            <legend><h2>チャレンジ</h2></legend>
+
+            <% if @evaluation.errors[:challenge_option].any? %>
+              <p class="group-error" id="challenge-option-error" role="alert">
+                <%= @evaluation.errors.full_messages_for(:challenge_option).first %>
+              </p>
+            <% end %>
+
+            <div class="choice-list<%= ' has-error' if @evaluation.errors[:challenge_option].any? %>">
+              <% @challenge_options.each do |option| %>
+                <%= form.radio_button :challenge_option_id, option.id, class: "choice-input" %>
+                <%= form.label :challenge_option_id, value: option.id, class: "choice-row" do %>
+                  <span class="choice-mark" aria-hidden="true"></span>
+                  <span>
+                    <strong><%= option.label %></strong><br>
+                    <span class="small"><%= option.description %></span>
+                  </span>
+                <% end %>
+              <% end %>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="button-row evaluation-actions" style="margin-top: var(--space-7)">
+          <%= form.submit "評価する", class: "btn btn-primary" %>
+        </div>
       <% end %>
-
-      <fieldset>
-        <legend class="field-label">集中</legend>
-
-        <% if @evaluation.errors[:focus_option].any? %>
-          <p class="group-error" role="alert">
-            <%= @evaluation.errors.full_messages_for(:focus_option).first %>
-          </p>
-        <% end %>
-
-        <% @focus_options.each do |option| %>
-          <div>
-            <%= form.radio_button :focus_option_id, option.id %>
-            <%= form.label :focus_option_id, value: option.id do %>
-              <span><%= option.label %></span>
-              <span><%= option.description %></span>
-            <% end %>
-          </div>
-        <% end %>
-      </fieldset>
-
-      <fieldset>
-        <legend class="field-label">チャレンジ</legend>
-
-        <% if @evaluation.errors[:challenge_option].any? %>
-          <p class="group-error" role="alert">
-            <%= @evaluation.errors.full_messages_for(:challenge_option).first %>
-          </p>
-        <% end %>
-
-        <% @challenge_options.each do |option| %>
-          <div>
-            <%= form.radio_button :challenge_option_id, option.id %>
-            <%= form.label :challenge_option_id, value: option.id do %>
-              <span><%= option.label %></span>
-              <span><%= option.description %></span>
-            <% end %>
-          </div>
-        <% end %>
-      </fieldset>
-
-      <%= form.submit "評価する", class: "btn btn-primary" %>
-    <% end %>
+    </section>
   </div>
 </div>

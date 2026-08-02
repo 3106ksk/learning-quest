@@ -72,6 +72,14 @@ class StudyRecord < ApplicationRecord
     (expires_at - current_pause_started_at).to_i
   end
 
+  # STUDY-03の実績時間表示用。四捨五入(切り捨てだと59秒が「0分」と表示され、
+  # 学習していないように見えるため、実態に近い側へ丸める)。
+  def actual_minutes
+    return nil if actual_seconds.nil?
+
+    (actual_seconds / 60.0).round
+  end
+
   private
 
   def calculate_pause_duration(now)

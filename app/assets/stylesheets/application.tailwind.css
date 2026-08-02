@@ -563,6 +563,19 @@
     justify-content: center;
   }
 
+  /*
+   * 着手セクション（STUDY-03）。見出し「着手」と説明文を縦の中心線で揃え、
+   * 送信ボタンの中央配置と紙面の軸を合わせる。
+   * 下罫線は visual-screen-wireframes.md §8 が着手と集中/チャレンジの間に
+   * 引いている区切り線。カードではなく罫線で面を分ける原則
+   * （visual-design-spec.md）に従い --border-hair を使う。
+   */
+  .evaluation-start {
+    border-bottom: var(--border-hair);
+    padding-bottom: var(--space-6);
+    text-align: center;
+  }
+
   .choice-list {
     border-top: var(--border-hair);
   }

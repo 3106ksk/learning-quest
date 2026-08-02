@@ -552,6 +552,17 @@
     }
   }
 
+  /*
+   * 評価送信ボタンの中央寄せ（STUDY-03）。screen-specifications.md §8.1の
+   * ワイヤーフレームが中央配置で描かれているため、それに合わせる。
+   * .button-row自体は左寄せが既定（プロトタイプ全画面で共通）なので、
+   * timer.htmlの `class="button-row timer-actions"` と同じモディファイア方式で
+   * この画面だけに限定する。
+   */
+  .evaluation-actions {
+    justify-content: center;
+  }
+
   .choice-list {
     border-top: var(--border-hair);
   }

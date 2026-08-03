@@ -6,10 +6,11 @@ RSpec.describe "StudyRecords", type: :request do
     StudyRecord.create!(
       user: user,
       planned_minutes: 25,
-      activity: "RSpecの学習",
-      started_at: Time.current,
-      status: study_record_status,
-      current_pause_started_at: study_record_status == :paused ? Time.current : nil
+        activity: "RSpecの学習",
+        started_at: Time.current,
+        status: study_record_status,
+        rank: study_record_status == :evaluated ? :a : nil,
+        current_pause_started_at: study_record_status == :paused ? Time.current : nil
     )
   end
 
@@ -60,7 +61,8 @@ RSpec.describe "StudyRecords", type: :request do
         planned_minutes: 25,
         activity: "完了した学習",
         started_at: Time.current,
-        status: :evaluated
+        status: :evaluated,
+        rank: :a
       )
 
       get new_study_record_path

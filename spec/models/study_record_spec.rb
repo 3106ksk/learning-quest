@@ -12,7 +12,7 @@ RSpec.describe StudyRecord, type: :model do
       )
 
       expect {
-        study_record.mark_as_evaluated!
+        study_record.mark_as_evaluated!(:a)
       }.to raise_error(RuntimeError, "評価待ちの記録だけ評価完了にできます")
 
       expect(study_record.reload).to be_running

@@ -42,6 +42,12 @@
       </section>
 
       <%= form_with model: @evaluation, url: study_record_evaluation_path(@study_record) do |form| %>
+        <% if @evaluation.errors[:base].any? %>
+          <p class="group-error" role="alert">
+            <%= @evaluation.errors.full_messages_for(:base).first %>
+          </p>
+        <% end %>
+
         <div class="eval-columns">
           <fieldset<%= ' aria-describedby="focus-option-error"'.html_safe if @evaluation.errors[:focus_option].any? %>>
             <legend><h2>集中</h2></legend>

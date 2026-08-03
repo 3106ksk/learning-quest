@@ -12,6 +12,12 @@ class StudyRecord < ApplicationRecord
     evaluated: "evaluated"
   }, validate: true
 
+  enum :rank, {
+    a: "a",
+    b: "b",
+    c: "c"
+  }, prefix: true, validate: { allow_nil: true }
+
   before_create :set_expires_at
 
   scope :active, -> { where(status: ACTIVE_STATUSES) }
@@ -19,6 +25,7 @@ class StudyRecord < ApplicationRecord
   validates :planned_minutes, presence: true, inclusion: { in: ALLOWED_PLANNED_MINUTES }
   validates :activity, presence: true, length: { maximum: 100 }
   validates :started_at, presence: true
+  validates :rank, presence: true, if: :evaluated?
   validates :user_id, uniqueness: {
     conditions: -> { where(status: ACTIVE_STATUSES) }
   }
@@ -62,18 +69,19 @@ class StudyRecord < ApplicationRecord
     )
   end
 
-  def mark_as_evaluated!
+  def mark_as_evaluated!(rank_code)
     raise "評価待ちの記録だけ評価完了にできます" unless awaiting_evaluation?
 
-    update!(status: :evaluated)
+    update!(
+      status: :evaluated,
+      rank: rank_code
+    )
   end
 
   def frozen_remaining_seconds
     (expires_at - current_pause_started_at).to_i
   end
 
-  # STUDY-03の実績時間表示用。四捨五入(切り捨てだと59秒が「0分」と表示され、
-  # 学習していないように見えるため、実態に近い側へ丸める)。
   def actual_minutes
     return nil if actual_seconds.nil?
 

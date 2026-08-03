@@ -22,10 +22,11 @@ RSpec.describe "Evaluations", type: :request do
     StudyRecord.create!(
       user: user,
       planned_minutes: 25,
-      activity: "RSpecの学習",
-      started_at: Time.current,
-      status: study_record_status
-    )
+        activity: "RSpecの学習",
+        started_at: Time.current,
+        status: study_record_status,
+        rank: study_record_status == :evaluated ? :a : nil
+      )
   end
   let(:evaluation_params) do
     {

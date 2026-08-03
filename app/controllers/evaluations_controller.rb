@@ -14,7 +14,7 @@ class EvaluationsController < ApplicationController
     @evaluation = Evaluation.new(evaluation_params)
     @evaluation.study_record = @study_record
 
-    if save_evaluation_and_mark_study_record_as_evaluated
+    if save_evaluation_and_rank
       redirect_to home_path, status: :see_other
     else
       set_evaluation_options
@@ -52,9 +52,18 @@ end
     @challenge_options = ChallengeOption.display_order
   end
 
-  def save_evaluation_and_mark_study_record_as_evaluated
+  def save_evaluation_and_rank
     StudyRecord.transaction do
-      @evaluation.save && @study_record.mark_as_evaluated!
+      if @evaluation.save
+        rank_code = RankDeterminer.call(
+          focus_point: @evaluation.focus_point,
+          challenge_point: @evaluation.challenge_point
+        )
+
+        @study_record.mark_as_evaluated!(rank_code)
+      else
+        false
+      end
     end
   end
 end

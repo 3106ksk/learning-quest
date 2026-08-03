@@ -12,6 +12,12 @@ class StudyRecord < ApplicationRecord
     evaluated: "evaluated"
   }, validate: true
 
+  enum :rank, {
+    a: "a",
+    b: "b",
+    c: "c"
+  }, prefix: true, validate: { allow_nil: true }
+
   before_create :set_expires_at
 
   scope :active, -> { where(status: ACTIVE_STATUSES) }
@@ -19,6 +25,7 @@ class StudyRecord < ApplicationRecord
   validates :planned_minutes, presence: true, inclusion: { in: ALLOWED_PLANNED_MINUTES }
   validates :activity, presence: true, length: { maximum: 100 }
   validates :started_at, presence: true
+  validates :rank, presence: true, if: :evaluated?
   validates :user_id, uniqueness: {
     conditions: -> { where(status: ACTIVE_STATUSES) }
   }

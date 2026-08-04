@@ -739,8 +739,8 @@
 
   .stamp {
     display: inline-block;
-    width: 96px;
-    height: 96px;
+    width: 120px;
+    height: 120px;
   }
 
   .stamp svg {
@@ -772,7 +772,7 @@
 
   .stamp-stage {
     display: flex;
-    min-height: 120px;
+    min-height: 144px;
     align-items: center;
     justify-content: center;
     margin-block: var(--space-5);

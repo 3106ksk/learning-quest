@@ -735,4 +735,45 @@
   .section-title {
     margin-bottom: var(--space-4);
   }
+
+  .stamp {
+    display: inline-block;
+    width: 96px;
+    height: 96px;
+  }
+
+  .stamp svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .stamp svg text {
+    font-family: var(--font-serif);
+  }
+
+  .stamp svg .stamp-rank-word {
+    font-family: var(--font-mono);
+  }
+
+  .stamp-a {
+    color: var(--color-kincha-500);
+  }
+
+  .stamp-b {
+    color: var(--color-green-600);
+  }
+
+  .stamp-c {
+    color: var(--color-ink-900);
+  }
+
+  .stamp-stage {
+    display: flex;
+    min-height: 120px;
+    align-items: center;
+    justify-content: center;
+    margin-block: var(--space-5);
+  }
 }

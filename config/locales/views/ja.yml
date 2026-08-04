@@ -1,7 +1,7 @@
 ja:
   time:
     formats:
-      evaluation_result: "%Y年%-m月%-d日 %H:%M"
+      evaluation_result: "%-m/%-d %H:%M"
   helpers:
     submit:
       create: カウントを作成する

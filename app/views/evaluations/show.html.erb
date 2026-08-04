@@ -25,14 +25,14 @@
     <section aria-labelledby="effort-title">
       <h2 id="effort-title" class="section-title"><%= t(".breakdown_title") %></h2>
 
-      <dl class="effort-list">
-        <div class="effort-row">
-          <dt class="effort-label"><%= t("evaluation_result.axes.start") %></dt>
+      <dl class="definition-list">
+        <div class="definition-row">
+          <dt><%= t("evaluation_result.axes.start") %></dt>
           <dd><%= t("evaluation_result.start_label") %></dd>
         </div>
 
-        <div class="effort-row">
-          <dt class="effort-label"><%= t("evaluation_result.axes.focus") %></dt>
+        <div class="definition-row">
+          <dt><%= t("evaluation_result.axes.focus") %></dt>
           <dd>
             <strong><%= @evaluation.focus_option.label %></strong>
             <% if @evaluation.focus_option.description.present? %>
@@ -41,8 +41,8 @@
           </dd>
         </div>
 
-        <div class="effort-row">
-          <dt class="effort-label"><%= t("evaluation_result.axes.challenge") %></dt>
+        <div class="definition-row">
+          <dt><%= t("evaluation_result.axes.challenge") %></dt>
           <dd>
             <strong><%= @evaluation.challenge_option.label %></strong>
             <% if @evaluation.challenge_option.description.present? %>

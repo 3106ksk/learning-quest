@@ -72,9 +72,12 @@ ja:
     start_label: 学習を開始できた
   evaluations:
     show:
+      session:
+        title: 今回の学習
+        started_at: 開始日時
+        planned_minutes: 予定時間
+        actual_minutes: 実時間
       breakdown_title: 今回の努力の記録
-      reason_title: Rankの判定理由
-      meta: "予定 %{planned}分 / 実際 %{actual}分"
       actions:
         history: 学習の記録を見る
         study_again: もう一度学習する

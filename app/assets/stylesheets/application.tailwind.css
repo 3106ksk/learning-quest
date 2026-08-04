@@ -57,6 +57,7 @@
   --space-6: 32px;
   --space-7: 48px;
   --space-8: 64px;
+  --space-9: 96px;
 
   --content-max: 960px;
   --column-main-max: 640px;
@@ -729,6 +730,141 @@
     .eval-columns {
       grid-template-columns: 1fr;
       gap: var(--space-7);
+    }
+  }
+  
+
+  .stamp {
+    display: inline-block;
+    width: 96px;
+    height: 96px;
+  }
+
+  .stamp-l {
+    width: 120px;
+    height: 120px;
+  }
+
+  .stamp svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .stamp svg text {
+    font-family: var(--font-serif);
+  }
+
+  .stamp svg .stamp-rank-word {
+    font-family: var(--font-mono);
+  }
+
+  .stamp-a {
+    color: var(--color-kincha-500);
+  }
+
+  .stamp-b {
+    color: var(--color-green-600);
+  }
+
+  .stamp-c {
+    color: var(--color-ink-900);
+  }
+
+  .stamp-stage {
+    display: flex;
+    min-height: 144px;
+    align-items: center;
+    justify-content: center;
+    margin-block: var(--space-5);
+  }
+
+  .evaluation-result-header {
+    border-bottom: var(--border-hair);
+    padding-bottom: var(--space-4);
+    text-align: center;
+  }
+
+  .evaluation-result-section {
+    position: relative;
+    border: var(--border-box);
+    border-radius: var(--radius-box);
+    padding: var(--space-6) var(--space-5) var(--space-5);
+  }
+
+  .evaluation-result-section-title {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin: 0;
+    background: var(--color-paper);
+    padding-inline: var(--space-3);
+    text-align: center;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+  }
+
+  .evaluation-result-list {
+    border: 0;
+  }
+
+  .evaluation-result-list .definition-row {
+    border-bottom: var(--border-hair);
+  }
+
+  .evaluation-session {
+    margin-top: var(--space-7);
+  }
+
+  .evaluation-session-list .definition-row {
+    grid-template-columns: 112px minmax(0, 160px);
+    justify-content: center;
+    gap: var(--space-3);
+    padding-block: var(--space-2);
+  }
+
+  .evaluation-session-list dd {
+    text-align: center;
+  }
+
+  .evaluation-breakdown .definition-row {
+    grid-template-columns: 112px minmax(0, 320px);
+    justify-content: center;
+    gap: var(--space-3);
+    line-height: 1.8;
+  }
+
+  .evaluation-breakdown dt {
+    letter-spacing: 0.04em;
+  }
+
+  .evaluation-result-section + .evaluation-result-section {
+    margin-top: var(--space-7);
+  }
+
+  .evaluation-result-reason {
+    margin-top: var(--space-4);
+  }
+
+  .evaluation-result-actions {
+    justify-content: center;
+    margin-top: var(--space-9);
+  }
+
+  @media (min-width: 768px) {
+    .evaluation-result-page {
+      display: grid;
+      min-height: 100vh;
+      place-items: center;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .evaluation-session-list .definition-row,
+    .evaluation-breakdown .definition-row {
+      grid-template-columns: 88px minmax(0, 1fr);
+      justify-content: stretch;
     }
   }
 }

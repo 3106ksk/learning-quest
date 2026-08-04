@@ -1,0 +1,66 @@
+<% content_for :title, @study_record.activity %>
+
+<div class="page">
+  <div class="form-shell">
+    <header>
+      <h1><%= @study_record.activity %></h1>
+
+      <p class="small">
+        <time datetime="<%= @study_record.started_at.iso8601 %>">
+          <%= l(@study_record.started_at, format: :evaluation_result) %>
+        </time>
+        <span aria-hidden="true">／</span>
+        <%= t(
+              ".meta",
+              planned: @study_record.planned_minutes,
+              actual: @study_record.actual_minutes
+            ) %>
+      </p>
+    </header>
+
+    <div class="stamp-stage">
+      <%= render "shared/rank_stamp", rank: @study_record.rank, size_class: "stamp-lg" %>
+    </div>
+
+    <section aria-labelledby="effort-title">
+      <h2 id="effort-title" class="section-title"><%= t(".breakdown_title") %></h2>
+
+      <dl class="definition-list">
+        <div class="definition-row">
+          <dt><%= t("evaluation_result.axes.start") %></dt>
+          <dd><%= t("evaluation_result.start_label") %></dd>
+        </div>
+
+        <div class="definition-row">
+          <dt><%= t("evaluation_result.axes.focus") %></dt>
+          <dd>
+            <strong><%= @evaluation.focus_option.label %></strong>
+            <% if @evaluation.focus_option.description.present? %>
+              <span class="small"><%= @evaluation.focus_option.description %></span>
+            <% end %>
+          </dd>
+        </div>
+
+        <div class="definition-row">
+          <dt><%= t("evaluation_result.axes.challenge") %></dt>
+          <dd>
+            <strong><%= @evaluation.challenge_option.label %></strong>
+            <% if @evaluation.challenge_option.description.present? %>
+              <span class="small"><%= @evaluation.challenge_option.description %></span>
+            <% end %>
+          </dd>
+        </div>
+      </dl>
+    </section>
+
+    <section aria-labelledby="rank-reason-title">
+      <h2 id="rank-reason-title" class="sr-only"><%= t(".reason_title") %></h2>
+      <p><%= t("rank.reasons.#{@study_record.rank}") %></p>
+    </section>
+
+    <div class="button-row">
+      <%= link_to t(".actions.history"), home_path, class: "btn btn-primary" %>
+      <%= link_to t(".actions.study_again"), new_study_record_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
+</div>

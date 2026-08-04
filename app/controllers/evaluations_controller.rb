@@ -3,6 +3,7 @@ class EvaluationsController < ApplicationController
 
   before_action :set_study_record
   before_action :ensure_awaiting_evaluation, only: %i[new create]
+  before_action :ensure_evaluated, only: :show
 
   def new
     @evaluation = Evaluation.new
@@ -30,6 +31,10 @@ class EvaluationsController < ApplicationController
     render_evaluation_form
   end
 
+  def show
+    @evaluation = @study_record.evaluation
+  end
+
   private
 
   def set_study_record
@@ -42,6 +47,19 @@ class EvaluationsController < ApplicationController
     destination =
       if @study_record.evaluated?
         home_path
+      else
+        @study_record
+      end
+
+    redirect_to destination, status: :see_other
+  end
+
+  def ensure_evaluated
+    return if @study_record.evaluated?
+
+    destination =
+      if @study_record.awaiting_evaluation?
+        new_study_record_evaluation_path(@study_record)
       else
         @study_record
       end

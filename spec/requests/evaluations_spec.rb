@@ -77,6 +77,56 @@ RSpec.describe "Evaluations", type: :request do
     end
   end
 
+  describe "GET /study_records/:study_record_id/evaluation" do
+    subject(:perform_request) do
+      get study_record_evaluation_path(study_record)
+    end
+
+    context "学習記録が評価済みの場合" do
+      let(:study_record_status) { :evaluated }
+
+      before do
+        Evaluation.create!(
+          study_record: study_record,
+          focus_option: focus_option,
+          challenge_option: challenge_option
+        )
+      end
+
+      it "評価結果画面を表示する" do
+        perform_request
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context "学習記録が評価待ちの場合" do
+      let(:study_record_status) { :awaiting_evaluation }
+
+      it "評価入力画面へ遷移する" do
+        perform_request
+
+        expect(response).to redirect_to(
+          new_study_record_evaluation_path(study_record)
+        )
+        expect(response).to have_http_status(:see_other)
+      end
+    end
+
+    [ :running, :paused ].each do |status|
+      context "学習記録が#{status}の場合" do
+        let(:study_record_status) { status }
+
+        it "学習記録画面へ遷移する" do
+          perform_request
+
+          expect(response).to redirect_to(study_record_path(study_record))
+          expect(response).to have_http_status(:see_other)
+        end
+      end
+    end
+  end
+
   describe "POST /study_records/:study_record_id/evaluation" do
     context "学習記録が評価待ちの場合" do
       let(:study_record_status) { :awaiting_evaluation }

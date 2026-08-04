@@ -7,6 +7,8 @@ ja:
       create: カウントを作成する
       submit: 保存
       update: 更新
+      evaluation:
+        create: 評価結果を見る
     label:
       name: お名前
       email_address: E-mailアドレス

@@ -783,6 +783,12 @@
     margin-block: var(--space-5);
   }
 
+  .evaluation-result-header {
+    border-bottom: var(--border-hair);
+    padding-bottom: var(--space-4);
+    text-align: center;
+  }
+
   .evaluation-result-section {
     position: relative;
     border: var(--border-box);

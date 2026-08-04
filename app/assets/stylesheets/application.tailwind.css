@@ -776,4 +776,14 @@
     justify-content: center;
     margin-block: var(--space-5);
   }
+
+  .evaluation-breakdown .definition-row {
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: var(--space-3);
+    line-height: 1.8;
+  }
+
+  .evaluation-breakdown dt {
+    letter-spacing: 0.04em;
+  }
 }

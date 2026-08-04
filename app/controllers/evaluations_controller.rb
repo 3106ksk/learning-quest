@@ -16,12 +16,12 @@ class EvaluationsController < ApplicationController
     @evaluation.study_record = @study_record
 
     if save_evaluation_and_rank
-      redirect_to home_path, status: :see_other
+      redirect_to study_record_evaluation_path(@study_record), status: :see_other
     else
       render_evaluation_form
     end
   rescue ActiveRecord::RecordNotUnique
-    redirect_to home_path, status: :see_other
+    redirect_to study_record_evaluation_path(@study_record), status: :see_other
   rescue RankDeterminer::InvalidTotalPointError
     @evaluation.errors.add(
       :base,
@@ -46,7 +46,7 @@ class EvaluationsController < ApplicationController
 
     destination =
       if @study_record.evaluated?
-        home_path
+        study_record_evaluation_path(@study_record)
       else
         @study_record
       end

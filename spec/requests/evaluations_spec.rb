@@ -55,10 +55,10 @@ RSpec.describe "Evaluations", type: :request do
     context "学習記録が評価済みの場合" do
       let(:study_record_status) { :evaluated }
 
-      it "ホーム画面へ遷移する" do
+      it "評価結果画面へ遷移する" do
         get new_study_record_evaluation_path(study_record)
 
-        expect(response).to redirect_to(home_path)
+        expect(response).to redirect_to(study_record_evaluation_path(study_record))
         expect(response).to have_http_status(:see_other)
       end
     end
@@ -137,7 +137,7 @@ RSpec.describe "Evaluations", type: :request do
         }.to change(Evaluation, :count).by(1)
 
         expect(study_record.reload).to be_evaluated
-        expect(response).to redirect_to(home_path)
+        expect(response).to redirect_to(study_record_evaluation_path(study_record))
         expect(response).to have_http_status(:see_other)
       end
 
@@ -156,12 +156,12 @@ RSpec.describe "Evaluations", type: :request do
     context "学習記録が評価済みの場合" do
       let(:study_record_status) { :evaluated }
 
-      it "評価を保存せずホーム画面へ遷移する" do
+      it "評価を保存せず評価結果画面へ遷移する" do
         expect {
           post study_record_evaluation_path(study_record), params: evaluation_params
         }.not_to change(Evaluation, :count)
 
-        expect(response).to redirect_to(home_path)
+        expect(response).to redirect_to(study_record_evaluation_path(study_record))
         expect(response).to have_http_status(:see_other)
       end
     end

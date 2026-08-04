@@ -45,10 +45,10 @@ RSpec.describe "StudyRecords", type: :request do
     context "学習記録が評価済みの場合" do
       let(:study_record_status) { :evaluated }
 
-      it "ホーム画面へ遷移する" do
+      it "評価結果画面へ遷移する" do
         get study_record_path(study_record)
 
-        expect(response).to redirect_to(home_path)
+        expect(response).to redirect_to(study_record_evaluation_path(study_record))
         expect(response).to have_http_status(:see_other)
       end
     end

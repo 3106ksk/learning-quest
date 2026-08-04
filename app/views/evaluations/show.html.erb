@@ -4,25 +4,38 @@
   <div class="form-shell">
     <header>
       <h1><%= @study_record.activity %></h1>
-
-      <p class="small">
-        <time datetime="<%= @study_record.started_at.iso8601 %>">
-          <%= l(@study_record.started_at, format: :evaluation_result) %>
-        </time>
-        <span aria-hidden="true">／</span>
-        <%= t(
-              ".meta",
-              planned: @study_record.planned_minutes,
-              actual: @study_record.actual_minutes
-            ) %>
-      </p>
     </header>
 
     <div class="stamp-stage">
       <%= render "shared/rank_stamp", rank: @study_record.rank, size_class: "stamp-l" %>
     </div>
 
-    <section aria-labelledby="effort-title">
+    <section class="evaluation-session" aria-labelledby="session-title">
+      <h2 id="session-title" class="evaluation-session-title"><%= t(".session.title") %></h2>
+
+      <dl class="definition-list evaluation-session-list">
+        <div class="definition-row">
+          <dt><%= t(".session.started_at") %></dt>
+          <dd>
+            <time datetime="<%= @study_record.started_at.iso8601 %>">
+              <%= l(@study_record.started_at, format: :evaluation_result) %>
+            </time>
+          </dd>
+        </div>
+
+        <div class="definition-row">
+          <dt><%= t(".session.planned_minutes") %></dt>
+          <dd class="num"><%= @study_record.planned_minutes %>分</dd>
+        </div>
+
+        <div class="definition-row">
+          <dt><%= t(".session.actual_minutes") %></dt>
+          <dd class="num"><%= @study_record.actual_minutes %>分</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="section" aria-labelledby="effort-title">
       <h2 id="effort-title" class="section-title"><%= t(".breakdown_title") %></h2>
 
       <dl class="definition-list evaluation-breakdown">

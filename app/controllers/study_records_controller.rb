@@ -96,7 +96,7 @@ class StudyRecordsController < ApplicationController
     if @study_record.awaiting_evaluation?
       redirect_to new_study_record_evaluation_path(@study_record), status: :see_other
     elsif @study_record.evaluated?
-      redirect_to home_path, status: :see_other
+      redirect_to study_record_evaluation_path(@study_record), status: :see_other
     end
   end
 

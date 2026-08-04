@@ -732,10 +732,7 @@
       gap: var(--space-7);
     }
   }
-
-  .section-title {
-    margin-bottom: var(--space-4);
-  }
+  
 
   .stamp {
     display: inline-block;

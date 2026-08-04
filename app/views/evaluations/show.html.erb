@@ -10,10 +10,10 @@
       <%= render "shared/rank_stamp", rank: @study_record.rank, size_class: "stamp-l" %>
     </div>
 
-    <section class="evaluation-session" aria-labelledby="session-title">
-      <h2 id="session-title" class="evaluation-session-title"><%= t(".session.title") %></h2>
+    <section class="evaluation-result-section evaluation-session" aria-labelledby="session-title">
+      <h2 id="session-title" class="evaluation-result-section-title"><%= t(".session.title") %></h2>
 
-      <dl class="definition-list evaluation-session-list">
+      <dl class="definition-list evaluation-result-list evaluation-session-list">
         <div class="definition-row">
           <dt><%= t(".session.started_at") %></dt>
           <dd>
@@ -35,10 +35,10 @@
       </dl>
     </section>
 
-    <section class="section" aria-labelledby="effort-title">
-      <h2 id="effort-title" class="section-title"><%= t(".breakdown_title") %></h2>
+    <section class="evaluation-result-section" aria-labelledby="effort-title">
+      <h2 id="effort-title" class="evaluation-result-section-title"><%= t(".breakdown_title") %></h2>
 
-      <dl class="definition-list evaluation-breakdown">
+      <dl class="definition-list evaluation-result-list evaluation-breakdown">
         <div class="definition-row">
           <dt><%= t("evaluation_result.axes.start") %></dt>
           <dd><%= t("evaluation_result.start_label") %></dd>
@@ -64,11 +64,8 @@
           </dd>
         </div>
       </dl>
-    </section>
 
-    <section class="evaluation-result-reason" aria-labelledby="rank-reason-title">
-      <h2 id="rank-reason-title" class="sr-only"><%= t(".reason_title") %></h2>
-      <p class="small"><%= t("rank.reasons.#{@study_record.rank}") %></p>
+      <p class="small evaluation-result-reason"><%= t("rank.reasons.#{@study_record.rank}") %></p>
     </section>
 
     <div class="button-row evaluation-result-actions">

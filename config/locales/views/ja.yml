@@ -78,7 +78,6 @@ ja:
         planned_minutes: 予定時間
         actual_minutes: 実時間
       breakdown_title: 今回の努力の記録
-      reason_title: Rankの判定理由
       actions:
         history: 学習の記録を見る
         study_again: もう一度学習する

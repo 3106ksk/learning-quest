@@ -783,25 +783,14 @@
     margin-block: var(--space-5);
   }
 
-  .evaluation-breakdown .definition-row {
-    grid-template-columns: 112px minmax(0, 1fr);
-    gap: var(--space-3);
-    line-height: 1.8;
-  }
-
-  .evaluation-breakdown dt {
-    letter-spacing: 0.04em;
-  }
-
-  .evaluation-session {
+  .evaluation-result-section {
     position: relative;
-    margin-top: var(--space-7);
     border: var(--border-box);
     border-radius: var(--radius-box);
     padding: var(--space-6) var(--space-5) var(--space-5);
   }
 
-  .evaluation-session-title {
+  .evaluation-result-section-title {
     position: absolute;
     top: 0;
     left: 50%;
@@ -813,15 +802,22 @@
     white-space: nowrap;
   }
 
-  .evaluation-session-list {
+  .evaluation-result-list {
     border: 0;
+  }
+
+  .evaluation-result-list .definition-row {
+    border-bottom: var(--border-hair);
+  }
+
+  .evaluation-session {
+    margin-top: var(--space-7);
   }
 
   .evaluation-session-list .definition-row {
     grid-template-columns: 112px minmax(0, 160px);
     justify-content: center;
     gap: var(--space-3);
-    border-bottom: var(--border-hair);
     padding-block: var(--space-2);
   }
 
@@ -829,7 +825,18 @@
     text-align: center;
   }
 
-  .evaluation-session + .section {
+  .evaluation-breakdown .definition-row {
+    grid-template-columns: 112px minmax(0, 320px);
+    justify-content: center;
+    gap: var(--space-3);
+    line-height: 1.8;
+  }
+
+  .evaluation-breakdown dt {
+    letter-spacing: 0.04em;
+  }
+
+  .evaluation-result-section + .evaluation-result-section {
     margin-top: var(--space-7);
   }
 
@@ -851,7 +858,8 @@
   }
 
   @media (max-width: 767px) {
-    .evaluation-session-list .definition-row {
+    .evaluation-session-list .definition-row,
+    .evaluation-breakdown .definition-row {
       grid-template-columns: 88px minmax(0, 1fr);
       justify-content: stretch;
     }

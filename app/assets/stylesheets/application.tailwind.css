@@ -786,4 +786,12 @@
   .evaluation-breakdown dt {
     letter-spacing: 0.04em;
   }
+
+  .evaluation-result-reason {
+    margin-top: var(--space-4);
+  }
+
+  .evaluation-result-actions {
+    margin-top: var(--space-7);
+  }
 }

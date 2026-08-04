@@ -53,12 +53,12 @@
       </dl>
     </section>
 
-    <section aria-labelledby="rank-reason-title">
+    <section class="evaluation-result-reason" aria-labelledby="rank-reason-title">
       <h2 id="rank-reason-title" class="sr-only"><%= t(".reason_title") %></h2>
-      <p><%= t("rank.reasons.#{@study_record.rank}") %></p>
+      <p class="small"><%= t("rank.reasons.#{@study_record.rank}") %></p>
     </section>
 
-    <div class="button-row">
+    <div class="button-row evaluation-result-actions">
       <%= link_to t(".actions.history"), home_path, class: "btn btn-primary" %>
       <%= link_to t(".actions.study_again"), new_study_record_path, class: "btn btn-secondary" %>
     </div>

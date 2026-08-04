@@ -796,4 +796,12 @@
     justify-content: center;
     margin-top: var(--space-9);
   }
+
+  @media (min-width: 768px) {
+    .evaluation-result-page {
+      display: grid;
+      min-height: 100vh;
+      place-items: center;
+    }
+  }
 }

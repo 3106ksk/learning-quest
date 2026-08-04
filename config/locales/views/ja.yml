@@ -55,23 +55,24 @@ ja:
       success: ユーザー登録が完了しました
       danger: ユーザー登録に失敗しました
   rank:
-    label: RANK
-    aria_label: "Rank %{rank}"
-    a:
-      reason: 学習を開始し、集中して取り組み、自分で決めたことへ前向きに向き合った記録からRank Aになりました。
-    b:
-      reason: 学習を開始したことに加え、今回記録された集中またはチャレンジの内容からRank Bになりました。
-    c:
-      reason: 学習を開始し、集中が切れた後も取り組み、決めたことへ向き合った記録からRank Cになりました。
+    stamp:
+      label: RANK
+      aria_label: "Rank %{rank}"
+    reasons:
+      a: 学習を開始し、集中して取り組み、自分で決めたことへ前向きに向き合った記録からRank Aになりました。
+      b: 学習を開始したことに加え、今回記録された集中またはチャレンジの内容からRank Bになりました。
+      c: 学習を開始し、集中が切れた後も取り組み、決めたことへ向き合った記録からRank Cになりました。
   evaluation_result:
-    axis_start: 着手
-    axis_focus: 集中
-    axis_challenge: チャレンジ
+    axes:
+      start: 着手
+      focus: 集中
+      challenge: チャレンジ
     start_label: 学習を開始できた
   evaluations:
     show:
       breakdown_title: 今回の努力の記録
       reason_title: Rankの判定理由
       meta: "予定 %{planned}分 / 実際 %{actual}分"
-      to_history: 学習の記録を見る
-      to_study: もう一度学習する
+      actions:
+        history: 学習の記録を見る
+        study_again: もう一度学習する

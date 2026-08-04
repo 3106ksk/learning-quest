@@ -21,13 +21,13 @@
     <div
       class="stamp stamp-<%= @study_record.rank %> stamp-lg stamp-stage"
       role="img"
-      aria-label="<%= t("rank.aria_label", rank: @study_record.rank.upcase) %>"
+      aria-label="<%= t("rank.stamp.aria_label", rank: @study_record.rank.upcase) %>"
     >
       <svg viewBox="0 0 96 96" fill="currentColor" aria-hidden="true" focusable="false">
         <circle cx="48" cy="48" r="45" fill="none" stroke="currentColor" stroke-width="1.5" />
         <circle cx="48" cy="48" r="42" fill="none" stroke="currentColor" stroke-width="0.75" />
         <text x="48" y="55" font-size="43" font-weight="600" text-anchor="middle"><%= @study_record.rank.upcase %></text>
-        <text x="48" y="71" font-size="7" letter-spacing="1.4" text-anchor="middle"><%= t("rank.label") %></text>
+        <text x="48" y="71" font-size="7" letter-spacing="1.4" text-anchor="middle"><%= t("rank.stamp.label") %></text>
       </svg>
     </div>
 
@@ -36,12 +36,12 @@
 
       <dl class="effort-list">
         <div class="effort-row">
-          <dt class="effort-label"><%= t("evaluation_result.axis_start") %></dt>
+          <dt class="effort-label"><%= t("evaluation_result.axes.start") %></dt>
           <dd><%= t("evaluation_result.start_label") %></dd>
         </div>
 
         <div class="effort-row">
-          <dt class="effort-label"><%= t("evaluation_result.axis_focus") %></dt>
+          <dt class="effort-label"><%= t("evaluation_result.axes.focus") %></dt>
           <dd>
             <strong><%= @evaluation.focus_option.label %></strong>
             <% if @evaluation.focus_option.description.present? %>
@@ -51,7 +51,7 @@
         </div>
 
         <div class="effort-row">
-          <dt class="effort-label"><%= t("evaluation_result.axis_challenge") %></dt>
+          <dt class="effort-label"><%= t("evaluation_result.axes.challenge") %></dt>
           <dd>
             <strong><%= @evaluation.challenge_option.label %></strong>
             <% if @evaluation.challenge_option.description.present? %>
@@ -64,12 +64,12 @@
 
     <section aria-labelledby="rank-reason-title">
       <h2 id="rank-reason-title" class="sr-only"><%= t(".reason_title") %></h2>
-      <p><%= t("rank.#{@study_record.rank}.reason") %></p>
+      <p><%= t("rank.reasons.#{@study_record.rank}") %></p>
     </section>
 
     <div class="button-row">
-      <%= link_to t(".to_history"), home_path, class: "btn btn-primary" %>
-      <%= link_to t(".to_study"), new_study_record_path, class: "btn btn-secondary" %>
+      <%= link_to t(".actions.history"), home_path, class: "btn btn-primary" %>
+      <%= link_to t(".actions.study_again"), new_study_record_path, class: "btn btn-secondary" %>
     </div>
   </div>
 </div>

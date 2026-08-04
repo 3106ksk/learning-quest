@@ -739,6 +739,11 @@
 
   .stamp {
     display: inline-block;
+    width: 96px;
+    height: 96px;
+  }
+
+  .stamp-l {
     width: 120px;
     height: 120px;
   }

@@ -14,5 +14,8 @@ Rails.application.routes.draw do
 
     resource :evaluation, only: [ :new, :create, :show ]
   end
+
+  resources :histories, only: [ :index, :show ]
+
   get "up" => "rails/health#show", as: :rails_health_check
 end

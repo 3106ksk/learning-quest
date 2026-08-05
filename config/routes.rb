@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
   resource :sign_up
 
-  resources :study_records, only: [ :index, :new, :create, :show, :update, :destroy ] do
+  resources :study_records, only: [ :new, :create, :show ] do
     member do
       patch :pause
       patch :resume

@@ -740,7 +740,7 @@
     height: 96px;
   }
 
-  .stamp-l {
+  .stamp-size-l {
     width: 120px;
     height: 120px;
   }
@@ -926,16 +926,16 @@
     padding-block: var(--space-7);
   }
 
-  .stamp-s {
+  .stamp-size-s {
     width: 20px;
     height: 20px;
   }
 
-  .stamp-a.stamp-s {
+  .stamp-a.stamp-size-s {
     color: var(--color-kincha-600);
   }
 
-  .stamp-s .stamp-rank-word {
+  .stamp-size-s .stamp-rank-word {
     display: none;
   }
 }

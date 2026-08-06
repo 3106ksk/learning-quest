@@ -867,4 +867,75 @@
       justify-content: stretch;
     }
   }
+
+  .section-title {
+    margin-bottom: var(--space-4);
+  }
+
+  .ledger {
+    border-top: var(--border-hair);
+  }
+
+  .ledger-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-4);
+    border-bottom: var(--border-hair);
+    padding-block: var(--space-4);
+  }
+
+  .ledger-body > *,
+  .ledger-meta > * {
+    display: block;
+  }
+
+  .ledger-meta {
+    color: var(--color-ink-500);
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: right;
+  }
+
+  .rank-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  a.ledger-row {
+    color: inherit;
+    text-decoration: none;
+    transition: background-color 100ms;
+  }
+
+  a.ledger-row:hover {
+    background: var(--color-green-tint);
+  }
+
+  .detail-cue {
+    color: var(--color-green-600);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .detail-cue::after {
+    content: " ›";
+  }
+
+  .empty-state {
+    padding-block: var(--space-7);
+  }
+
+  .stamp-s {
+    width: 20px;
+    height: 20px;
+  }
+
+  .stamp-a.stamp-s {
+    color: var(--color-kincha-600);
+  }
+
+  .stamp-s .stamp-rank-word {
+    display: none;
+  }
 }

@@ -938,4 +938,12 @@
   .stamp-size-s .stamp-rank-word {
     display: none;
   }
+
+  .stamp-size-s .stamp-ring-inner {
+    display: none;
+  }
+
+  .stamp-size-s .stamp-ring {
+    stroke-width: 5;
+  }
 }

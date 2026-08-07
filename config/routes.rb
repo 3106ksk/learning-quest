@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
   resource :sign_up
 
-  resources :study_records, only: [ :index, :new, :create, :show, :update, :destroy ] do
+  resources :study_records, only: [ :new, :create, :show ] do
     member do
       patch :pause
       patch :resume
@@ -14,5 +14,8 @@ Rails.application.routes.draw do
 
     resource :evaluation, only: [ :new, :create, :show ]
   end
+
+  resources :histories, only: [ :index, :show ]
+
   get "up" => "rails/health#show", as: :rails_health_check
 end

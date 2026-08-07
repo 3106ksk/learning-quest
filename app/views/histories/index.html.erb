@@ -1,0 +1,44 @@
+<% content_for :title, t(".title") %>
+
+<div class="page">
+  <div class="form-shell">
+    <h1><%= t(".title") %></h1>
+
+    <% if @records_by_date.any? %>
+      <% @records_by_date.each do |date, records| %>
+        <section class="section">
+          <h2 class="section-title"><%= l(date, format: :record) %></h2>
+
+          <div class="ledger">
+            <% records.each do |record| %>
+              <%= link_to history_path(record), class: "ledger-row" do %>
+                <span class="ledger-body">
+                  <span class="rank-inline">
+                    <%= render "shared/rank_stamp", rank: record.rank, size_class: "stamp-size-s" %>
+                    <strong><%= record.activity %></strong>
+                  </span>
+                  <span class="small">
+                    <%= t(
+                      ".duration_html",
+                      planned: tag.span(record.planned_minutes, class: "num"),
+                      actual: tag.span(record.actual_minutes, class: "num")
+                    ) %>
+                  </span>
+                </span>
+
+                <span class="ledger-meta">
+                  <time datetime="<%= record.started_at.iso8601 %>">
+                    <%= l(record.started_at, format: :clock) %>
+                  </time>
+                  <span class="detail-cue"><%= t(".detail") %></span>
+                </span>
+              <% end %>
+            <% end %>
+          </div>
+        </section>
+      <% end %>
+    <% else %>
+      <p class="empty-state"><%= t(".empty") %></p>
+    <% end %>
+  </div>
+</div>

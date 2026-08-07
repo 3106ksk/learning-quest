@@ -7,9 +7,6 @@ class StudyRecordsController < ApplicationController
   before_action :ensure_running_or_paused, only: :complete
   before_action :redirect_by_status, only: :show
 
-  def index
-  end
-
   def new
     active_record = Current.user.study_records.active.take
 
@@ -37,9 +34,6 @@ class StudyRecordsController < ApplicationController
     end
   end
 
-  def update
-  end
-
   def pause
     @study_record.start_pause!
 
@@ -63,9 +57,6 @@ class StudyRecordsController < ApplicationController
   def complete
     @study_record.complete!
     redirect_to new_study_record_evaluation_path(@study_record), status: :see_other
-  end
-
-  def destroy
   end
 
   private

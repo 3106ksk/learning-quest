@@ -21,6 +21,7 @@ class StudyRecord < ApplicationRecord
   before_create :set_expires_at
 
   scope :active, -> { where(status: ACTIVE_STATUSES) }
+  scope :recent_first, -> { order(started_at: :desc, id: :desc) }
 
   validates :planned_minutes, presence: true, inclusion: { in: ALLOWED_PLANNED_MINUTES }
   validates :activity, presence: true, length: { maximum: 100 }

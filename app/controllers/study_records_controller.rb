@@ -7,9 +7,6 @@ class StudyRecordsController < ApplicationController
   before_action :ensure_running_or_paused, only: :complete
   before_action :redirect_by_status, only: :show
 
-  def index
-  end
-
   def new
     active_record = Current.user.study_records.active.take
 
@@ -22,9 +19,6 @@ class StudyRecordsController < ApplicationController
     end
   end
 
-  def show
-  end
-
   def create
     @study_record = Current.user.study_records.build(
       study_record_params.merge(started_at: Time.current)
@@ -35,9 +29,6 @@ class StudyRecordsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def update
   end
 
   def pause

@@ -30,6 +30,12 @@
       <% end %>
 
       <main>
+        <% if authenticated? && flash[:danger].present? %>
+          <div class="page flash-shell">
+            <div class="error-banner"><%= flash[:danger] %></div>
+          </div>
+        <% end %>
+
         <%= yield %>
       </main>
     <% end %>

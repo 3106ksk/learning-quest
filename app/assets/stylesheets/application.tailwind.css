@@ -975,6 +975,10 @@
     display: none;
   }
 
+  .stamp-size-s .stamp-rank-letter {
+    font-size: 48px;
+  }
+
   .stamp-size-m .stamp-rank-letter,
   .stamp-size-s .stamp-rank-letter {
     transform: translateY(9px);

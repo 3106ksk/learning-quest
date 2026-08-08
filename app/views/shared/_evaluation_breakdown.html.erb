@@ -1,0 +1,34 @@
+<%# locals: (evaluation:, rank:) %>
+
+<section class="evaluation-result-section" aria-labelledby="effort-title">
+  <h2 id="effort-title" class="evaluation-result-section-title"><%= t("evaluations.show.breakdown_title") %></h2>
+
+  <dl class="definition-list evaluation-result-list evaluation-breakdown">
+    <div class="definition-row">
+      <dt><%= t("evaluation_result.axes.start") %></dt>
+      <dd><%= t("evaluation_result.start_label") %></dd>
+    </div>
+
+    <div class="definition-row">
+      <dt><%= t("evaluation_result.axes.focus") %></dt>
+      <dd>
+        <p><strong><%= evaluation.focus_option.label %></strong></p>
+        <% if evaluation.focus_option.description.present? %>
+          <p class="small"><%= evaluation.focus_option.description %></p>
+        <% end %>
+      </dd>
+    </div>
+
+    <div class="definition-row">
+      <dt><%= t("evaluation_result.axes.challenge") %></dt>
+      <dd>
+        <p><strong><%= evaluation.challenge_option.label %></strong></p>
+        <% if evaluation.challenge_option.description.present? %>
+          <p class="small"><%= evaluation.challenge_option.description %></p>
+        <% end %>
+      </dd>
+    </div>
+  </dl>
+
+  <p class="small evaluation-result-reason"><%= t("rank.reasons.#{rank}") %></p>
+</section>

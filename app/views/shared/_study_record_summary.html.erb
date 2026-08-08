@@ -1,0 +1,26 @@
+<%# locals: (study_record:) %>
+
+<section class="evaluation-result-section evaluation-session" aria-labelledby="session-title">
+  <h2 id="session-title" class="evaluation-result-section-title"><%= t("evaluations.show.session.title") %></h2>
+
+  <dl class="definition-list evaluation-result-list evaluation-session-list">
+    <div class="definition-row">
+      <dt><%= t("evaluations.show.session.started_at") %></dt>
+      <dd>
+        <time datetime="<%= study_record.started_at.iso8601 %>">
+          <%= l(study_record.started_at, format: :record) %>
+        </time>
+      </dd>
+    </div>
+
+    <div class="definition-row">
+      <dt><%= t("evaluations.show.session.planned_minutes") %></dt>
+      <dd class="num"><%= study_record.planned_minutes %>分</dd>
+    </div>
+
+    <div class="definition-row">
+      <dt><%= t("evaluations.show.session.actual_minutes") %></dt>
+      <dd class="num"><%= study_record.actual_minutes %>分</dd>
+    </div>
+  </dl>
+</section>

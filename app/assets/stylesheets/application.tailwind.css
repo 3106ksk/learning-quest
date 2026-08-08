@@ -383,9 +383,24 @@
     padding: var(--page-pad-pc);
   }
 
+  /*
+   * 認証後画面のflashバナー。ページと同じ左右paddingを保ちながら、
+   * バナー本体を.form-shellと同じ最大640pxの本文カラムへ揃える。
+   * 下側paddingは直後の.pageが持つ上側paddingと重複させない。
+   */
+  .flash-shell {
+    width: min(100%, calc(var(--column-main-max) + (var(--page-pad-pc) * 2)));
+    padding-bottom: 0;
+  }
+
   @media (max-width: 767px) {
     .page {
       padding: var(--space-6) var(--page-pad-mobile) var(--space-7);
+    }
+
+    .flash-shell {
+      width: min(100%, calc(var(--column-main-max) + (var(--page-pad-mobile) * 2)));
+      padding-bottom: 0;
     }
   }
 

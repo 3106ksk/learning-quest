@@ -961,4 +961,21 @@
   .stamp-size-s .stamp-ring {
     stroke-width: 5;
   }
+
+  .stamp-size-m {
+    width: 40px;
+    height: 40px;
+  }
+
+  .stamp-a.stamp-size-m {
+    color: var(--color-kincha-600);
+  }
+
+  .stamp-size-m .stamp-rank-word {
+    display: none;
+  }
+
+  .stamp-stage-m {
+    min-height: 64px;
+  }
 }

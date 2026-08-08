@@ -1,6 +1,10 @@
 class HistoriesController < ApplicationController
   def index
-    @records_by_date = history_records.recent_first.group_by { |record| record.started_at.to_date }
+    @records_by_date =
+      history_records
+        .recent_first
+        .group_by { |record| record.started_at.to_date }
+        .transform_values { |records| records.reverse }
   end
 
   def show

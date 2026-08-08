@@ -4,7 +4,6 @@ ja:
       record: "%-m/%-d"
   time:
     formats:
-      evaluation_result: "%-m/%-d %H:%M"
       record: "%-m/%-d %H:%M"
       clock: "%H:%M"
   helpers:
@@ -31,6 +30,14 @@ ja:
       nav_history: 履歴
       nav_study: 学習する
       nav_settings: 設定
+    study_record_summary:
+      title: 今回の学習
+      started_at: 開始日時
+      planned_minutes: 予定時間
+      actual_minutes: 実時間
+      duration_minutes: "%{minutes}分"
+    evaluation_breakdown:
+      title: 今回の努力の記録
   static_pages:
     home:
       brand: きづき
@@ -81,14 +88,10 @@ ja:
       duration_html: "予定%{planned}分 / 実際%{actual}分"
       detail: 詳細
       empty: 保存された学習記録はありません。
+    show:
+      not_found: その学習記録は見つかりませんでした。
   evaluations:
     show:
-      session:
-        title: 今回の学習
-        started_at: 開始日時
-        planned_minutes: 予定時間
-        actual_minutes: 実時間
-      breakdown_title: 今回の努力の記録
       actions:
         history: 学習の記録を見る
         study_again: もう一度学習する

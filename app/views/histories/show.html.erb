@@ -1,0 +1,16 @@
+<% content_for :title, @study_record.activity %>
+
+<div class="page">
+  <div class="form-shell">
+    <header class="evaluation-result-header">
+      <h1><%= @study_record.activity %></h1>
+    </header>
+
+    <div class="stamp-stage stamp-stage-m">
+      <%= render "shared/rank_stamp", rank: @study_record.rank, size_class: "stamp-size-m" %>
+    </div>
+
+    <%= render "shared/study_record_summary", study_record: @study_record %>
+    <%= render "shared/evaluation_breakdown", evaluation: @evaluation, rank: @study_record.rank %>
+  </div>
+</div>

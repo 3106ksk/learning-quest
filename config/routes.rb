@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get "home", to: "home#index", as: :home
   root "static_pages#home"
   resource :session
   resources :passwords, param: :token

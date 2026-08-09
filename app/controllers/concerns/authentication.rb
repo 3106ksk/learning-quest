@@ -35,7 +35,7 @@ module Authentication
     end
 
     def after_authentication_url
-      session.delete(:return_to_after_authenticating) || home_path
+      session.delete(:return_to_after_authenticating) || new_study_record_path
     end
 
     def start_new_session_for(user)

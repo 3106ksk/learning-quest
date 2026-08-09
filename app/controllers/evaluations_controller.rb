@@ -68,7 +68,7 @@ class EvaluationsController < ApplicationController
   end
 
   def evaluation_params
-    params.require(:evaluation).permit(:focus_option_id, :challenge_option_id)
+    params.fetch(:evaluation, {}).permit(:focus_option_id, :challenge_option_id)
   end
 
   def set_evaluation_options

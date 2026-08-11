@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   root "static_pages#home"
   resource :session
-  resources :passwords, param: :token
   resource :sign_up
 
   resources :study_records, only: [ :new, :create, :show ] do

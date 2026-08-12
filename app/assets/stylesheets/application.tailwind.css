@@ -142,6 +142,32 @@
     }
   }
 
+  .lp-hero {
+    display: grid;
+    min-height: calc(100vh - 72px);
+    place-items: center;
+    padding: var(--space-8) var(--page-pad-mobile);
+  }
+
+  .lp-hero-inner {
+    max-width: var(--column-main-max);
+  }
+
+  .lp-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  @media (max-width: 600px) {
+    .lp-hero {
+      min-height: auto;
+      padding-block: var(--space-7);
+    }
+  }
+
   .section {
     padding-top: var(--space-5);
     border-top: var(--border-hair);

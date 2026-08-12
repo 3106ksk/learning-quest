@@ -55,6 +55,18 @@ ja:
       history:
         title: 続けた分だけ、記録に残る。
         body: いつ、どれくらい、どんな状態で取り組めたか。何度でも見返せます。
+      principles:
+        title: きづきが、しないこと。
+        items:
+          - 他人と比べること、ランキング
+          - 連続日数の強制。途切れても、戻ってくればいい
+          - Rank Cを「失敗」と呼ぶこと
+      origin:
+        title: なぜ「きづき」か。
+        body: 学習の記録が積み重なると、自分がどんなときに学べるのかが見えてきます。
+        vision: 気づくたびに、築かれていく——それが名前の由来であり、このサービスが目指している「じぶんの取扱説明書」です。
+      final_cta:
+        title_html: "最初の%{minutes}分から、<br>始めてみませんか。"
       cta_primary: 無料で始める
       cta_login: ログイン
       footer_signature: きづき KIZUKI

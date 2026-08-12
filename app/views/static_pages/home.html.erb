@@ -67,3 +67,29 @@
     </div>
   </div>
 </section>
+
+<section class="lp-section" aria-labelledby="principles-title">
+  <h2 id="principles-title"><%= t(".principles.title") %></h2>
+
+  <div class="ledger" style="margin-top: var(--space-5)">
+    <% t(".principles.items").each do |item| %>
+      <div class="ledger-row"><span><%= item %></span></div>
+    <% end %>
+  </div>
+</section>
+
+<section class="lp-section" aria-labelledby="origin-title">
+  <h2 id="origin-title"><%= t(".origin.title") %></h2>
+  <p style="margin-top: var(--space-4)"><%= t(".origin.body") %></p>
+  <p style="margin-top: var(--space-4)"><%= t(".origin.vision") %></p>
+</section>
+
+<section class="lp-section" aria-labelledby="final-cta-title">
+  <h2 id="final-cta-title">
+    <%= t(".final_cta.title_html", minutes: tag.span(5, class: "num")) %>
+  </h2>
+
+  <div class="lp-cta-row">
+    <%= link_to t(".cta_primary"), sign_up_path, class: "btn btn-primary" %>
+  </div>
+</section>

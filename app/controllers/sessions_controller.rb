@@ -10,12 +10,12 @@ class SessionsController < ApplicationController
       start_new_session_for user
       redirect_to after_authentication_url
     else
-      redirect_to new_session_path, alert: "Try another email address or password."
+      redirect_to new_session_path, danger: I18n.t("sessions.create.danger")
     end
   end
 
   def destroy
     terminate_session
-    redirect_to new_session_path, status: :see_other
+    redirect_to root_url, status: :see_other
   end
 end

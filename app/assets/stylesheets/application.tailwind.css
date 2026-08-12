@@ -1,1 +1,1049 @@
 @import "tailwindcss";
+
+@theme {
+
+  --color-*: initial;
+
+  /* Paper */
+  --color-paper: #faf9f5;
+  --color-paper-line: rgba(38, 36, 31, 0.12);
+  --color-paper-line-strong: rgba(38, 36, 31, 0.26);
+  --color-line-control: rgba(38, 36, 31, 0.52);
+
+  /* Ink */
+  --color-ink-900: #26241f;
+  --color-ink-600: #5c584e;
+  --color-ink-500: #6e695d;
+  --color-ink-400: #908b7d;
+
+  /* Signature green */
+  --color-green-700: #24503f;
+  --color-green-600: #2d5d4b;
+  --color-green-tint: rgba(45, 93, 75, 0.08);
+
+  /* Kincha */
+  --color-kincha-600: #8a6224;
+  --color-kincha-500: #a97a2f;
+  --color-kincha-tint: rgba(169, 122, 47, 0.1);
+
+  /* Semantic */
+  --color-error-600: #a8402c;
+  --color-error-tint: rgba(168, 64, 44, 0.08);
+  --color-scrim: rgba(38, 36, 31, 0.32);
+
+  /* Type */
+  --font-serif: "Hiragino Mincho ProN", "Yu Mincho", YuMincho, serif;
+  --font-sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", YuGothic, Meiryo, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, monospace;
+
+  /* Shape（--radius-*は@themeの通常の名前付き名前空間なので安全に上書きできる） */
+  --radius-box: 2px;
+}
+
+/*
+ * Spacing/border/type複合値はプレーンなCSS変数として保持する。
+ * 理由: Tailwind v4のp-5等の数値ユーティリティは --spacing 単一値のcalc(var(--spacing) * N)で
+ * 動的生成される仕組みで、個別ステップ（--spacing-5等）の上書きができない。
+ * 本トークン(4/8/12/16/24/32/48/64px)は等差が5段目以降で崩れるため、その仕組みに乗せられない。
+ * よって @theme の外側で素のCSS変数として定義し、@layer components 側から参照する
+ * （`tech-decisions.md` §7 2026-07-08追記）。
+ */
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  --content-max: 960px;
+  --column-main-max: 640px;
+  --page-pad-pc: 48px;
+  --page-pad-mobile: 20px;
+
+  --border-hair: 1px solid var(--color-paper-line);
+  --border-box: 1px solid var(--color-paper-line-strong);
+  --border-control: 1px solid var(--color-line-control);
+  --focus-ring: 3px solid var(--color-green-600);
+
+  --nav-width: 220px;
+
+  --text-display-size: clamp(56px, 12vw, 88px);
+  --text-display-line: 1.05;
+  --text-display: 500 var(--text-display-size) / var(--text-display-line) var(--font-mono);
+}
+
+@layer base {
+  html {
+    min-width: 0;
+    background: var(--color-paper);
+    color: var(--color-ink-900);
+    font-family: var(--font-sans);
+  }
+
+  body {
+    min-width: 0;
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  :focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  a {
+    color: var(--color-green-600);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  a:hover {
+    color: var(--color-green-700);
+  }
+
+  h1,
+  h2 {
+    margin-block: 0;
+    font-family: var(--font-serif);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  h1 {
+    font-size: clamp(22px, 3vw, 28px);
+    line-height: 1.4;
+  }
+}
+
+/*
+ * 共通フォームシェル（screen-specifications.md §1.1）。AUTH/GOAL/REWARDの
+ * 作成・編集画面で共通利用する前提のため、単一画面用の使い捨てにせず
+ * ここに置く（`components.css` §「共通ルール」「§WO-A1b」相当の移植）。
+ */
+@layer components {
+  .form-shell {
+    width: min(100%, var(--column-main-max));
+    margin-inline: auto;
+  }
+
+  .public-page {
+    width: min(100%, calc(var(--content-max) + (var(--page-pad-pc) * 2)));
+    margin-inline: auto;
+    padding: var(--page-pad-pc);
+  }
+
+  @media (max-width: 767px) {
+    .public-page {
+      padding: var(--space-6) var(--page-pad-mobile) var(--space-7);
+    }
+  }
+
+  .lp-hero {
+    display: grid;
+    min-height: calc(100vh - 72px);
+    place-items: center;
+    padding: var(--space-8) var(--page-pad-mobile);
+  }
+
+  .lp-hero-inner {
+    max-width: var(--column-main-max);
+  }
+
+  .lp-section {
+    max-width: var(--column-main-max);
+    margin-inline: auto;
+    border-top: var(--border-hair);
+    padding: var(--space-8) var(--page-pad-mobile);
+  }
+
+  .lp-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .lp-mini {
+    max-width: 360px;
+    margin-top: var(--space-5);
+    border: var(--border-hair);
+    border-radius: var(--radius-box);
+    padding: var(--space-5);
+  }
+
+  .lp-mini-center {
+    text-align: center;
+  }
+
+  .lp-timer-value {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 32px;
+    line-height: 1.2;
+  }
+
+  .lp-timer-bar {
+    width: 62%;
+    height: 2px;
+    margin: var(--space-3) auto 0;
+    background: var(--color-line-control);
+  }
+
+  @media (max-width: 600px) {
+    .lp-hero {
+      min-height: auto;
+      padding-block: var(--space-7);
+    }
+  }
+
+  .section {
+    padding-top: var(--space-5);
+    border-top: var(--border-hair);
+  }
+
+  .form-stack > * + * {
+    margin-top: var(--space-5);
+  }
+
+  .form-help {
+    margin-top: var(--space-2);
+    color: var(--color-ink-600);
+    font-size: 14px;
+  }
+
+  .field-label {
+    display: block;
+    margin-bottom: var(--space-2);
+    color: var(--color-ink-600);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .field-control {
+    width: 100%;
+    min-height: 44px;
+    border: var(--border-control);
+    border-radius: var(--radius-box);
+    background: var(--color-paper);
+    color: var(--color-ink-900);
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .field-control::placeholder {
+    color: var(--color-ink-500);
+  }
+
+  .field-control.has-error {
+    border-color: var(--color-error-600);
+  }
+
+  .group-error {
+    color: var(--color-error-600);
+    font-size: 14px;
+  }
+
+  .btn {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-box);
+    padding: var(--space-2) var(--space-4);
+    cursor: pointer;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 100ms, color 100ms, border-color 100ms;
+  }
+
+  .btn-primary {
+    border: var(--border-control);
+    border-color: var(--color-green-600);
+    background: var(--color-green-600);
+    color: var(--color-paper);
+  }
+
+  .btn-primary:hover {
+    border-color: var(--color-green-700);
+    background: var(--color-green-700);
+  }
+
+  .btn-secondary {
+    border: var(--border-control);
+    background: var(--color-paper);
+    color: var(--color-ink-900);
+  }
+
+  .btn-secondary:hover {
+    background: var(--color-green-tint);
+  }
+
+  .error-banner {
+    border: var(--border-box);
+    border-color: var(--color-error-600);
+    border-radius: var(--radius-box);
+    background: var(--color-error-tint);
+    color: var(--color-error-600);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .notice-banner {
+    border: var(--border-box);
+    border-color: var(--color-green-600);
+    border-radius: var(--radius-box);
+    background: var(--color-green-tint);
+    color: var(--color-green-600);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .small {
+    color: var(--color-ink-600);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /*
+   * 公開ヘッダー（LP・登録・ログイン・パスワード再設定の未認証全画面共通）。
+   * prototype/components.css .public-header/.public-actions/.brand の移植
+   * （--paper系トークンを本ファイルの--color-*命名に合わせて置換）。
+   */
+  .public-header {
+    display: flex;
+    min-height: 72px;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    border-bottom: var(--border-hair);
+    padding: var(--space-3) max(var(--page-pad-mobile), calc((100% - var(--content-max)) / 2));
+  }
+
+  .public-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .brand {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    color: var(--color-ink-900);
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+  }
+
+  .public-actions > a:not(.btn) {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  /*
+   * 認証後サイドバー（PC）。prototype/components.css .app-shell/.side-nav/
+   * .nav-list/.nav-link/.account-label/.nav-icon の移植（--paper系トークンを
+   * 本ファイルの--color-*命名に合わせて置換）。
+   */
+  .app-shell {
+    min-height: 100vh;
+    padding-left: var(--nav-width);
+  }
+
+  .side-nav {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 10;
+    display: flex;
+    width: var(--nav-width);
+    flex-direction: column;
+    border-right: var(--border-hair);
+    background: var(--color-paper);
+    padding: var(--space-6) var(--space-5);
+  }
+
+  .nav-list {
+    padding: 0;
+    margin: var(--space-7) 0 0;
+    list-style: none;
+  }
+
+  .nav-link {
+    position: relative;
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    color: var(--color-ink-600);
+    font-size: 14px;
+    text-decoration: none;
+  }
+
+  .nav-link:hover {
+    background: var(--color-green-tint);
+  }
+
+  .nav-link[aria-current="page"] {
+    color: var(--color-green-600);
+    font-weight: 600;
+  }
+
+  .nav-link[aria-current="page"]::before {
+    content: "";
+    position: absolute;
+    inset: 8px auto 8px -24px;
+    width: 2px;
+    background: var(--color-green-600);
+  }
+
+  .nav-icon {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: butt;
+    stroke-width: 1.5;
+  }
+
+  .nav-link[aria-current="page"] .nav-icon,
+  .nav-link.study .nav-icon {
+    fill: currentColor;
+  }
+
+  .account-label {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--color-ink-500);
+    font-size: 12px;
+    text-decoration: none;
+  }
+
+  /*
+   * 認証後ページの共通シェル（STUDY-01ほか）。prototype/components.css .page の
+   * 移植。内容は単一カラム（最大640px・中央）——欄外注カラムは2026-07-17に全廃
+   * （visual-design-spec.md §3.7）。中央寄せは既存の .form-shell を併用する。
+   */
+  .page {
+    width: min(100%, calc(var(--content-max) + (var(--page-pad-pc) * 2)));
+    margin-inline: auto;
+    padding: var(--page-pad-pc);
+  }
+
+  /*
+   * 認証後画面のflashバナー。ページと同じ左右paddingを保ちながら、
+   * バナー本体を.form-shellと同じ最大640pxの本文カラムへ揃える。
+   * 下側paddingは直後の.pageが持つ上側paddingと重複させない。
+   */
+  .flash-shell {
+    width: min(100%, calc(var(--column-main-max) + (var(--page-pad-pc) * 2)));
+    padding-bottom: 0;
+  }
+
+  @media (max-width: 767px) {
+    .page {
+      padding: var(--space-6) var(--page-pad-mobile) var(--space-7);
+    }
+
+    .flash-shell {
+      width: min(100%, calc(var(--column-main-max) + (var(--page-pad-mobile) * 2)));
+      padding-bottom: 0;
+    }
+  }
+
+  /*
+   * セグメント選択（時間選択 5/15/25/50分）。prototype/components.css
+   * .segments/.segment-input/.segment-label の移植（visual-design-spec.md §3.2）。
+   * 選択状態はcolorだけでなく::beforeのチェックマークでも示す（色単独伝達の禁止）。
+   */
+  .segments {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .segment-input {
+    position: absolute;
+    opacity: 0;
+  }
+
+  .segment-label {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    border: var(--border-control);
+    border-radius: 0;
+    margin-left: -1px;
+    padding: var(--space-2) var(--space-4);
+    cursor: pointer;
+  }
+
+  .segment-input:checked + .segment-label {
+    background: var(--color-green-600);
+    color: var(--color-paper);
+  }
+
+  .segment-input:checked + .segment-label::before {
+    margin-right: var(--space-1);
+    content: "✓";
+  }
+
+  .segment-input:focus-visible + .segment-label {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+    z-index: 1;
+  }
+
+  /*
+   * layouts/focus（サイドバー・ヘッダーを持たない全画面）の共通シェル。
+   * STUDY-02（カウントダウン・.timer-panel）とSTUDY-03（評価入力・.page、#55）が使う。
+   * レイアウトファイルの責務はchromeの有無までとし、上下中央寄せは
+   * .timer-panelを持つ画面だけの見た目なので:has()で限定する
+   * （.pageは自前でPC/モバイル別paddingを持つため、二重paddingを避ける）。
+   * :has()はallow_browser versions: :modern が前提とする機能。
+   *
+   * prototype/components.css .timer-page/.timer-panel/.timer-status/
+   * .timer-display/.timer-actions/.btn-text の移植（#49）。水平残量線
+   * （.timer-track/.timer-remaining）はMVP後のため移植しない。
+   */
+  .focus-layout main {
+    min-height: 100vh;
+  }
+
+  .focus-layout main:has(.timer-panel) {
+    display: grid;
+    padding: var(--page-pad-mobile);
+    place-items: center;
+  }
+
+  .timer-panel {
+    width: min(100%, var(--column-main-max));
+    text-align: center;
+  }
+
+  .timer-activity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
+    color: var(--color-ink-900);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.6;
+  }
+
+  .timer-activity-text {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .timer-activity svg {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: butt;
+  }
+
+  .timer-status {
+    min-height: 28px;
+    color: var(--color-ink-600);
+  }
+
+  .timer-display {
+    margin-block: var(--space-5);
+    font: var(--text-display);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .timer-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-top: var(--space-7);
+  }
+
+  .btn-text {
+    min-height: 44px;
+    border: 0;
+    background: var(--color-paper);
+    color: var(--color-green-600);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .btn-text:hover {
+    color: var(--color-green-700);
+  }
+
+  /*
+   * 学習後評価画面
+   */
+  .num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /*
+   * 定義リスト（ラベル・値の2カラム）。prototype/components.css
+   * .definition-list/.definition-row の移植。HISTORY-02（学習記録の詳細）と
+   * STUDY-03（#55）で使う——「学習した記録を見る」という同じ性質の表示に、
+   * 同じ部品を当てる。
+   */
+  .definition-list {
+    margin: 0;
+    border-top: var(--border-hair);
+  }
+
+  .definition-row {
+    display: grid;
+    grid-template-columns: minmax(120px, 1fr) minmax(0, 2fr);
+    gap: var(--space-4);
+    border-bottom: var(--border-hair);
+    padding-block: var(--space-3);
+  }
+
+  .definition-row dt {
+    font-weight: 600;
+  }
+
+  .definition-row dd {
+    margin: 0;
+  }
+
+  @media (max-width: 767px) {
+    .definition-row {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+    }
+  }
+
+  .caption {
+    color: var(--color-ink-600);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+  }
+
+  .margin-note {
+    color: var(--color-ink-500);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .section + .section {
+    margin-top: var(--space-7);
+  }
+
+  .button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  @media (max-width: 767px) {
+    .button-row .btn {
+      width: 100%;
+    }
+  }
+
+  /*
+   * 評価送信ボタンの中央寄せ（STUDY-03）。screen-specifications.md §8.1の
+   * ワイヤーフレームが中央配置で描かれているため、それに合わせる。
+   * .button-row自体は左寄せが既定（プロトタイプ全画面で共通）なので、
+   * timer.htmlの `class="button-row timer-actions"` と同じモディファイア方式で
+   * この画面だけに限定する。
+   */
+  .evaluation-actions {
+    justify-content: center;
+  }
+
+  /*
+   * 着手セクション（STUDY-03）。見出し「着手」と説明文を縦の中心線で揃え、
+   * 送信ボタンの中央配置と紙面の軸を合わせる。
+   * 下罫線は visual-screen-wireframes.md §8 が着手と集中/チャレンジの間に
+   * 引いている区切り線。カードではなく罫線で面を分ける原則
+   * （visual-design-spec.md）に従い --border-hair を使う。
+   */
+  .evaluation-start {
+    border-bottom: var(--border-hair);
+    padding-bottom: var(--space-6);
+    text-align: center;
+  }
+
+  /*
+   * ふみ（文鳥・線画）。prototype/components.css .fumi/.fumi-eye/.fumi-s の
+   * 移植（visual-design-spec.md §3.10）。塗りなし・stroke 1.5px・線端butt・
+   * 単色currentColor。.fumi-l/.fumi-linkはMANUAL系専用のためSTUDY-03では
+   * 移植しない。
+   */
+  .fumi {
+    display: inline-block;
+    vertical-align: -5px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: butt;
+    color: var(--color-ink-900);
+  }
+
+  .fumi .fumi-eye {
+    fill: currentColor;
+    stroke: none;
+  }
+
+  .fumi-s {
+    width: 22px;
+    height: 22px;
+  }
+
+  /*
+   * ふみの問い（STUDY-03）。prototype/reflect.html（MANUAL-03検証の問い手）の
+   * 前例に倣い、線画を本文の先頭・同じ行内に置く。§3.10の右下配置は
+   * メモ署名（手紙の結び）用途のルールで、「問いかけ」の場面はこちらの
+   * 前例が別に成立している。
+   */
+  .evaluation-prompt .fumi {
+    margin-right: var(--space-2);
+  }
+
+  .choice-list {
+    border-top: var(--border-hair);
+  }
+
+  .choice-input {
+    position: absolute;
+    opacity: 0;
+  }
+
+  .choice-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: var(--space-3);
+    border-bottom: var(--border-hair);
+    padding: var(--space-4);
+    cursor: pointer;
+  }
+
+  .choice-input:focus-visible + .choice-row {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  .choice-input:checked + .choice-row {
+    border-left: 2px solid var(--color-green-600);
+    background: var(--color-green-tint);
+  }
+
+  .choice-mark {
+    width: 16px;
+    height: 16px;
+    border: var(--border-control);
+    border-radius: 50%;
+    margin-top: 5px;
+  }
+
+  .choice-input:checked + .choice-row .choice-mark {
+    border: 4px solid var(--color-green-600);
+  }
+
+  .choice-list.has-error {
+    border-top-color: var(--color-error-600);
+  }
+
+  .choice-list.has-error .choice-row {
+    border-bottom-color: var(--color-error-600);
+  }
+
+  /*
+   * margin-topはプロトタイプの--space-6から--space-7へ広げている。
+   * 着手セクションに下罫線を足した分（プロトタイプには無い）、
+   * 罫線と集中/チャレンジの間に余白が要るため。
+   */
+  .eval-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+    margin-top: var(--space-7);
+  }
+
+  .eval-columns fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  /*
+   * 集中/チャレンジの見出しを着手（.evaluation-start）と同じ中央寄せに揃える。
+   * legendだけを対象にし、fieldset自体には掛けない——choice-list（選択肢の
+   * ラベル・補足文）まで中央寄せが継承されると、左寄せの罫線リスト行という
+   * 意匠が崩れるため。
+   */
+  .eval-columns legend {
+    width: 100%;
+    margin-bottom: var(--space-4);
+    text-align: center;
+  }
+
+  @media (max-width: 767px) {
+    .eval-columns {
+      grid-template-columns: 1fr;
+      gap: var(--space-7);
+    }
+  }
+  
+
+  .stamp {
+    display: inline-block;
+    width: 96px;
+    height: 96px;
+  }
+
+  .stamp-size-l {
+    width: 120px;
+    height: 120px;
+  }
+
+  .stamp svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .stamp svg text {
+    font-family: var(--font-serif);
+  }
+
+  .stamp svg .stamp-rank-word {
+    font-family: var(--font-mono);
+  }
+
+  .stamp-a {
+    color: var(--color-kincha-500);
+  }
+
+  .stamp-b {
+    color: var(--color-green-600);
+  }
+
+  .stamp-c {
+    color: var(--color-ink-900);
+  }
+
+  .stamp-stage {
+    display: flex;
+    min-height: 144px;
+    align-items: center;
+    justify-content: center;
+    margin-block: var(--space-5);
+  }
+
+  .evaluation-result-header {
+    border-bottom: var(--border-hair);
+    padding-bottom: var(--space-4);
+    text-align: center;
+  }
+
+  .evaluation-result-section {
+    position: relative;
+    border: var(--border-box);
+    border-radius: var(--radius-box);
+    padding: var(--space-6) var(--space-5) var(--space-5);
+  }
+
+  .evaluation-result-section-title {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin: 0;
+    background: var(--color-paper);
+    padding-inline: var(--space-3);
+    text-align: center;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+  }
+
+  .evaluation-result-list {
+    border: 0;
+  }
+
+  .evaluation-result-list .definition-row {
+    border-bottom: var(--border-hair);
+  }
+
+  .evaluation-session {
+    margin-top: var(--space-7);
+  }
+
+  .evaluation-session-list .definition-row {
+    grid-template-columns: 112px minmax(0, 160px);
+    justify-content: center;
+    gap: var(--space-3);
+    padding-block: var(--space-2);
+  }
+
+  .evaluation-session-list dd {
+    text-align: center;
+  }
+
+  .evaluation-breakdown .definition-row {
+    grid-template-columns: 112px minmax(0, 320px);
+    justify-content: center;
+    gap: var(--space-3);
+    line-height: 1.8;
+  }
+
+  .evaluation-breakdown dt {
+    letter-spacing: 0.04em;
+  }
+
+  .evaluation-result-section + .evaluation-result-section {
+    margin-top: var(--space-7);
+  }
+
+  .evaluation-result-reason {
+    margin-top: var(--space-4);
+  }
+
+  .evaluation-result-actions {
+    justify-content: center;
+    margin-top: var(--space-9);
+  }
+
+  @media (min-width: 768px) {
+    .evaluation-result-page {
+      display: grid;
+      min-height: 100vh;
+      place-items: center;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .evaluation-session-list .definition-row,
+    .evaluation-breakdown .definition-row {
+      grid-template-columns: 88px minmax(0, 1fr);
+      justify-content: stretch;
+    }
+  }
+
+  .section-title {
+    margin-bottom: var(--space-2);
+  }
+
+  .ledger {
+    border-top: var(--border-hair);
+  }
+
+  .ledger-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-4);
+    border-bottom: var(--border-hair);
+    padding-block: var(--space-4);
+  }
+
+  .ledger-body > *,
+  .ledger-meta > * {
+    display: block;
+  }
+
+  .ledger-meta {
+    color: var(--color-ink-500);
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: right;
+  }
+
+  .rank-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  a.ledger-row {
+    color: inherit;
+    text-decoration: none;
+    transition: background-color 100ms;
+  }
+
+  a.ledger-row:hover {
+    background: var(--color-green-tint);
+  }
+
+  .detail-cue {
+    color: var(--color-green-600);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .detail-cue::after {
+    content: " ›";
+  }
+
+  .empty-state {
+    padding-block: var(--space-7);
+  }
+
+  .stamp-size-s {
+    width: 20px;
+    height: 20px;
+  }
+
+  .stamp-a.stamp-size-s {
+    color: var(--color-kincha-600);
+  }
+
+  .stamp-size-s .stamp-rank-word {
+    display: none;
+  }
+
+  .stamp-size-s .stamp-ring-inner {
+    display: none;
+  }
+
+  .stamp-size-s .stamp-ring {
+    stroke-width: 5;
+  }
+
+  .stamp-size-m {
+    width: 40px;
+    height: 40px;
+  }
+
+  .stamp-a.stamp-size-m {
+    color: var(--color-kincha-600);
+  }
+
+  .stamp-size-m .stamp-rank-word {
+    display: none;
+  }
+
+  .stamp-size-s .stamp-rank-letter {
+    font-size: 48px;
+  }
+
+  .stamp-size-m .stamp-rank-letter,
+  .stamp-size-s .stamp-rank-letter {
+    transform: translateY(9px);
+  }
+
+  .stamp-stage-m {
+    min-height: 64px;
+  }
+}

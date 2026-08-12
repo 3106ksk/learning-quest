@@ -1,0 +1,120 @@
+ja:
+  date:
+    formats:
+      record: "%-m/%-d"
+  time:
+    formats:
+      record: "%-m/%-d %H:%M"
+      clock: "%H:%M"
+  helpers:
+    submit:
+      create: カウントを作成する
+      submit: 保存
+      update: 更新
+      evaluation:
+        create: 評価結果を見る
+    label:
+      name: お名前
+      email_address: E-mailアドレス
+      password: パスワード
+      password_confirmation: パスワード（確認）
+  shared:
+    header:
+      brand: きづき
+      login: ログイン
+      sign_up: 無料で始める
+    sidebar:
+      brand: きづき
+      logout: ログアウト
+      nav_history: 履歴
+      nav_study: 学習する
+      nav_settings: 設定
+    study_record_summary:
+      title: 今回の学習
+      started_at: 開始日時
+      planned_minutes: 予定時間
+      actual_minutes: 実時間
+      duration_minutes: "%{minutes}分"
+    evaluation_breakdown:
+      title: 今回の努力の記録
+  static_pages:
+    home:
+      brand: きづき
+      headline: 学習時間だけでは見えない努力を、記録に残す。
+      caption: 着手・集中・チャレンジの3つで、その日の学習を振り返る。
+      body: |-
+        疲れていても始められた日も、集中が切れた日も。
+        時間の長さには写らない努力を記録します。
+      study:
+        title_html: "%{minutes}分から、始められる。"
+        body: 時間を選んで、学習する内容を書いて、始めるだけ。
+      evaluation:
+        title: 終わったら、選ぶだけ。
+        body: 学習に取り組んだかは自動で記録。集中とチャレンジを、実感に近いものから1つずつ選ぶだけ。その日の学習への姿勢をRankに変換
+        note_html: Rankは成績ではありません。今日の努力を%{axes}つの軸で要約した印です。
+      history:
+        title: 続けた分だけ、記録に残る。
+        body: いつ、どれくらい、どんな状態で取り組めたか。何度でも見返せます。
+      principles:
+        title: きづきが、しないこと。
+        items:
+          - 他人と比べること、ランキング
+          - 連続日数の強制。途切れても、戻ってくればいい
+          - Rank Cを「失敗」と呼ぶこと
+      origin:
+        title: なぜ「きづき」か。
+        body: 学習の記録が積み重なると、自分がどんなときに学べるのかが見えてきます。
+        vision: 気づくたびに、築かれていく——それが名前の由来であり、このサービスが目指している「じぶんの取扱説明書」です。
+      final_cta:
+        title_html: "最初の%{minutes}分から、<br>始めてみませんか。"
+      cta_primary: 無料で始める
+      cta_login: ログイン
+      footer_signature: きづき KIZUKI
+  sessions:
+    new:
+      title: ログイン
+      login: ログイン
+      email_placeholder: メールアドレスを入力してください
+      password_placeholder: パスワードを入力してください
+      to_register_notice: アカウントをお持ちでない方は
+      to_register_page: 登録する
+      password_forget: パスワードをお忘れの方はこちら
+    create:
+      login: ログイン
+      password_forget: パスワードをお忘れの方はこちら
+      danger: メールアドレスまたはパスワードが正しくありません
+  sign_ups:
+    show:
+      title: ユーザー登録
+      submit: 登録する
+      to_login_page: ログインページへ
+    create:
+      success: ユーザー登録が完了しました
+      danger: ユーザー登録に失敗しました
+  rank:
+    stamp:
+      label: RANK
+      aria_label: "Rank %{rank}"
+    reasons:
+      a: 学習を開始し、集中して取り組み、自分で決めたことへ前向きに向き合った記録からRank Aになりました。
+      b: 学習を開始したことに加え、今回記録された集中またはチャレンジの内容からRank Bになりました。
+      c: 学習を開始し、集中が切れた後も取り組み、決めたことへ向き合った記録からRank Cになりました。
+  evaluation_result:
+    axes:
+      start: 着手
+      focus: 集中
+      challenge: チャレンジ
+    start_label: 学習を開始できた
+  histories:
+    index:
+      title: 学習履歴
+      duration_html: "予定%{planned}分 / 実際%{actual}分"
+      detail: 詳細
+      empty: 保存された学習記録はありません。
+    show:
+      not_found: その学習記録は見つかりませんでした。
+  evaluations:
+    show:
+      actions:
+        history: 学習の記録を見る
+        study_again: もう一度学習する

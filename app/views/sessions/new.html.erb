@@ -1,11 +1,35 @@
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
-<%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
+<main class="public-page">
+  <div class="form-shell">
+    <h1><%= t('.title') %></h1>
 
-<%= form_with url: session_path do |form| %>
-  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
-  <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72 %><br>
-  <%= form.submit "Sign in" %>
-<% end %>
-<br>
+    <% if flash[:danger].present? %>
+      <div class="error-banner" role="alert" style="margin-top: var(--space-5)">
+        <%= flash[:danger] %>
+      </div>
+    <% end %>
 
-<%= link_to "Forgot password?", new_password_path %>
+    <%= form_with url: session_path, class: "section form-stack", style: "margin-top: var(--space-5)" do |form| %>
+      <div>
+        <%= form.label :email_address, class: "field-label" %>
+        <%= form.email_field :email_address,
+              autofocus: true,
+              autocomplete: "username",
+              class: "field-control" %>
+      </div>
+
+      <div>
+        <%= form.label :password, class: "field-label" %>
+        <%= form.password_field :password,
+              autocomplete: "current-password",
+              maxlength: 72,
+              class: "field-control" %>
+      </div>
+
+      <%= form.submit t('.login'), class: "btn btn-primary" %>
+
+      <p class="small">
+        <%= t('.to_register_notice') %> <%= link_to t('.to_register_page'), sign_up_path %>
+      </p>
+    <% end %>
+  </div>
+</main>

@@ -1,0 +1,21 @@
+<% content_for :title, @study_record.activity %>
+
+<div class="page evaluation-result-page">
+  <div class="form-shell">
+    <header class="evaluation-result-header">
+      <h1><%= @study_record.activity %></h1>
+    </header>
+
+    <div class="stamp-stage">
+      <%= render "shared/rank_stamp", rank: @study_record.rank, size_class: "stamp-size-l" %>
+    </div>
+
+    <%= render "shared/study_record_summary", study_record: @study_record %>
+    <%= render "shared/evaluation_breakdown", evaluation: @evaluation, rank: @study_record.rank %>
+
+    <div class="button-row evaluation-result-actions">
+      <%= link_to t(".actions.history"), histories_path, class: "btn btn-primary" %>
+      <%= link_to t(".actions.study_again"), new_study_record_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
+</div>

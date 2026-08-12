@@ -17,13 +17,27 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
   <body>
-    <%= yield %>
+    <%= tag.div class: ("app-shell" if authenticated?) do %>
+      <% if authenticated? %>
+        <%= render "shared/sidebar" %>
+      <% else %>
+        <%= render "shared/header" %>
+      <% end %>
+
+      <main>
+        <% if authenticated? && flash[:danger].present? %>
+          <div class="page flash-shell">
+            <div class="error-banner"><%= flash[:danger] %></div>
+          </div>
+        <% end %>
+
+        <%= yield %>
+      </main>
+    <% end %>
   </body>
 </html>

@@ -18,3 +18,52 @@
     </div>
   </div>
 </section>
+
+<section class="lp-section" aria-labelledby="study-title">
+  <h2 id="study-title">
+    <%= t(".study.title_html", minutes: tag.span(5, class: "num")) %>
+  </h2>
+  <p style="margin-top: var(--space-4)"><%= t(".study.body") %></p>
+
+  <div class="lp-mini lp-mini-center" aria-hidden="true">
+    <p class="lp-timer-value">04:32</p>
+    <div class="lp-timer-bar"></div>
+  </div>
+</section>
+
+<section class="lp-section" aria-labelledby="evaluation-title">
+  <h2 id="evaluation-title"><%= t(".evaluation.title") %></h2>
+  <p style="margin-top: var(--space-4)"><%= t(".evaluation.body") %></p>
+
+  <div class="stamp-stage" aria-hidden="true">
+    <%= render "shared/rank_stamp", rank: "b", size_class: "stamp-size-l" %>
+  </div>
+
+  <p class="small">
+    <%= t(".evaluation.note_html", axes: tag.span(3, class: "num")) %>
+  </p>
+</section>
+
+<section class="lp-section" aria-labelledby="history-title">
+  <h2 id="history-title"><%= t(".history.title") %></h2>
+  <p style="margin-top: var(--space-4)"><%= t(".history.body") %></p>
+
+  <div class="lp-mini" aria-hidden="true">
+    <p class="section-title"><span class="num">7/4</span></p>
+    <div class="ledger" style="margin-top: var(--space-3)">
+      <div class="ledger-row">
+        <span class="ledger-body">
+          <span class="rank-inline">
+            <%= render "shared/rank_stamp", rank: "b", size_class: "stamp-size-s" %>
+            <strong>英単語を<span class="num">10</span>個復習</strong>
+          </span>
+          <span class="small">予定<span class="num">15</span>分 / 実際<span class="num">13</span>分</span>
+        </span>
+
+        <span class="ledger-meta">
+          <time datetime="2026-07-04T20:10">20:10</time>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>

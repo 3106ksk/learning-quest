@@ -45,6 +45,16 @@ ja:
       body: |-
         疲れていても始められた日も、集中が切れた日も。
         時間の長さには写らない努力を記録します。
+      study:
+        title_html: "%{minutes}分から、始められる。"
+        body: 時間を選んで、学習する内容を書いて、始めるだけ。
+      evaluation:
+        title: 終わったら、選ぶだけ。
+        body: 学習に取り組んだかは自動で記録。集中とチャレンジを、実感に近いものから1つずつ選ぶだけ。その日の学習への姿勢をRankに変換
+        note_html: Rankは成績ではありません。今日の努力を%{axes}つの軸で要約した印です。
+      history:
+        title: 続けた分だけ、記録に残る。
+        body: いつ、どれくらい、どんな状態で取り組めたか。何度でも見返せます。
       cta_primary: 無料で始める
       cta_login: ログイン
       footer_signature: きづき KIZUKI

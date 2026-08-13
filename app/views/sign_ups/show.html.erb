@@ -9,7 +9,7 @@
     <% end %>
 
     <%= form_with model: @user, url: sign_up_path, class: "section form-stack", style: "margin-top: var(--space-5)" do |form| %>
-      <% %i[name email_address password password_confirmation].each do |field| %>
+      <% %i[name password password_confirmation].each do |field| %>
         <% if form.object.errors[field].any? %>
           <div class="group-error" id="<%= field %>-error"><%= form.object.errors.full_messages_for(field).first %></div>
         <% end %>
@@ -27,8 +27,7 @@
         <%= form.label :email_address, class: "field-label" %>
         <%= form.email_field :email_address,
               autocomplete: "email",
-              class: "field-control#{' has-error' if form.object.errors[:email_address].any?}",
-              aria: { describedby: ("email_address-error" if form.object.errors[:email_address].any?) } %>
+              class: "field-control" %>
       </div>
 
       <div>

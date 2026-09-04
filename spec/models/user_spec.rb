@@ -11,7 +11,7 @@ RSpec.describe User, type: :model do
   describe "名前のバリデーション" do
     context "名前がある場合" do
       it "有効である" do
-        user = build(:user, name: "テストユーザー")
+        user = build(:user, account_name: "テストユーザー")
 
         expect(user).to be_valid
       end
@@ -19,16 +19,16 @@ RSpec.describe User, type: :model do
 
     context "名前がない場合は無効となりエラーメッセージが表示される" do
       it "無効である" do
-        user = build(:user, name: nil)
+        user = build(:user, account_name: nil)
 
         expect(user).not_to be_valid
-        expect(user.errors[:name]).to be_present
+        expect(user.errors[:account_name]).to be_present
       end
     end
 
     context "名前が51文字の場合" do
       it "無効である" do
-        user = build(:user, name: "あ" * 51)
+        user = build(:user, account_name: "あ" * 51)
 
         expect(user).not_to be_valid
       end
@@ -38,13 +38,13 @@ RSpec.describe User, type: :model do
   describe "メールアドレスのバリデーション" do
     context "有効なメールアドレスの場合" do
       it "有効である" do
-        expect(build(:user, email_address: "test@example.com")).to be_valid
+        expect(build(:user, email: "test@example.com")).to be_valid
       end
     end
 
     context "メールアドレスがない場合" do
       it "無効である" do
-        expect(build(:user, email_address: nil)).not_to be_valid
+        expect(build(:user, email: nil)).not_to be_valid
       end
     end
 
@@ -57,35 +57,35 @@ RSpec.describe User, type: :model do
           "user@example,com"
         ]
 
-        invalid_email_addresses.each do |email_address|
-          expect(build(:user, email_address: email_address)).not_to be_valid,
-            "#{email_address.inspect} は無効である必要があります"
+        invalid_email_addresses.each do |email|
+          expect(build(:user, email: email)).not_to be_valid,
+            "#{email.inspect} は無効である必要があります"
         end
       end
     end
 
     context "メールアドレスが256文字の場合" do
       it "無効である" do
-        email_address = "a" * 244 + "@example.com"
+        email = "a" * 244 + "@example.com"
 
-        expect(build(:user, email_address: email_address)).not_to be_valid
+        expect(build(:user, email: email)).not_to be_valid
       end
     end
 
     context "メールアドレスがすでに使われている場合" do
       it "大文字小文字が違っても無効である" do
-        create(:user, email_address: "test@example.com")
+        create(:user, email: "test@example.com")
 
-        expect(build(:user, email_address: "TEST@EXAMPLE.COM")).not_to be_valid
+        expect(build(:user, email: "TEST@EXAMPLE.COM")).not_to be_valid
       end
     end
   end
 
   describe "メールアドレスの正規化" do
     it "前後の空白を除去し、小文字に変換する" do
-      user = build(:user, email_address: "  TEST@EXAMPLE.COM  ")
+      user = build(:user, email: "  TEST@EXAMPLE.COM  ")
 
-      expect(user.email_address).to eq("test@example.com")
+      expect(user.email).to eq("test@example.com")
     end
   end
 

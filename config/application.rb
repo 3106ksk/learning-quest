@@ -28,6 +28,7 @@ module Myapp
     # in config/environments, which are processed later.
     #
     config.time_zone = "Tokyo"
+    config.action_cable.mount_path = nil
     # config.eager_load_paths << Rails.root.join("extras")
     config.i18n.default_locale = :ja
   end

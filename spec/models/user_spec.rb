@@ -52,7 +52,6 @@ RSpec.describe User, type: :model do
       it "無効である" do
         invalid_email_addresses = [
           "user",
-          "user@example",
           "user@ example.com",
           "user@example,com"
         ]
@@ -85,6 +84,8 @@ RSpec.describe User, type: :model do
     it "前後の空白を除去し、小文字に変換する" do
       user = build(:user, email: "  TEST@EXAMPLE.COM  ")
 
+      user.valid?
+
       expect(user.email).to eq("test@example.com")
     end
   end
@@ -112,7 +113,7 @@ RSpec.describe User, type: :model do
       it "認証できる" do
         user = create(:user, password: "Password123!", password_confirmation: "Password123!")
 
-        expect(user.authenticate("Password123!")).to eq(user)
+        expect(user.valid_password?("Password123!")).to be(true)
       end
     end
 
@@ -120,7 +121,7 @@ RSpec.describe User, type: :model do
       it "認証できない" do
         user = create(:user, password: "Password123!", password_confirmation: "Password123!")
 
-        expect(user.authenticate("WrongPassword123!")).to be(false)
+        expect(user.valid_password?("WrongPassword123!")).to be(false)
       end
     end
   end

@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
   root "static_pages#home"
-  resource :session
-  resource :sign_up
 
   resources :study_records, only: [ :new, :create, :show ] do
     member do

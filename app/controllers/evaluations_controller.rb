@@ -38,7 +38,7 @@ class EvaluationsController < ApplicationController
   private
 
   def set_study_record
-    @study_record = Current.user.study_records.find(params[:study_record_id])
+    @study_record = current_user.study_records.find(params[:study_record_id])
   end
 
   def ensure_awaiting_evaluation

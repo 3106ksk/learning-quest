@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_04_050348) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_05_001855) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -77,17 +77,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_04_050348) do
     t.string "status", default: "running", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_study_records_on_active_user_id", unique: true, where: "((status)::text = ANY (ARRAY[('running'::character varying)::text, ('paused'::character varying)::text, ('awaiting_evaluation'::character varying)::text]))"
+    t.index ["user_id"], name: "index_study_records_on_active_user_id", unique: true, where: "((status)::text = ANY ((ARRAY['running'::character varying, 'paused'::character varying, 'awaiting_evaluation'::character varying])::text[]))"
     t.index ["user_id"], name: "index_study_records_on_user_id"
     t.check_constraint "planned_minutes = ANY (ARRAY[5, 15, 25, 50])", name: "planned_minutes_allowed_values"
-    t.check_constraint "rank::text = ANY (ARRAY['a'::character varying::text, 'b'::character varying::text, 'c'::character varying::text])", name: "study_records_rank_allowed_values"
+    t.check_constraint "rank::text = ANY (ARRAY['a'::character varying, 'b'::character varying, 'c'::character varying]::text[])", name: "study_records_rank_allowed_values"
     t.check_constraint "status::text <> 'evaluated'::text OR rank IS NOT NULL", name: "study_records_rank_required_when_evaluated"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "account_name"
     t.datetime "created_at", null: false
-    t.string "email", default: "", null: false
+    t.string "email", limit: 255, default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"

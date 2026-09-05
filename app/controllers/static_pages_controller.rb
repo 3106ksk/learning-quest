@@ -1,5 +1,4 @@
 class StaticPagesController < ApplicationController
-  skip_before_action :require_authentication, only: :home
   skip_before_action :authenticate_user!, only: :home
   before_action :redirect_authenticated_users, only: :home
 

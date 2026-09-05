@@ -1,8 +1,4 @@
 class ApplicationController < ActionController::Base
-  include Authentication
-
-  skip_before_action :require_authentication, if: :devise_controller?
-  
   add_flash_types :success, :danger
 
   before_action :authenticate_user!, unless: :devise_controller?

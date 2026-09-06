@@ -70,11 +70,4 @@ RSpec.describe "StudyRecords", type: :request do
       expect(response).to have_http_status(:ok)
     end
   end
-
-  def sign_in(user)
-    post session_path, params: {
-      email_address: user.email_address,
-      password: "Password123!"
-    }
-  end
 end

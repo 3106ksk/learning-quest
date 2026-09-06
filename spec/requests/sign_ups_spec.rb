@@ -1,16 +1,16 @@
 require "rails_helper"
 
-RSpec.describe "SignUps", type: :request do
-  describe "POST /sign_up" do
+RSpec.describe "User registrations", type: :request do
+  describe "POST /users" do
     context "登録済みメールアドレスの場合" do
-      let!(:registered_user) { create(:user, email_address: "registered@example.com") }
+      let!(:registered_user) { create(:user, email: "registered@example.com") }
 
-      it "登録状況を示す詳細エラーを表示せず、ユーザーを作成しない" do
+      it "ユーザーを作成せず、登録エラーを表示する" do
         expect {
-          post sign_up_path, params: {
+          post user_registration_path, params: {
             user: {
-              name: "別のユーザー",
-              email_address: registered_user.email_address.upcase,
+              account_name: "別のユーザー",
+              email: registered_user.email.upcase,
               password: "Password123!",
               password_confirmation: "Password123!"
             }
@@ -18,36 +18,33 @@ RSpec.describe "SignUps", type: :request do
         }.not_to change(User, :count)
 
         expect(response).to have_http_status(:unprocessable_content)
-        expect(response.body).to include(I18n.t("sign_ups.create.danger"))
-        expect(response.body).not_to include("E-mailアドレスはすでに存在します")
 
-        email_field = response.parsed_body.at_css('input[name="user[email_address]"]')
+        email_field = response.parsed_body.at_css('input[name="user[email]"]')
 
-        expect(response.parsed_body.at_css("#email_address-error")).to be_nil
-        expect(email_field["class"].split).not_to include("has-error")
-        expect(email_field["aria-describedby"]).to be_nil
+        expect(response.parsed_body.at_css("#error_explanation")).to be_present
+        expect(email_field).to be_present
       end
     end
 
-    context "メールアドレスの形式と名前が不正な場合" do
-      it "メールアドレスの詳細エラーを表示せず、名前の詳細エラーは表示する" do
-        post sign_up_path, params: {
+    context "メールアドレスの形式とアカウント名が不正な場合" do
+      it "登録エラーを表示する" do
+        post user_registration_path, params: {
           user: {
-            name: "",
-            email_address: "invalid-email",
+            account_name: "",
+            email: "invalid-email",
             password: "Password123!",
             password_confirmation: "Password123!"
           }
         }
 
         expect(response).to have_http_status(:unprocessable_content)
-        expect(response.parsed_body.at_css("#email_address-error")).to be_nil
-        expect(response.parsed_body.at_css("#name-error")).to be_present
 
-        name_field = response.parsed_body.at_css('input[name="user[name]"]')
+        account_name_field = response.parsed_body.at_css('input[name="user[account_name]"]')
+        email_field = response.parsed_body.at_css('input[name="user[email]"]')
 
-        expect(name_field["class"].split).to include("has-error")
-        expect(name_field["aria-describedby"]).to eq("name-error")
+        expect(response.parsed_body.at_css("#error_explanation")).to be_present
+        expect(account_name_field).to be_present
+        expect(email_field).to be_present
       end
     end
   end

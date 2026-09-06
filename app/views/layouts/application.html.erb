@@ -22,15 +22,15 @@
   </head>
 
   <body>
-    <%= tag.div class: ("app-shell" if authenticated?) do %>
-      <% if authenticated? %>
+    <%= tag.div class: ("app-shell" if user_signed_in?) do %>
+      <% if user_signed_in? %>
         <%= render "shared/sidebar" %>
       <% else %>
         <%= render "shared/header" %>
       <% end %>
 
       <main>
-        <% if authenticated? && flash[:danger].present? %>
+        <% if user_signed_in? && flash[:danger].present? %>
           <div class="page flash-shell">
             <div class="error-banner"><%= flash[:danger] %></div>
           </div>

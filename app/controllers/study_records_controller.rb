@@ -8,7 +8,7 @@ class StudyRecordsController < ApplicationController
   before_action :redirect_by_status, only: :show
 
   def new
-    active_record = Current.user.study_records.active.take
+    active_record = current_user.study_records.active.take
 
     if active_record
       destination = active_record.awaiting_evaluation? ? new_study_record_evaluation_path(active_record) : active_record
@@ -23,7 +23,7 @@ class StudyRecordsController < ApplicationController
   end
 
   def create
-    @study_record = Current.user.study_records.build(
+    @study_record = current_user.study_records.build(
       study_record_params.merge(started_at: Time.current)
     )
 
@@ -62,7 +62,7 @@ class StudyRecordsController < ApplicationController
   private
 
   def set_study_record
-    @study_record = Current.user.study_records.find(params[:id])
+    @study_record = current_user.study_records.find(params[:id])
   end
 
   def ensure_running

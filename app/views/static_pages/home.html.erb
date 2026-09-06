@@ -13,8 +13,8 @@
     <p class="small" style="margin-top: var(--space-5); white-space: pre-line"><%= t('.body') %></p>
 
     <div class="lp-cta-row">
-      <%= link_to t('.cta_primary'), sign_up_path, class: "btn btn-primary" %>
-      <%= link_to t('.cta_login'), new_session_path %>
+      <%= link_to t('.cta_primary'), new_user_registration_path, class: "btn btn-primary" %>
+      <%= link_to t('.cta_login'), new_user_session_path %>
     </div>
   </div>
 </section>
@@ -90,6 +90,6 @@
   </h2>
 
   <div class="lp-cta-row">
-    <%= link_to t(".cta_primary"), sign_up_path, class: "btn btn-primary" %>
+    <%= link_to t(".cta_primary"), new_user_registration_path, class: "btn btn-primary" %>
   </div>
 </section>

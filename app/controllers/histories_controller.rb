@@ -19,6 +19,6 @@ class HistoriesController < ApplicationController
   private
 
   def history_records
-    Current.user.study_records.evaluated
+    current_user.study_records.evaluated
   end
 end

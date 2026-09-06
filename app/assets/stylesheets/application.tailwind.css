@@ -130,6 +130,35 @@
     margin-inline: auto;
   }
 
+  /*
+   * 認証フォームは、入力欄の幅を画面全体ではなくカード内の本文幅で決める。
+   * 罫線・余白・紙色は既存トークンだけで構成し、カード調の影や丸みは加えない。
+   */
+  .auth-form-card {
+    width: min(100%, 480px);
+    border: var(--border-box);
+    border-radius: var(--radius-box);
+    margin-inline: auto;
+    padding: var(--space-6);
+  }
+
+  .auth-form-card > * + * {
+    margin-top: var(--space-5);
+  }
+
+  .auth-form-title {
+    text-align: center;
+  }
+
+  .auth-form-card .btn-primary {
+    width: 100%;
+  }
+
+  .auth-form-links {
+    border-top: var(--border-hair);
+    padding-top: var(--space-5);
+  }
+
   .public-page {
     width: min(100%, calc(var(--content-max) + (var(--page-pad-pc) * 2)));
     margin-inline: auto;
@@ -139,6 +168,10 @@
   @media (max-width: 767px) {
     .public-page {
       padding: var(--space-6) var(--page-pad-mobile) var(--space-7);
+    }
+
+    .auth-form-card {
+      padding: var(--space-5);
     }
   }
 

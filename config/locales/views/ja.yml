@@ -85,7 +85,7 @@ ja:
       danger: メールアドレスまたはパスワードが正しくありません
   sign_ups:
     show:
-      title: ユーザー登録
+      title: 新規アカウント作成
       submit: 登録する
       to_login_page: ログインページへ
     create:

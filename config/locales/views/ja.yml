@@ -87,7 +87,8 @@ ja:
     show:
       title: 新規アカウント作成
       submit: 登録する
-      to_login_page: ログインページへ
+      to_login_notice: アカウントをお持ちの方は
+      to_login_page: ログイン
     create:
       success: ユーザー登録が完了しました
       danger: ユーザー登録に失敗しました

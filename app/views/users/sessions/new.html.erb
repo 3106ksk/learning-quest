@@ -26,7 +26,10 @@
       <% end %>
 
       <div class="auth-form-links">
-        <%= render "users/shared/links" %>
+        <p class="small">
+          <%= t("sessions.new.to_register_notice") %>
+          <%= link_to t("sessions.new.to_register_page"), new_user_registration_path %>
+        </p>
       </div>
     </section>
   </div>

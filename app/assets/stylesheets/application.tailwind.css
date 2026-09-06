@@ -161,6 +161,7 @@
   .auth-form-links {
     border-top: var(--border-hair);
     padding-top: var(--space-5);
+    text-align: center;
   }
 
   .public-page {

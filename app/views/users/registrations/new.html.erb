@@ -45,7 +45,10 @@
       <% end %>
 
       <div class="auth-form-links">
-        <%= render "users/shared/links" %>
+        <p class="small">
+          <%= t("sign_ups.show.to_login_notice") %>
+          <%= link_to t("sign_ups.show.to_login_page"), new_user_session_path %>
+        </p>
       </div>
     </section>
   </div>

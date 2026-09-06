@@ -85,5 +85,4 @@ RSpec.describe "Histories", type: :request do
       )
     end
   end
-
 end

@@ -1,7 +1,7 @@
 <main class="public-page">
   <div class="form-shell">
     <section class="auth-form-card" aria-labelledby="registration-title">
-      <h1 id="registration-title" class="auth-form-title">新規アカウント作成</h1>
+      <h1 id="registration-title" class="auth-form-title"><%= t(".title") %></h1>
 
       <%= form_for(resource,
                    as: resource_name,
@@ -27,7 +27,7 @@
         <div>
           <%= f.label :password, class: "field-label" %>
           <% if @minimum_password_length %>
-            <p class="form-help"><%= @minimum_password_length %>文字以上で入力してください</p>
+            <p class="form-help"><%= t(".password_hint", count: @minimum_password_length) %></p>
           <% end %>
           <%= f.password_field :password,
                                autocomplete: "new-password",
@@ -41,13 +41,13 @@
                                class: "field-control" %>
         </div>
 
-        <%= f.submit t("sign_ups.show.submit"), class: "btn btn-primary" %>
+        <%= f.submit t(".submit"), class: "btn btn-primary" %>
       <% end %>
 
       <div class="auth-form-links">
         <p class="small">
-          <%= t("sign_ups.show.to_login_notice") %>
-          <%= link_to t("sign_ups.show.to_login_page"), new_user_session_path %>
+          <%= t(".to_login_notice") %>
+          <%= link_to t(".to_login"), new_user_session_path %>
         </p>
       </div>
     </section>

@@ -92,6 +92,20 @@ ja:
     create:
       success: ユーザー登録が完了しました
       danger: ユーザー登録に失敗しました
+  users:
+    registrations:
+      new:
+        title: 新規アカウント作成
+        submit: 登録する
+        password_hint: "%{count}文字以上で入力してください"
+        to_login_notice: アカウントをお持ちの方は
+        to_login: ログイン
+    sessions:
+      new:
+        title: ログイン
+        submit: ログイン
+        to_registration_notice: アカウントをお持ちでない方は
+        to_registration: 登録する
   rank:
     stamp:
       label: RANK

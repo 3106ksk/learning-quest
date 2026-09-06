@@ -4,6 +4,8 @@
         user: ユーザー
       attributes:
         user:
+          account_name: アカウント名
+          email: E-mailアドレス
           email_address: E-mailアドレス
           name: ユーザー名
           password: パスワード

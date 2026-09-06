@@ -1,19 +1,33 @@
-<h2>Log in</h2>
+<main class="public-page">
+  <div class="form-shell">
+    <section class="auth-form-card auth-form-card--session" aria-labelledby="session-title">
+      <h1 id="session-title" class="auth-form-title"><%= t("sessions.new.title") %></h1>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <p><%= f.label :email %></p>
-    <p><%= f.email_field :email, autofocus: true, autocomplete: "email" %></p>
+      <%= form_for(resource,
+                   as: resource_name,
+                   url: session_path(resource_name),
+                   html: { class: "section form-stack" }) do |f| %>
+        <div>
+          <%= f.label :email, class: "field-label" %>
+          <%= f.email_field :email,
+                            autofocus: true,
+                            autocomplete: "email",
+                            class: "field-control" %>
+        </div>
+
+        <div>
+          <%= f.label :password, class: "field-label" %>
+          <%= f.password_field :password,
+                               autocomplete: "current-password",
+                               class: "field-control" %>
+        </div>
+
+        <%= f.submit t("sessions.new.login"), class: "btn btn-primary" %>
+      <% end %>
+
+      <div class="auth-form-links">
+        <%= render "users/shared/links" %>
+      </div>
+    </section>
   </div>
-
-  <div class="field">
-    <p><%= f.label :password %></p>
-    <p><%= f.password_field :password, autocomplete: "current-password" %></p>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+</main>

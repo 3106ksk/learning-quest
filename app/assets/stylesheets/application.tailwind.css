@@ -286,6 +286,10 @@
     font-size: 14px;
   }
 
+  .field-control + .group-error {
+    margin-top: var(--space-2);
+  }
+
   .btn {
     display: inline-flex;
     min-height: 44px;

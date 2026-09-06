@@ -6,6 +6,9 @@ ja:
     formats:
       record: "%-m/%-d %H:%M"
       clock: "%H:%M"
+  errors:
+    form:
+      invalid: 入力内容をご確認ください
   helpers:
     submit:
       create: カウントを作成する

@@ -3,6 +3,12 @@
     <section class="auth-form-card auth-form-card--session" aria-labelledby="session-title">
       <h1 id="session-title" class="auth-form-title"><%= t(".title") %></h1>
 
+      <% if flash[:alert].present? %>
+        <div class="error-banner" role="alert" data-turbo-temporary>
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+
       <%= form_for(resource,
                    as: resource_name,
                    url: session_path(resource_name),

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_10_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_10_161607) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -80,6 +80,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_10_000000) do
     t.datetime "current_pause_started_at"
     t.datetime "ended_at"
     t.datetime "expires_at", null: false
+    t.bigint "goal_id"
     t.integer "pause_count", default: 0, null: false
     t.integer "paused_seconds", default: 0, null: false
     t.integer "planned_minutes", null: false
@@ -88,10 +89,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_10_000000) do
     t.string "status", default: "running", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_study_records_on_active_user_id", unique: true, where: "((status)::text = ANY (ARRAY[('running'::character varying)::text, ('paused'::character varying)::text, ('awaiting_evaluation'::character varying)::text]))"
+    t.index ["goal_id"], name: "index_study_records_on_goal_id"
+    t.index ["user_id"], name: "index_study_records_on_active_user_id", unique: true, where: "((status)::text = ANY ((ARRAY['running'::character varying, 'paused'::character varying, 'awaiting_evaluation'::character varying])::text[]))"
     t.index ["user_id"], name: "index_study_records_on_user_id"
     t.check_constraint "planned_minutes = ANY (ARRAY[5, 15, 25, 50])", name: "planned_minutes_allowed_values"
-    t.check_constraint "rank::text = ANY (ARRAY['a'::character varying::text, 'b'::character varying::text, 'c'::character varying::text])", name: "study_records_rank_allowed_values"
+    t.check_constraint "rank::text = ANY (ARRAY['a'::character varying, 'b'::character varying, 'c'::character varying]::text[])", name: "study_records_rank_allowed_values"
     t.check_constraint "status::text <> 'evaluated'::text OR rank IS NOT NULL", name: "study_records_rank_required_when_evaluated"
   end
 
@@ -113,5 +115,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_10_000000) do
   add_foreign_key "evaluations", "study_records"
   add_foreign_key "goals", "users"
   add_foreign_key "sessions", "users"
+  add_foreign_key "study_records", "goals"
   add_foreign_key "study_records", "users"
 end

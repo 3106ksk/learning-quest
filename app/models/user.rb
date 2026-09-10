@@ -4,6 +4,7 @@ class User < ApplicationRecord
 
   has_many :sessions, dependent: :destroy
   has_many :study_records, dependent: :destroy
+  has_many :goals, dependent: :destroy
 
   validates :account_name, presence: true, length: { maximum: 50 }
   validates :email, length: { maximum: 255 }

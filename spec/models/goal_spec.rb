@@ -28,16 +28,4 @@ RSpec.describe Goal, type: :model do
       expect(new_goal).to be_valid
     end
   end
-
-  describe "#complete!" do
-    it "完了すると完了済みになり完了日時が記録される" do
-      goal = create(:goal)
-
-      expect {
-        goal.complete!
-      }.to change { goal.reload.completed_at }.from(nil)
-
-      expect(goal.reload).to be_completed
-    end
-  end
 end

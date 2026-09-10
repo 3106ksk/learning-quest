@@ -18,6 +18,23 @@ RSpec.describe "StudyRecords", type: :request do
     sign_in(user)
   end
 
+  describe "POST /study_records" do
+    it "現在の目標を新しい学習記録へ保存する" do
+      goal = create(:goal, user: user)
+
+      post study_records_path, params: {
+        study_record: {
+          planned_minutes: 25,
+          activity: "RSpecの学習"
+        }
+      }
+
+      study_record = user.study_records.order(:created_at).last
+
+      expect(study_record.goal_id).to eq(goal.id)
+    end
+  end
+
   describe "GET /study_records/:id" do
     [ :running, :paused ].each do |status|
       context "学習記録が#{status}の場合" do

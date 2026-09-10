@@ -2,9 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "StudyRecords", type: :request do
   let(:user) { create(:user) }
+  let(:goal) { create(:goal, user: user) }
   let(:study_record) do
     StudyRecord.create!(
       user: user,
+      goal: goal,
       planned_minutes: 25,
         activity: "RSpecの学習",
         started_at: Time.current,
@@ -16,6 +18,25 @@ RSpec.describe "StudyRecords", type: :request do
 
   before do
     sign_in(user)
+  end
+
+  describe "POST /study_records" do
+    it "完了済み目標ではなく現在の目標を新しい学習記録へ保存する" do
+      create(:goal, :completed, user: user)
+      current_goal = create(:goal, user: user)
+      create(:goal, :completed, user: user)
+
+      post study_records_path, params: {
+        study_record: {
+          planned_minutes: 25,
+          activity: "RSpecの学習"
+        }
+      }
+
+      study_record = user.study_records.order(:created_at).last
+
+      expect(study_record.goal_id).to eq(current_goal.id)
+    end
   end
 
   describe "GET /study_records/:id" do
@@ -58,6 +79,7 @@ RSpec.describe "StudyRecords", type: :request do
     it "評価済みの学習記録があっても新規学習フォームを表示する" do
       StudyRecord.create!(
         user: user,
+        goal: goal,
         planned_minutes: 25,
         activity: "完了した学習",
         started_at: Time.current,

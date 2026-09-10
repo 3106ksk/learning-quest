@@ -54,6 +54,7 @@ RSpec.describe "Histories", type: :request do
       it "学習履歴一覧画面へ戻る" do
         study_record = StudyRecord.create!(
           user: user,
+          goal: create(:goal, user: user),
           planned_minutes: 25,
           activity: "評価前の学習",
           started_at: Time.current,
@@ -71,6 +72,7 @@ RSpec.describe "Histories", type: :request do
   def create_evaluated_record(user:)
     StudyRecord.create!(
       user: user,
+      goal: create(:goal, user: user),
       planned_minutes: 25,
       activity: "RSpecの学習",
       started_at: Time.current,

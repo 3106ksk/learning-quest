@@ -2,9 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Evaluation, type: :model do
   let(:user) { create(:user) }
+  let(:goal) { create(:goal, user: user) }
   let(:study_record) do
     StudyRecord.create!(
       user: user,
+      goal: goal,
       planned_minutes: 25,
       activity: "RSpecの学習",
       started_at: Time.current,

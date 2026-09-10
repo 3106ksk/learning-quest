@@ -2,9 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "StudyRecords", type: :request do
   let(:user) { create(:user) }
+  let(:goal) { create(:goal, user: user) }
   let(:study_record) do
     StudyRecord.create!(
       user: user,
+      goal: goal,
       planned_minutes: 25,
         activity: "RSpecの学習",
         started_at: Time.current,
@@ -77,6 +79,7 @@ RSpec.describe "StudyRecords", type: :request do
     it "評価済みの学習記録があっても新規学習フォームを表示する" do
       StudyRecord.create!(
         user: user,
+        goal: goal,
         planned_minutes: 25,
         activity: "完了した学習",
         started_at: Time.current,

@@ -19,8 +19,10 @@ RSpec.describe "StudyRecords", type: :request do
   end
 
   describe "POST /study_records" do
-    it "現在の目標を新しい学習記録へ保存する" do
-      goal = create(:goal, user: user)
+    it "完了済み目標ではなく現在の目標を新しい学習記録へ保存する" do
+      create(:goal, :completed, user: user)
+      current_goal = create(:goal, user: user)
+      create(:goal, :completed, user: user)
 
       post study_records_path, params: {
         study_record: {
@@ -31,7 +33,7 @@ RSpec.describe "StudyRecords", type: :request do
 
       study_record = user.study_records.order(:created_at).last
 
-      expect(study_record.goal_id).to eq(goal.id)
+      expect(study_record.goal_id).to eq(current_goal.id)
     end
   end
 

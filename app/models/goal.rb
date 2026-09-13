@@ -7,7 +7,7 @@ class Goal < ApplicationRecord
     completed: "completed"
   }, validate: true
 
-  validates :name, presence: true
+  validates :name, presence: true, length: { maximum: 100 }
   validates :user_id, uniqueness: {
     conditions: -> { where(status: "active") }
   }, if: :active?

@@ -1,0 +1,20 @@
+<div class="page">
+  <div class="form-shell">
+    <h1>目標を設定する</h1>
+    <p class="small" style="margin-top: var(--space-2)">
+      これから取り組みたい目標を入力してください。
+    </p>
+
+    <%= form_with model: @goal, class: "section form-stack", style: "margin-top: var(--space-5)" do |form| %>
+      <div>
+        <%= form.label :name, "目標名", class: "field-label" %>
+        <%= form.text_field :name,
+              maxlength: 100,
+              placeholder: "例: RailsでWebアプリを作る",
+              class: "field-control" %>
+      </div>
+
+      <%= form.submit "目標を設定する", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

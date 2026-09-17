@@ -1,4 +1,6 @@
 class GoalsController < ApplicationController
+  before_action :set_goal, only: :show
+
   def new
     @goal = current_user.goals.build
   end
@@ -15,6 +17,10 @@ class GoalsController < ApplicationController
   end
 
   private
+
+  def set_goal
+    @goal = current_user.goals.find(params[:id])
+  end
 
   def goal_params
     params.expect(goal: [ :name ])

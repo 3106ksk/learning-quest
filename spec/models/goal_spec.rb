@@ -26,6 +26,19 @@ RSpec.describe Goal, type: :model do
       expect(goal.errors[:name]).to be_present
     end
 
+    it "目標名が100文字なら保存できる" do
+      goal = build(:goal, name: "あ" * 100)
+
+      expect(goal).to be_valid
+    end
+
+    it "目標名が101文字だと保存できない" do
+      goal = build(:goal, name: "あ" * 101)
+
+      expect(goal).to be_invalid
+      expect(goal.errors[:name]).to be_present
+    end
+
     it "進行中の目標があるユーザーは新しい目標を作成できない" do
       user = create(:user)
       create(:goal, user: user)

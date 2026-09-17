@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { registrations: "users/registrations" }
   root "static_pages#home"
 
   resources :study_records, only: [ :new, :create, :show ] do
@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   end
 
   resources :histories, only: [ :index, :show ]
+
+  resources :goals, only: [ :new, :create, :update, :destroy ]
 
   get "up" => "rails/health#show", as: :rails_health_check
 end

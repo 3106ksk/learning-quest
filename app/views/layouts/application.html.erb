@@ -30,6 +30,12 @@
       <% end %>
 
       <main>
+        <% if user_signed_in? && flash[:success].present? %>
+          <div class="page flash-shell">
+            <div class="notice-banner"><%= flash[:success] %></div>
+          </div>
+        <% end %>
+
         <% if user_signed_in? && flash[:danger].present? %>
           <div class="page flash-shell">
             <div class="error-banner"><%= flash[:danger] %></div>

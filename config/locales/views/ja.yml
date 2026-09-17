@@ -95,6 +95,10 @@ ja:
     create:
       success: ユーザー登録が完了しました
       danger: ユーザー登録に失敗しました
+  goals:
+    create:
+      success: 目標を設定しました
+      danger: 目標を設定できませんでした
   users:
     registrations:
       new:

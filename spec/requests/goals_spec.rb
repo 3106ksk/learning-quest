@@ -170,7 +170,7 @@ RSpec.describe "Goals", type: :request do
     context "自分の取り組み中の目標の場合" do
       it "Turbo Frame内に編集フォームを表示する" do
         goal = create(:goal, user: user)
-        frame_id = ActionView::RecordIdentifier.dom_id(goal, :name)
+        frame_id = ActionView::RecordIdentifier.dom_id(goal)
 
         get edit_goal_path(goal)
 
@@ -238,7 +238,7 @@ RSpec.describe "Goals", type: :request do
 
         expect(response).to have_http_status(:unprocessable_content)
 
-        frame_id = ActionView::RecordIdentifier.dom_id(goal, :name)
+        frame_id = ActionView::RecordIdentifier.dom_id(goal)
         frame = response.parsed_body.at_css("turbo-frame##{frame_id}")
         expect(frame).to be_present
         expect(frame.at_css("[role='alert']")).to be_present

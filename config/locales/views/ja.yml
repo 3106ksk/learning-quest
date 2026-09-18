@@ -96,6 +96,13 @@ ja:
       success: ユーザー登録が完了しました
       danger: ユーザー登録に失敗しました
   goals:
+    show:
+      edit: 編集する
+    edit:
+      title: 目標を編集する
+      name: 目標名
+      submit: 更新する
+      cancel: キャンセル
     create:
       success: 目標を設定しました
       danger: 目標を設定できませんでした

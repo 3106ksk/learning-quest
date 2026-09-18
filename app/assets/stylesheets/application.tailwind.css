@@ -146,6 +146,23 @@
     line-height: 1.4;
   }
 
+  .goal-card-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .goal-card-controls .goal-card-title,
+  .goal-card-controls .field-control {
+    width: auto;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .goal-card-controls .btn {
+    flex-shrink: 0;
+  }
+
   @media (max-width: 767px) {
     .goal-card {
       padding: var(--space-5);

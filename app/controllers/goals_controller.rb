@@ -16,6 +16,10 @@ class GoalsController < ApplicationController
     end
   end
 
+  def edit
+    @goal = current_user.goals.find(params[:id])
+  end
+
   private
 
   def set_goal

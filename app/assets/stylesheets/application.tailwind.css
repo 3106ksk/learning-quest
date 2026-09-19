@@ -1193,7 +1193,6 @@
     display: block;
     overflow: hidden;
     border: 1px solid rgba(38, 36, 31, 0.1);
-    border-radius: 20px;
     background: #fff;
     box-shadow: 0 8px 24px rgba(38, 36, 31, 0.06);
     color: inherit;
@@ -1235,6 +1234,46 @@
     width: 150px;
     height: 150px;
     opacity: 0.07;
+  }
+
+  .grid-card-body {
+    display: grid;
+    min-height: 56px;
+    place-items: center;
+    padding: 14px 16px;
+    text-align: center;
+  }
+
+  .grid-card-title {
+    margin: 0;
+    color: var(--color-ink-900);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 900;
+    line-height: 1.5;
+  }
+
+  .card-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1.4;
+  }
+
+  .badge-active {
+    background: var(--color-green-600);
+    color: #fff;
+  }
+
+  .badge-completed {
+    border: 1px solid rgba(138, 98, 36, 0.25);
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--color-kincha-600);
   }
 
   @media (max-width: 767px) {

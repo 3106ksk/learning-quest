@@ -10,6 +10,8 @@
           name: ユーザー名
           password: パスワード
           password_confirmation: パスワード確認
+        goal:
+          name: 目標名
         study_record:
           planned_minutes: 学習時間
           activity: 今回やること

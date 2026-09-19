@@ -130,6 +130,51 @@
     margin-inline: auto;
   }
 
+  .goal-card {
+    border: var(--border-hair);
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.06);
+    padding: var(--space-6);
+  }
+
+  .goal-card-title {
+    font-family: var(--font-sans);
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 900;
+    letter-spacing: 0;
+    line-height: 1.4;
+  }
+
+  .goal-card-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .goal-card-controls .goal-card-title,
+  .goal-card-controls .field-control {
+    width: auto;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .goal-card-controls .group-error {
+    order: -1;
+    flex-basis: 100%;
+  }
+
+  .goal-card-controls .btn {
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 767px) {
+    .goal-card {
+      padding: var(--space-5);
+    }
+  }
+
   /*
    * 認証フォームは、入力欄の幅を画面全体ではなくカード内の本文幅で決める。
    * 罫線・余白・紙色は既存トークンだけで構成し、カード調の影や丸みは加えない。

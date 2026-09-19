@@ -1,0 +1,12 @@
+<% content_for :title, @goal.name %>
+
+<div class="page">
+  <%= turbo_frame_tag @goal do %>
+    <section class="goal-card" aria-labelledby="goal-title">
+      <div class="goal-card-controls">
+        <h1 id="goal-title" class="goal-card-title"><%= @goal.name %></h1>
+        <%= link_to t(".edit"), edit_goal_path(@goal), class: "btn btn-secondary" %>
+      </div>
+    </section>
+  <% end %>
+</div>

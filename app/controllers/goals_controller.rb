@@ -1,4 +1,7 @@
 class GoalsController < ApplicationController
+  before_action :set_goal, only: [ :show, :edit, :update ]
+  before_action :ensure_active, only: [ :edit, :update ]
+
   def new
     @goal = current_user.goals.build
   end
@@ -14,7 +17,28 @@ class GoalsController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    if @goal.update(goal_params)
+      redirect_to goal_path(@goal), status: :see_other
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
+
+  def set_goal
+    @goal = current_user.goals.find(params[:id])
+  end
+
+  def ensure_active
+    return if @goal.active?
+
+    redirect_to @goal, status: :see_other
+  end
 
   def goal_params
     params.expect(goal: [ :name ])

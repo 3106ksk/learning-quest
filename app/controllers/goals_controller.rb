@@ -1,5 +1,5 @@
 class GoalsController < ApplicationController
-  before_action :set_goal, only: :show
+  before_action :set_goal, only: [ :show, :edit, :update ]
 
   def new
     @goal = current_user.goals.build
@@ -17,7 +17,14 @@ class GoalsController < ApplicationController
   end
 
   def edit
-    @goal = current_user.goals.find(params[:id])
+  end
+
+  def update
+    if @goal.update(goal_params)
+      redirect_to goal_path(@goal), status: :see_other
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private

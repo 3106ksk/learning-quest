@@ -3,10 +3,15 @@
 <div class="page">
   <%= turbo_frame_tag @goal do %>
     <section class="goal-card" aria-labelledby="goal-edit-title">
-
       <%= form_with model: @goal, style: "margin-top: var(--space-5)" do |form| %>
         <div class="goal-card-controls">
+          <% if @goal.errors[:name].any? %>
+            <p class="group-error">
+              <%= @goal.errors.full_messages_for(:name).join(", ") %>
+            </p>
+          <% end %>
           <%= form.text_field :name,
+                maxlength: 100,
                 class: "field-control" %>
           <%= form.submit t(".submit"), class: "btn btn-primary" %>
           <%= link_to t(".cancel"), goal_path(@goal), class: "btn btn-secondary" %>

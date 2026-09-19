@@ -148,6 +148,7 @@
 
   .goal-card-controls {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: var(--space-3);
   }
@@ -157,6 +158,11 @@
     width: auto;
     min-width: 0;
     flex: 1;
+  }
+
+  .goal-card-controls .group-error {
+    order: -1;
+    flex-basis: 100%;
   }
 
   .goal-card-controls .btn {

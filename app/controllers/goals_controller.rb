@@ -2,6 +2,10 @@ class GoalsController < ApplicationController
   before_action :set_goal, only: [ :show, :edit, :update ]
   before_action :ensure_active, only: [ :edit, :update ]
 
+  def index
+    @goals = current_user.goals.order(completed_at: :desc)
+  end
+
   def new
     @goal = current_user.goals.build
   end

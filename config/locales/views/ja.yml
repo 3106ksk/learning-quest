@@ -96,6 +96,11 @@ ja:
       success: ユーザー登録が完了しました
       danger: ユーザー登録に失敗しました
   goals:
+    index:
+      title: 取り組んできた目標
+      eyebrow: 目標
+      empty: まだ目標がありません。
+      new_goal: 目標を設定する
     show:
       edit: 編集する
     edit:
@@ -106,6 +111,11 @@ ja:
     create:
       success: 目標を設定しました
       danger: 目標を設定できませんでした
+  enums:
+    goal:
+      status:
+        active: 進行中
+        completed: 完了
   users:
     registrations:
       new:

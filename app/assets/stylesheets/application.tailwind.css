@@ -1133,4 +1133,153 @@
   .stamp-stage-m {
     min-height: 64px;
   }
+
+  .page-wide {
+    width: min(100%, calc(1100px + (var(--page-pad-pc) * 2)));
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    margin-inline: auto;
+    padding: 40px var(--page-pad-pc);
+  }
+
+  .panel {
+    border: var(--border-hair);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.05);
+    padding: 28px;
+    flex: 1;
+  }
+
+  .panel-eyebrow {
+    margin: 0 0 var(--space-1);
+    color: var(--color-kincha-600);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    line-height: 1.4;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .card-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .card-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .grid-card {
+    display: block;
+    overflow: hidden;
+    border: 1px solid rgba(38, 36, 31, 0.1);
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.06);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 200ms, box-shadow 200ms, transform 200ms;
+  }
+
+  .grid-card:hover {
+    border-color: rgba(138, 98, 36, 0.35);
+    box-shadow: 0 14px 32px rgba(38, 36, 31, 0.1);
+    color: inherit;
+    transform: translateY(-3px);
+  }
+
+  .grid-card:focus-visible {
+    outline-offset: 4px;
+  }
+
+  .grid-card-face {
+    position: relative;
+    height: 150px;
+    overflow: hidden;
+  }
+
+  .face-active {
+    background: radial-gradient(circle at 78% 18%, rgba(45, 93, 75, 0.28), transparent 42%), rgba(45, 93, 75, 0.12);
+    color: var(--color-green-600);
+  }
+
+  .face-completed {
+    background: radial-gradient(circle at 78% 18%, rgba(169, 122, 47, 0.3), transparent 42%), rgba(169, 122, 47, 0.14);
+    color: var(--color-kincha-600);
+  }
+
+  .goal-card-watermark {
+    position: absolute;
+    right: -10px;
+    bottom: -30px;
+    width: 150px;
+    height: 150px;
+    opacity: 0.07;
+  }
+
+  .grid-card-body {
+    display: grid;
+    min-height: 56px;
+    place-items: center;
+    padding: 14px 16px;
+    text-align: center;
+  }
+
+  .grid-card-title {
+    margin: 0;
+    color: var(--color-ink-900);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 900;
+    line-height: 1.5;
+  }
+
+  .card-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1.4;
+  }
+
+  .badge-active {
+    background: var(--color-green-600);
+    color: #fff;
+  }
+
+  .badge-completed {
+    border: 1px solid rgba(138, 98, 36, 0.25);
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--color-kincha-600);
+  }
+
+  @media (max-width: 767px) {
+    .grid-card-face {
+      height: 110px;
+    }
+
+    .page-wide {
+      padding: 20px 16px var(--space-7);
+    }
+
+    .panel {
+      padding: 20px;
+    }
+  }
 }

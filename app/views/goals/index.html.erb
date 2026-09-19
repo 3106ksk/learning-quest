@@ -1,0 +1,33 @@
+<% content_for :title, t(".title") %>
+
+<div class="page-wide">
+  <section class="panel">
+    <p class="panel-eyebrow"><%= t(".eyebrow") %></p>
+
+    <% if @goals.any? %>
+      <div class="card-grid">
+        <% @goals.each do |goal| %>
+          <%= link_to goal_path(goal), class: "grid-card" do %>
+            <div class="grid-card-face face-<%= goal.status %>">
+              <svg class="goal-card-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 21 10.5 3" />
+                <path d="M10.5 4c3.3.3 5.5 3 8.5 3.5l-2.7 8.3c-3-.3-5.2-3-8.5-3.5z" />
+              </svg>
+              <span class="card-badge badge-<%= goal.status %>">
+                <%= t("enums.goal.status.#{goal.status}") %>
+              </span>
+            </div>
+            <div class="grid-card-body">
+              <p class="grid-card-title"><%= goal.name %></p>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="empty-state">
+        <p><%= t(".empty") %></p>
+        <%= link_to t(".new_goal"), new_goal_path %>
+      </div>
+    <% end %>
+  </section>
+</div>

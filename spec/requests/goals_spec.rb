@@ -1,6 +1,74 @@
 require "rails_helper"
 
 RSpec.describe "Goals", type: :request do
+  describe "GET /goals (index)" do
+    context "ログイン済みの場合" do
+      let(:user) { create(:user) }
+
+      before do
+        sign_in(user)
+      end
+
+      it "他ユーザーの目標を表示しない" do
+        own_goal = create(:goal, user: user, name: "自分の目標")
+        other_users_goal = create(:goal, :completed, name: "他ユーザーの目標")
+
+        get goals_path
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include(own_goal.name)
+        expect(response.body).not_to include(other_users_goal.name)
+      end
+
+      it "進行中の目標、完了日の新しい順の完了目標の順に表示する" do
+        active_goal = create(:goal, user: user, name: "進行中の目標")
+        older_completed_goal = create(
+          :goal,
+          :completed,
+          user: user,
+          name: "以前に完了した目標",
+          completed_at: 2.days.ago
+        )
+        newer_completed_goal = create(
+          :goal,
+          :completed,
+          user: user,
+          name: "最近完了した目標",
+          completed_at: 1.day.ago
+        )
+
+        get goals_path
+
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body.css(".grid-card-title").map(&:text)).to eq([
+          active_goal.name,
+          newer_completed_goal.name,
+          older_completed_goal.name
+        ])
+      end
+
+      it "目標が0件のとき、空状態と目標設定画面へのリンクを表示する" do
+        get goals_path
+
+        expect(response).to have_http_status(:ok)
+
+        empty_state = response.parsed_body.at_css(".empty-state")
+        expect(empty_state).to be_present
+        expect(empty_state.text).to include("まだ目標がありません。")
+        expect(empty_state.at_css("a[href='#{new_goal_path}']").text).to eq("目標を設定する")
+      end
+
+      it "完了目標のみのとき、空状態を表示しない" do
+        create(:goal, :completed, user: user)
+
+        get goals_path
+
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body.at_css(".empty-state")).to be_nil
+      end
+    end
+  end
+
   describe "GET /goals/new" do
     context "未ログインの場合" do
       it "ログイン画面へ遷移する" do

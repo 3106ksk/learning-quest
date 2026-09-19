@@ -241,7 +241,7 @@ RSpec.describe "Goals", type: :request do
         frame_id = ActionView::RecordIdentifier.dom_id(goal)
         frame = response.parsed_body.at_css("turbo-frame##{frame_id}")
         expect(frame).to be_present
-        expect(frame.at_css("[role='alert']")).to be_present
+        expect(frame.text).to include("100文字")
 
         input = frame.at_css('input[name="goal[name]"]')
         expect(input["value"]).to eq(invalid_name)

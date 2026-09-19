@@ -1133,4 +1133,45 @@
   .stamp-stage-m {
     min-height: 64px;
   }
+
+  .page-wide {
+    width: min(100%, calc(1100px + (var(--page-pad-pc) * 2)));
+    margin-inline: auto;
+    padding: 40px var(--page-pad-pc);
+  }
+
+  .panel {
+    border: var(--border-hair);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.05);
+    padding: 28px;
+  }
+
+  .panel-eyebrow {
+    margin: 0 0 var(--space-1);
+    color: var(--color-kincha-600);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    line-height: 1.4;
+  }
+
+  .panel > h1 {
+    font-family: var(--font-sans);
+    font-size: clamp(22px, 2vw, 26px);
+    font-weight: 900;
+    letter-spacing: 0;
+  }
+
+  @media (max-width: 767px) {
+    .page-wide {
+      padding: 20px 16px var(--space-7);
+    }
+
+    .panel {
+      padding: 20px;
+    }
+  }
 }

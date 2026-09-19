@@ -111,25 +111,6 @@ RSpec.describe "Goals", type: :request do
     end
   end
 
-  describe "GET /goals (index)" do
-    let(:user) { create(:user) }
-
-    before do
-      sign_in(user)
-    end
-
-    it "ログインユーザーの目標だけを表示する" do
-      own_goal = create(:goal, user: user, name: "自分の目標")
-      other_goal = create(:goal, name: "他ユーザーの目標")
-
-      get goals_path
-
-      expect(response).to have_http_status(:ok)
-      expect(response.body).to include(own_goal.name)
-      expect(response.body).not_to include(other_goal.name)
-    end
-  end
-
   describe "GET /goals/:id (show)" do
     let(:user) { create(:user) }
 

@@ -40,7 +40,7 @@ RSpec.describe "Goals", type: :request do
         get goals_path
 
         expect(response).to have_http_status(:ok)
-        expect(response.parsed_body.css(".grid-card").map(&:text)).to eq([
+        expect(response.parsed_body.css(".grid-card-title").map(&:text)).to eq([
           active_goal.name,
           newer_completed_goal.name,
           older_completed_goal.name

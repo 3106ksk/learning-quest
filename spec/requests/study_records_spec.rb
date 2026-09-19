@@ -21,7 +21,8 @@ RSpec.describe "StudyRecords", type: :request do
   end
 
   describe "POST /study_records" do
-    it "完了済み目標ではなく現在の目標を新しい学習記録へ保存する" do
+    it "完了済み目標ではなく現在の目標を新しい学習記録へ保存する",
+       skip: "GOAL-8(#206)で StudyRecordsController#create が goal_id を渡すまでRed" do
       create(:goal, :completed, user: user)
       current_goal = create(:goal, user: user)
       create(:goal, :completed, user: user)

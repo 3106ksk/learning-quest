@@ -1,5 +1,6 @@
 class GoalsController < ApplicationController
   before_action :set_goal, only: [ :show, :edit, :update ]
+  before_action :ensure_active, only: [ :edit, :update ]
 
   def new
     @goal = current_user.goals.build
@@ -31,6 +32,12 @@ class GoalsController < ApplicationController
 
   def set_goal
     @goal = current_user.goals.find(params[:id])
+  end
+
+  def ensure_active
+    return if @goal.active?
+
+    redirect_to @goal, status: :see_other
   end
 
   def goal_params

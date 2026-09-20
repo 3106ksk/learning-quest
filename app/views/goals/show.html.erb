@@ -2,11 +2,34 @@
 
 <div class="page">
   <%= turbo_frame_tag @goal do %>
+    <% if turbo_frame_request? && flash[:danger].present? %>
+      <div class="error-banner" style="margin-bottom: var(--space-4)"><%= flash[:danger] %></div>
+    <% end %>
+
     <section class="goal-card" aria-labelledby="goal-title">
-      <div class="goal-card-controls">
-        <h1 id="goal-title" class="goal-card-title"><%= @goal.name %></h1>
-        <%= link_to t(".edit"), edit_goal_path(@goal), class: "btn btn-secondary" %>
+      <div class="goal-card-overview">
+        <div class="goal-card-heading">
+          <span class="card-badge badge-<%= @goal.status %>">
+            <%= t("enums.goal.status.#{@goal.status}") %>
+          </span>
+          <h1 id="goal-title" class="goal-card-title"><%= @goal.name %></h1>
+        </div>
+        <div class="goal-card-actions">
+          <% if @goal.active? %>
+            <%= link_to t(".edit"), edit_goal_path(@goal), class: "btn btn-secondary" %>
+            <%= button_to t(".complete"), complete_goal_path(@goal), method: :patch,
+                  data: { turbo_confirm: t(".confirm", name: @goal.name) },
+                  class: "btn btn-secondary" %>
+          <% else %>
+            <%= link_to t(".new_goal"), new_goal_path %>
+          <% end %>
+        </div>
       </div>
+      <% if @goal.completed? %>
+        <p class="caption" style="margin-top: var(--space-3)">
+          <%= l(@goal.completed_at.to_date, format: :completed) %>
+        </p>
+      <% end %>
     </section>
   <% end %>
 </div>

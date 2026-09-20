@@ -1,6 +1,6 @@
 class GoalsController < ApplicationController
-  before_action :set_goal, only: [ :show, :edit, :update ]
-  before_action :ensure_active, only: [ :edit, :update ]
+  before_action :set_goal, only: [ :show, :edit, :update, :complete ]
+  before_action :ensure_active, only: [ :edit, :update, :complete ]
 
   def index
     @goals = current_user.goals.order(completed_at: :desc)
@@ -32,6 +32,11 @@ class GoalsController < ApplicationController
     end
   end
 
+  def complete
+    @goal.complete!
+    redirect_to @goal, status: :see_other
+  end
+
   private
 
   def set_goal
@@ -41,7 +46,7 @@ class GoalsController < ApplicationController
   def ensure_active
     return if @goal.active?
 
-    redirect_to @goal, status: :see_other
+    redirect_to @goal, danger: t(".danger"), status: :see_other
   end
 
   def goal_params

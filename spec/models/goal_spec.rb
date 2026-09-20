@@ -1,6 +1,30 @@
 require 'rails_helper'
 
 RSpec.describe Goal, type: :model do
+  include ActiveSupport::Testing::TimeHelpers
+
+  describe "#complete!" do
+    it "進行中の目標を完了にし、完了日時を保存する" do
+      goal = create(:goal)
+      completed_at = Time.zone.local(2026, 9, 20, 12, 0, 0)
+
+      travel_to(completed_at) { goal.complete! }
+
+      expect(goal.reload).to be_completed
+      expect(goal.completed_at).to eq(completed_at)
+    end
+
+    it "完了済みの目標は再度完了できず、状態と完了日時を変えない" do
+      completed_at = Time.zone.local(2026, 9, 19, 12, 0, 0)
+      goal = create(:goal, :completed, completed_at: completed_at)
+
+      expect { goal.complete! }.to raise_error(RuntimeError)
+
+      expect(goal.reload.status).to eq("completed")
+      expect(goal.completed_at).to eq(completed_at)
+    end
+  end
+
   describe "学習記録との関連付け" do
     it "削除すると紐づく学習記録も削除される" do
       user = create(:user)

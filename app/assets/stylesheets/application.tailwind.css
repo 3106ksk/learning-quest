@@ -146,6 +146,29 @@
     line-height: 1.4;
   }
 
+  .goal-card-overview {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .goal-card-heading {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+    min-width: 0;
+  }
+
+  .goal-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--space-3);
+  }
+
   .goal-card-controls {
     display: flex;
     flex-wrap: wrap;
@@ -153,7 +176,6 @@
     gap: var(--space-3);
   }
 
-  .goal-card-controls .goal-card-title,
   .goal-card-controls .field-control {
     width: auto;
     min-width: 0;
@@ -172,6 +194,14 @@
   @media (max-width: 767px) {
     .goal-card {
       padding: var(--space-5);
+    }
+
+    .goal-card-overview {
+      flex-direction: column;
+    }
+
+    .goal-card-actions {
+      justify-content: flex-start;
     }
   }
 
@@ -1247,15 +1277,18 @@
   }
 
   .card-badge {
-    position: absolute;
-    top: 12px;
-    left: 12px;
     border-radius: 999px;
     padding: 4px 10px;
     font-family: var(--font-sans);
     font-size: 11px;
     font-weight: 800;
     line-height: 1.4;
+  }
+
+  .grid-card-face .card-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
   }
 
   .badge-active {

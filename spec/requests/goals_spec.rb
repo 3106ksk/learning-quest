@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Goals", type: :request do
+  include ActiveSupport::Testing::TimeHelpers
+
   describe "GET /goals (index)" do
     context "ログイン済みの場合" do
       let(:user) { create(:user) }
@@ -320,6 +322,40 @@ RSpec.describe "Goals", type: :request do
 
         expect(response).to have_http_status(:not_found)
       end
+    end
+  end
+
+  describe "PATCH /goals/:id/complete" do
+    let(:user) { create(:user) }
+
+    before do
+      sign_in(user)
+    end
+
+    it "進行中の目標を完了し、目標詳細画面へリダイレクトする" do
+      goal = create(:goal, user: user)
+      completed_at = Time.zone.local(2026, 9, 20, 12, 0, 0)
+
+      travel_to(completed_at) { patch complete_goal_path(goal) }
+
+      expect(goal.reload).to be_completed
+      expect(goal.completed_at).to eq(completed_at)
+      expect(response).to have_http_status(:see_other)
+      expect(response).to redirect_to(goal_path(goal))
+      expect(flash[:success]).to be_nil
+    end
+
+    it "完了済みの目標を再度完了せず、失敗通知付きで目標詳細画面へリダイレクトする" do
+      completed_at = Time.zone.local(2026, 9, 19, 12, 0, 0)
+      goal = create(:goal, :completed, user: user, completed_at: completed_at)
+
+      patch complete_goal_path(goal)
+
+      expect(goal.reload.status).to eq("completed")
+      expect(goal.completed_at).to eq(completed_at)
+      expect(response).to have_http_status(:see_other)
+      expect(response).to redirect_to(goal_path(goal))
+      expect(flash[:danger]).to eq("この目標はすでに完了しています")
     end
   end
 end

@@ -2,6 +2,7 @@ ja:
   date:
     formats:
       record: "%-m/%-d"
+      completed: "%Y年%-m月%-d日"
   time:
     formats:
       record: "%-m/%-d %H:%M"
@@ -103,11 +104,19 @@ ja:
       new_goal: 目標を設定する
     show:
       edit: 編集する
+      complete: 完了する
+      confirm: "「%{name}」を完了しますか？"
+      new_goal: 次の目標を設定する
     edit:
       title: 目標を編集する
       name: 目標名
       submit: 更新する
       cancel: キャンセル
+      danger: 完了した目標は編集できません
+    update:
+      danger: 完了した目標は編集できません
+    complete:
+      danger: この目標はすでに完了しています
     create:
       success: 目標を設定しました
       danger: 目標を設定できませんでした

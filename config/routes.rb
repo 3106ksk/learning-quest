@@ -14,7 +14,11 @@ Rails.application.routes.draw do
 
   resources :histories, only: [ :index, :show ]
 
-  resources :goals
+  resources :goals do
+    member do
+      patch :complete
+    end
+  end
 
   get "up" => "rails/health#show", as: :rails_health_check
 end

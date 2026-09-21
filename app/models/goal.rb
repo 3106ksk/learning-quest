@@ -11,4 +11,10 @@ class Goal < ApplicationRecord
   validates :user_id, uniqueness: {
     conditions: -> { where(status: "active") }
   }, if: :active?
+
+  def complete!
+    raise "進行中の目標だけ完了できます" unless active?
+
+    update!(status: :completed, completed_at: Time.current)
+  end
 end

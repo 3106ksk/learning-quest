@@ -358,4 +358,52 @@ RSpec.describe "Goals", type: :request do
       expect(flash[:danger]).to eq("この目標はすでに完了しています")
     end
   end
+
+  describe "DELETE /goals/:id" do
+    let(:user) { create(:user) }
+
+    before do
+      sign_in(user)
+    end
+
+    context "自分の進行中の目標の場合" do
+      it "目標を削除し、成功通知付きで目標一覧へリダイレクトする" do
+        goal = create(:goal, user: user)
+
+        expect {
+          delete goal_path(goal)
+        }.to change(Goal, :count).by(-1)
+
+        expect(response).to have_http_status(:see_other)
+        expect(response).to redirect_to(goals_path)
+        expect(flash[:success]).to eq("目標を削除しました")
+      end
+    end
+
+    context "自分の完了済み目標の場合" do
+      it "目標を削除し、目標一覧へリダイレクトする" do
+        goal = create(:goal, :completed, user: user)
+
+        expect {
+          delete goal_path(goal)
+        }.to change(Goal, :count).by(-1)
+
+        expect(response).to have_http_status(:see_other)
+        expect(response).to redirect_to(goals_path)
+      end
+    end
+
+    context "他ユーザーの目標の場合" do
+      it "目標を削除せず、404を返す" do
+        other_goal = create(:goal)
+
+        expect {
+          delete goal_path(other_goal)
+        }.not_to change(Goal, :count)
+
+        expect(response).to have_http_status(:not_found)
+        expect(Goal.exists?(other_goal.id)).to be(true)
+      end
+    end
+  end
 end

@@ -1,5 +1,5 @@
 class GoalsController < ApplicationController
-  before_action :set_goal, only: [ :show, :edit, :update, :complete ]
+  before_action :set_goal, only: [ :show, :edit, :update, :complete, :destroy ]
   before_action :ensure_active, only: [ :edit, :update, :complete ]
 
   def index
@@ -35,6 +35,11 @@ class GoalsController < ApplicationController
   def complete
     @goal.complete!
     redirect_to @goal, status: :see_other
+  end
+
+  def destroy
+    @goal.destroy!
+    redirect_to goals_path, success: t(".success"), status: :see_other
   end
 
   private

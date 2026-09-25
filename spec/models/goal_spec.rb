@@ -25,20 +25,24 @@ RSpec.describe Goal, type: :model do
     end
   end
 
-  describe "学習記録との関連付け" do
-    it "削除すると紐づく学習記録も削除される" do
-      user = create(:user)
-      goal = create(:goal, user: user)
-      StudyRecord.create!(
-        user: user,
-        goal: goal,
-        planned_minutes: 25,
-        activity: "RSpecの学習",
-        started_at: Time.current,
-        status: :running
-      )
+  describe "関連データの削除" do
+    context "目標の削除に成功した場合" do
+      it "紐づく学習記録と評価も削除される" do
+        user = create(:user)
+        goal = create(:goal, user: user)
+        study_record = create(
+          :study_record,
+          user: user,
+          goal: goal,
+          status: :awaiting_evaluation
+        )
+        create(:evaluation, study_record: study_record)
 
-      expect { goal.destroy! }.to change(StudyRecord, :count).by(-1)
+        expect { goal.destroy! }
+          .to change(Goal, :count).by(-1)
+          .and change(StudyRecord, :count).by(-1)
+          .and change(Evaluation, :count).by(-1)
+      end
     end
   end
 

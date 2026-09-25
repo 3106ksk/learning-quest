@@ -28,6 +28,19 @@ RSpec.describe StudyRecord, type: :model do
     end
   end
 
+  describe "関連データの削除" do
+    context "学習記録の削除に成功した場合" do
+      it "紐づく評価も削除される" do
+        study_record = create(:study_record, status: :awaiting_evaluation)
+        create(:evaluation, study_record: study_record)
+
+        expect { study_record.destroy! }
+          .to change(StudyRecord, :count).by(-1)
+          .and change(Evaluation, :count).by(-1)
+      end
+    end
+  end
+
   describe "#mark_as_evaluated!" do
     it "評価待ち以外の学習記録は評価済みに変更できない" do
       user = create(:user)

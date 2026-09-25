@@ -27,6 +27,7 @@
   --color-kincha-tint: rgba(169, 122, 47, 0.1);
 
   /* Semantic */
+  --color-error-700: #863725;
   --color-error-600: #a8402c;
   --color-error-tint: rgba(168, 64, 44, 0.08);
   --color-scrim: rgba(38, 36, 31, 0.32);
@@ -390,6 +391,18 @@
   .btn-primary:hover {
     border-color: var(--color-green-700);
     background: var(--color-green-700);
+  }
+
+  .btn-destructive {
+    border: var(--border-control);
+    border-color: var(--color-error-600);
+    background: var(--color-error-600);
+    color: var(--color-paper);
+  }
+
+  .btn-destructive:hover {
+    border-color: var(--color-error-700);
+    background: var(--color-error-700);
   }
 
   .btn-secondary {

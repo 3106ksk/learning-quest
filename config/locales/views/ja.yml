@@ -175,6 +175,7 @@ ja:
       goal_required: まずは目標を設定してください。
       set_goal: 目標を設定する
       set_goal_link: 目標を設定する →
+      view_goal: 目標を見る →
   evaluations:
     show:
       actions:

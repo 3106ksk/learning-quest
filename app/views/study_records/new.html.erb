@@ -20,7 +20,7 @@
             </div>
             <p class="goal-card-title"><%= @current_goal.name %></p>
           </section>
-          <%= link_to "目標を見る →", goal_path(@current_goal), class: "study-start-goal-link", data: { turbo_frame: "_top" } %>
+          <%= link_to t(".view_goal"), goal_path(@current_goal), class: "study-start-goal-link", data: { turbo_frame: "_top" } %>
         <% else %>
           <section class="study-start-empty-goal">
             <p class="study-start-empty-title"><%= t(".goal_unset") %></p>

@@ -106,6 +106,9 @@ ja:
       edit: 編集する
       complete: 完了する
       confirm: "「%{name}」を完了しますか？"
+      destroy: 削除する
+      destroy_confirm: "「%{name}」と、紐づく学習記録%{count}件を削除します。この操作は取り消せません。"
+      destroy_confirm_without_records: "「%{name}」を削除します。この操作は取り消せません。"
       new_goal: 次の目標を設定する
     edit:
       title: 目標を編集する

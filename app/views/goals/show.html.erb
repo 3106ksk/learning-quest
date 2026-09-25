@@ -23,6 +23,13 @@
           <% else %>
             <%= link_to t(".new_goal"), new_goal_path, data: { turbo_frame: "_top" } %>
           <% end %>
+          <% study_records_count = @goal.study_records.count %>
+          <% destroy_confirm = study_records_count.positive? ?
+               t(".destroy_confirm", name: @goal.name, count: study_records_count) :
+               t(".destroy_confirm_without_records", name: @goal.name) %>
+          <%= button_to t(".destroy"), goal_path(@goal), method: :delete,
+                data: { turbo_confirm: destroy_confirm, turbo_frame: "_top" },
+                class: "btn btn-destructive" %>
         </div>
       </div>
       <% if @goal.completed? %>

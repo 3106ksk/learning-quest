@@ -117,6 +117,8 @@ ja:
       danger: 完了した目標は編集できません
     complete:
       danger: この目標はすでに完了しています
+    destroy:
+      success: 目標を削除しました
     create:
       success: 目標を設定しました
       danger: 目標を設定できませんでした

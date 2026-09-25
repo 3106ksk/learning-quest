@@ -18,7 +18,7 @@
           <% if @goal.active? %>
             <%= link_to t(".edit"), edit_goal_path(@goal), class: "btn btn-secondary" %>
             <%= button_to t(".complete"), complete_goal_path(@goal), method: :patch,
-                  data: { turbo_confirm: t(".confirm", name: @goal.name) },
+                  data: { turbo_confirm: t(".complete_confirm", name: @goal.name) },
                   class: "btn btn-secondary" %>
           <% else %>
             <%= link_to t(".new_goal"), new_goal_path, data: { turbo_frame: "_top" } %>

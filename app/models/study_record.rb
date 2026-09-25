@@ -3,7 +3,7 @@ class StudyRecord < ApplicationRecord
   ACTIVE_STATUSES = %w[running paused awaiting_evaluation].freeze
 
   belongs_to :user
-  belongs_to :goal
+  belongs_to :goal, optional: true
   has_one :evaluation, dependent: :destroy
 
   enum :status, {
@@ -24,6 +24,7 @@ class StudyRecord < ApplicationRecord
   scope :active, -> { where(status: ACTIVE_STATUSES) }
   scope :recent_first, -> { order(started_at: :desc, id: :desc) }
 
+  validates :goal_id, presence: true, on: :create
   validates :planned_minutes, presence: true, inclusion: { in: ALLOWED_PLANNED_MINUTES }
   validates :activity, presence: true, length: { maximum: 100 }
   validates :started_at, presence: true

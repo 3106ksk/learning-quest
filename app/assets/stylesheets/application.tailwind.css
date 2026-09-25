@@ -139,6 +139,71 @@
     padding: var(--space-6);
   }
 
+  .study-start-layout {
+    width: 100%;
+  }
+
+  .study-start-form {
+    min-width: 0;
+  }
+
+  .study-start-layout:not(.has-goal) .study-start-form {
+    max-width: var(--column-main-max);
+    margin-inline: auto;
+  }
+
+  .study-start-aside {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    min-width: 0;
+  }
+
+  .study-start-goal-card {
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .study-start-goal-card .goal-card-title {
+    margin: 0;
+    padding: var(--space-5);
+    font-size: 22px;
+    overflow-wrap: anywhere;
+  }
+
+  .study-start-goal-link {
+    align-self: flex-end;
+  }
+
+  @media (min-width: 768px) {
+    .study-start-layout.has-goal {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 340px);
+      align-items: stretch;
+      gap: var(--space-5);
+    }
+
+    .study-start-layout.has-goal .study-start-aside {
+      grid-column: 2;
+      grid-row: 1;
+      border: var(--border-hair);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.5);
+      padding: var(--space-5);
+    }
+
+    .study-start-layout.has-goal .study-start-form {
+      grid-column: 1;
+      grid-row: 1;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .study-start-layout.has-goal .study-start-form {
+      margin-top: var(--space-5);
+    }
+  }
+
   .goal-card-title {
     font-family: var(--font-sans);
     font-size: clamp(24px, 3vw, 32px);

@@ -2,6 +2,7 @@ class StudyRecordsController < ApplicationController
   layout "focus", only: :show
 
   before_action :set_study_record, only: %i[show pause resume complete]
+  before_action :set_current_goal, only: %i[new create]
   before_action :ensure_running, only: :pause
   before_action :ensure_paused, only: :resume
   before_action :ensure_running_or_paused, only: :complete
@@ -24,7 +25,7 @@ class StudyRecordsController < ApplicationController
 
   def create
     @study_record = current_user.study_records.build(
-      study_record_params.merge(started_at: Time.current)
+      study_record_params.merge(started_at: Time.current, goal: @current_goal)
     )
 
     if @study_record.save
@@ -60,6 +61,10 @@ class StudyRecordsController < ApplicationController
   end
 
   private
+
+  def set_current_goal
+    @current_goal = current_user.goals.active.take
+  end
 
   def set_study_record
     @study_record = current_user.study_records.find(params[:id])

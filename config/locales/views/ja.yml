@@ -166,6 +166,16 @@ ja:
       empty: 保存された学習記録はありません。
     show:
       not_found: その学習記録は見つかりませんでした。
+  study_records:
+    new:
+      current_goal: 現在の目標
+      goal: 目標
+      goal_unset: 目標未設定
+      goal_required_description: 学習を始めるには、目標の設定が必要です。
+      goal_required: まずは目標を設定してください。
+      set_goal: 目標を設定する
+      set_goal_link: 目標を設定する →
+      view_goal: 目標を見る →
   evaluations:
     show:
       actions:

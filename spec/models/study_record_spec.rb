@@ -24,7 +24,7 @@ RSpec.describe StudyRecord, type: :model do
       study_record = described_class.new(attributes)
 
       expect(study_record).to be_invalid
-      expect(study_record.errors[:goal]).to be_present
+      expect(study_record.errors[:goal_id]).to be_present
     end
   end
 

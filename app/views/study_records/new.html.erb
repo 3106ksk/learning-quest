@@ -1,6 +1,36 @@
 <%= turbo_frame_tag "study-form" do %>
-  <div class="page">
-    <div class="form-shell">
+  <div class="page-wide">
+    <% if @study_record.errors[:goal_id].any? %>
+      <div class="error-banner study-start-error" role="alert">
+        <p><%= t(".goal_required") %></p>
+        <%= link_to t(".set_goal_link"), new_goal_path, data: { turbo_frame: "_top" } %>
+      </div>
+    <% end %>
+
+    <div class="study-start-columns">
+      <aside class="study-start-side-column" aria-label="<%= @current_goal ? t('.current_goal') : t('.goal') %>">
+        <% if @current_goal %>
+          <section class="goal-card study-start-goal-card">
+            <div class="grid-card-face face-active">
+              <svg class="goal-card-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 21 10.5 3" />
+                <path d="M10.5 4c3.3.3 5.5 3 8.5 3.5l-2.7 8.3c-3-.3-5.2-3-8.5-3.5z" />
+              </svg>
+              <span class="card-badge badge-active"><%= t("enums.goal.status.active") %></span>
+            </div>
+            <p class="goal-card-title"><%= @current_goal.name %></p>
+          </section>
+          <%= link_to t(".view_goal"), goal_path(@current_goal), class: "study-start-goal-link", data: { turbo_frame: "_top" } %>
+        <% else %>
+          <section class="study-start-empty-goal">
+            <p class="study-start-empty-title"><%= t(".goal_unset") %></p>
+            <p class="study-start-empty-description"><%= t(".goal_required_description") %></p>
+            <%= link_to t(".set_goal"), new_goal_path, class: "btn btn-secondary", data: { turbo_frame: "_top" } %>
+          </section>
+        <% end %>
+      </aside>
+
+      <div class="study-start-form">
       <h1>学習を始める</h1>
 
       <%= form_with model: @study_record, url: study_records_path,  data: { turbo_frame: "_top"}, class: "section form-stack", style: "margin-top: var(--space-5)" do |form| %>
@@ -45,6 +75,7 @@
               data: { turbo_submits_with: "学習を開始します..." },
               class: "btn btn-primary disabled:cursor-not-allowed disabled:opacity-60" %>
       <% end %>
+      </div>
     </div>
   </div>
 <% end %>

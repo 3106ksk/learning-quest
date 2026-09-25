@@ -21,8 +21,7 @@ RSpec.describe "StudyRecords", type: :request do
   end
 
   describe "POST /study_records" do
-    it "完了済み目標ではなく現在の目標を新しい学習記録へ保存する",
-       skip: "GOAL-8(#206)で StudyRecordsController#create が goal_id を渡すまでRed" do
+    it "完了済み目標ではなく現在の目標を新しい学習記録へ保存する" do
       create(:goal, :completed, user: user)
       current_goal = create(:goal, user: user)
       create(:goal, :completed, user: user)
@@ -37,6 +36,17 @@ RSpec.describe "StudyRecords", type: :request do
       study_record = user.study_records.order(:created_at).last
 
       expect(study_record.goal_id).to eq(current_goal.id)
+    end
+
+    it "目標がないときは学習記録を作らず入力を保持して422を返す" do
+      expect {
+        post study_records_path, params: {
+          study_record: { planned_minutes: 25, activity: "RSpecの学習" }
+        }
+      }.not_to change(StudyRecord, :count)
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.body).to include("RSpecの学習", "まずは目標を設定してください。")
     end
   end
 

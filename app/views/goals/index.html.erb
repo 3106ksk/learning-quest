@@ -9,19 +9,19 @@
             <path d="M5 21 10.5 3" />
             <path d="M10.5 4c3.3.3 5.5 3 8.5 3.5l-2.7 8.3c-3-.3-5.2-3-8.5-3.5z" />
           </svg>
-          <span class="card-badge badge-<%= @selected_goal.status %>">
-            <%= t("enums.goal.status.#{@selected_goal.status}") %>
-          </span>
         </div>
+        <span class="card-badge badge-<%= @selected_goal.status %>">
+          <%= t("enums.goal.status.#{@selected_goal.status}") %>
+        </span>
         <div class="goal-dex-hero-body">
-          <div>
+          <div class="goal-dex-hero-copy">
             <h1 id="selected-goal-name" class="goal-dex-hero-name"><%= @selected_goal.name %></h1>
             <% if @selected_goal.completed? %>
               <p class="goal-dex-hero-date"><%= l(@selected_goal.completed_at.to_date, format: :completed) %></p>
             <% end %>
           </div>
-          <%= link_to t(".view_goal"), goal_path(@selected_goal), class: "btn btn-secondary goal-dex-hero-link", data: { turbo_frame: "_top" } %>
         </div>
+        <%= link_to t(".view_goal"), goal_path(@selected_goal), class: "btn btn-secondary goal-dex-hero-link", data: { turbo_frame: "_top" } %>
       </section>
     <% else %>
       <section class="goal-dex-empty" aria-labelledby="goal-unset-heading">

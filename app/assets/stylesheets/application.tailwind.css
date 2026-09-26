@@ -1385,6 +1385,7 @@
 
   .goal-dex-hero {
     display: flex;
+    position: relative;
     min-width: 0;
     flex-direction: column;
     overflow: hidden;
@@ -1409,7 +1410,7 @@
     opacity: 0.09;
   }
 
-  .goal-dex-hero-face .card-badge {
+  .goal-dex-hero > .card-badge {
     position: absolute;
     top: 16px;
     right: 18px;
@@ -1418,9 +1419,10 @@
   .goal-dex-hero-body {
     display: flex;
     flex: 1;
+    min-width: 0;
     flex-direction: column;
     gap: 14px;
-    padding: 22px 26px 26px;
+    padding: 22px 26px 16px;
   }
 
   .goal-dex-hero-name {
@@ -1441,7 +1443,7 @@
 
   .goal-dex-hero-link {
     align-self: flex-end;
-    margin-top: auto;
+    margin: 0 26px 26px;
   }
 
   .goal-dex-empty {
@@ -1734,6 +1736,75 @@
   }
 
   @media (max-width: 767px) {
+    .goal-dex {
+      gap: 20px;
+    }
+
+    .goal-dex-hero {
+      display: grid;
+      grid-template-columns: 112px minmax(0, 1fr);
+      grid-template-rows: minmax(128px, auto) auto;
+      border-radius: 20px;
+    }
+
+    .goal-dex-hero-face {
+      grid-column: 1;
+      grid-row: 1;
+      min-height: 128px;
+      height: auto;
+      flex: initial;
+    }
+
+    .goal-dex-hero-face .goal-card-watermark {
+      right: -32px;
+      bottom: -24px;
+      width: 140px;
+      height: 140px;
+    }
+
+    .goal-dex-hero > .card-badge {
+      top: 10px;
+      right: 12px;
+    }
+
+    .goal-dex-hero-body {
+      grid-column: 2;
+      grid-row: 1;
+      justify-content: center;
+      gap: 8px;
+      padding: 32px 12px 12px;
+    }
+
+    .goal-dex-hero-name {
+      font-size: 16px;
+      line-height: 1.45;
+    }
+
+    .goal-dex-hero-date {
+      font-size: 12px;
+    }
+
+    .goal-dex-hero-link {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      justify-self: center;
+      align-self: center;
+      width: calc(100% - 24px);
+      margin: 0 12px 12px;
+    }
+
+    .goal-dex-list {
+      padding: 12px;
+    }
+
+    .goal-dex-list-header {
+      padding: 10px 12px;
+    }
+
+    .goal-dex-tiles {
+      gap: 10px;
+    }
+
     .grid-card-face {
       height: 110px;
     }

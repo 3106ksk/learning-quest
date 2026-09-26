@@ -1626,13 +1626,13 @@
     transition: border-color 200ms, background-color 200ms;
   }
 
-  .goal-dex-next-tile:hover {
+  a.goal-dex-next-tile:hover {
     border-color: var(--color-green-600);
     background: rgba(45, 93, 75, 0.06);
     color: var(--color-green-600);
   }
 
-  .goal-dex-next-tile:focus-visible {
+  a.goal-dex-next-tile:focus-visible {
     outline-offset: 4px;
   }
 
@@ -1652,6 +1652,28 @@
     line-height: 1.5;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .goal-dex-empty-tile {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1.5px dashed rgba(38, 36, 31, 0.22);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+  }
+
+  .goal-dex-empty-face {
+    display: block;
+    aspect-ratio: 1 / 0.78;
+    border-bottom: 1px dashed rgba(38, 36, 31, 0.18);
+    background: repeating-linear-gradient(135deg, rgba(38, 36, 31, 0.025) 0 8px, transparent 8px 16px);
+  }
+
+  .goal-dex-empty-label {
+    display: block;
+    min-height: 36px;
   }
 
   @media (min-width: 768px) {

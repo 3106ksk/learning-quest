@@ -40,34 +40,44 @@
         </p>
       </div>
 
-      <% if @goals.any? %>
-        <div class="goal-dex-tiles">
-          <% @goals.each do |goal| %>
-            <% selected = goal == @selected_goal %>
-            <%= link_to goals_path(goal_id: goal.id),
-                  class: "goal-dex-tile#{' is-selected' if selected}",
-                  aria: ({ current: "true" } if selected),
-                  data: { turbo_frame: "goal-dex", turbo_action: "advance" } do %>
-              <div class="goal-dex-tile-face face-<%= goal.status %>">
-                <svg class="goal-card-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M5 21 10.5 3" />
-                  <path d="M10.5 4c3.3.3 5.5 3 8.5 3.5l-2.7 8.3c-3-.3-5.2-3-8.5-3.5z" />
-                </svg>
-              </div>
-              <div class="goal-dex-tile-body">
-                <p class="goal-dex-tile-title"><%= goal.name %></p>
-              </div>
-            <% end %>
+      <div class="goal-dex-tiles">
+        <% @goals.each do |goal| %>
+          <% selected = goal == @selected_goal %>
+          <%= link_to goals_path(goal_id: goal.id),
+                class: "goal-dex-tile#{' is-selected' if selected}",
+                aria: ({ current: "true" } if selected),
+                data: { turbo_frame: "goal-dex", turbo_action: "advance" } do %>
+            <div class="goal-dex-tile-face face-<%= goal.status %>">
+              <svg class="goal-card-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 21 10.5 3" />
+                <path d="M10.5 4c3.3.3 5.5 3 8.5 3.5l-2.7 8.3c-3-.3-5.2-3-8.5-3.5z" />
+              </svg>
+            </div>
+            <div class="goal-dex-tile-body">
+              <p class="goal-dex-tile-title"><%= goal.name %></p>
+            </div>
           <% end %>
-        </div>
-      <% else %>
-        <div class="goal-dex-tiles">
+        <% end %>
+
+        <% if @goals.none?(&:active?) %>
           <%= link_to new_goal_path, class: "goal-dex-next-tile", data: { turbo_frame: "_top" } do %>
             <span class="goal-dex-next-face" aria-hidden="true">＋</span>
             <span class="goal-dex-next-label"><%= t(".next_goal") %></span>
           <% end %>
-        </div>
-      <% end %>
+        <% else %>
+          <div class="goal-dex-next-tile">
+            <span class="goal-dex-next-face" aria-hidden="true">＋</span>
+            <span class="goal-dex-next-label"><%= t(".next_goal") %></span>
+          </div>
+        <% end %>
+
+        <% goal_tile_slots(@goals.size).times do %>
+          <div class="goal-dex-empty-tile" aria-hidden="true">
+            <span class="goal-dex-empty-face"></span>
+            <span class="goal-dex-empty-label"></span>
+          </div>
+        <% end %>
+      </div>
     </section>
   <% end %>
 </div>

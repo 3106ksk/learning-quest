@@ -147,6 +147,14 @@
     box-shadow: 0 8px 24px rgba(38, 36, 31, 0.06);
   }
 
+  .goal-new-error {
+    margin-bottom: var(--space-5);
+  }
+
+  .goal-new-error p {
+    margin: 0;
+  }
+
   .goal-new-face.face-active {
     position: relative;
     height: 120px;
@@ -566,7 +574,7 @@
   .error-banner {
     border: var(--border-box);
     border-color: var(--color-error-600);
-    border-radius: var(--radius-box);
+    border-radius: 12px;
     background: var(--color-error-tint);
     color: var(--color-error-600);
     padding: var(--space-3) var(--space-4);
@@ -575,10 +583,25 @@
   .notice-banner {
     border: var(--border-box);
     border-color: var(--color-green-600);
-    border-radius: var(--radius-box);
+    border-radius: 12px;
     background: var(--color-green-tint);
     color: var(--color-green-600);
     padding: var(--space-3) var(--space-4);
+  }
+
+  .banner-action {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-4);
+  }
+
+  .banner-action a {
+    color: inherit;
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .small {
@@ -722,11 +745,11 @@
 
   /*
    * 認証後画面のflashバナー。ページと同じ左右paddingを保ちながら、
-   * バナー本体を.form-shellと同じ最大640pxの本文カラムへ揃える。
+   * バナー本体を.page-wideと同じ最大1100pxの本文幅へ揃える。
    * 下側paddingは直後の.pageが持つ上側paddingと重複させない。
    */
   .flash-shell {
-    width: min(100%, calc(var(--column-main-max) + (var(--page-pad-pc) * 2)));
+    width: min(100%, calc(1100px + (var(--page-pad-pc) * 2)));
     padding-bottom: 0;
   }
 
@@ -736,7 +759,8 @@
     }
 
     .flash-shell {
-      width: min(100%, calc(var(--column-main-max) + (var(--page-pad-mobile) * 2)));
+      width: 100%;
+      padding-inline: 16px;
       padding-bottom: 0;
     }
   }

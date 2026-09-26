@@ -1,7 +1,15 @@
 <% content_for :title, t(".title") %>
 
 <div class="page-wide">
-  <% name_has_error = @goal.errors[:name].any? %>
+  <% active_goal_error = @goal.errors[:user_id].any? %>
+  <% if active_goal_error %>
+    <div class="error-banner banner-action goal-new-error" role="alert">
+      <p><%= t(".active_goal_error") %></p>
+      <%= link_to t(".view_active_goal"), goals_path %>
+    </div>
+  <% end %>
+
+  <% name_has_error = @goal.errors[:name].any? && !active_goal_error %>
   <% name_error_type = @goal.errors.details[:name].find { |error| [ :blank, :too_long ].include?(error[:error]) }&.fetch(:error, nil) %>
 
   <section class="goal-new-card" aria-labelledby="goal-new-title">

@@ -103,6 +103,8 @@ ja:
       empty: まだ目標がありません。
       new_goal: 目標を設定する
       view_goal: 詳細を見る
+      goals_count: 目標
+      completed_count: 完了
     show:
       edit: 編集する
       complete: 完了する

@@ -1676,7 +1676,7 @@
     min-height: 36px;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 1120px) {
     .goal-dex.has-selection,
     .goal-dex.is-empty {
       grid-template-columns: 400px minmax(0, 1fr);

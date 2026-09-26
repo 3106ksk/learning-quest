@@ -22,6 +22,24 @@ RSpec.describe "Goals", type: :request do
         expect(response.body).not_to include(other_users_goal.name)
       end
 
+      it "他ユーザーのgoal_idを指定しても自分の初期選択の目標を表示する" do
+        own_goal = create(:goal, user: user, name: "自分の進行中の目標")
+        other_user = create(:user)
+        other_users_goal = create(:goal, user: other_user, name: "他ユーザーだけの目標")
+
+        get goals_path(goal_id: other_users_goal.id)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).not_to include(other_users_goal.name)
+
+        frame = response.parsed_body.at_css("turbo-frame#goal-dex")
+        expect(frame.at_css(".goal-dex-hero-name").text).to eq(own_goal.name)
+
+        selected_tiles = frame.css('.goal-dex-tile[aria-current="true"]')
+        expect(selected_tiles.size).to eq(1)
+        expect(selected_tiles.first["href"]).to eq(goals_path(goal_id: own_goal.id))
+      end
+
       it "進行中の目標、完了日の新しい順の完了目標の順に表示する" do
         active_goal = create(:goal, user: user, name: "進行中の目標")
         older_completed_goal = create(
@@ -42,31 +60,61 @@ RSpec.describe "Goals", type: :request do
         get goals_path
 
         expect(response).to have_http_status(:ok)
-        expect(response.parsed_body.css(".grid-card-title").map(&:text)).to eq([
+        expect(response.parsed_body.css(".goal-dex-tile-title").map(&:text)).to eq([
           active_goal.name,
           newer_completed_goal.name,
           older_completed_goal.name
         ])
       end
 
-      it "目標が0件のとき、空状態と目標設定画面へのリンクを表示する" do
-        get goals_path
+      it "goal_idで指定した目標を左に表示し、タイルを選択状態にする" do
+        create(:goal, user: user, name: "先頭の目標")
+        selected_goal = create(:goal, :completed, user: user, name: "選択した目標")
+
+        get goals_path(goal_id: selected_goal.id)
 
         expect(response).to have_http_status(:ok)
 
-        empty_state = response.parsed_body.at_css(".empty-state")
-        expect(empty_state).to be_present
-        expect(empty_state.text).to include("まだ目標がありません。")
-        expect(empty_state.at_css("a[href='#{new_goal_path}']").text).to eq("目標を設定する")
+        frame = response.parsed_body.at_css("turbo-frame#goal-dex")
+        expect(frame).to be_present
+        expect(frame.at_css(".goal-dex-hero-name").text).to eq(selected_goal.name)
+
+        selected_tile = frame.at_css(".goal-dex-tile[aria-current='true']")
+        expect(selected_tile).to be_present
+        expect(selected_tile["href"]).to eq(goals_path(goal_id: selected_goal.id))
+        expect(selected_tile["data-turbo-frame"]).to eq("goal-dex")
+        expect(selected_tile["data-turbo-action"]).to eq("advance")
+        expect(selected_tile["class"]).to include("is-selected")
       end
 
-      it "完了目標のみのとき、空状態を表示しない" do
-        create(:goal, :completed, user: user)
+      it "目標が0件のとき、目標未設定の案内と目標設定画面へのリンクを表示する" do
+        get goals_path
+
+        expect(response).to have_http_status(:ok)
+
+        document = response.parsed_body
+        empty_state = document.at_css(".goal-dex-empty")
+        expect(empty_state).to be_present
+        expect(empty_state.at_css("h1").text).to eq("目標未設定")
+        expect(empty_state.text).to include("学習を始めるには、目標の設定が必要です。")
+        expect(empty_state.at_css("a[href='#{new_goal_path}']").text).to eq("目標を設定する")
+        expect(document.at_css(".goal-dex-tally").text.squish).to eq("0目標 0完了")
+        next_goal = document.at_css(".goal-dex-next-tile[href='#{new_goal_path}']")
+        expect(next_goal).to be_present
+        expect(next_goal.text).to include("＋ 次の目標")
+      end
+
+      it "完了目標のみのとき、完了目標を左に表示する" do
+        completed_goal = create(:goal, :completed, user: user, name: "完了した目標")
 
         get goals_path
 
         expect(response).to have_http_status(:ok)
-        expect(response.parsed_body.at_css(".empty-state")).to be_nil
+
+        document = response.parsed_body
+        expect(document.at_css(".goal-dex-empty")).to be_nil
+        expect(document.at_css(".goal-dex-hero-name").text).to eq(completed_goal.name)
+        expect(document.at_css('.goal-dex-tile[aria-current="true"]')).to be_present
       end
     end
   end

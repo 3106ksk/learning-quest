@@ -4,6 +4,7 @@ class GoalsController < ApplicationController
 
   def index
     @goals = current_user.goals.order(completed_at: :desc)
+    @selected_goal = current_user.goals.find_by(id: params[:goal_id]) || @goals.first
   end
 
   def new

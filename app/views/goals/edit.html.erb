@@ -1,6 +1,6 @@
 <% content_for :title, t(".title") %>
 
-<div class="page">
+<div class="page-wide">
   <%= turbo_frame_tag @goal do %>
     <section class="goal-card" aria-labelledby="goal-edit-title">
       <%= form_with model: @goal, style: "margin-top: var(--space-5)" do |form| %>
@@ -14,7 +14,7 @@
                 maxlength: 100,
                 class: "field-control" %>
           <%= form.submit t(".submit"), class: "btn btn-primary" %>
-          <%= link_to t(".cancel"), goal_path(@goal), class: "btn btn-secondary" %>
+          <%= link_to t(".cancel"), goal_path(@goal), class: "btn btn-ghost" %>
         </div>
       <% end %>
     </section>

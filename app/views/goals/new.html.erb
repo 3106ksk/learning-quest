@@ -1,20 +1,45 @@
-<div class="page">
-  <div class="form-shell">
-    <h1>目標を設定する</h1>
-    <p class="small" style="margin-top: var(--space-2)">
-      これから取り組みたい目標を入力してください。
-    </p>
+<% content_for :title, t(".title") %>
 
-    <%= form_with model: @goal, class: "section form-stack", style: "margin-top: var(--space-5)" do |form| %>
-      <div>
-        <%= form.label :name, "目標名", class: "field-label" %>
-        <%= form.text_field :name,
-              maxlength: 100,
-              placeholder: "例: RailsでWebアプリを作る",
-              class: "field-control" %>
-      </div>
+<div class="page-wide">
+  <% active_goal_error = @goal.errors[:user_id].any? %>
+  <% if active_goal_error %>
+    <div class="error-banner banner-action goal-new-error" role="alert">
+      <p><%= t(".active_goal_error") %></p>
+      <%= link_to t(".view_active_goal"), goals_path %>
+    </div>
+  <% end %>
 
-      <%= form.submit "目標を設定する", class: "btn btn-primary" %>
-    <% end %>
-  </div>
+  <% name_has_error = @goal.errors[:name].any? && !active_goal_error %>
+  <% name_error_type = @goal.errors.details[:name].find { |error| [ :blank, :too_long ].include?(error[:error]) }&.fetch(:error, nil) %>
+
+  <section class="goal-new-card" aria-labelledby="goal-new-title">
+    <div class="goal-new-face face-active" aria-hidden="true">
+      <svg class="goal-card-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 21 10.5 3" />
+        <path d="M10.5 4c3.3.3 5.5 3 8.5 3.5l-2.7 8.3c-3-.3-5.2-3-8.5-3.5z" />
+      </svg>
+    </div>
+
+    <div class="goal-new-body">
+      <h1 id="goal-new-title"><%= t(".title") %></h1>
+
+      <%= form_with model: @goal, class: "goal-new-form" do |form| %>
+        <div>
+          <%= form.label :name, t(".name"), class: "field-label" %>
+          <%= form.text_field :name,
+                maxlength: 100,
+                placeholder: t(".name_placeholder"),
+                class: "field-control#{' has-error' if name_has_error}",
+                aria: { invalid: ("true" if name_has_error), describedby: ("goal-name-error" if name_has_error) } %>
+          <% if name_has_error %>
+            <p id="goal-name-error" class="group-error"><%= t(".name_errors.#{name_error_type}") %></p>
+          <% end %>
+        </div>
+
+        <div class="goal-new-actions">
+          <%= form.submit t(".submit"), class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </section>
 </div>

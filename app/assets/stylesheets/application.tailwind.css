@@ -139,6 +139,69 @@
     padding: var(--space-6);
   }
 
+  .goal-new-card {
+    overflow: hidden;
+    border: var(--border-hair);
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.06);
+  }
+
+  .goal-new-error {
+    margin-bottom: var(--space-5);
+  }
+
+  .goal-new-error p {
+    margin: 0;
+  }
+
+  .goal-new-face.face-active {
+    position: relative;
+    height: 120px;
+    overflow: hidden;
+    background: radial-gradient(circle at 78% 18%, rgba(45, 93, 75, 0.28), transparent 42%),
+      radial-gradient(circle at 18% 90%, rgba(169, 122, 47, 0.18), transparent 40%),
+      rgba(45, 93, 75, 0.12);
+  }
+
+  .goal-new-body {
+    width: min(100%, 704px);
+    margin-inline: auto;
+    padding: var(--space-6);
+  }
+
+  .goal-new-body h1 {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 18px;
+    font-weight: 900;
+  }
+
+  .goal-new-form {
+    display: grid;
+    gap: var(--space-5);
+    margin-top: var(--space-5);
+  }
+
+  .goal-new-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  @media (max-width: 767px) {
+    .goal-new-face.face-active {
+      height: 90px;
+    }
+
+    .goal-new-body {
+      padding: var(--space-5);
+    }
+
+    .goal-new-actions .btn {
+      width: 100%;
+    }
+  }
+
   .study-start-columns {
     width: 100%;
   }
@@ -290,6 +353,10 @@
       padding: var(--space-5);
     }
 
+    .goal-card-controls .field-control {
+      flex-basis: 100%;
+    }
+
     .goal-card-overview {
       flex-direction: column;
     }
@@ -435,8 +502,8 @@
   .field-control {
     width: 100%;
     min-height: 44px;
-    border: var(--border-control);
-    border-radius: var(--radius-box);
+    border: 1.5px solid var(--color-line-control);
+    border-radius: 10px;
     background: var(--color-paper);
     color: var(--color-ink-900);
     padding: var(--space-2) var(--space-3);
@@ -464,10 +531,10 @@
     min-height: 44px;
     align-items: center;
     justify-content: center;
-    border-radius: var(--radius-box);
+    border-radius: 12px;
     padding: var(--space-2) var(--space-4);
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 800;
     line-height: 1.4;
     text-align: center;
     text-decoration: none;
@@ -479,6 +546,7 @@
     border-color: var(--color-green-600);
     background: var(--color-green-600);
     color: var(--color-paper);
+    font-weight: 900;
   }
 
   .btn-primary:hover {
@@ -487,21 +555,27 @@
   }
 
   .btn-destructive {
-    border: var(--border-control);
-    border-color: var(--color-error-600);
-    background: var(--color-error-600);
-    color: var(--color-paper);
+    border: 1.5px solid var(--color-error-600);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--color-error-600);
   }
 
   .btn-destructive:hover {
-    border-color: var(--color-error-700);
-    background: var(--color-error-700);
+    background: var(--color-error-tint);
   }
 
   .btn-secondary {
-    border: var(--border-control);
+    border: 1.5px solid var(--color-green-600);
     background: var(--color-paper);
-    color: var(--color-ink-900);
+    color: var(--color-green-600);
+  }
+
+  .btn-ghost {
+    border: 1.5px solid var(--color-line-control);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--color-ink-500);
   }
 
   .btn-secondary:hover {
@@ -511,7 +585,7 @@
   .error-banner {
     border: var(--border-box);
     border-color: var(--color-error-600);
-    border-radius: var(--radius-box);
+    border-radius: 12px;
     background: var(--color-error-tint);
     color: var(--color-error-600);
     padding: var(--space-3) var(--space-4);
@@ -520,10 +594,25 @@
   .notice-banner {
     border: var(--border-box);
     border-color: var(--color-green-600);
-    border-radius: var(--radius-box);
+    border-radius: 12px;
     background: var(--color-green-tint);
     color: var(--color-green-600);
     padding: var(--space-3) var(--space-4);
+  }
+
+  .banner-action {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-4);
+  }
+
+  .banner-action a {
+    color: inherit;
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .small {
@@ -667,11 +756,11 @@
 
   /*
    * 認証後画面のflashバナー。ページと同じ左右paddingを保ちながら、
-   * バナー本体を.form-shellと同じ最大640pxの本文カラムへ揃える。
+   * バナー本体を.page-wideと同じ最大1100pxの本文幅へ揃える。
    * 下側paddingは直後の.pageが持つ上側paddingと重複させない。
    */
   .flash-shell {
-    width: min(100%, calc(var(--column-main-max) + (var(--page-pad-pc) * 2)));
+    width: min(100%, calc(1100px + (var(--page-pad-pc) * 2)));
     padding-bottom: 0;
   }
 
@@ -681,7 +770,8 @@
     }
 
     .flash-shell {
-      width: min(100%, calc(var(--column-main-max) + (var(--page-pad-mobile) * 2)));
+      width: 100%;
+      padding-inline: 16px;
       padding-bottom: 0;
     }
   }
@@ -881,6 +971,11 @@
   @media (max-width: 767px) {
     .button-row .btn {
       width: 100%;
+    }
+
+    .button-row .btn-ghost,
+    .button-row .btn-destructive {
+      border-radius: 12px;
     }
   }
 

@@ -16,7 +16,6 @@ class GoalsController < ApplicationController
     if @goal.save
       redirect_to new_study_record_path, success: t(".success"), status: :see_other
     else
-      flash.now[:danger] = t(".danger")
       render :new, status: :unprocessable_entity
     end
   end

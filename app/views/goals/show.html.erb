@@ -1,6 +1,6 @@
 <% content_for :title, @goal.name %>
 
-<div class="page">
+<div class="page-wide">
   <%= turbo_frame_tag @goal do %>
     <% if turbo_frame_request? && flash[:danger].present? %>
       <div class="error-banner" style="margin-bottom: var(--space-4)"><%= flash[:danger] %></div>
@@ -16,12 +16,13 @@
         </div>
         <div class="goal-card-actions">
           <% if @goal.active? %>
-            <%= link_to t(".edit"), edit_goal_path(@goal), class: "btn btn-secondary" %>
+            <%= link_to t(".edit"), edit_goal_path(@goal), class: "btn btn-ghost" %>
             <%= button_to t(".complete"), complete_goal_path(@goal), method: :patch,
                   data: { turbo_confirm: t(".complete_confirm", name: @goal.name) },
-                  class: "btn btn-secondary" %>
+                  class: "btn btn-ghost" %>
           <% else %>
-            <%= link_to t(".new_goal"), new_goal_path, data: { turbo_frame: "_top" } %>
+            <%= link_to t(".new_goal"), new_goal_path,
+                  data: { turbo_frame: "_top" }, class: "btn btn-secondary" %>
           <% end %>
           <% study_records_count = @goal.study_records.count %>
           <% destroy_confirm = study_records_count.positive? ?

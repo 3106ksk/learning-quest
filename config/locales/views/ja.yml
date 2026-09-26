@@ -124,7 +124,16 @@ ja:
       success: 目標を削除しました
     create:
       success: 目標を設定しました
-      danger: 目標を設定できませんでした
+    new:
+      title: 目標を設定
+      name: 目標名
+      name_placeholder: 例：TOEIC 800点を目指す
+      name_errors:
+        blank: 目標名を入力してください。
+        too_long: 目標名は100文字以内で入力してください。
+      submit: 目標を設定する
+      active_goal_error: 進行中の目標があるため、新しい目標は設定できません。
+      view_active_goal: 進行中の目標を見る →
   enums:
     goal:
       status:

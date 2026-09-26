@@ -49,6 +49,26 @@ RSpec.describe "Goals", type: :request do
         ])
       end
 
+      it "goal_idで指定した目標を左に表示し、タイルを選択状態にする" do
+        create(:goal, user: user, name: "先頭の目標")
+        selected_goal = create(:goal, :completed, user: user, name: "選択した目標")
+
+        get goals_path(goal_id: selected_goal.id)
+
+        expect(response).to have_http_status(:ok)
+
+        frame = response.parsed_body.at_css("turbo-frame#goal-dex")
+        expect(frame).to be_present
+        expect(frame.at_css(".goal-dex-hero-name").text).to eq(selected_goal.name)
+
+        selected_tile = frame.at_css(".goal-dex-tile[aria-current='true']")
+        expect(selected_tile).to be_present
+        expect(selected_tile["href"]).to eq(goals_path(goal_id: selected_goal.id))
+        expect(selected_tile["data-turbo-frame"]).to eq("goal-dex")
+        expect(selected_tile["data-turbo-action"]).to eq("advance")
+        expect(selected_tile["class"]).to include("is-selected")
+      end
+
       it "目標が0件のとき、目標未設定の案内と目標設定画面へのリンクを表示する" do
         get goals_path
 

@@ -1,7 +1,7 @@
 <% content_for :title, t(".title") %>
 
 <div class="page-wide">
-  <div class="goal-dex<%= @selected_goal ? ' has-selection' : ' is-empty' %>">
+  <%= turbo_frame_tag "goal-dex", class: "goal-dex#{@selected_goal ? ' has-selection' : ' is-empty'}" do %>
     <% if @selected_goal %>
       <section class="goal-dex-hero" aria-labelledby="selected-goal-name">
         <div class="goal-dex-hero-face face-<%= @selected_goal.status %>">
@@ -20,7 +20,7 @@
               <p class="goal-dex-hero-date"><%= l(@selected_goal.completed_at.to_date, format: :completed) %></p>
             <% end %>
           </div>
-          <%= link_to t(".view_goal"), goal_path(@selected_goal), class: "btn btn-secondary goal-dex-hero-link" %>
+          <%= link_to t(".view_goal"), goal_path(@selected_goal), class: "btn btn-secondary goal-dex-hero-link", data: { turbo_frame: "_top" } %>
         </div>
       </section>
     <% else %>
@@ -43,7 +43,11 @@
       <% if @goals.any? %>
         <div class="goal-dex-tiles">
           <% @goals.each do |goal| %>
-            <%= link_to goal_path(goal), class: "goal-dex-tile" do %>
+            <% selected = goal == @selected_goal %>
+            <%= link_to goals_path(goal_id: goal.id),
+                  class: "goal-dex-tile#{' is-selected' if selected}",
+                  aria: ({ current: "true" } if selected),
+                  data: { turbo_frame: "goal-dex", turbo_action: "advance" } do %>
               <div class="goal-dex-tile-face face-<%= goal.status %>">
                 <svg class="goal-card-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M5 21 10.5 3" />
@@ -65,5 +69,5 @@
         </div>
       <% end %>
     </section>
-  </div>
+  <% end %>
 </div>

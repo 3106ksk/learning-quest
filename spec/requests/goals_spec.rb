@@ -22,6 +22,24 @@ RSpec.describe "Goals", type: :request do
         expect(response.body).not_to include(other_users_goal.name)
       end
 
+      it "他ユーザーのgoal_idを指定しても自分の初期選択の目標を表示する" do
+        own_goal = create(:goal, user: user, name: "自分の進行中の目標")
+        other_user = create(:user)
+        other_users_goal = create(:goal, user: other_user, name: "他ユーザーだけの目標")
+
+        get goals_path(goal_id: other_users_goal.id)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).not_to include(other_users_goal.name)
+
+        frame = response.parsed_body.at_css("turbo-frame#goal-dex")
+        expect(frame.at_css(".goal-dex-hero-name").text).to eq(own_goal.name)
+
+        selected_tiles = frame.css('.goal-dex-tile[aria-current="true"]')
+        expect(selected_tiles.size).to eq(1)
+        expect(selected_tiles.first["href"]).to eq(goals_path(goal_id: own_goal.id))
+      end
+
       it "進行中の目標、完了日の新しい順の完了目標の順に表示する" do
         active_goal = create(:goal, user: user, name: "進行中の目標")
         older_completed_goal = create(

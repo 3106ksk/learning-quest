@@ -1374,6 +1374,82 @@
     padding: 40px var(--page-pad-pc);
   }
 
+  .goal-dex {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    align-items: stretch;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .goal-dex-hero {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    overflow: hidden;
+    border: var(--border-hair);
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: 0 12px 32px rgba(38, 36, 31, 0.08);
+  }
+
+  .goal-dex-hero-face {
+    position: relative;
+    height: 300px;
+    flex: 0 0 300px;
+    overflow: hidden;
+  }
+
+  .goal-dex-hero-face .goal-card-watermark {
+    right: -30px;
+    bottom: -60px;
+    width: 300px;
+    height: 300px;
+    opacity: 0.09;
+  }
+
+  .goal-dex-hero-face .card-badge {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+  }
+
+  .goal-dex-hero-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 14px;
+    padding: 22px 26px 26px;
+  }
+
+  .goal-dex-hero-name {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
+
+  .goal-dex-hero-date {
+    margin-top: 6px;
+    color: var(--color-ink-500);
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+
+  .goal-dex-hero-link {
+    align-self: flex-end;
+    margin-top: auto;
+  }
+
+  @media (min-width: 768px) {
+    .goal-dex.has-selection {
+      grid-template-columns: 400px minmax(0, 1fr);
+    }
+  }
+
   .panel {
     border: var(--border-hair);
     border-radius: 24px;

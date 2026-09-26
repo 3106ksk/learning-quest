@@ -1,33 +1,58 @@
 <% content_for :title, t(".title") %>
 
 <div class="page-wide">
-  <section class="panel">
-    <p class="panel-eyebrow"><%= t(".eyebrow") %></p>
-
-    <% if @goals.any? %>
-      <div class="card-grid">
-        <% @goals.each do |goal| %>
-          <%= link_to goal_path(goal), class: "grid-card" do %>
-            <div class="grid-card-face face-<%= goal.status %>">
-              <svg class="goal-card-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M5 21 10.5 3" />
-                <path d="M10.5 4c3.3.3 5.5 3 8.5 3.5l-2.7 8.3c-3-.3-5.2-3-8.5-3.5z" />
-              </svg>
-              <span class="card-badge badge-<%= goal.status %>">
-                <%= t("enums.goal.status.#{goal.status}") %>
-              </span>
-            </div>
-            <div class="grid-card-body">
-              <p class="grid-card-title"><%= goal.name %></p>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
-    <% else %>
-      <div class="empty-state">
-        <p><%= t(".empty") %></p>
-        <%= link_to t(".new_goal"), new_goal_path %>
-      </div>
+  <div class="goal-dex<%= ' has-selection' if @selected_goal %>">
+    <% if @selected_goal %>
+      <section class="goal-dex-hero" aria-labelledby="selected-goal-name">
+        <div class="goal-dex-hero-face face-<%= @selected_goal.status %>">
+          <svg class="goal-card-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 21 10.5 3" />
+            <path d="M10.5 4c3.3.3 5.5 3 8.5 3.5l-2.7 8.3c-3-.3-5.2-3-8.5-3.5z" />
+          </svg>
+          <span class="card-badge badge-<%= @selected_goal.status %>">
+            <%= t("enums.goal.status.#{@selected_goal.status}") %>
+          </span>
+        </div>
+        <div class="goal-dex-hero-body">
+          <div>
+            <h1 id="selected-goal-name" class="goal-dex-hero-name"><%= @selected_goal.name %></h1>
+            <% if @selected_goal.completed? %>
+              <p class="goal-dex-hero-date"><%= l(@selected_goal.completed_at.to_date, format: :completed) %></p>
+            <% end %>
+          </div>
+          <%= link_to t(".view_goal"), goal_path(@selected_goal), class: "btn btn-secondary goal-dex-hero-link" %>
+        </div>
+      </section>
     <% end %>
-  </section>
+
+    <section class="panel">
+      <p class="panel-eyebrow"><%= t(".eyebrow") %></p>
+
+      <% if @goals.any? %>
+        <div class="card-grid">
+          <% @goals.each do |goal| %>
+            <%= link_to goal_path(goal), class: "grid-card" do %>
+              <div class="grid-card-face face-<%= goal.status %>">
+                <svg class="goal-card-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 21 10.5 3" />
+                  <path d="M10.5 4c3.3.3 5.5 3 8.5 3.5l-2.7 8.3c-3-.3-5.2-3-8.5-3.5z" />
+                </svg>
+                <span class="card-badge badge-<%= goal.status %>">
+                  <%= t("enums.goal.status.#{goal.status}") %>
+                </span>
+              </div>
+              <div class="grid-card-body">
+                <p class="grid-card-title"><%= goal.name %></p>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="empty-state">
+          <p><%= t(".empty") %></p>
+          <%= link_to t(".new_goal"), new_goal_path %>
+        </div>
+      <% end %>
+    </section>
+  </div>
 </div>

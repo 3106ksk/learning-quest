@@ -104,13 +104,17 @@ RSpec.describe "Goals", type: :request do
         expect(next_goal.text).to include("＋ 次の目標")
       end
 
-      it "完了目標のみのとき、空状態を表示しない" do
-        create(:goal, :completed, user: user)
+      it "完了目標のみのとき、完了目標を左に表示する" do
+        completed_goal = create(:goal, :completed, user: user, name: "完了した目標")
 
         get goals_path
 
         expect(response).to have_http_status(:ok)
-        expect(response.parsed_body.at_css(".empty-state")).to be_nil
+
+        document = response.parsed_body
+        expect(document.at_css(".goal-dex-empty")).to be_nil
+        expect(document.at_css(".goal-dex-hero-name").text).to eq(completed_goal.name)
+        expect(document.at_css('.goal-dex-tile[aria-current="true"]')).to be_present
       end
     end
   end

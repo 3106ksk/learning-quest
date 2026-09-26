@@ -1,6 +1,6 @@
 <% content_for :title, t(".title") %>
 
-<div class="page-wide">
+<div class="page-wide goal-dex-page">
   <%= turbo_frame_tag "goal-dex", class: "goal-dex#{@selected_goal ? ' has-selection' : ' is-empty'}" do %>
     <% if @selected_goal %>
       <section class="goal-dex-hero" aria-labelledby="selected-goal-name">

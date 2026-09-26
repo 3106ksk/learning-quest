@@ -530,7 +530,7 @@
     border-radius: 12px;
     padding: var(--space-2) var(--space-4);
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 800;
     line-height: 1.4;
     text-align: center;
     text-decoration: none;
@@ -542,6 +542,7 @@
     border-color: var(--color-green-600);
     background: var(--color-green-600);
     color: var(--color-paper);
+    font-weight: 900;
   }
 
   .btn-primary:hover {
@@ -550,21 +551,27 @@
   }
 
   .btn-destructive {
-    border: var(--border-control);
-    border-color: var(--color-error-600);
-    background: var(--color-error-600);
-    color: var(--color-paper);
+    border: 1.5px solid var(--color-error-600);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--color-error-600);
   }
 
   .btn-destructive:hover {
-    border-color: var(--color-error-700);
-    background: var(--color-error-700);
+    background: var(--color-error-tint);
   }
 
   .btn-secondary {
-    border: var(--border-control);
+    border: 1.5px solid var(--color-green-600);
     background: var(--color-paper);
-    color: var(--color-ink-900);
+    color: var(--color-green-600);
+  }
+
+  .btn-ghost {
+    border: 1.5px solid var(--color-line-control);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--color-ink-500);
   }
 
   .btn-secondary:hover {
@@ -960,6 +967,11 @@
   @media (max-width: 767px) {
     .button-row .btn {
       width: 100%;
+    }
+
+    .button-row .btn-ghost,
+    .button-row .btn-destructive {
+      border-radius: 12px;
     }
   }
 

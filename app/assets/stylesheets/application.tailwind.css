@@ -139,6 +139,61 @@
     padding: var(--space-6);
   }
 
+  .goal-new-card {
+    overflow: hidden;
+    border: var(--border-hair);
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.06);
+  }
+
+  .goal-new-face.face-active {
+    position: relative;
+    height: 120px;
+    overflow: hidden;
+    background: radial-gradient(circle at 78% 18%, rgba(45, 93, 75, 0.28), transparent 42%),
+      radial-gradient(circle at 18% 90%, rgba(169, 122, 47, 0.18), transparent 40%),
+      rgba(45, 93, 75, 0.12);
+  }
+
+  .goal-new-body {
+    width: min(100%, 704px);
+    margin-inline: auto;
+    padding: var(--space-6);
+  }
+
+  .goal-new-body h1 {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 18px;
+    font-weight: 900;
+  }
+
+  .goal-new-form {
+    display: grid;
+    gap: var(--space-5);
+    margin-top: var(--space-5);
+  }
+
+  .goal-new-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  @media (max-width: 767px) {
+    .goal-new-face.face-active {
+      height: 90px;
+    }
+
+    .goal-new-body {
+      padding: var(--space-5);
+    }
+
+    .goal-new-actions .btn {
+      width: 100%;
+    }
+  }
+
   .study-start-columns {
     width: 100%;
   }
@@ -435,8 +490,8 @@
   .field-control {
     width: 100%;
     min-height: 44px;
-    border: var(--border-control);
-    border-radius: var(--radius-box);
+    border: 1.5px solid var(--color-line-control);
+    border-radius: 10px;
     background: var(--color-paper);
     color: var(--color-ink-900);
     padding: var(--space-2) var(--space-3);
@@ -464,7 +519,7 @@
     min-height: 44px;
     align-items: center;
     justify-content: center;
-    border-radius: var(--radius-box);
+    border-radius: 12px;
     padding: var(--space-2) var(--space-4);
     cursor: pointer;
     font-weight: 600;

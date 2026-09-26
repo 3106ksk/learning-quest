@@ -105,6 +105,9 @@ ja:
       view_goal: 詳細を見る
       goals_count: 目標
       completed_count: 完了
+      goal_unset: 目標未設定
+      goal_unset_description: 学習を始めるには、目標の設定が必要です。
+      next_goal: ＋ 次の目標
     show:
       edit: 編集する
       complete: 完了する

@@ -49,15 +49,21 @@ RSpec.describe "Goals", type: :request do
         ])
       end
 
-      it "目標が0件のとき、空状態と目標設定画面へのリンクを表示する" do
+      it "目標が0件のとき、目標未設定の案内と目標設定画面へのリンクを表示する" do
         get goals_path
 
         expect(response).to have_http_status(:ok)
 
-        empty_state = response.parsed_body.at_css(".empty-state")
+        document = response.parsed_body
+        empty_state = document.at_css(".goal-dex-empty")
         expect(empty_state).to be_present
-        expect(empty_state.text).to include("まだ目標がありません。")
+        expect(empty_state.at_css("h1").text).to eq("目標未設定")
+        expect(empty_state.text).to include("学習を始めるには、目標の設定が必要です。")
         expect(empty_state.at_css("a[href='#{new_goal_path}']").text).to eq("目標を設定する")
+        expect(document.at_css(".goal-dex-tally").text.squish).to eq("0目標 0完了")
+        next_goal = document.at_css(".goal-dex-next-tile[href='#{new_goal_path}']")
+        expect(next_goal).to be_present
+        expect(next_goal.text).to include("＋ 次の目標")
       end
 
       it "完了目標のみのとき、空状態を表示しない" do

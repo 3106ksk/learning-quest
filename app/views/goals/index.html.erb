@@ -1,7 +1,7 @@
 <% content_for :title, t(".title") %>
 
 <div class="page-wide">
-  <div class="goal-dex<%= ' has-selection' if @selected_goal %>">
+  <div class="goal-dex<%= @selected_goal ? ' has-selection' : ' is-empty' %>">
     <% if @selected_goal %>
       <section class="goal-dex-hero" aria-labelledby="selected-goal-name">
         <div class="goal-dex-hero-face face-<%= @selected_goal.status %>">
@@ -22,6 +22,12 @@
           </div>
           <%= link_to t(".view_goal"), goal_path(@selected_goal), class: "btn btn-secondary goal-dex-hero-link" %>
         </div>
+      </section>
+    <% else %>
+      <section class="goal-dex-empty" aria-labelledby="goal-unset-heading">
+        <h1 id="goal-unset-heading" class="goal-dex-empty-title"><%= t(".goal_unset") %></h1>
+        <p class="goal-dex-empty-description"><%= t(".goal_unset_description") %></p>
+        <%= link_to t(".new_goal"), new_goal_path, class: "btn btn-secondary goal-dex-empty-link", data: { turbo_frame: "_top" } %>
       </section>
     <% end %>
 
@@ -51,9 +57,11 @@
           <% end %>
         </div>
       <% else %>
-        <div class="empty-state">
-          <p><%= t(".empty") %></p>
-          <%= link_to t(".new_goal"), new_goal_path %>
+        <div class="goal-dex-tiles">
+          <%= link_to new_goal_path, class: "goal-dex-next-tile", data: { turbo_frame: "_top" } do %>
+            <span class="goal-dex-next-face" aria-hidden="true">＋</span>
+            <span class="goal-dex-next-label"><%= t(".next_goal") %></span>
+          <% end %>
         </div>
       <% end %>
     </section>

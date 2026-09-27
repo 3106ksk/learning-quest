@@ -28,6 +28,28 @@ RSpec.describe StudyRecord, type: :model do
     end
   end
 
+  describe "学習スキルとの関連付け" do
+    let(:user) { create(:user) }
+    let(:goal) { create(:goal, user: user) }
+
+    it "学習スキルを選択せずに保存できる" do
+      study_record = create(:study_record, user: user, goal: goal, learning_skill: nil)
+      expect(study_record.reload.learning_skill_id).to be_nil
+    end
+
+    it "同じ利用者の学習スキルを紐づけて保存できる" do
+      learning_skill = create(:learning_skill, user: user)
+      study_record = create(
+        :study_record,
+        user: user,
+        goal: goal,
+        learning_skill: learning_skill
+      )
+
+      expect(study_record.reload.learning_skill_id).to eq(learning_skill.id)
+    end
+  end
+
   describe "関連データの削除" do
     context "学習記録の削除に成功した場合" do
       it "紐づく評価も削除される" do

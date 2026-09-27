@@ -52,4 +52,25 @@ RSpec.describe LearningSkill, type: :model do
       expect(learning_skill).to be_valid
     end
   end
+
+  describe "学習記録との関連データの削除" do
+    it "学習記録がある学習スキルは削除できず、エラーが入り件数が変わらない" do
+      learning_skill = create(:learning_skill)
+      study_record = create(:study_record, user: learning_skill.user, learning_skill: learning_skill)
+      skill_count = described_class.count
+      study_record_count = StudyRecord.count
+
+      expect(learning_skill.destroy).to be(false)
+      expect(learning_skill.errors[:base]).to be_present
+      expect(described_class.count).to eq(skill_count)
+      expect(StudyRecord.count).to eq(study_record_count)
+    end
+
+    it "学習記録がない学習スキルは削除できる" do
+      learning_skill = create(:learning_skill)
+
+      expect { learning_skill.destroy }
+        .to change(described_class, :count).by(-1)
+    end
+  end
 end

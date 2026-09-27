@@ -4,6 +4,7 @@ class StudyRecord < ApplicationRecord
 
   belongs_to :user
   belongs_to :goal, optional: true
+  belongs_to :learning_skill, optional: true
   has_one :evaluation, dependent: :destroy
 
   enum :status, {

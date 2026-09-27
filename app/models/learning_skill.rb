@@ -1,5 +1,6 @@
 class LearningSkill < ApplicationRecord
   belongs_to :user
+  has_many :study_records, dependent: :restrict_with_error
 
   normalizes :name, with: ->(name) { name.strip }
 

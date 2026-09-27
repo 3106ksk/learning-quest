@@ -135,4 +135,14 @@ RSpec.describe User, type: :model do
       expect(Session.exists?(session.id)).to be_falsey
     end
   end
+
+  describe "学習スキルとの関連" do
+    it "ユーザーを削除すると、紐づく学習スキルも削除される" do
+      user = create(:user)
+      learning_skill = create(:learning_skill, user: user)
+
+      expect { user.destroy }.to change(LearningSkill, :count).by(-1)
+      expect(LearningSkill.exists?(learning_skill.id)).to be_falsey
+    end
+  end
 end

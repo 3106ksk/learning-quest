@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_13_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_27_041025) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -64,6 +64,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_13_000000) do
     t.index ["user_id"], name: "index_goals_on_user_id"
   end
 
+  create_table "learning_skills", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name", limit: 100, null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id", "name"], name: "index_learning_skills_on_user_id_and_name", unique: true
+    t.index ["user_id"], name: "index_learning_skills_on_user_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "ip_address"
@@ -114,6 +123,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_13_000000) do
   add_foreign_key "evaluations", "focus_options"
   add_foreign_key "evaluations", "study_records"
   add_foreign_key "goals", "users"
+  add_foreign_key "learning_skills", "users"
   add_foreign_key "sessions", "users"
   add_foreign_key "study_records", "goals"
   add_foreign_key "study_records", "users"

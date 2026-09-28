@@ -53,24 +53,53 @@ RSpec.describe LearningSkill, type: :model do
     end
   end
 
-  describe "学習記録との関連データの削除" do
-    it "学習記録がある学習スキルは削除できず、エラーが入り件数が変わらない" do
-      learning_skill = create(:learning_skill)
-      study_record = create(:study_record, user: learning_skill.user, learning_skill: learning_skill)
-      skill_count = described_class.count
-      study_record_count = StudyRecord.count
+  describe "#destroy" do
+    context "学習記録がある場合" do
+      it "学習スキルを削除できず、エラーが入り件数が変わらない" do
+        learning_skill = create(:learning_skill)
+        study_record = create(:study_record, user: learning_skill.user, learning_skill: learning_skill)
+        skill_count = described_class.count
+        study_record_count = StudyRecord.count
 
-      expect(learning_skill.destroy).to be(false)
-      expect(learning_skill.errors[:base]).to be_present
-      expect(described_class.count).to eq(skill_count)
-      expect(StudyRecord.count).to eq(study_record_count)
+        expect(learning_skill.destroy).to be(false)
+        expect(learning_skill.errors[:base]).to be_present
+        expect(described_class.count).to eq(skill_count)
+        expect(StudyRecord.count).to eq(study_record_count)
+      end
+
+      it "目標との紐づけがあっても削除できず、中間テーブルの行も残る" do
+        goal_learning_skill = create(:goal_learning_skill)
+        learning_skill = goal_learning_skill.learning_skill
+        create(
+          :study_record,
+          user: learning_skill.user,
+          goal: goal_learning_skill.goal,
+          learning_skill: learning_skill
+        )
+
+        expect(learning_skill.destroy).to be(false)
+        expect(learning_skill.errors[:base]).to be_present
+        expect(learning_skill.reload).to be_persisted
+        expect(GoalLearningSkill.exists?(goal_learning_skill.id)).to be(true)
+      end
     end
 
-    it "学習記録がない学習スキルは削除できる" do
-      learning_skill = create(:learning_skill)
+    context "学習記録がない場合" do
+      it "学習スキルを削除できる" do
+        learning_skill = create(:learning_skill)
 
-      expect { learning_skill.destroy }
-        .to change(described_class, :count).by(-1)
+        expect { learning_skill.destroy }
+          .to change(described_class, :count).by(-1)
+      end
+
+      it "目標との紐づけがあれば、中間テーブルの行も削除する" do
+        goal_learning_skill = create(:goal_learning_skill)
+        learning_skill = goal_learning_skill.learning_skill
+
+        expect { learning_skill.destroy }
+          .to change(described_class, :count).by(-1)
+          .and change(GoalLearningSkill, :count).by(-1)
+      end
     end
   end
 end

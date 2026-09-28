@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :goal_learning_skill do
-    goal { nil }
-    learning_skill { nil }
+    goal
+    learning_skill { association(:learning_skill, user: goal.user) }
   end
 end

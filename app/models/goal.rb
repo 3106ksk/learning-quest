@@ -1,6 +1,8 @@
 class Goal < ApplicationRecord
   belongs_to :user
   has_many :study_records, dependent: :destroy
+  has_many :goal_learning_skills, dependent: :destroy
+  has_many :learning_skills, through: :goal_learning_skills
 
   enum :status, {
     active: "active",

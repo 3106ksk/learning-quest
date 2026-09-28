@@ -25,8 +25,8 @@ RSpec.describe Goal, type: :model do
     end
   end
 
-  describe "関連データの削除" do
-    context "目標の削除に成功した場合" do
+  describe "#destroy!" do
+    context "学習記録と評価がある場合" do
       it "紐づく学習記録と評価も削除される" do
         user = create(:user)
         goal = create(:goal, user: user)
@@ -42,6 +42,33 @@ RSpec.describe Goal, type: :model do
           .to change(Goal, :count).by(-1)
           .and change(StudyRecord, :count).by(-1)
           .and change(Evaluation, :count).by(-1)
+      end
+    end
+
+    context "学習スキルとの紐づけがある場合" do
+      it "目標と中間テーブルの行を削除し、学習スキル本体は残す" do
+        goal_learning_skill = create(:goal_learning_skill)
+        goal = goal_learning_skill.goal
+        learning_skill = goal_learning_skill.learning_skill
+
+        expect { goal.destroy! }
+          .to change(Goal, :count).by(-1)
+          .and change(GoalLearningSkill, :count).by(-1)
+          .and change(LearningSkill, :count).by(0)
+        expect(learning_skill.reload).to be_persisted
+      end
+    end
+  end
+
+  describe "#learning_skills" do
+    context "選択済みと未選択の学習スキルがある場合" do
+      it "学習開始フォームの候補となる選択済みスキルだけを返す" do
+        goal = create(:goal)
+        selected_skill = create(:learning_skill, user: goal.user)
+        create(:learning_skill, user: goal.user)
+        create(:goal_learning_skill, goal: goal, learning_skill: selected_skill)
+
+        expect(goal.learning_skills).to contain_exactly(selected_skill)
       end
     end
   end

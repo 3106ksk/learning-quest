@@ -45,7 +45,7 @@ RSpec.describe "StudyRecords", type: :request do
         }
       }.not_to change(StudyRecord, :count)
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.body).to include("RSpecの学習", "まずは目標を設定してください。")
     end
   end

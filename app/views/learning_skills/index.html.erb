@@ -29,6 +29,13 @@
             </div>
           </div>
         <% end %>
+
+        <% learning_skill_tile_slots(@learning_skills.size).times do %>
+          <div class="goal-dex-empty-tile" aria-hidden="true">
+            <span class="goal-dex-empty-face"></span>
+            <span class="goal-dex-empty-label"></span>
+          </div>
+        <% end %>
       </div>
     </section>
   </div>

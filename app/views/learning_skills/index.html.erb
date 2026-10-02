@@ -3,11 +3,15 @@
 <div class="page-wide dex-page">
   <div class="dex is-skill">
     <%= turbo_frame_tag "skill-form" do %>
-      <%= link_to new_learning_skill_path, class: "dex-hero skill-dex-add" do %>
-        <div class="dex-hero-face face-non skill-dex-add-face" aria-hidden="true">＋</div>
-        <div class="dex-hero-body">
-          <p class="dex-hero-name"><%= t(".new_skill") %></p>
-        </div>
+      <% if @learning_skill&.errors&.any? %>
+        <%= render "learning_skills/form", learning_skill: @learning_skill %>
+      <% else %>
+        <%= link_to new_learning_skill_path, class: "dex-hero skill-dex-add" do %>
+          <div class="dex-hero-face face-non skill-dex-add-face" aria-hidden="true">＋</div>
+          <div class="dex-hero-body">
+            <p class="dex-hero-name"><%= t(".new_skill") %></p>
+          </div>
+        <% end %>
       <% end %>
     <% end %>
 

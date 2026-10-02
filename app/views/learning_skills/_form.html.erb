@@ -1,11 +1,11 @@
 <% name_has_error = learning_skill.errors[:name].any? %>
 <% name_error_type = learning_skill.errors.details[:name].find { |error| [ :blank, :too_long, :taken ].include?(error[:error]) }&.fetch(:error, nil) %>
 
-<section class="goal-dex-hero" aria-label="<%= t('learning_skills.new.title') %>">
-  <div class="goal-dex-hero-face face-non" aria-hidden="true"></div>
+<section class="dex-hero" aria-label="<%= t('learning_skills.new.title') %>">
+  <div class="dex-hero-face face-non" aria-hidden="true"></div>
 
-  <div class="goal-dex-hero-body">
-    <%= form_with model: learning_skill, data: { turbo_frame: "_top" }, class: "goal-new-form" do |form| %>
+  <div class="dex-hero-body">
+    <%= form_with model: learning_skill, data: { turbo_frame: "_top" }, class: "skill-form" do |form| %>
       <div>
         <%= form.label :name, t(".name"), class: "field-label" %>
         <%= form.text_field :name,
@@ -18,7 +18,7 @@
         <% end %>
       </div>
 
-      <div class="goal-new-actions">
+      <div class="skill-form-actions">
         <%= link_to t(".cancel"), learning_skills_path, class: "btn btn-ghost" %>
         <%= form.submit t(".submit"), class: "btn btn-primary" %>
       </div>

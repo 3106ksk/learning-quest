@@ -183,13 +183,15 @@
     font-weight: 900;
   }
 
-  .goal-new-form {
+  .goal-new-form,
+  .skill-form {
     display: grid;
     gap: var(--space-5);
     margin-top: var(--space-5);
   }
 
-  .goal-new-actions {
+  .goal-new-actions,
+  .skill-form-actions {
     display: flex;
     justify-content: flex-end;
   }
@@ -207,7 +209,8 @@
       padding: var(--space-5);
     }
 
-    .goal-new-actions .btn {
+    .goal-new-actions .btn,
+    .skill-form-actions .btn {
       width: 100%;
     }
   }
@@ -1384,11 +1387,13 @@
     padding: 40px var(--page-pad-pc);
   }
 
-  .goal-dex-page {
+  .goal-dex-page,
+  .dex-page {
     width: 100%;
   }
 
-  .goal-dex {
+  .goal-dex,
+  .dex {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 28px;
@@ -1427,25 +1432,26 @@
     color: var(--color-green-600);
   }
 
-  .skill-dex-add .goal-dex-hero-body {
+  .skill-dex-add .dex-hero-body {
     align-items: center;
     justify-content: center;
     text-align: center;
   }
 
-  #skill-form .goal-new-actions {
+  #skill-form .skill-form-actions {
     flex-wrap: wrap;
     gap: var(--space-3);
   }
 
   @media (max-width: 767px) {
-    #skill-form .goal-new-actions .btn {
+    #skill-form .skill-form-actions .btn {
       width: auto;
       flex: 1 1 96px;
     }
   }
 
-  .goal-dex-hero {
+  .goal-dex-hero,
+  .dex-hero {
     display: flex;
     position: relative;
     min-width: 0;
@@ -1457,7 +1463,8 @@
     box-shadow: 0 12px 32px rgba(38, 36, 31, 0.08);
   }
 
-  .goal-dex-hero-face {
+  .goal-dex-hero-face,
+  .dex-hero-face {
     position: relative;
     height: 300px;
     flex: 0 0 300px;
@@ -1478,7 +1485,8 @@
     right: 18px;
   }
 
-  .goal-dex-hero-body {
+  .goal-dex-hero-body,
+  .dex-hero-body {
     display: flex;
     flex: 1;
     min-width: 0;
@@ -1487,7 +1495,8 @@
     padding: 22px 26px 16px;
   }
 
-  .goal-dex-hero-name {
+  .goal-dex-hero-name,
+  .dex-hero-name {
     margin: 0;
     font-family: var(--font-sans);
     font-size: 24px;
@@ -1541,11 +1550,13 @@
     margin-top: auto;
   }
 
-  .goal-dex-list {
+  .goal-dex-list,
+  .dex-list {
     min-width: 0;
   }
 
-  .goal-dex-list-header {
+  .goal-dex-list-header,
+  .dex-list-header {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
@@ -1553,7 +1564,8 @@
     margin-bottom: 14px;
   }
 
-  .goal-dex-list-header .panel-eyebrow {
+  .goal-dex-list-header .panel-eyebrow,
+  .dex-list-header .panel-eyebrow {
     margin: 0;
   }
 
@@ -1575,13 +1587,15 @@
     font-weight: 900;
   }
 
-  .goal-dex-tiles {
+  .goal-dex-tiles,
+  .dex-tiles {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
   }
 
-  .goal-dex-tile {
+  .goal-dex-tile,
+  .dex-tile {
     display: block;
     min-width: 0;
     overflow: hidden;
@@ -1596,7 +1610,8 @@
     backdrop-filter: blur(10px) saturate(1.15);
   }
 
-  .goal-dex-tile:hover {
+  .goal-dex-tile:hover,
+  .dex-tile:hover {
     border-color: rgba(138, 98, 36, 0.35);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 10px 24px rgba(38, 36, 31, 0.1);
     color: inherit;
@@ -1631,7 +1646,8 @@
     outline-offset: 4px;
   }
 
-  .goal-dex-tile-face {
+  .goal-dex-tile-face,
+  .dex-tile-face {
     position: relative;
     display: flex;
     aspect-ratio: 1 / 0.78;
@@ -1640,7 +1656,8 @@
     overflow: hidden;
   }
 
-  .goal-dex-tile .goal-card-watermark {
+  .goal-dex-tile .goal-card-watermark,
+  .dex-tile .dex-watermark {
     right: -8px;
     bottom: -18px;
     width: 90px;
@@ -1648,17 +1665,19 @@
     opacity: 0.08;
   }
 
-  .goal-dex-tile-body {
+  .goal-dex-tile-body,
+  .dex-tile-body {
     padding: 8px 10px 10px;
   }
 
-  .goal-dex.is-skill .goal-dex-tile-body {
+  .dex.is-skill .dex-tile-body {
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .goal-dex-tile-title {
+  .goal-dex-tile-title,
+  .dex-tile-title {
     overflow: hidden;
     margin: 0;
     font-size: 12px;
@@ -1668,7 +1687,7 @@
     white-space: nowrap;
   }
 
-  .goal-dex.is-skill .goal-dex-tile-title {
+  .dex.is-skill .dex-tile-title {
     min-width: 0;
     width: 100%;
     text-align: center;
@@ -1714,7 +1733,8 @@
     white-space: nowrap;
   }
 
-  .goal-dex-empty-tile {
+  .goal-dex-empty-tile,
+  .dex-empty-tile {
     display: flex;
     min-width: 0;
     flex-direction: column;
@@ -1724,14 +1744,16 @@
     box-shadow: none;
   }
 
-  .goal-dex-empty-face {
+  .goal-dex-empty-face,
+  .dex-empty-face {
     display: block;
     aspect-ratio: 1 / 0.78;
     border-bottom: 1px dashed rgba(38, 36, 31, 0.18);
     background: repeating-linear-gradient(135deg, rgba(38, 36, 31, 0.025) 0 8px, transparent 8px 16px);
   }
 
-  .goal-dex-empty-label {
+  .goal-dex-empty-label,
+  .dex-empty-label {
     display: block;
     min-height: 36px;
   }
@@ -1739,11 +1761,12 @@
   @media (min-width: 1120px) {
     .goal-dex.has-selection,
     .goal-dex.is-empty,
-    .goal-dex.is-skill {
+    .dex.is-skill {
       grid-template-columns: minmax(400px, 0.77fr) minmax(0, 1fr);
     }
 
-    .goal-dex-tiles {
+    .goal-dex-tiles,
+    .dex-tiles {
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
@@ -1779,7 +1802,8 @@
     color: #5c584e;
   }
 
-  .goal-card-watermark {
+  .goal-card-watermark,
+  .dex-watermark {
     position: absolute;
     right: -10px;
     bottom: -30px;
@@ -1815,18 +1839,21 @@
   }
 
   @media (max-width: 767px) {
-    .goal-dex {
+    .goal-dex,
+    .dex {
       gap: 20px;
     }
 
-    .goal-dex-hero {
+    .goal-dex-hero,
+    .dex-hero {
       display: grid;
       grid-template-columns: 112px minmax(0, 1fr);
       grid-template-rows: minmax(128px, auto) auto;
       border-radius: 20px;
     }
 
-    .goal-dex-hero-face {
+    .goal-dex-hero-face,
+    .dex-hero-face {
       grid-column: 1;
       grid-row: 1;
       min-height: 128px;
@@ -1846,7 +1873,8 @@
       right: 12px;
     }
 
-    .goal-dex-hero-body {
+    .goal-dex-hero-body,
+    .dex-hero-body {
       grid-column: 2;
       grid-row: 1;
       justify-content: center;
@@ -1854,7 +1882,8 @@
       padding: 32px 12px 12px;
     }
 
-    .goal-dex-hero-name {
+    .goal-dex-hero-name,
+    .dex-hero-name {
       font-size: 16px;
       line-height: 1.45;
     }
@@ -1872,15 +1901,18 @@
       margin: 0 12px 12px;
     }
 
-    .goal-dex-list {
+    .goal-dex-list,
+    .dex-list {
       padding: 12px;
     }
 
-    .goal-dex-list-header {
+    .goal-dex-list-header,
+    .dex-list-header {
       padding: 10px 12px;
     }
 
-    .goal-dex-tiles {
+    .goal-dex-tiles,
+    .dex-tiles {
       gap: 10px;
     }
 

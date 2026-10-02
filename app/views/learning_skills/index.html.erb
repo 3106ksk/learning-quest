@@ -1,39 +1,39 @@
 <% content_for :title, t(".title") %>
 
-<div class="page-wide goal-dex-page">
-  <div class="goal-dex is-skill">
+<div class="page-wide dex-page">
+  <div class="dex is-skill">
     <%= turbo_frame_tag "skill-form" do %>
-      <%= link_to new_learning_skill_path, class: "goal-dex-hero skill-dex-add" do %>
-        <div class="goal-dex-hero-face face-non skill-dex-add-face" aria-hidden="true">＋</div>
-        <div class="goal-dex-hero-body">
-          <p class="goal-dex-hero-name"><%= t(".new_skill") %></p>
+      <%= link_to new_learning_skill_path, class: "dex-hero skill-dex-add" do %>
+        <div class="dex-hero-face face-non skill-dex-add-face" aria-hidden="true">＋</div>
+        <div class="dex-hero-body">
+          <p class="dex-hero-name"><%= t(".new_skill") %></p>
         </div>
       <% end %>
     <% end %>
 
-    <section class="goal-dex-list" aria-labelledby="learning-skills-heading">
-      <div class="goal-dex-list-header">
+    <section class="dex-list" aria-labelledby="learning-skills-heading">
+      <div class="dex-list-header">
         <h2 id="learning-skills-heading" class="panel-eyebrow"><%= t(".eyebrow") %></h2>
       </div>
 
-      <div class="goal-dex-tiles">
+      <div class="dex-tiles">
         <% @learning_skills.each do |learning_skill| %>
-          <div class="goal-dex-tile">
-            <div class="goal-dex-tile-face face-non">
-              <svg class="goal-card-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <div class="dex-tile">
+            <div class="dex-tile-face face-non">
+              <svg class="dex-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.7.6 1 1.3 1 2.1h5c0-.8.3-1.5 1-2.1A6 6 0 0 0 12 3z" />
               </svg>
             </div>
-            <div class="goal-dex-tile-body">
-              <p class="goal-dex-tile-title"><%= learning_skill.name %></p>
+            <div class="dex-tile-body">
+              <p class="dex-tile-title"><%= learning_skill.name %></p>
             </div>
           </div>
         <% end %>
 
         <% learning_skill_tile_slots(@learning_skills.size).times do %>
-          <div class="goal-dex-empty-tile" aria-hidden="true">
-            <span class="goal-dex-empty-face"></span>
-            <span class="goal-dex-empty-label"></span>
+          <div class="dex-empty-tile" aria-hidden="true">
+            <span class="dex-empty-face"></span>
+            <span class="dex-empty-label"></span>
           </div>
         <% end %>
       </div>

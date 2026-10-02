@@ -1,4 +1,8 @@
 class LearningSkillsController < ApplicationController
+  def index
+    set_learning_skills
+  end
+
   def new
     @learning_skill = current_user.learning_skills.build
   end
@@ -16,6 +20,10 @@ class LearningSkillsController < ApplicationController
   end
 
   private
+
+  def set_learning_skills
+    @learning_skills = current_user.learning_skills.order(created_at: :desc)
+  end
 
   def learning_skill_params
     params.expect(learning_skill: [ :name ])

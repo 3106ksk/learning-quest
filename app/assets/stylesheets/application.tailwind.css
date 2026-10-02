@@ -1396,6 +1396,23 @@
     min-width: 0;
   }
 
+  turbo-frame#skill-form {
+    display: block;
+    min-width: 0;
+  }
+
+  .skill-dex-add,
+  .skill-dex-add:hover {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .skill-dex-add-face {
+    display: grid;
+    place-items: center;
+    font-size: 56px;
+  }
+
   .goal-dex-hero {
     display: flex;
     position: relative;
@@ -1677,7 +1694,8 @@
 
   @media (min-width: 1120px) {
     .goal-dex.has-selection,
-    .goal-dex.is-empty {
+    .goal-dex.is-empty,
+    .goal-dex.is-skill {
       grid-template-columns: minmax(400px, 0.77fr) minmax(0, 1fr);
     }
 

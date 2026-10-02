@@ -141,14 +141,20 @@ ja:
       active_goal_error: 進行中の目標があるため、新しい目標は設定できません。
       view_active_goal: 進行中の目標を見る →
   learning_skills:
+    index:
+      title: 学習スキル
+      eyebrow: 登録済み
+      new_skill: 学習スキルの登録
     new:
       title: 学習スキルを登録
+    form:
       name: 学習スキル名
       name_placeholder: 例：問題を解く前に制限時間を決める
       name_errors:
         blank: 学習スキル名を入力してください
         too_long: 100文字以内で入力してください
         taken: 同じ名前の学習スキルがすでにあります
+      cancel: キャンセル
       submit: 登録する
     create:
       success: 学習スキルを登録しました

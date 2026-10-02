@@ -1,34 +1,7 @@
 <% content_for :title, t(".title") %>
 
 <div class="page-wide">
-  <% name_has_error = @learning_skill.errors[:name].any? %>
-  <% name_error_type = @learning_skill.errors.details[:name].find { |error| [ :blank, :too_long, :taken ].include?(error[:error]) }&.fetch(:error, nil) %>
-
-  <section class="goal-new-card" aria-label="<%= t('.title') %>">
-    <div class="goal-new-face face-non" aria-hidden="true">
-      <svg class="goal-card-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.7.6 1 1.3 1 2.1h5c0-.8.3-1.5 1-2.1A6 6 0 0 0 12 3z" />
-      </svg>
-    </div>
-
-    <div class="goal-new-body">
-      <%= form_with model: @learning_skill, class: "goal-new-form" do |form| %>
-        <div>
-          <%= form.label :name, t(".name"), class: "field-label" %>
-          <%= form.text_field :name,
-                maxlength: 100,
-                placeholder: t(".name_placeholder"),
-                class: "field-control#{' has-error' if name_has_error}",
-                aria: { invalid: ("true" if name_has_error), describedby: ("learning-skill-name-error" if name_has_error) } %>
-          <% if name_has_error %>
-            <p id="learning-skill-name-error" class="group-error"><%= t(".name_errors.#{name_error_type}") %></p>
-          <% end %>
-        </div>
-
-        <div class="goal-new-actions">
-          <%= form.submit t(".submit"), class: "btn btn-primary" %>
-        </div>
-      <% end %>
-    </div>
-  </section>
+  <%= turbo_frame_tag "skill-form" do %>
+    <%= render "learning_skills/form", learning_skill: @learning_skill %>
+  <% end %>
 </div>

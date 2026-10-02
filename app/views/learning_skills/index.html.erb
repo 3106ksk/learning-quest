@@ -1,4 +1,4 @@
-<% content_for :title, "学習スキル" %>
+<% content_for :title, t(".title") %>
 
 <div class="page-wide goal-dex-page">
   <div class="goal-dex is-skill">
@@ -6,14 +6,14 @@
       <%= link_to new_learning_skill_path, class: "goal-dex-hero skill-dex-add" do %>
         <div class="goal-dex-hero-face face-non skill-dex-add-face" aria-hidden="true">＋</div>
         <div class="goal-dex-hero-body">
-          <p class="goal-dex-hero-name">新しい学習スキル</p>
+          <p class="goal-dex-hero-name"><%= t(".new_skill") %></p>
         </div>
       <% end %>
     <% end %>
 
     <section class="goal-dex-list" aria-labelledby="learning-skills-heading">
       <div class="goal-dex-list-header">
-        <h2 id="learning-skills-heading" class="panel-eyebrow">登録済み</h2>
+        <h2 id="learning-skills-heading" class="panel-eyebrow"><%= t(".eyebrow") %></h2>
       </div>
 
       <div class="goal-dex-tiles">

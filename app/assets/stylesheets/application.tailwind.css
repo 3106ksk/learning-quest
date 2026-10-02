@@ -1407,10 +1407,42 @@
     text-decoration: none;
   }
 
+  .skill-dex-add {
+    transition: border-color 200ms, box-shadow 200ms;
+  }
+
+  .skill-dex-add:is(:hover, :focus-visible) {
+    border-color: var(--color-green-600);
+  }
+
   .skill-dex-add-face {
     display: grid;
     place-items: center;
-    font-size: 56px;
+    font-size: 44px;
+    transition: background-color 200ms, color 200ms;
+  }
+
+  .skill-dex-add:is(:hover, :focus-visible) .skill-dex-add-face {
+    background: rgba(45, 93, 75, 0.06);
+    color: var(--color-green-600);
+  }
+
+  .skill-dex-add .goal-dex-hero-body {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  #skill-form .goal-new-actions {
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  @media (max-width: 767px) {
+    #skill-form .goal-new-actions .btn {
+      width: auto;
+      flex: 1 1 96px;
+    }
   }
 
   .goal-dex-hero {
@@ -1620,6 +1652,12 @@
     padding: 8px 10px 10px;
   }
 
+  .goal-dex.is-skill .goal-dex-tile-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .goal-dex-tile-title {
     overflow: hidden;
     margin: 0;
@@ -1628,6 +1666,12 @@
     line-height: 1.5;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .goal-dex.is-skill .goal-dex-tile-title {
+    min-width: 0;
+    width: 100%;
+    text-align: center;
   }
 
   .goal-dex-next-tile {

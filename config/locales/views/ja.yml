@@ -144,7 +144,7 @@ ja:
     index:
       title: 学習スキル
       eyebrow: 登録済み
-      new_skill: 新しい学習スキル
+      new_skill: 学習スキルの登録
     new:
       title: 学習スキルを登録
     form:

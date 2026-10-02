@@ -41,7 +41,7 @@ RSpec.describe "LearningSkills", type: :request do
       expect(response.body).to include("復習5分")
     end
 
-    it "同じスキル名の場合は登録せず重複エラーを返す" do
+    it "同じスキル名の場合は登録せず422で一覧とエラー付きフォームを表示する" do
       user = create(:user)
       create(:learning_skill, user: user, name: "復習5分")
       sign_in(user)
@@ -53,8 +53,9 @@ RSpec.describe "LearningSkills", type: :request do
 
       expect(user.learning_skills.count).to eq(before_count)
       expect(response).to have_http_status(:unprocessable_content)
-      expect(response.body).to include("同じ名前の学習スキルがすでにあります")
-      expect(response.body).to include("復習5分")
+      expect(response.parsed_body.css(".dex-tile-title").map(&:text)).to include("復習5分")
+      error = response.parsed_body.at_css("turbo-frame#skill-form .group-error")
+      expect(error&.text).to include("同じ名前の学習スキルがすでにあります")
     end
   end
 end

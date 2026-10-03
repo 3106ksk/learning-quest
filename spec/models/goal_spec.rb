@@ -47,13 +47,13 @@ RSpec.describe Goal, type: :model do
 
     context "学習スキルとの紐づけがある場合" do
       it "目標と中間テーブルの行を削除し、学習スキル本体は残す" do
-        goal_learning_skill = create(:goal_learning_skill)
-        goal = goal_learning_skill.goal
-        learning_skill = goal_learning_skill.learning_skill
+        goal_skill_setting = create(:goal_skill_setting)
+        goal = goal_skill_setting.goal
+        learning_skill = goal_skill_setting.learning_skill
 
         expect { goal.destroy! }
           .to change(Goal, :count).by(-1)
-          .and change(GoalLearningSkill, :count).by(-1)
+          .and change(GoalSkillSetting, :count).by(-1)
           .and change(LearningSkill, :count).by(0)
         expect(learning_skill.reload).to be_persisted
       end
@@ -66,7 +66,7 @@ RSpec.describe Goal, type: :model do
         goal = create(:goal)
         selected_skill = create(:learning_skill, user: goal.user)
         create(:learning_skill, user: goal.user)
-        create(:goal_learning_skill, goal: goal, learning_skill: selected_skill)
+        create(:goal_skill_setting, goal: goal, learning_skill: selected_skill)
 
         expect(goal.learning_skills).to contain_exactly(selected_skill)
       end

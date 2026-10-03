@@ -1,7 +1,7 @@
 class LearningSkill < ApplicationRecord
   belongs_to :user
   has_many :study_records, dependent: :restrict_with_error
-  has_many :goal_learning_skills, dependent: :destroy
+  has_many :goal_skill_settings, dependent: :destroy
 
   normalizes :name, with: ->(name) { name.strip }
 

@@ -105,6 +105,16 @@ ja:
       set_goal: 目標を設定する
       list_title: 目標一覧
       list_description: これまでの目標を確認する
+      skills_title: この目標で使う学習スキル
+      skills_description: スキルの使用を設定する
+      skills_unavailable: 目標を設定すると、使う学習スキルを選べます
+  goal_skill_settings:
+    index:
+      title: "%{goal_name} の学習スキル"
+      back: ← 目標
+      eyebrow: 学習スキル一覧
+      new_skill: 学習スキルを登録する
+      danger: 完了した目標の学習スキルは変更できません
   goals:
     index:
       title: 取り組んできた目標

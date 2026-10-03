@@ -221,5 +221,4 @@ ja:
   evaluations:
     show:
       actions:
-        history: 学習の記録を見る
         study_again: もう一度学習する

@@ -14,6 +14,8 @@ Rails.application.routes.draw do
 
   resources :histories, only: [ :index, :show ]
 
+  resource :goal_hub, only: :show
+
   resources :goals do
     member do
       patch :complete

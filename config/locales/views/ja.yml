@@ -30,7 +30,7 @@ ja:
     sidebar:
       brand: きづき
       logout: ログアウト
-      nav_history: 履歴
+      nav_goals: 目標
       nav_learning_skills: 学習スキル
       nav_study: 学習する
       nav_settings: 設定
@@ -97,6 +97,14 @@ ja:
     create:
       success: ユーザー登録が完了しました
       danger: ユーザー登録に失敗しました
+  goal_hubs:
+    show:
+      title: 目標
+      detail: 詳細
+      empty_title: 進行中の目標はありません
+      set_goal: 目標を設定する
+      list_title: 目標一覧
+      list_description: これまでの目標を確認する
   goals:
     index:
       title: 取り組んできた目標
@@ -213,5 +221,4 @@ ja:
   evaluations:
     show:
       actions:
-        history: 学習の記録を見る
         study_again: もう一度学習する

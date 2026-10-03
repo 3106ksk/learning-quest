@@ -1,14 +1,13 @@
 <div class="dex-tiles">
   <% learning_skills.each do |learning_skill| %>
-    <div class="dex-tile">
+    <div class="dex-tile skill-tile">
       <div class="dex-tile-face face-non">
         <svg class="dex-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.7.6 1 1.3 1 2.1h5c0-.8.3-1.5 1-2.1A6 6 0 0 0 12 3z" />
         </svg>
-      </div>
-      <div class="dex-tile-body">
         <p class="dex-tile-title"><%= learning_skill.name %></p>
       </div>
+      <div class="dex-tile-body"></div>
     </div>
   <% end %>
 

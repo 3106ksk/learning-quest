@@ -1759,10 +1759,14 @@
     padding: 8px 10px 10px;
   }
 
-  .dex.is-skill .dex-tile-body {
-    display: flex;
+  .skill-tile .dex-tile-face {
     align-items: center;
     justify-content: center;
+    padding: 16px 48px 16px 16px;
+  }
+
+  .skill-tile .dex-tile-body {
+    min-height: 36px;
   }
 
   .goal-dex-tile-title,
@@ -1776,10 +1780,16 @@
     white-space: nowrap;
   }
 
-  .dex.is-skill .dex-tile-title {
+  .skill-tile .dex-tile-title {
+    position: relative;
     min-width: 0;
     width: 100%;
-    text-align: center;
+    color: var(--color-ink-900);
+    font-size: 18px;
+    text-align: left;
+    text-overflow: clip;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .goal-dex-next-tile {

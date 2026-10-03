@@ -22,14 +22,38 @@
     </section>
   <% end %>
 
-  <%= link_to goals_path, class: "goal-hub-link-card" do %>
-    <svg class="goal-hub-link-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M5 21 10.5 3" />
-      <path d="M10.5 4c3.3.3 5.5 3 8.5 3.5l-2.7 8.3c-3-.3-5.2-3-8.5-3.5z" />
-    </svg>
-    <span class="goal-hub-link-card-copy">
-      <span class="goal-hub-link-card-title"><%= t(".list_title") %></span>
-      <span class="goal-hub-link-card-description"><%= t(".list_description") %></span>
-    </span>
-  <% end %>
+  <div class="goal-hub-links">
+    <%= link_to goals_path, class: "goal-hub-link-card" do %>
+      <svg class="goal-hub-link-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 21 10.5 3" />
+        <path d="M10.5 4c3.3.3 5.5 3 8.5 3.5l-2.7 8.3c-3-.3-5.2-3-8.5-3.5z" />
+      </svg>
+      <span class="goal-hub-link-card-copy">
+        <span class="goal-hub-link-card-title"><%= t(".list_title") %></span>
+        <span class="goal-hub-link-card-description"><%= t(".list_description") %></span>
+      </span>
+    <% end %>
+
+    <% if @current_goal %>
+      <%= link_to goal_skill_settings_path(@current_goal), class: "goal-hub-link-card" do %>
+        <svg class="goal-hub-link-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.7.6 1 1.3 1 2.1h5c0-.8.3-1.5 1-2.1A6 6 0 0 0 12 3z" />
+        </svg>
+        <span class="goal-hub-link-card-copy">
+          <span class="goal-hub-link-card-title"><%= t(".skills_title") %></span>
+          <span class="goal-hub-link-card-description"><%= t(".skills_description") %></span>
+        </span>
+      <% end %>
+    <% else %>
+      <div class="goal-hub-link-card is-unavailable">
+        <svg class="goal-hub-link-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.7.6 1 1.3 1 2.1h5c0-.8.3-1.5 1-2.1A6 6 0 0 0 12 3z" />
+        </svg>
+        <span class="goal-hub-link-card-copy">
+          <span class="goal-hub-link-card-title"><%= t(".skills_title") %></span>
+          <span class="goal-hub-link-card-description"><%= t(".skills_unavailable") %></span>
+        </span>
+      </div>
+    <% end %>
+  </div>
 </div>

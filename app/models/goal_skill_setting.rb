@@ -1,4 +1,4 @@
-class GoalLearningSkill < ApplicationRecord
+class GoalSkillSetting < ApplicationRecord
   belongs_to :goal
   belongs_to :learning_skill
 

@@ -68,19 +68,19 @@ RSpec.describe LearningSkill, type: :model do
       end
 
       it "目標との紐づけがあっても削除できず、中間テーブルの行も残る" do
-        goal_learning_skill = create(:goal_learning_skill)
-        learning_skill = goal_learning_skill.learning_skill
+        goal_skill_setting = create(:goal_skill_setting)
+        learning_skill = goal_skill_setting.learning_skill
         create(
           :study_record,
           user: learning_skill.user,
-          goal: goal_learning_skill.goal,
+          goal: goal_skill_setting.goal,
           learning_skill: learning_skill
         )
 
         expect(learning_skill.destroy).to be(false)
         expect(learning_skill.errors[:base]).to be_present
         expect(learning_skill.reload).to be_persisted
-        expect(GoalLearningSkill.exists?(goal_learning_skill.id)).to be(true)
+        expect(GoalSkillSetting.exists?(goal_skill_setting.id)).to be(true)
       end
     end
 
@@ -93,12 +93,12 @@ RSpec.describe LearningSkill, type: :model do
       end
 
       it "目標との紐づけがあれば、中間テーブルの行も削除する" do
-        goal_learning_skill = create(:goal_learning_skill)
-        learning_skill = goal_learning_skill.learning_skill
+        goal_skill_setting = create(:goal_skill_setting)
+        learning_skill = goal_skill_setting.learning_skill
 
         expect { learning_skill.destroy }
           .to change(described_class, :count).by(-1)
-          .and change(GoalLearningSkill, :count).by(-1)
+          .and change(GoalSkillSetting, :count).by(-1)
       end
     end
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_28_034923) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_03_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -53,14 +53,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_28_034923) do
     t.check_constraint "point >= 1 AND point <= 3", name: "focus_options_point_range"
   end
 
-  create_table "goal_learning_skills", force: :cascade do |t|
+  create_table "goal_skill_settings", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.bigint "goal_id", null: false
     t.bigint "learning_skill_id", null: false
     t.datetime "updated_at", null: false
-    t.index ["goal_id", "learning_skill_id"], name: "index_goal_learning_skills_on_goal_id_and_learning_skill_id", unique: true
-    t.index ["goal_id"], name: "index_goal_learning_skills_on_goal_id"
-    t.index ["learning_skill_id"], name: "index_goal_learning_skills_on_learning_skill_id"
+    t.index ["goal_id", "learning_skill_id"], name: "index_goal_skill_settings_on_goal_id_and_learning_skill_id", unique: true
+    t.index ["goal_id"], name: "index_goal_skill_settings_on_goal_id"
+    t.index ["learning_skill_id"], name: "index_goal_skill_settings_on_learning_skill_id"
   end
 
   create_table "goals", force: :cascade do |t|
@@ -134,8 +134,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_28_034923) do
   add_foreign_key "evaluations", "challenge_options"
   add_foreign_key "evaluations", "focus_options"
   add_foreign_key "evaluations", "study_records"
-  add_foreign_key "goal_learning_skills", "goals"
-  add_foreign_key "goal_learning_skills", "learning_skills"
+  add_foreign_key "goal_skill_settings", "goals"
+  add_foreign_key "goal_skill_settings", "learning_skills"
   add_foreign_key "goals", "users"
   add_foreign_key "learning_skills", "users"
   add_foreign_key "sessions", "users"

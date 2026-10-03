@@ -1450,6 +1450,32 @@
     padding: 40px var(--page-pad-pc);
   }
 
+  .goal-skill-settings-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .goal-skill-settings-back {
+    color: var(--color-green-600);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .goal-skill-settings-title {
+    margin: 0;
+    color: var(--color-ink-900);
+    font-size: 28px;
+    font-weight: 900;
+    line-height: 1.4;
+  }
+
+  .goal-skill-settings-list .dex-list-header {
+    align-items: center;
+  }
+
   .goal-dex-page,
   .dex-page {
     width: 100%;

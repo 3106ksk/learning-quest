@@ -1,0 +1,19 @@
+<% content_for :title, t(".title", goal_name: @goal.name) %>
+
+<div class="page-wide goal-skill-settings-page">
+  <header class="goal-skill-settings-header">
+    <%= link_to t(".back"), goal_hub_path, class: "goal-skill-settings-back" %>
+    <h1 class="goal-skill-settings-title"><%= t(".title", goal_name: @goal.name) %></h1>
+  </header>
+
+  <section class="dex-list goal-skill-settings-list" aria-labelledby="goal-skill-settings-heading">
+    <div class="dex-list-header">
+      <h2 id="goal-skill-settings-heading" class="panel-eyebrow"><%= t(".eyebrow") %></h2>
+      <% if @learning_skills.empty? %>
+        <%= link_to t(".new_skill"), learning_skills_path, class: "btn btn-secondary" %>
+      <% end %>
+    </div>
+
+    <%= render "learning_skills/tiles", learning_skills: @learning_skills %>
+  </section>
+</div>

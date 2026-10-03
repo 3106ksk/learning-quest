@@ -1,4 +1,4 @@
-<% content_for :title, t(".title", default: "目標") %>
+<% content_for :title, t(".title") %>
 
 <div class="page-wide">
   <% if @current_goal %>
@@ -11,14 +11,14 @@
           <h2 id="goal-title" class="goal-card-title"><%= @current_goal.name %></h2>
         </div>
         <div class="goal-card-actions">
-          <%= link_to t(".detail", default: "詳細"), goal_path(@current_goal), class: "btn btn-primary" %>
+          <%= link_to t(".detail"), goal_path(@current_goal), class: "btn btn-primary" %>
         </div>
       </div>
     </section>
   <% else %>
     <section class="goal-hub-empty-state">
-      <p class="study-start-empty-title"><%= t(".empty_title", default: "進行中の目標はありません") %></p>
-      <%= link_to t(".set_goal", default: "目標を設定する"), new_goal_path, class: "btn btn-secondary" %>
+      <p class="study-start-empty-title"><%= t(".empty_title") %></p>
+      <%= link_to t(".set_goal"), new_goal_path, class: "btn btn-secondary" %>
     </section>
   <% end %>
 
@@ -28,8 +28,8 @@
       <path d="M10.5 4c3.3.3 5.5 3 8.5 3.5l-2.7 8.3c-3-.3-5.2-3-8.5-3.5z" />
     </svg>
     <span class="goal-hub-link-card-copy">
-      <span class="goal-hub-link-card-title"><%= t(".list_title", default: "目標一覧") %></span>
-      <span class="goal-hub-link-card-description"><%= t(".list_description", default: "これまでの目標を確認する") %></span>
+      <span class="goal-hub-link-card-title"><%= t(".list_title") %></span>
+      <span class="goal-hub-link-card-description"><%= t(".list_description") %></span>
     </span>
   <% end %>
 </div>

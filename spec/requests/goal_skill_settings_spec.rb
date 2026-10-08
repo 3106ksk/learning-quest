@@ -34,4 +34,162 @@ RSpec.describe "Goal skill settings", type: :request do
       end
     end
   end
+
+  describe "POST /goals/:goal_id/skill_settings" do
+    let(:goal) { create(:goal, user: user) }
+    let(:learning_skill) { create(:learning_skill, user: user) }
+    let(:path) { "/goals/#{goal.id}/skill_settings" }
+
+    context "進行中の目標に未設定の学習スキルを設定する場合" do
+      it "設定行を1件作り、303で設定画面へ戻る" do
+        expect {
+          post path, params: { learning_skill_id: learning_skill.id }
+        }.to change(GoalSkillSetting, :count).by(1)
+
+        expect(response).to have_http_status(:see_other)
+        expect(response).to redirect_to(goal_skill_settings_path(goal))
+        expect(flash).to be_empty
+      end
+    end
+
+    context "同じ学習スキルの設定を2回送る場合" do
+      it "設定行は1件のまま、どちらも303で設定画面へ戻る" do
+        2.times do
+          post path, params: { learning_skill_id: learning_skill.id }
+
+          expect(response).to have_http_status(:see_other)
+          expect(response).to redirect_to(goal_skill_settings_path(goal))
+          expect(flash).to be_empty
+        end
+
+        expect(goal.goal_skill_settings.count).to eq(1)
+      end
+    end
+
+    context "他ユーザーの学習スキルを指定した場合" do
+      it "設定行を作らず404を返す" do
+        other_skill = create(:learning_skill)
+
+        expect {
+          post path, params: { learning_skill_id: other_skill.id }
+        }.not_to change(GoalSkillSetting, :count)
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context "他ユーザーの目標を指定した場合" do
+      it "設定行を作らず404を返す" do
+        other_goal = create(:goal)
+
+        expect {
+          post "/goals/#{other_goal.id}/skill_settings", params: { learning_skill_id: learning_skill.id }
+        }.not_to change(GoalSkillSetting, :count)
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context "完了した目標の場合" do
+      it "設定行を作らず、目標詳細へ303で戻して変更不可の文言を表示する" do
+        completed_goal = create(:goal, :completed, user: user)
+
+        expect {
+          post "/goals/#{completed_goal.id}/skill_settings", params: { learning_skill_id: learning_skill.id }
+        }.not_to change(GoalSkillSetting, :count)
+
+        expect(response).to have_http_status(:see_other)
+        expect(response).to redirect_to(goal_path(completed_goal))
+        expect(flash[:danger]).to eq("完了した目標の学習スキルは変更できません")
+      end
+    end
+
+    context "設定時にDBの一意制約に当たった場合" do
+      it "303で設定画面へ戻る" do
+        allow_any_instance_of(GoalSkillSetting).to receive(:save).and_raise(ActiveRecord::RecordNotUnique)
+
+        post path, params: { learning_skill_id: learning_skill.id }
+
+        expect(response).to have_http_status(:see_other)
+        expect(response).to redirect_to(goal_skill_settings_path(goal))
+        expect(flash).to be_empty
+      end
+    end
+  end
+
+  describe "DELETE /goals/:goal_id/skill_settings/:id" do
+    let(:goal) { create(:goal, user: user) }
+    let(:path) { "/goals/#{goal.id}/skill_settings" }
+
+    context "進行中の目標に設定行がある場合" do
+      it "設定行だけを消し、学習スキルと学習記録を残して303で設定画面へ戻る" do
+        skill = create(:learning_skill, user: user)
+        setting = create(:goal_skill_setting, goal: goal, learning_skill: skill)
+        study_record = create(:study_record, user: user, goal: goal, learning_skill: skill)
+
+        expect {
+          delete "#{path}/#{setting.id}"
+        }.to change(GoalSkillSetting, :count).by(-1)
+
+        expect(response).to have_http_status(:see_other)
+        expect(response).to redirect_to(goal_skill_settings_path(goal))
+        expect(flash).to be_empty
+        expect(LearningSkill.exists?(skill.id)).to be(true)
+        expect(StudyRecord.exists?(study_record.id)).to be(true)
+      end
+    end
+
+    context "設定行が既に存在しない場合" do
+      it "303で設定画面へ戻る" do
+        delete "#{path}/0"
+
+        expect(response).to have_http_status(:see_other)
+        expect(response).to redirect_to(goal_skill_settings_path(goal))
+        expect(flash).to be_empty
+      end
+    end
+
+    context "他ユーザーの目標を指定した場合" do
+      it "設定行を消さず404を返す" do
+        other_goal = create(:goal)
+        setting = create(:goal_skill_setting, goal: other_goal)
+
+        expect {
+          delete "/goals/#{other_goal.id}/skill_settings/#{setting.id}"
+        }.not_to change(GoalSkillSetting, :count)
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context "自分の目標URLに別の目標の設定行IDを指定した場合" do
+      it "設定行を消さず303で設定画面へ戻る" do
+        another_goal = create(:goal)
+        setting = create(:goal_skill_setting, goal: another_goal)
+
+        expect {
+          delete "#{path}/#{setting.id}"
+        }.not_to change(GoalSkillSetting, :count)
+
+        expect(response).to have_http_status(:see_other)
+        expect(response).to redirect_to(goal_skill_settings_path(goal))
+        expect(flash).to be_empty
+      end
+    end
+
+    context "完了した目標の場合" do
+      it "設定行を消さず、目標詳細へ303で戻して変更不可の文言を表示する" do
+        completed_goal = create(:goal, :completed, user: user)
+        setting = create(:goal_skill_setting, goal: completed_goal)
+
+        expect {
+          delete "/goals/#{completed_goal.id}/skill_settings/#{setting.id}"
+        }.not_to change(GoalSkillSetting, :count)
+
+        expect(response).to have_http_status(:see_other)
+        expect(response).to redirect_to(goal_path(completed_goal))
+        expect(flash[:danger]).to eq("完了した目標の学習スキルは変更できません")
+      end
+    end
+  end
 end

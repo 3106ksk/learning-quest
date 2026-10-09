@@ -4,6 +4,10 @@ class GoalSkillSettingsController < ApplicationController
 
   def index
     @learning_skills = current_user.learning_skills.order(created_at: :desc)
+    @selected_ids = @goal.learning_skill_ids
+    @skill_settings = @goal.goal_skill_settings
+                           .includes(:learning_skill)
+                           .order(created_at: :desc)
   end
 
   def create

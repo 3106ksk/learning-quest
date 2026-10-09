@@ -1571,6 +1571,16 @@
     height: 20px;
   }
 
+  .skill-unset-button {
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+  }
+
+  .skill-unset-button:hover {
+    background: var(--color-kincha-600);
+  }
+
   .goal-skill-settings-selected-tiles .dex-empty-tile {
     min-height: 164px;
   }

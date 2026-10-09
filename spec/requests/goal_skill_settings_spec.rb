@@ -42,7 +42,7 @@ RSpec.describe "Goal skill settings", type: :request do
     context "進行中の目標に未設定の学習スキルを設定する場合" do
       it "設定行を1件作り、303で設定画面へ戻る" do
         expect {
-          post goal_skill_settings_path(goal), params: { learning_skill_id: learning_skill.id }
+          post goal_skill_settings_path(goal), params: { learning_skill: learning_skill.id }
         }.to change(GoalSkillSetting, :count).by(1)
 
         expect(response).to have_http_status(:see_other)
@@ -54,7 +54,7 @@ RSpec.describe "Goal skill settings", type: :request do
     context "同じ学習スキルの設定を2回送る場合" do
       it "設定行は1件のまま、どちらも303で設定画面へ戻る" do
         2.times do
-          post goal_skill_settings_path(goal), params: { learning_skill_id: learning_skill.id }
+          post goal_skill_settings_path(goal), params: { learning_skill: learning_skill.id }
 
           expect(response).to have_http_status(:see_other)
           expect(response).to redirect_to(goal_skill_settings_path(goal))
@@ -70,7 +70,7 @@ RSpec.describe "Goal skill settings", type: :request do
         other_skill = create(:learning_skill)
 
         expect {
-          post goal_skill_settings_path(goal), params: { learning_skill_id: other_skill.id }
+          post goal_skill_settings_path(goal), params: { learning_skill: other_skill.id }
         }.not_to change(GoalSkillSetting, :count)
 
         expect(response).to have_http_status(:not_found)
@@ -82,7 +82,7 @@ RSpec.describe "Goal skill settings", type: :request do
         other_goal = create(:goal)
 
         expect {
-          post goal_skill_settings_path(other_goal), params: { learning_skill_id: learning_skill.id }
+          post goal_skill_settings_path(other_goal), params: { learning_skill: learning_skill.id }
         }.not_to change(GoalSkillSetting, :count)
 
         expect(response).to have_http_status(:not_found)
@@ -94,7 +94,7 @@ RSpec.describe "Goal skill settings", type: :request do
         completed_goal = create(:goal, :completed, user: user)
 
         expect {
-          post goal_skill_settings_path(completed_goal), params: { learning_skill_id: learning_skill.id }
+          post goal_skill_settings_path(completed_goal), params: { learning_skill: learning_skill.id }
         }.not_to change(GoalSkillSetting, :count)
 
         expect(response).to have_http_status(:see_other)
@@ -107,7 +107,7 @@ RSpec.describe "Goal skill settings", type: :request do
       it "303で設定画面へ戻る" do
         allow_any_instance_of(GoalSkillSetting).to receive(:save).and_raise(ActiveRecord::RecordNotUnique)
 
-        post goal_skill_settings_path(goal), params: { learning_skill_id: learning_skill.id }
+        post goal_skill_settings_path(goal), params: { learning_skill: learning_skill.id }
 
         expect(response).to have_http_status(:see_other)
         expect(response).to redirect_to(goal_skill_settings_path(goal))

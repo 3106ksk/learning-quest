@@ -6,6 +6,12 @@
           <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.7.6 1 1.3 1 2.1h5c0-.8.3-1.5 1-2.1A6 6 0 0 0 12 3z" />
         </svg>
         <p class="dex-tile-title"><%= learning_skill.name %></p>
+        <% if local_assigns[:goal] %>
+          <%= button_to "💡", goal_skill_settings_path(goal), method: :post,
+                params: { learning_skill: learning_skill.id },
+                aria: { label: "#{learning_skill.name}をこの目標で使う" },
+                form: { class: "skill-bulb-form" }, class: "skill-bulb-button" %>
+        <% end %>
       </div>
       <div class="dex-tile-body"></div>
     </div>

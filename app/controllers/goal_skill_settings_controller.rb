@@ -9,7 +9,8 @@ class GoalSkillSettingsController < ApplicationController
   def create
     learning_skill = current_user.learning_skills.find(params[:learning_skill])
 
-    @goal.goal_skill_settings.create(learning_skill_id: learning_skill)
+    skill_setting = @goal.goal_skill_settings.build(learning_skill_id: learning_skill.id)
+    skill_setting.save
 
     redirect_to goal_skill_settings_path(@goal), status: :see_other
   rescue ActiveRecord::RecordNotUnique

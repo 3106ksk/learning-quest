@@ -14,16 +14,12 @@
         <% learning_skill = skill_setting.learning_skill %>
         <div class="dex-tile skill-tile">
           <div class="dex-tile-face face-in-use">
-            <svg class="dex-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.7.6 1 1.3 1 2.1h5c0-.8.3-1.5 1-2.1A6 6 0 0 0 12 3z" />
-            </svg>
+            <%= render "shared/bulb_icon", css_class: "dex-watermark" %>
             <p class="dex-tile-title"><%= learning_skill.name %></p>
             <%= button_to goal_skill_setting_path(@goal, skill_setting), method: :delete,
                   aria: { label: "#{learning_skill.name}をこの目標で使うのをやめる" },
                   class: "skill-in-use-mark skill-unset-button" do %>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.7.6 1 1.3 1 2.1h5c0-.8.3-1.5 1-2.1A6 6 0 0 0 12 3z" />
-              </svg>
+              <%= render "shared/bulb_icon", css_class: nil %>
             <% end %>
           </div>
           <div class="dex-tile-body"></div>

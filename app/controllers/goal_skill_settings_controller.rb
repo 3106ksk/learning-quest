@@ -17,6 +17,13 @@ class GoalSkillSettingsController < ApplicationController
     redirect_to goal_skill_settings_path(@goal), status: :see_other
   end
 
+  def destroy
+    skill_setting = @goal.goal_skill_settings.find_by(id: params[:id])
+    skill_setting&.destroy
+
+    redirect_to goal_skill_settings_path(@goal), status: :see_other
+  end
+
   private
 
   def set_goal

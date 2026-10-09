@@ -111,6 +111,8 @@ ja:
   goal_skill_settings:
     create:
       danger: 完了した目標の学習スキルは変更できません
+    destroy:
+      danger: 完了した目標の学習スキルは変更できません
     index:
       title: "%{goal_name} の学習スキル"
       back: ← 目標

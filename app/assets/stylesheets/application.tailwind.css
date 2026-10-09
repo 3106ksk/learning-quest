@@ -1502,6 +1502,148 @@
     align-items: center;
   }
 
+  .goal-skill-settings-selected {
+    margin-bottom: 28px;
+    padding: 28px;
+    border: var(--border-hair);
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.055);
+  }
+
+  .goal-skill-settings-selected-title {
+    margin-bottom: 24px;
+    font-family: var(--font-sans);
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.5;
+  }
+
+  .goal-skill-settings-selected-tiles.dex-tiles {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .goal-skill-settings-selected-tiles .dex-tile,
+  .goal-skill-settings-selected-tiles .dex-empty-tile {
+    border-radius: 20px;
+  }
+
+  .goal-skill-settings-selected-tiles .dex-tile-face {
+    min-height: 128px;
+    aspect-ratio: auto;
+    align-items: flex-end;
+    padding: 56px 20px 20px;
+  }
+
+  .goal-skill-settings-selected-tiles .dex-tile-body {
+    min-height: 36px;
+    background: #fff;
+  }
+
+  .face-in-use {
+    background: rgba(169, 122, 47, 0.14);
+    color: var(--color-kincha-600);
+  }
+
+  .dex-tile .face-in-use .dex-watermark {
+    right: 8px;
+    bottom: 4px;
+    opacity: 0.25;
+  }
+
+  .skill-in-use-mark {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: grid;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--color-kincha-500);
+    color: #fff;
+    box-shadow: 0 0 0 5px rgba(169, 122, 47, 0.1);
+  }
+
+  .skill-in-use-mark svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .skill-unset-button {
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+  }
+
+  .skill-unset-button:hover {
+    background: var(--color-kincha-600);
+  }
+
+  .skill-bulb-control {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border-radius: 50%;
+  }
+
+  .skill-bulb-control svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .skill-bulb-button {
+    border: 2px solid var(--color-ink-400);
+    background: #fff;
+    color: var(--color-ink-400);
+    cursor: pointer;
+  }
+
+  .skill-bulb-button:hover {
+    border-color: var(--color-kincha-600);
+    color: var(--color-kincha-600);
+  }
+
+  .goal-skill-settings-selected-tiles .dex-empty-tile {
+    min-height: 164px;
+  }
+
+  .goal-skill-settings-selected-tiles .dex-empty-face {
+    width: 72px;
+    height: 128px;
+    aspect-ratio: auto;
+    border: 0;
+  }
+
+  @media (max-width: 1023px) {
+    .goal-skill-settings-selected-tiles.dex-tiles {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 767px) {
+    .goal-skill-settings-selected {
+      padding: 16px;
+    }
+
+    .goal-skill-settings-selected-tiles.dex-tiles {
+      gap: 10px;
+    }
+
+    .goal-skill-settings-selected-tiles .dex-tile-title {
+      font-size: 14px;
+    }
+
+    .goal-skill-settings-selected-tiles .dex-tile-face {
+      padding-inline: 12px;
+    }
+  }
+
   .goal-dex-page,
   .dex-page {
     width: 100%;

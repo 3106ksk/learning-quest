@@ -21,7 +21,7 @@ Rails.application.routes.draw do
       patch :complete
     end
 
-    resources :goal_skill_settings, only: [ :index ], as: :skill_settings, path: "skill_settings"
+    resources :goal_skill_settings, only: [ :index, :create, :destroy ], as: :skill_settings, path: "skill_settings"
   end
 
   resources :learning_skills, only: [ :index, :new, :create ]

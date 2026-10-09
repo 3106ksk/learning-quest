@@ -1581,6 +1581,34 @@
     background: var(--color-kincha-600);
   }
 
+  .skill-bulb-control {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border-radius: 50%;
+  }
+
+  .skill-bulb-control svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .skill-bulb-button {
+    border: 2px solid var(--color-ink-400);
+    background: #fff;
+    color: var(--color-ink-400);
+    cursor: pointer;
+  }
+
+  .skill-bulb-button:hover {
+    border-color: var(--color-kincha-600);
+    color: var(--color-kincha-600);
+  }
+
   .goal-skill-settings-selected-tiles .dex-empty-tile {
     min-height: 164px;
   }

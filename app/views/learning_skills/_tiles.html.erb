@@ -1,16 +1,30 @@
 <div class="dex-tiles">
   <% learning_skills.each do |learning_skill| %>
+    <% selected = local_assigns[:goal] && local_assigns.fetch(:selected_ids, []).include?(learning_skill.id) %>
     <div class="dex-tile skill-tile">
-      <div class="dex-tile-face face-non">
+      <div class="dex-tile-face <%= selected ? "face-in-use" : "face-non" %>">
         <svg class="dex-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.7.6 1 1.3 1 2.1h5c0-.8.3-1.5 1-2.1A6 6 0 0 0 12 3z" />
         </svg>
         <p class="dex-tile-title"><%= learning_skill.name %></p>
         <% if local_assigns[:goal] %>
-          <%= button_to "💡", goal_skill_settings_path(goal), method: :post,
-                params: { learning_skill: learning_skill.id },
-                aria: { label: "#{learning_skill.name}をこの目標で使う" },
-                form: { class: "skill-bulb-form" }, class: "skill-bulb-button" %>
+          <% if selected %>
+            <span class="skill-in-use-mark skill-bulb-control" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.7.6 1 1.3 1 2.1h5c0-.8.3-1.5 1-2.1A6 6 0 0 0 12 3z" />
+              </svg>
+            </span>
+            <span class="sr-only">この目標で使用中</span>
+          <% else %>
+            <%= button_to goal_skill_settings_path(goal), method: :post,
+                  params: { learning_skill: learning_skill.id },
+                  aria: { label: "#{learning_skill.name}をこの目標で使う" },
+                  form: { class: "skill-bulb-form" }, class: "skill-bulb-button skill-bulb-control" do %>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.7.6 1 1.3 1 2.1h5c0-.8.3-1.5 1-2.1A6 6 0 0 0 12 3z" />
+              </svg>
+            <% end %>
+          <% end %>
         <% end %>
       </div>
       <div class="dex-tile-body"></div>

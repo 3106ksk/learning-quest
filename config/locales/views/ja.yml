@@ -119,6 +119,7 @@ ja:
       back: ← 目標
       eyebrow: 学習スキル一覧
       selected_skills: 学習開始で選べるスキル
+      limit_note: 3件まで設定できます
       new_skill: 学習スキルを登録する
       danger: 完了した目標の学習スキルは変更できません
   goals:

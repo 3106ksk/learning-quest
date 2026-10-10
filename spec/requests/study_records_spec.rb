@@ -49,6 +49,19 @@ RSpec.describe "StudyRecords", type: :request do
       expect(response.body).to include("RSpecの学習", "まずは目標を設定してください。")
     end
 
+    %w[paused awaiting_evaluation].each do |status|
+      it "不正なstatus(#{status})を送っても、学習記録はrunningで保存される" do
+        goal
+
+        post study_records_path, params: {
+          study_record: { planned_minutes: 25, activity: "RSpecの学習", status: status }
+        }
+
+        expect(response).to have_http_status(:see_other)
+        expect(user.study_records.order(:created_at).last.status).to eq("running")
+      end
+    end
+
     context "保存に失敗して422で再表示する場合" do
       it "今の目標に設定した学習スキルを表示する" do
         create(:goal_skill_setting, goal: goal, learning_skill: create(:learning_skill, user: user, name: "今の目標のスキル"))

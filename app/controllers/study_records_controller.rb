@@ -3,6 +3,7 @@ class StudyRecordsController < ApplicationController
 
   before_action :set_study_record, only: %i[show pause resume complete]
   before_action :set_current_goal, only: %i[new create]
+  before_action :set_learning_skills, only: %i[new create]
   before_action :ensure_running, only: :pause
   before_action :ensure_paused, only: :resume
   before_action :ensure_running_or_paused, only: :complete
@@ -64,6 +65,12 @@ class StudyRecordsController < ApplicationController
 
   def set_current_goal
     @current_goal = current_user.goals.active.take
+  end
+
+  def set_learning_skills
+    return unless @current_goal
+
+    @skill_settings = @current_goal.goal_skill_settings.includes(:learning_skill).order(created_at: :desc)
   end
 
   def set_study_record

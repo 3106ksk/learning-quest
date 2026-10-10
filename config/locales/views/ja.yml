@@ -233,6 +233,9 @@ ja:
       set_goal: 目標を設定する
       set_goal_link: 目標を設定する →
       view_goal: 目標を見る →
+      title: 学習を始める
+      submit: 開始する
+      submitting: 開始しています…
   evaluations:
     show:
       actions:

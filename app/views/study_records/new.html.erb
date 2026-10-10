@@ -78,13 +78,6 @@
             <span class="skill-select-optional"><%= t(".skill_optional") %></span>
           </legend>
 
-          <% if skill_settings.any? %>
-            <div class="skill-select-none">
-              <%= form.radio_button :learning_skill_id, "", class: "skill-none-input" %>
-              <%= form.label :learning_skill_id, t(".skill_none"), value: "", class: "skill-none-label" %>
-            </div>
-          <% end %>
-
           <div class="skill-cards">
             <% skill_settings.each do |setting| %>
               <%= form.radio_button :learning_skill_id, setting.learning_skill_id, class: "skill-card-input" %>
@@ -100,6 +93,13 @@
               <span class="skill-card-slot" aria-hidden="true"></span>
             <% end %>
           </div>
+
+          <% if skill_settings.any? %>
+            <div class="skill-select-none">
+              <%= form.radio_button :learning_skill_id, "", class: "skill-none-input" %>
+              <%= form.label :learning_skill_id, t(".skill_none"), value: "", class: "skill-none-label" %>
+            </div>
+          <% end %>
 
           <% if @current_goal && skill_settings.empty? %>
             <%= link_to t(".skill_settings_link"), goal_skill_settings_path(@current_goal),

@@ -238,6 +238,12 @@ ja:
       title: 学習を始める
       submit: 開始する
       submitting: 開始しています…
+      skill_eyebrow: EQUIP
+      skill_label: 今回装備する学習スキル
+      skill_optional: 任意
+      skill_equipped: 装備中
+      skill_none: スキルを使用しない
+      skill_settings_link: この目標で使う学習スキルを選べます
   evaluations:
     show:
       actions:

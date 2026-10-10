@@ -70,6 +70,43 @@
           <% end %>
         </div>
 
+        <% skill_settings = @skill_settings.to_a %>
+        <fieldset class="skill-select">
+          <legend class="skill-select-legend">
+            <span class="skill-select-eyebrow" aria-hidden="true"><%= t(".skill_eyebrow") %></span>
+            <span class="field-label"><%= t(".skill_label") %></span>
+            <span class="skill-select-optional"><%= t(".skill_optional") %></span>
+          </legend>
+
+          <% if skill_settings.any? %>
+            <div class="skill-select-none">
+              <%= form.radio_button :learning_skill_id, "", class: "skill-none-input" %>
+              <%= form.label :learning_skill_id, t(".skill_none"), value: "", class: "skill-none-label" %>
+            </div>
+          <% end %>
+
+          <div class="skill-cards">
+            <% skill_settings.each do |setting| %>
+              <%= form.radio_button :learning_skill_id, setting.learning_skill_id, class: "skill-card-input" %>
+              <%= form.label :learning_skill_id, value: setting.learning_skill_id, class: "skill-card" do %>
+                <span class="skill-card-face"><%= render "shared/bulb_icon", css_class: "skill-card-bulb" %></span>
+                <span class="skill-card-mark"><%= t(".skill_equipped") %></span>
+                <span class="skill-card-name"><%= setting.learning_skill.name %></span>
+                <span class="skill-card-band" aria-hidden="true"></span>
+              <% end %>
+            <% end %>
+
+            <% [GoalSkillSetting::MAX_PER_GOAL - skill_settings.size, 0].max.times do %>
+              <span class="skill-card-slot" aria-hidden="true"></span>
+            <% end %>
+          </div>
+
+          <% if @current_goal && skill_settings.empty? %>
+            <%= link_to t(".skill_settings_link"), goal_skill_settings_path(@current_goal),
+                  class: "skill-select-link", data: { turbo_frame: "_top" } %>
+          <% end %>
+        </fieldset>
+
         <div class="study-start-actions">
           <%= form.submit t(".submit"),
                 data: { turbo_submits_with: t(".submitting") },

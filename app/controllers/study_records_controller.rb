@@ -104,6 +104,6 @@ class StudyRecordsController < ApplicationController
   end
 
   def study_record_params
-    params.require(:study_record).permit(:planned_minutes, :activity, :status)
+    params.expect(study_record: [ :planned_minutes, :activity ])
   end
 end

@@ -31,3 +31,7 @@
                 required: を選択してください
               study_record_id:
                 taken: はすでに評価済みです
+          goal_skill_setting:
+            attributes:
+              base:
+                too_many_skills: 設定できる学習スキルは%{count}件までです

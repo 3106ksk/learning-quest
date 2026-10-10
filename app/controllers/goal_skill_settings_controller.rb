@@ -14,9 +14,14 @@ class GoalSkillSettingsController < ApplicationController
     learning_skill = current_user.learning_skills.find(params[:learning_skill])
 
     skill_setting = @goal.goal_skill_settings.build(learning_skill_id: learning_skill.id)
-    skill_setting.save
 
-    redirect_to goal_skill_settings_path(@goal), status: :see_other
+    if skill_setting.save
+      redirect_to goal_skill_settings_path(@goal), status: :see_other
+    elsif skill_setting.errors.of_kind?(:base, :too_many_skills)
+      redirect_to goal_skill_settings_path(@goal), danger: t(".too_many_skills"), status: :see_other
+    else
+      redirect_to goal_skill_settings_path(@goal), status: :see_other
+    end
   rescue ActiveRecord::RecordNotUnique
     redirect_to goal_skill_settings_path(@goal), status: :see_other
   end

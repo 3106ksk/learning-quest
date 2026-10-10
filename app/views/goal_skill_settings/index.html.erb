@@ -9,7 +9,10 @@
   <section class="goal-skill-settings-selected" aria-labelledby="selected-skills-heading">
     <div class="goal-skill-settings-selected-header">
       <h2 id="selected-skills-heading" class="goal-skill-settings-selected-title"><%= t(".selected_skills") %></h2>
-      <p class="goal-skill-settings-limit-note"><%= t(".limit_note") %></p>
+      <p class="goal-skill-settings-limit-note">
+        <%= render "shared/bulb_icon", css_class: "goal-skill-settings-limit-icon" %>
+        <%= t(".limit_note") %>
+      </p>
     </div>
 
     <div class="dex-tiles goal-skill-settings-selected-tiles">

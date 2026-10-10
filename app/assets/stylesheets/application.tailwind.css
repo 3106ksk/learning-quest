@@ -280,9 +280,16 @@
   }
 
   .goal-new-actions,
-  .skill-form-actions {
+  .skill-form-actions,
+  .study-start-actions {
     display: flex;
     justify-content: flex-end;
+  }
+
+  .study-start-actions {
+    margin-top: var(--space-5);
+    border-top: var(--border-hair);
+    padding-top: var(--space-5);
   }
 
   @media (max-width: 767px) {
@@ -299,7 +306,8 @@
     }
 
     .goal-new-actions .btn,
-    .skill-form-actions .btn {
+    .skill-form-actions .btn,
+    .study-start-actions .btn {
       width: 100%;
     }
   }
@@ -310,6 +318,15 @@
 
   .study-start-form {
     min-width: 0;
+    border: var(--border-hair);
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.06);
+    padding: var(--space-6);
+  }
+
+  .study-start-form .field-control {
+    background: #fff;
   }
 
   .study-start-error {
@@ -394,6 +411,7 @@
   @media (max-width: 767px) {
     .study-start-columns .study-start-form {
       margin-top: var(--space-5);
+      padding: var(--space-5);
     }
   }
 

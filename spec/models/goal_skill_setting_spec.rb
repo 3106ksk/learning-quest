@@ -26,6 +26,36 @@ RSpec.describe GoalSkillSetting, type: :model do
     end
   end
 
+  describe "目標あたりの上限" do
+    let(:goal) { create(:goal) }
+
+    context "同じ目標に3件設定済みの場合" do
+      it "4件目はバリデーションで保存できず、上限のエラーになる" do
+        create_list(:goal_skill_setting, 3, goal: goal)
+        fourth = build(:goal_skill_setting, goal: goal)
+
+        expect(fourth).to be_invalid
+        expect(fourth.errors.of_kind?(:base, :too_many_skills)).to be(true)
+      end
+    end
+
+    context "同じ目標に2件設定済みの場合" do
+      it "3件目は保存できる" do
+        create_list(:goal_skill_setting, 2, goal: goal)
+
+        expect(build(:goal_skill_setting, goal: goal)).to be_valid
+      end
+    end
+
+    context "別の目標に3件設定済みの場合" do
+      it "この目標には保存できる" do
+        create_list(:goal_skill_setting, 3, goal: create(:goal))
+
+        expect(build(:goal_skill_setting, goal: goal)).to be_valid
+      end
+    end
+  end
+
   describe "紐づけの解除" do
     context "学習記録がある場合" do
       it "中間テーブルの行だけを削除し、学習スキル本体と学習記録は残す" do

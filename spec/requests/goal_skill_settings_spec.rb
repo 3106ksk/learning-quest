@@ -103,6 +103,20 @@ RSpec.describe "Goal skill settings", type: :request do
       end
     end
 
+    context "同じ目標に3件設定済みの場合" do
+      it "4件目の設定行を作らず、303で設定画面へ戻して上限のフラッシュを表示する" do
+        create_list(:goal_skill_setting, 3, goal: goal)
+
+        expect {
+          post goal_skill_settings_path(goal), params: { learning_skill: learning_skill.id }
+        }.not_to change(GoalSkillSetting, :count)
+
+        expect(response).to have_http_status(:see_other)
+        expect(response).to redirect_to(goal_skill_settings_path(goal))
+        expect(flash[:danger]).to eq("設定できる学習スキルは3件までです")
+      end
+    end
+
     context "設定時にDBの一意制約に当たった場合" do
       it "303で設定画面へ戻る" do
         allow_any_instance_of(GoalSkillSetting).to receive(:save).and_raise(ActiveRecord::RecordNotUnique)

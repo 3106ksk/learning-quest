@@ -104,6 +104,6 @@ class StudyRecordsController < ApplicationController
   end
 
   def study_record_params
-    params.expect(study_record: [ :planned_minutes, :activity ])
+    params.expect(study_record: [ :planned_minutes, :activity, :learning_skill_id ])
   end
 end

@@ -48,6 +48,26 @@ RSpec.describe StudyRecord, type: :model do
 
       expect(study_record.reload.learning_skill_id).to eq(learning_skill.id)
     end
+
+    context "学習開始時に選んだ学習スキルの検証" do
+      it "学習開始時に目標へ使用設定していない学習スキルIDは無効になる" do
+        learning_skill = create(:learning_skill, user: user)
+        study_record = build(:study_record, user: user, goal: goal, learning_skill_id: learning_skill.id)
+
+        expect(study_record).to be_invalid
+        expect(study_record.errors[:learning_skill_id]).to be_present
+      end
+
+      it "学習開始後に使用設定を解除しても有効なままである" do
+        learning_skill = create(:learning_skill, user: user)
+        setting = create(:goal_skill_setting, goal: goal, learning_skill: learning_skill)
+        study_record = create(:study_record, user: user, goal: goal, learning_skill: learning_skill)
+
+        setting.destroy!
+
+        expect(study_record.valid?).to be(true)
+      end
+    end
   end
 
   describe "関連データの削除" do

@@ -62,14 +62,87 @@ RSpec.describe "StudyRecords", type: :request do
       end
     end
 
-    context "保存に失敗して422で再表示する場合" do
-      it "今の目標に設定した学習スキルを表示する" do
-        create(:goal_skill_setting, goal: goal, learning_skill: create(:learning_skill, user: user, name: "今の目標のスキル"))
+    context "設定した学習スキルの選択" do
+      it "学習スキルを選んで開始すると学習記録に保存される" do
+        skill = create(:learning_skill, user: user)
+        create(:goal_skill_setting, goal: goal, learning_skill: skill)
 
-        post study_records_path, params: { study_record: { planned_minutes: 25, activity: "" } }
+        expect {
+          post study_records_path, params: {
+            study_record: {
+              planned_minutes: 25,
+              activity: "RSpecの学習",
+              learning_skill_id: skill.id
+            }
+          }
+        }.to change(StudyRecord, :count).by(1)
 
-        expect(response).to have_http_status(:unprocessable_content)
-        expect(response.body).to include("今の目標のスキル")
+        expect(response).to have_http_status(:see_other)
+        expect(user.study_records.order(:created_at).last.learning_skill_id).to eq(skill.id)
+      end
+
+      it "スキルを使用しない場合はlearning_skill_idがnilになる" do
+        goal
+
+        expect {
+          post study_records_path, params: {
+            study_record: {
+              planned_minutes: 25,
+              activity: "RSpecの学習",
+              learning_skill_id: ""
+            }
+          }
+        }.to change(StudyRecord, :count).by(1)
+
+        expect(response).to have_http_status(:see_other)
+        expect(user.study_records.order(:created_at).last.learning_skill_id).to be_nil
+      end
+
+      context "保存に失敗して422で再表示する場合" do
+        it "今回やることが空でも選んだ学習スキルのラジオを選択状態で表示する" do
+          skill = create(:learning_skill, user: user)
+          create(:goal_skill_setting, goal: goal, learning_skill: skill)
+
+          post study_records_path, params: {
+            study_record: {
+              planned_minutes: 25,
+              activity: "",
+              learning_skill_id: skill.id
+            }
+          }
+
+          expect(response).to have_http_status(:unprocessable_content)
+          assert_select "input[name='study_record[learning_skill_id]'][value='#{skill.id}'][checked]", count: 1
+        end
+
+        it "目標がなく学習スキルIDを送っても目標のバナーだけを表示する" do
+          skill = create(:learning_skill, user: user)
+          create(:goal_skill_setting, goal: goal, learning_skill: skill)
+          goal.complete!
+
+          expect {
+            post study_records_path, params: {
+              study_record: {
+                planned_minutes: 25,
+                activity: "RSpecの学習",
+                learning_skill_id: skill.id
+              }
+            }
+          }.not_to change(StudyRecord, :count)
+
+          expect(response).to have_http_status(:unprocessable_content)
+          expect(response.body).to include("まずは目標を設定してください。")
+          expect(response.body).not_to include("選んだ学習スキルが見つかりません。")
+        end
+
+        it "今の目標に設定した学習スキルを表示する" do
+          create(:goal_skill_setting, goal: goal, learning_skill: create(:learning_skill, user: user, name: "今の目標のスキル"))
+
+          post study_records_path, params: { study_record: { planned_minutes: 25, activity: "" } }
+
+          expect(response).to have_http_status(:unprocessable_content)
+          expect(response.body).to include("今の目標のスキル")
+        end
       end
     end
   end

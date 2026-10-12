@@ -98,6 +98,72 @@ RSpec.describe "StudyRecords", type: :request do
         expect(user.study_records.order(:created_at).last.learning_skill_id).to be_nil
       end
 
+      context "不正な学習スキルIDを送信した場合" do
+        it "他ユーザーの学習スキルでは記録を作らず422でバナーを表示する" do
+          goal
+          skill = create(:learning_skill)
+
+          expect {
+            post study_records_path, params: {
+              study_record: {
+                planned_minutes: 25,
+                activity: "RSpecの学習",
+                learning_skill_id: skill.id
+              }
+            }
+          }.not_to change(StudyRecord, :count)
+
+          expect(response).to have_http_status(:unprocessable_content)
+          assert_select ".page-wide > .error-banner.study-start-error[role='alert']", count: 1 do
+            assert_select "p", text: "選んだ学習スキルが見つかりません。もう一度選び直してください。"
+            assert_select "a[href='#{goal_skill_settings_path(goal)}'][data-turbo-frame='_top']", text: "学習スキルを確かめる →"
+          end
+        end
+
+        it "使用設定を解除した自分の学習スキルでは記録を作らず422でバナーを表示する" do
+          skill = create(:learning_skill, user: user)
+          setting = create(:goal_skill_setting, goal: goal, learning_skill: skill)
+          setting.destroy!
+
+          expect {
+            post study_records_path, params: {
+              study_record: {
+                planned_minutes: 25,
+                activity: "RSpecの学習",
+                learning_skill_id: skill.id
+              }
+            }
+          }.not_to change(StudyRecord, :count)
+
+          expect(response).to have_http_status(:unprocessable_content)
+          assert_select ".page-wide > .error-banner.study-start-error[role='alert']", count: 1 do
+            assert_select "p", text: "選んだ学習スキルが見つかりません。もう一度選び直してください。"
+            assert_select "a[href='#{goal_skill_settings_path(goal)}'][data-turbo-frame='_top']", text: "学習スキルを確かめる →"
+          end
+        end
+
+        it "存在しない学習スキルIDでは記録を作らず422でバナーを表示する" do
+          goal
+          nonexistent_id = LearningSkill.maximum(:id).to_i + 1
+
+          expect {
+            post study_records_path, params: {
+              study_record: {
+                planned_minutes: 25,
+                activity: "RSpecの学習",
+                learning_skill_id: nonexistent_id
+              }
+            }
+          }.not_to change(StudyRecord, :count)
+
+          expect(response).to have_http_status(:unprocessable_content)
+          assert_select ".page-wide > .error-banner.study-start-error[role='alert']", count: 1 do
+            assert_select "p", text: "選んだ学習スキルが見つかりません。もう一度選び直してください。"
+            assert_select "a[href='#{goal_skill_settings_path(goal)}'][data-turbo-frame='_top']", text: "学習スキルを確かめる →"
+          end
+        end
+      end
+
       context "保存に失敗して422で再表示する場合" do
         it "今回やることが空でも選んだ学習スキルのラジオを選択状態で表示する" do
           skill = create(:learning_skill, user: user)

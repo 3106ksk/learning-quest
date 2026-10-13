@@ -33,6 +33,7 @@ class StudyRecord < ApplicationRecord
   validates :user_id, uniqueness: {
     conditions: -> { where(status: ACTIVE_STATUSES) }
   }
+  validate :learning_skill_in_goal_settings, on: :create
 
   def start_pause!
     update!(
@@ -93,6 +94,15 @@ class StudyRecord < ApplicationRecord
   end
 
   private
+
+  def learning_skill_in_goal_settings
+    return if learning_skill_id.nil?
+    return if goal.nil?
+
+    unless goal.goal_skill_settings.exists?(learning_skill_id: learning_skill_id)
+      errors.add(:learning_skill_id, :not_in_goal_settings)
+    end
+  end
 
   def calculate_pause_duration(now)
     raise "一時停止開始時刻がありません" if current_pause_started_at.nil?

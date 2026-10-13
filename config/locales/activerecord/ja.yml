@@ -21,6 +21,10 @@
           study_record_id: 学習記録
       errors:
         models:
+          study_record:
+            attributes:
+              learning_skill_id:
+                not_in_goal_settings: は進行中の目標に使用設定してある学習スキルではありません
           evaluation:
             attributes:
               focus_option:

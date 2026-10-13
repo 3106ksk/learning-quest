@@ -8,6 +8,13 @@
       </div>
     <% end %>
 
+    <% if @study_record.errors.of_kind?(:learning_skill_id, :not_in_goal_settings) && @current_goal %>
+      <div class="error-banner study-start-error" role="alert">
+        <p><%= t(".skill_not_found") %></p>
+        <%= link_to t(".skill_check_link"), goal_skill_settings_path(@current_goal), data: { turbo_frame: "_top" } %>
+      </div>
+    <% end %>
+
     <div class="study-start-columns">
       <aside class="study-start-side-column" aria-label="<%= @current_goal ? t('.current_goal') : t('.goal') %>">
         <% if @current_goal %>

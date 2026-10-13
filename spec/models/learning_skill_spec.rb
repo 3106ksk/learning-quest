@@ -57,7 +57,9 @@ RSpec.describe LearningSkill, type: :model do
     context "学習記録がある場合" do
       it "学習スキルを削除できず、エラーが入り件数が変わらない" do
         learning_skill = create(:learning_skill)
-        study_record = create(:study_record, user: learning_skill.user, learning_skill: learning_skill)
+        goal = create(:goal, user: learning_skill.user)
+        create(:goal_skill_setting, goal: goal, learning_skill: learning_skill)
+        study_record = create(:study_record, user: learning_skill.user, goal: goal, learning_skill: learning_skill)
         skill_count = described_class.count
         study_record_count = StudyRecord.count
 

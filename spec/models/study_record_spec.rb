@@ -39,6 +39,7 @@ RSpec.describe StudyRecord, type: :model do
 
     it "同じ利用者の学習スキルを紐づけて保存できる" do
       learning_skill = create(:learning_skill, user: user)
+      create(:goal_skill_setting, goal: goal, learning_skill: learning_skill)
       study_record = create(
         :study_record,
         user: user,

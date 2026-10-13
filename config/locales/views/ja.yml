@@ -244,6 +244,8 @@ ja:
       skill_equipped: 装備中
       skill_none: スキルを使用しない
       skill_settings_link: この目標で使う学習スキルを選べます
+      skill_not_found: 選んだ学習スキルが見つかりません。もう一度選び直してください。
+      skill_check_link: 学習スキルを確かめる →
   evaluations:
     show:
       actions:

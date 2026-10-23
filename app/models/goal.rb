@@ -1,6 +1,7 @@
 class Goal < ApplicationRecord
   belongs_to :user
   has_many :study_records, dependent: :destroy
+  has_many :weekly_reflections, dependent: :destroy
   has_many :goal_skill_settings, dependent: :destroy
   has_many :learning_skills, through: :goal_skill_settings
 

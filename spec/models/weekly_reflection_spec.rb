@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe WeeklyReflection, type: :model do
   describe "バリデーション" do
     context "作成時に目標へ使用設定していない学習スキルの場合" do
-      it "無効になり、学習スキルIDにエラーが入る", skip: "使用設定の検証は保存機能の実装時に追加する" do
+      it "無効になり、学習スキルIDにエラーが入る" do
         goal = create(:goal)
         learning_skill = create(:learning_skill, user: goal.user)
         weekly_reflection = build(:weekly_reflection, goal: goal, learning_skill: learning_skill)
@@ -14,7 +14,7 @@ RSpec.describe WeeklyReflection, type: :model do
     end
 
     context "作成後に学習スキルの使用設定を解除した場合" do
-      it "実感と振り返った日時を更新できる", skip: "作成時だけ使用設定を検証することは保存・更新機能の実装時に確認する" do
+      it "実感と振り返った日時を更新できる" do
         weekly_reflection = create(:weekly_reflection)
         setting = GoalSkillSetting.find_by!(
           goal: weekly_reflection.goal,

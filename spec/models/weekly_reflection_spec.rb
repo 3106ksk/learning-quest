@@ -1,6 +1,22 @@
 require 'rails_helper'
 
 RSpec.describe WeeklyReflection, type: :model do
+  include ActiveSupport::Testing::TimeHelpers
+
+  describe ".current_week_start_on" do
+    it "日本時間の日曜23:59には、その週の月曜日を返す" do
+      travel_to Time.zone.local(2026, 11, 1, 23, 59, 0) do
+        expect(described_class.current_week_start_on).to eq(Date.new(2026, 10, 26))
+      end
+    end
+
+    it "日本時間の月曜0:00には、新しい週の月曜日を返す" do
+      travel_to Time.zone.local(2026, 11, 2, 0, 0, 0) do
+        expect(described_class.current_week_start_on).to eq(Date.new(2026, 11, 2))
+      end
+    end
+  end
+
   describe "バリデーション" do
     context "作成時に目標へ使用設定していない学習スキルの場合" do
       it "無効になり、学習スキルIDにエラーが入る" do

@@ -21,6 +21,10 @@ class WeeklyReflection < ApplicationRecord
   validates :expectation_note, :comment, length: { maximum: 200 }
   validate :learning_skill_in_goal_settings, on: :create
 
+  def self.current_week_start_on
+    Date.current.beginning_of_week
+  end
+
   private
 
   def learning_skill_in_goal_settings

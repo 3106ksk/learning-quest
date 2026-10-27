@@ -4,7 +4,7 @@ class WeeklyReflectionsController < ApplicationController
 
   def create
     @weekly_reflection = @goal.weekly_reflections.build(weekly_reflection_params)
-    @weekly_reflection.week_start_on = Date.new(2026, 10, 26)
+    @weekly_reflection.week_start_on = WeeklyReflection.current_week_start_on
 
     if @weekly_reflection.save
       redirect_to goal_weekly_reflection_path(@goal, @weekly_reflection), status: :see_other

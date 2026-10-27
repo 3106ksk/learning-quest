@@ -11,6 +11,12 @@ class WeeklyReflectionsController < ApplicationController
     else
       render :new, status: :unprocessable_content
     end
+  rescue ActiveRecord::RecordNotUnique
+    @weekly_reflection = @goal.weekly_reflections.find_by!(
+      week_start_on: @weekly_reflection.week_start_on
+    )
+
+    redirect_to goal_weekly_reflection_path(@goal, @weekly_reflection), status: :see_other
   end
 
   private

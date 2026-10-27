@@ -19,4 +19,20 @@ class WeeklyReflection < ApplicationRecord
 
   validates :week_start_on, presence: true, uniqueness: { scope: :goal_id }
   validates :expectation_note, :comment, length: { maximum: 200 }
+  validate :learning_skill_in_goal_settings, on: :create
+
+  def self.current_week_start_on
+    Date.current.beginning_of_week
+  end
+
+  private
+
+  def learning_skill_in_goal_settings
+    return if learning_skill_id.nil?
+    return if goal.nil?
+
+    unless goal.goal_skill_settings.exists?(learning_skill_id: learning_skill_id)
+      errors.add(:learning_skill_id, :not_in_goal_settings)
+    end
+  end
 end

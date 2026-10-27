@@ -19,8 +19,21 @@
           focus_option: 集中
           challenge_option: チャレンジ
           study_record_id: 学習記録
+        weekly_reflection:
+          learning_skill: 今週の学習スキル
+          learning_skill_id: 今週の学習スキル
+          expectation: 期待する変化
+          expectation_note: 期待する変化の具体的な内容
       errors:
         models:
+          weekly_reflection:
+            attributes:
+              learning_skill:
+                required: を選んでください
+              learning_skill_id:
+                not_in_goal_settings: は、この目標で使う学習スキルから選んでください
+              expectation:
+                inclusion: を選んでください
           study_record:
             attributes:
               learning_skill_id:

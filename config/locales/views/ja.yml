@@ -108,6 +108,9 @@ ja:
       skills_title: この目標で使う学習スキル
       skills_description: スキルの使用を設定する
       skills_unavailable: 目標を設定すると、使う学習スキルを選べます
+  weekly_reflections:
+    create:
+      danger: この目標は既に完了しています
   goal_skill_settings:
     create:
       danger: 完了した目標の学習スキルは変更できません

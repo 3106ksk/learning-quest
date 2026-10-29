@@ -29,7 +29,7 @@ ja:
       sign_up: 無料で始める
     sidebar:
       brand: きづき
-      logout: ログアウト
+      logout: f
       nav_goals: 目標
       nav_learning_skills: 学習スキル
       nav_study: 学習する
@@ -115,6 +115,8 @@ ja:
       goal_label: 進行中の目標
       skill_heading: 今週の学習スキル
       skill_description: この目標で使う学習スキル（最大3件）の中から、今週検証する1つを選びます
+      skill_settings_link: この目標で使う学習スキルを選ぶ →
+      skills_empty: まだありません
       expectation_heading: 期待する変化
       expectation_description: この学習スキルを使って、どう変わってほしいか
       note_label: 期待する変化を、具体的に書くなら

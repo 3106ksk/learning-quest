@@ -34,6 +34,9 @@
           <p class="small" style="margin-bottom: var(--space-3)"><%= t(".skill_description") %></p>
 
           <div class="skill-cards">
+            <% if @skill_settings.empty? %>
+              <span class="skill-card-slot is-empty"><%= t(".skills_empty") %></span>
+            <% end %>
             <% @skill_settings.each do |setting| %>
               <%= form.radio_button :learning_skill_id, setting.learning_skill_id, class: "skill-card-input" %>
               <%= form.label :learning_skill_id, value: setting.learning_skill_id, class: "skill-card" do %>
@@ -42,6 +45,11 @@
               <% end %>
             <% end %>
           </div>
+          <% if @skill_settings.empty? %>
+            <div style="text-align: right">
+              <%= link_to t(".skill_settings_link"), goal_skill_settings_path(@goal), class: "skill-select-link" %>
+            </div>
+          <% end %>
         </fieldset>
       </section>
 
@@ -94,7 +102,9 @@
       </section>
 
       <div class="button-row" style="justify-content: center">
-        <%= form.submit t(".submit"), class: "btn btn-primary" %>
+        <%= form.submit t(".submit"),
+              disabled: @skill_settings.empty?,
+              class: "btn btn-primary disabled:cursor-not-allowed disabled:opacity-60" %>
       </div>
     <% end %>
   </div>

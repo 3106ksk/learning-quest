@@ -122,6 +122,12 @@ ja:
       note_placeholder: 例：学習中に、次に何をするかで迷いにくくしたい
       submit: 学習スキルと期待する変化を決める
       danger: この目標は既に完了しています
+    show:
+      title: 週の振り返り
+      week_suffix: の週
+      skill_label: 今週の学習スキル
+      expectation_label: 期待する変化
+      note_label: 具体的に
     create:
       danger: この目標は既に完了しています
   goal_skill_settings:

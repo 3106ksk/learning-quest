@@ -1,0 +1,34 @@
+<% content_for :title, t(".title") %>
+<% expectation_labels = {
+  "easy_start" => "始めやすく、続けやすくしたい",
+  "focus" => "集中して取り組みたい",
+  "challenge" => "決めた内容に取り組みたい",
+  "undecided" => "まだ決めていない"
+} %>
+
+<div class="page-wide">
+  <section class="goal-card" aria-labelledby="weekly-reflection-title">
+    <header>
+      <p class="skill-select-eyebrow">
+        <%= l(@weekly_reflection.week_start_on, format: :record) %>〜<%= l(@weekly_reflection.week_start_on + 6.days, format: :record) %><%= t(".week_suffix") %>
+      </p>
+      <h1 id="weekly-reflection-title" class="goal-card-title" style="margin-top: var(--space-3); overflow-wrap: anywhere"><%= @goal.name %></h1>
+    </header>
+
+    <dl class="definition-list" style="margin-top: var(--space-5)">
+      <div class="definition-row">
+        <dt><%= t(".skill_label") %></dt>
+        <dd><%= @weekly_reflection.learning_skill.name %></dd>
+      </div>
+      <div class="definition-row">
+        <dt><%= t(".expectation_label") %></dt>
+        <dd>
+          <%= expectation_labels.fetch(@weekly_reflection.expectation) %>
+          <% if @weekly_reflection.expectation_note.present? %>
+            <p class="form-help" style="white-space: pre-wrap"><%= t(".note_label") %>：<%= @weekly_reflection.expectation_note %></p>
+          <% end %>
+        </dd>
+      </div>
+    </dl>
+  </section>
+</div>

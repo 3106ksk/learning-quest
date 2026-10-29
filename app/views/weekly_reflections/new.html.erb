@@ -6,7 +6,7 @@
       <span class="card-badge badge-active"><%= t(".goal_label") %></span>
       <h1 class="goal-card-title" style="margin-top: var(--space-3); overflow-wrap: anywhere"><%= @goal.name %></h1>
       <p class="skill-select-eyebrow" style="margin-top: var(--space-3)">
-        <%= l(@weekly_reflection.week_start_on, format: :record) %>〜<%= l(@weekly_reflection.week_start_on + 6.days, format: :record) %>
+        <%= weekly_reflection_period(@weekly_reflection.week_start_on) %>
       </p>
       <p class="form-help"><%= t(".description") %></p>
     </header>

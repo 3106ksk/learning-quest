@@ -4,7 +4,7 @@
   <section class="goal-card" aria-labelledby="weekly-reflection-title">
     <header>
       <p class="skill-select-eyebrow">
-        <%= l(@weekly_reflection.week_start_on, format: :record) %>〜<%= l(@weekly_reflection.week_start_on + 6.days, format: :record) %><%= t(".week_suffix") %>
+        <%= weekly_reflection_period(@weekly_reflection.week_start_on) %><%= t(".week_suffix") %>
       </p>
       <h1 id="weekly-reflection-title" class="goal-card-title" style="margin-top: var(--space-3); overflow-wrap: anywhere"><%= @goal.name %></h1>
     </header>

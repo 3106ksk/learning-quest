@@ -109,6 +109,8 @@ ja:
       skills_description: スキルの使用を設定する
       skills_unavailable: 目標を設定すると、使う学習スキルを選べます
   weekly_reflections:
+    new:
+      danger: この目標は既に完了しています
     create:
       danger: この目標は既に完了しています
   goal_skill_settings:

@@ -12,12 +12,25 @@
     </header>
 
     <%= form_with model: [ @goal, @weekly_reflection ], class: "form-stack" do |form| %>
-      <section class="goal-card">
-        <fieldset class="m-0 min-w-0 border-0 p-0">
+      <section class="goal-card"
+        <% if @weekly_reflection.errors[:learning_skill].any? || @weekly_reflection.errors[:learning_skill_id].any? %>
+          style="border-color: var(--color-error-600)"
+        <% end %>
+      >
+        <fieldset class="m-0 min-w-0 border-0 p-0"
+          <% if @weekly_reflection.errors[:learning_skill].any? || @weekly_reflection.errors[:learning_skill_id].any? %>
+            aria-describedby="weekly-reflection-skill-error" aria-invalid="true"
+          <% end %>
+        >
           <legend class="skill-select-legend">
             <span class="skill-select-eyebrow" aria-hidden="true">1</span>
             <h2><%= t(".skill_heading") %></h2>
           </legend>
+          <% if @weekly_reflection.errors[:learning_skill].any? || @weekly_reflection.errors[:learning_skill_id].any? %>
+            <p class="group-error" id="weekly-reflection-skill-error" role="alert">
+              <%= (@weekly_reflection.errors.full_messages_for(:learning_skill) + @weekly_reflection.errors.full_messages_for(:learning_skill_id)).first %>
+            </p>
+          <% end %>
           <p class="small" style="margin-bottom: var(--space-3)"><%= t(".skill_description") %></p>
 
           <div class="skill-cards">
@@ -33,14 +46,23 @@
       </section>
 
       <section class="goal-card">
-        <fieldset class="m-0 min-w-0 border-0 p-0">
+        <fieldset class="m-0 min-w-0 border-0 p-0"
+          <% if @weekly_reflection.errors[:expectation].any? %>
+            aria-describedby="weekly-reflection-expectation-error" aria-invalid="true"
+          <% end %>
+        >
           <legend class="skill-select-legend">
             <span class="skill-select-eyebrow" aria-hidden="true">2</span>
             <h2><%= t(".expectation_heading") %></h2>
           </legend>
+          <% if @weekly_reflection.errors[:expectation].any? %>
+            <p class="group-error" id="weekly-reflection-expectation-error" role="alert">
+              <%= @weekly_reflection.errors.full_messages_for(:expectation).first %>
+            </p>
+          <% end %>
           <p class="small" style="margin-bottom: var(--space-3)"><%= t(".expectation_description") %></p>
 
-          <div class="choice-list">
+          <div class="choice-list<%= ' has-error' if @weekly_reflection.errors[:expectation].any? %>">
             <% WeeklyReflection.expectations.keys.each do |value| %>
               <%= form.radio_button :expectation, value, class: "choice-input" %>
               <%= form.label :expectation, value: value, class: "choice-row" do %>
@@ -58,8 +80,16 @@
                 rows: 4,
                 maxlength: 200,
                 placeholder: t(".note_placeholder"),
-                class: "field-control",
-                aria: { describedby: "expectation-note-help" } %>
+                class: "field-control#{' has-error' if @weekly_reflection.errors[:expectation_note].any?}",
+                aria: {
+                  describedby: [ "expectation-note-help", ("weekly-reflection-note-error" if @weekly_reflection.errors[:expectation_note].any?) ].compact.join(" "),
+                  invalid: ("true" if @weekly_reflection.errors[:expectation_note].any?)
+                } %>
+          <% if @weekly_reflection.errors[:expectation_note].any? %>
+            <p class="group-error" id="weekly-reflection-note-error" role="alert">
+              <%= @weekly_reflection.errors.full_messages_for(:expectation_note).first %>
+            </p>
+          <% end %>
         </div>
       </section>
 

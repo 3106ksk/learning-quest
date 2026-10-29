@@ -207,6 +207,12 @@ ja:
       success: 学習スキルを登録しました
       danger: 同じ名前の学習スキルがすでにあります
   enums:
+    weekly_reflection:
+      expectation:
+        easy_start: 始めやすく、続けやすくしたい
+        focus: 集中して取り組みたい
+        challenge: 決めた内容に取り組みたい
+        undecided: まだ決めていない
     goal:
       status:
         active: 進行中

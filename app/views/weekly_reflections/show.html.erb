@@ -1,10 +1,4 @@
 <% content_for :title, t(".title") %>
-<% expectation_labels = {
-  "easy_start" => "始めやすく、続けやすくしたい",
-  "focus" => "集中して取り組みたい",
-  "challenge" => "決めた内容に取り組みたい",
-  "undecided" => "まだ決めていない"
-} %>
 
 <div class="page-wide">
   <section class="goal-card" aria-labelledby="weekly-reflection-title">
@@ -23,7 +17,7 @@
       <div class="definition-row">
         <dt><%= t(".expectation_label") %></dt>
         <dd>
-          <%= expectation_labels.fetch(@weekly_reflection.expectation) %>
+          <%= t("enums.weekly_reflection.expectation.#{@weekly_reflection.expectation}") %>
           <% if @weekly_reflection.expectation_note.present? %>
             <p class="form-help" style="white-space: pre-wrap"><%= t(".note_label") %>：<%= @weekly_reflection.expectation_note %></p>
           <% end %>

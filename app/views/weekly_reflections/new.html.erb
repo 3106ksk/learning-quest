@@ -41,16 +41,11 @@
           <p class="small" style="margin-bottom: var(--space-3)"><%= t(".expectation_description") %></p>
 
           <div class="choice-list">
-            <% {
-              "easy_start" => "始めやすく、続けやすくしたい",
-              "focus" => "集中して取り組みたい",
-              "challenge" => "決めた内容に取り組みたい",
-              "undecided" => "まだ決めていない"
-            }.each do |value, label| %>
+            <% WeeklyReflection.expectations.keys.each do |value| %>
               <%= form.radio_button :expectation, value, class: "choice-input" %>
               <%= form.label :expectation, value: value, class: "choice-row" do %>
                 <span class="choice-mark" aria-hidden="true"></span>
-                <span><%= label %></span>
+                <span><%= t("enums.weekly_reflection.expectation.#{value}") %></span>
               <% end %>
             <% end %>
           </div>

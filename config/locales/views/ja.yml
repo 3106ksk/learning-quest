@@ -108,7 +108,31 @@ ja:
       skills_title: この目標で使う学習スキル
       skills_description: スキルの使用を設定する
       skills_unavailable: 目標を設定すると、使う学習スキルを選べます
+      reflections_title: 週の振り返り
+      reflections_description: 1週間ごとに、使った学習スキルを振り返る
+      reflections_unavailable: 目標を決めると、週の振り返りを始められます
   weekly_reflections:
+    new:
+      title: 今週の学習スキルと期待する変化を決める
+      description: 週の終わりに、期待した変化を感じられたかを振り返ります
+      goal_label: 進行中の目標
+      skill_heading: 今週の学習スキル
+      skill_description: 今週効果を試したい学習スキルを選択
+      skill_settings_link: この目標で使う学習スキルを選ぶ →
+      skills_empty: まだありません
+      expectation_heading: 期待する変化
+      expectation_description: この学習スキルを使って、どう変わってほしいか
+      note_label: 期待する変化を、具体的に書くなら
+      note_help: 任意・200字まで
+      note_placeholder: 例：学習中に、次に何をするかで迷いにくくしたい
+      submit: 学習スキルと期待する変化を決める
+      danger: この目標は既に完了しています
+    show:
+      title: 週の振り返り
+      week_suffix: の週
+      skill_label: 今週の学習スキル
+      expectation_label: 期待する変化
+      note_label: 具体的に
     create:
       danger: この目標は既に完了しています
   goal_skill_settings:
@@ -188,6 +212,12 @@ ja:
       success: 学習スキルを登録しました
       danger: 同じ名前の学習スキルがすでにあります
   enums:
+    weekly_reflection:
+      expectation:
+        easy_start: 始めやすく、続けやすくしたい
+        focus: 集中して取り組みたい
+        challenge: 決めた内容に取り組みたい
+        undecided: まだ決めていない
     goal:
       status:
         active: 進行中

@@ -1,0 +1,28 @@
+<% content_for :title, t(".title") %>
+
+<div class="page-wide">
+  <section class="goal-card" aria-labelledby="weekly-reflection-title">
+    <header>
+      <p class="skill-select-eyebrow">
+        <%= weekly_reflection_period(@weekly_reflection.week_start_on) %><%= t(".week_suffix") %>
+      </p>
+      <h1 id="weekly-reflection-title" class="goal-card-title" style="margin-top: var(--space-3); overflow-wrap: anywhere"><%= @goal.name %></h1>
+    </header>
+
+    <dl class="definition-list" style="margin-top: var(--space-5)">
+      <div class="definition-row">
+        <dt><%= t(".skill_label") %></dt>
+        <dd><%= @weekly_reflection.learning_skill.name %></dd>
+      </div>
+      <div class="definition-row">
+        <dt><%= t(".expectation_label") %></dt>
+        <dd>
+          <%= t("enums.weekly_reflection.expectation.#{@weekly_reflection.expectation}") %>
+          <% if @weekly_reflection.expectation_note.present? %>
+            <p class="form-help" style="white-space: pre-wrap"><%= t(".note_label") %>：<%= @weekly_reflection.expectation_note %></p>
+          <% end %>
+        </dd>
+      </div>
+    </dl>
+  </section>
+</div>

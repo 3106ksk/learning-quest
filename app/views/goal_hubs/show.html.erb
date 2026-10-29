@@ -23,17 +23,6 @@
   <% end %>
 
   <div class="goal-hub-links">
-    <%= link_to goals_path, class: "goal-hub-link-card" do %>
-      <svg class="goal-hub-link-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M5 21 10.5 3" />
-        <path d="M10.5 4c3.3.3 5.5 3 8.5 3.5l-2.7 8.3c-3-.3-5.2-3-8.5-3.5z" />
-      </svg>
-      <span class="goal-hub-link-card-copy">
-        <span class="goal-hub-link-card-title"><%= t(".list_title") %></span>
-        <span class="goal-hub-link-card-description"><%= t(".list_description") %></span>
-      </span>
-    <% end %>
-
     <% if @current_goal %>
       <%= link_to goal_skill_settings_path(@current_goal), class: "goal-hub-link-card" do %>
         <svg class="goal-hub-link-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -54,6 +43,41 @@
           <span class="goal-hub-link-card-description"><%= t(".skills_unavailable") %></span>
         </span>
       </div>
+    <% end %>
+
+    <% if @current_goal %>
+      <%= link_to new_goal_weekly_reflection_path(@current_goal), class: "goal-hub-link-card" do %>
+        <svg class="goal-hub-link-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="16" rx="2" />
+          <path d="M16 3v4M8 3v4M3 11h18m-12 5 2 2 4-4" />
+        </svg>
+        <span class="goal-hub-link-card-copy">
+          <span class="goal-hub-link-card-title"><%= t(".reflections_title") %></span>
+          <span class="goal-hub-link-card-description"><%= t(".reflections_description") %></span>
+        </span>
+      <% end %>
+    <% else %>
+      <div class="goal-hub-link-card is-unavailable" style="border-style: dashed">
+        <svg class="goal-hub-link-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="16" rx="2" />
+          <path d="M16 3v4M8 3v4M3 11h18m-12 5 2 2 4-4" />
+        </svg>
+        <span class="goal-hub-link-card-copy">
+          <span class="goal-hub-link-card-title"><%= t(".reflections_title") %></span>
+          <span class="goal-hub-link-card-description"><%= t(".reflections_unavailable") %></span>
+        </span>
+      </div>
+    <% end %>
+
+    <%= link_to goals_path, class: "goal-hub-link-card" do %>
+      <svg class="goal-hub-link-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 21 10.5 3" />
+        <path d="M10.5 4c3.3.3 5.5 3 8.5 3.5l-2.7 8.3c-3-.3-5.2-3-8.5-3.5z" />
+      </svg>
+      <span class="goal-hub-link-card-copy">
+        <span class="goal-hub-link-card-title"><%= t(".list_title") %></span>
+        <span class="goal-hub-link-card-description"><%= t(".list_description") %></span>
+      </span>
     <% end %>
   </div>
 </div>

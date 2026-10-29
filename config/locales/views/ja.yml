@@ -108,6 +108,9 @@ ja:
       skills_title: この目標で使う学習スキル
       skills_description: スキルの使用を設定する
       skills_unavailable: 目標を設定すると、使う学習スキルを選べます
+      reflections_title: 週の振り返り
+      reflections_description: 1週間ごとに、使った学習スキルを振り返る
+      reflections_unavailable: 目標を決めると、週の振り返りを始められます
   weekly_reflections:
     new:
       title: 今週の学習スキルと期待する変化を決める

@@ -1,0 +1,76 @@
+<% content_for :title, t(".title") %>
+
+<div class="page-wide">
+  <div class="form-stack">
+    <header class="goal-card text-center">
+      <span class="card-badge badge-active"><%= t(".goal_label") %></span>
+      <h1 class="goal-card-title" style="margin-top: var(--space-3); overflow-wrap: anywhere"><%= @goal.name %></h1>
+      <p class="skill-select-eyebrow" style="margin-top: var(--space-3)">
+        <%= l(@weekly_reflection.week_start_on, format: :record) %>〜<%= l(@weekly_reflection.week_start_on + 6.days, format: :record) %>
+      </p>
+      <p class="form-help"><%= t(".description") %></p>
+    </header>
+
+    <%= form_with model: [ @goal, @weekly_reflection ], class: "form-stack" do |form| %>
+      <section class="goal-card">
+        <fieldset class="m-0 min-w-0 border-0 p-0">
+          <legend class="skill-select-legend">
+            <span class="skill-select-eyebrow" aria-hidden="true">1</span>
+            <h2><%= t(".skill_heading") %></h2>
+          </legend>
+          <p class="small" style="margin-bottom: var(--space-3)"><%= t(".skill_description") %></p>
+
+          <div class="skill-cards">
+            <% @skill_settings.each do |setting| %>
+              <%= form.radio_button :learning_skill_id, setting.learning_skill_id, class: "skill-card-input" %>
+              <%= form.label :learning_skill_id, value: setting.learning_skill_id, class: "skill-card" do %>
+                <span class="skill-card-face"><%= render "shared/bulb_icon", css_class: "skill-card-bulb" %></span>
+                <span class="skill-card-name"><%= setting.learning_skill.name %></span>
+              <% end %>
+            <% end %>
+          </div>
+        </fieldset>
+      </section>
+
+      <section class="goal-card">
+        <fieldset class="m-0 min-w-0 border-0 p-0">
+          <legend class="skill-select-legend">
+            <span class="skill-select-eyebrow" aria-hidden="true">2</span>
+            <h2><%= t(".expectation_heading") %></h2>
+          </legend>
+          <p class="small" style="margin-bottom: var(--space-3)"><%= t(".expectation_description") %></p>
+
+          <div class="choice-list">
+            <% {
+              "easy_start" => "始めやすく、続けやすくしたい",
+              "focus" => "集中して取り組みたい",
+              "challenge" => "決めた内容に取り組みたい",
+              "undecided" => "まだ決めていない"
+            }.each do |value, label| %>
+              <%= form.radio_button :expectation, value, class: "choice-input" %>
+              <%= form.label :expectation, value: value, class: "choice-row" do %>
+                <span class="choice-mark" aria-hidden="true"></span>
+                <span><%= label %></span>
+              <% end %>
+            <% end %>
+          </div>
+        </fieldset>
+
+        <div style="margin-top: var(--space-5)">
+          <%= form.label :expectation_note, t(".note_label"), class: "field-label" %>
+          <p class="small" id="expectation-note-help" style="margin-bottom: var(--space-2)"><%= t(".note_help") %></p>
+          <%= form.text_area :expectation_note,
+                rows: 4,
+                maxlength: 200,
+                placeholder: t(".note_placeholder"),
+                class: "field-control",
+                aria: { describedby: "expectation-note-help" } %>
+        </div>
+      </section>
+
+      <div class="button-row" style="justify-content: center">
+        <%= form.submit t(".submit"), class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

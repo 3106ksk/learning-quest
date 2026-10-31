@@ -26,4 +26,8 @@ class WeeklyStudyAggregator
   private
 
   attr_reader :goal, :week_start_on, :learning_skill
+
+  def records_in_week(week_range)
+    goal.study_records.evaluated.where(started_at: week_range)
+  end
 end

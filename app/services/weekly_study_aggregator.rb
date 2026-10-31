@@ -18,14 +18,22 @@ class WeeklyStudyAggregator
     previous = week_start_on.prev_week.all_week
 
     {
-      current: current,
-      previous: previous
+      current: aggregate_week(current),
+      previous: aggregate_week(previous)
     }
   end
 
   private
 
   attr_reader :goal, :week_start_on, :learning_skill
+
+  def aggregate_week(week_range)
+    records = records_in_week(week_range).to_a
+
+    {
+      study_count: records.size
+    }
+  end
 
   def records_in_week(week_range)
     goal.study_records.evaluated.where(started_at: week_range)

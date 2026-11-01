@@ -136,14 +136,15 @@ ja:
       study_heading: 週の記録
       previous_week: 前週
       current_week: 今週
-      current_week_in_progress: 今週（ここまで）
       no_previous_week: この目標は今週から始めました
       study_count_label: 学習回数
       study_days_label: 学習した日数
       selected_count_label: この学習スキルを選んだ回
       times: "%{count}回"
       days: "%{count}日"
-      study_note: 数えているのは、評価まで終えた学習です
+      breakdown_heading: "『%{skill}』を選んだ回の内訳"
+      focus_heading: 集中
+      challenge_heading: チャレンジ
     create:
       danger: この目標は既に完了しています
   goal_skill_settings:

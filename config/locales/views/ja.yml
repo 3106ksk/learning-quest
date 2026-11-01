@@ -150,6 +150,9 @@ ja:
       comment_heading: 使ってみて、気づいたことはありますか？
       comment_help: 任意・200字まで
       submit: この週を振り返る
+      review_heading: 振り返り
+      feeling_label: 実感
+      comment_label: ひと言
     create:
       danger: この目標は既に完了しています
   reviews:

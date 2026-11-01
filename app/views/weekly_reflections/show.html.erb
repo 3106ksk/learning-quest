@@ -119,68 +119,87 @@
     </dl>
   </section>
 
-  <%= form_with model: @weekly_reflection,
-        url: goal_weekly_reflection_review_path(@goal, @weekly_reflection),
-        method: :patch,
-        class: "form-stack",
-        style: "margin-top: var(--space-5)" do |form| %>
-    <section class="goal-card">
-      <fieldset class="m-0 min-w-0 border-0 p-0"
-        <% if @weekly_reflection.errors[:feeling].any? %>
-          aria-describedby="weekly-reflection-feeling-error" aria-invalid="true"
-        <% end %>
-      >
-        <legend class="skill-select-legend">
-          <span class="skill-select-eyebrow" aria-hidden="true">1</span>
-          <h2>
-            <% if @weekly_reflection.expectation_undecided? %>
-              <%= t(".feeling_question_undecided", skill: @weekly_reflection.learning_skill.name) %>
-            <% else %>
-              <%= t(".feeling_question", expectation: t("enums.weekly_reflection.expectation.#{@weekly_reflection.expectation}")) %>
+  <% if @goal.active? %>
+    <%= form_with model: @weekly_reflection,
+          url: goal_weekly_reflection_review_path(@goal, @weekly_reflection),
+          method: :patch,
+          class: "form-stack",
+          style: "margin-top: var(--space-5)" do |form| %>
+      <section class="goal-card">
+        <fieldset class="m-0 min-w-0 border-0 p-0"
+          <% if @weekly_reflection.errors[:feeling].any? %>
+            aria-describedby="weekly-reflection-feeling-error" aria-invalid="true"
+          <% end %>
+        >
+          <legend class="skill-select-legend">
+            <span class="skill-select-eyebrow" aria-hidden="true">1</span>
+            <h2>
+              <% if @weekly_reflection.expectation_undecided? %>
+                <%= t(".feeling_question_undecided", skill: @weekly_reflection.learning_skill.name) %>
+              <% else %>
+                <%= t(".feeling_question", expectation: t("enums.weekly_reflection.expectation.#{@weekly_reflection.expectation}")) %>
+              <% end %>
+            </h2>
+          </legend>
+          <% if @weekly_reflection.errors[:feeling].any? %>
+            <p class="group-error" id="weekly-reflection-feeling-error" role="alert">
+              <%= @weekly_reflection.errors.full_messages_for(:feeling).first %>
+            </p>
+          <% end %>
+
+          <div class="choice-list<%= ' has-error' if @weekly_reflection.errors[:feeling].any? %>">
+            <% WeeklyReflection.feelings.keys.each do |value| %>
+              <%= form.radio_button :feeling, value, class: "choice-input" %>
+              <%= form.label :feeling, value: value, class: "choice-row" do %>
+                <span class="choice-mark" aria-hidden="true"></span>
+                <span><%= t("enums.weekly_reflection.feeling.#{value}") %></span>
+              <% end %>
             <% end %>
-          </h2>
-        </legend>
-        <% if @weekly_reflection.errors[:feeling].any? %>
-          <p class="group-error" id="weekly-reflection-feeling-error" role="alert">
-            <%= @weekly_reflection.errors.full_messages_for(:feeling).first %>
+          </div>
+        </fieldset>
+      </section>
+
+      <section class="goal-card">
+        <div class="skill-select-legend">
+          <span class="skill-select-eyebrow" aria-hidden="true">2</span>
+          <%= form.label :comment, t(".comment_heading"), class: "field-label" %>
+        </div>
+        <p class="small" id="comment-help" style="margin-bottom: var(--space-2)"><%= t(".comment_help") %></p>
+        <%= form.text_area :comment,
+              rows: 4,
+              maxlength: 200,
+              class: "field-control#{' has-error' if @weekly_reflection.errors[:comment].any?}",
+              aria: {
+                describedby: [ "comment-help", ("weekly-reflection-comment-error" if @weekly_reflection.errors[:comment].any?) ].compact.join(" "),
+                invalid: ("true" if @weekly_reflection.errors[:comment].any?)
+              } %>
+        <% if @weekly_reflection.errors[:comment].any? %>
+          <p class="group-error" id="weekly-reflection-comment-error" role="alert">
+            <%= @weekly_reflection.errors.full_messages_for(:comment).first %>
           </p>
         <% end %>
+      </section>
 
-        <div class="choice-list<%= ' has-error' if @weekly_reflection.errors[:feeling].any? %>">
-          <% WeeklyReflection.feelings.keys.each do |value| %>
-            <%= form.radio_button :feeling, value, class: "choice-input" %>
-            <%= form.label :feeling, value: value, class: "choice-row" do %>
-              <span class="choice-mark" aria-hidden="true"></span>
-              <span><%= t("enums.weekly_reflection.feeling.#{value}") %></span>
-            <% end %>
-          <% end %>
-        </div>
-      </fieldset>
-    </section>
-
-    <section class="goal-card">
-      <div class="skill-select-legend">
-        <span class="skill-select-eyebrow" aria-hidden="true">2</span>
-        <%= form.label :comment, t(".comment_heading"), class: "field-label" %>
+      <div class="button-row" style="justify-content: center">
+        <%= form.submit t(".submit"), class: "btn btn-primary" %>
       </div>
-      <p class="small" id="comment-help" style="margin-bottom: var(--space-2)"><%= t(".comment_help") %></p>
-      <%= form.text_area :comment,
-            rows: 4,
-            maxlength: 200,
-            class: "field-control#{' has-error' if @weekly_reflection.errors[:comment].any?}",
-            aria: {
-              describedby: [ "comment-help", ("weekly-reflection-comment-error" if @weekly_reflection.errors[:comment].any?) ].compact.join(" "),
-              invalid: ("true" if @weekly_reflection.errors[:comment].any?)
-            } %>
-      <% if @weekly_reflection.errors[:comment].any? %>
-        <p class="group-error" id="weekly-reflection-comment-error" role="alert">
-          <%= @weekly_reflection.errors.full_messages_for(:comment).first %>
-        </p>
-      <% end %>
-    </section>
+    <% end %>
+  <% elsif @weekly_reflection.reflected_at.present? %>
+    <section aria-labelledby="weekly-review-title" style="margin-top: var(--space-5)">
+      <h2 id="weekly-review-title" class="section-title"><%= t(".review_heading") %></h2>
 
-    <div class="button-row" style="justify-content: center">
-      <%= form.submit t(".submit"), class: "btn btn-primary" %>
-    </div>
+      <dl class="definition-list">
+        <div class="definition-row">
+          <dt><%= t(".feeling_label") %></dt>
+          <dd><%= t("enums.weekly_reflection.feeling.#{@weekly_reflection.feeling}") %></dd>
+        </div>
+        <% if @weekly_reflection.comment.present? %>
+          <div class="definition-row">
+            <dt><%= t(".comment_label") %></dt>
+            <dd style="white-space: pre-wrap; overflow-wrap: anywhere"><%= @weekly_reflection.comment %></dd>
+          </div>
+        <% end %>
+      </dl>
+    </section>
   <% end %>
 </div>

@@ -38,6 +38,6 @@ class WeeklyStudyAggregator
   end
 
   def records_in_week(week_range)
-    goal.study_records.evaluated.where(started_at: week_range)
+    goal.study_records.evaluated.where(started_at: week_range).includes(:evaluation)
   end
 end

@@ -46,7 +46,7 @@ RSpec.describe WeeklyReflection, type: :model do
     end
 
     context "振り返った日時があって実感が空の場合" do
-      it "無効になり、実感にエラーが入る", skip: "実感と振り返った日時の検証は保存・更新機能の実装時に追加する" do
+      it "無効になり、実感にエラーが入る" do
         weekly_reflection = build(:weekly_reflection, feeling: nil, reflected_at: Time.current)
 
         expect(weekly_reflection).to be_invalid

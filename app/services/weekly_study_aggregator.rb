@@ -31,7 +31,8 @@ class WeeklyStudyAggregator
     records = records_in_week(week_range).to_a
 
     {
-      study_count: records.size
+      study_count: records.size,
+      study_days: records.uniq { |r| r.started_at.to_date }.size
     }
   end
 

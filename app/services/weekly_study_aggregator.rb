@@ -14,8 +14,8 @@ class WeeklyStudyAggregator
   end
 
   def call
-    current = week_start_on.all_week
-    previous = week_start_on.prev_week.all_week
+    current = week_start_on.in_time_zone.all_week
+    previous = week_start_on.prev_week.in_time_zone.all_week
 
     {
       current: aggregate_week(current),

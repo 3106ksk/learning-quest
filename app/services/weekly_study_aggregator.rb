@@ -33,7 +33,7 @@ class WeeklyStudyAggregator
     {
       study_count: records.size,
       study_days: records.uniq { |r| r.started_at.to_date }.size,
-      selected_count: records.find_all { |r| r.learning_skill_id == learning_skill }.size
+      selected_count: records.find_all { |r| r.learning_skill_id == learning_skill.id }.size
     }
   end
 

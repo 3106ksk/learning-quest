@@ -125,7 +125,11 @@
         class: "form-stack",
         style: "margin-top: var(--space-5)" do |form| %>
     <section class="goal-card">
-      <fieldset class="m-0 min-w-0 border-0 p-0">
+      <fieldset class="m-0 min-w-0 border-0 p-0"
+        <% if @weekly_reflection.errors[:feeling].any? %>
+          aria-describedby="weekly-reflection-feeling-error" aria-invalid="true"
+        <% end %>
+      >
         <legend class="skill-select-legend">
           <span class="skill-select-eyebrow" aria-hidden="true">1</span>
           <h2>
@@ -136,8 +140,13 @@
             <% end %>
           </h2>
         </legend>
+        <% if @weekly_reflection.errors[:feeling].any? %>
+          <p class="group-error" id="weekly-reflection-feeling-error" role="alert">
+            <%= @weekly_reflection.errors.full_messages_for(:feeling).first %>
+          </p>
+        <% end %>
 
-        <div class="choice-list">
+        <div class="choice-list<%= ' has-error' if @weekly_reflection.errors[:feeling].any? %>">
           <% WeeklyReflection.feelings.keys.each do |value| %>
             <%= form.radio_button :feeling, value, class: "choice-input" %>
             <%= form.label :feeling, value: value, class: "choice-row" do %>
@@ -158,8 +167,16 @@
       <%= form.text_area :comment,
             rows: 4,
             maxlength: 200,
-            class: "field-control",
-            aria: { describedby: "comment-help" } %>
+            class: "field-control#{' has-error' if @weekly_reflection.errors[:comment].any?}",
+            aria: {
+              describedby: [ "comment-help", ("weekly-reflection-comment-error" if @weekly_reflection.errors[:comment].any?) ].compact.join(" "),
+              invalid: ("true" if @weekly_reflection.errors[:comment].any?)
+            } %>
+      <% if @weekly_reflection.errors[:comment].any? %>
+        <p class="group-error" id="weekly-reflection-comment-error" role="alert">
+          <%= @weekly_reflection.errors.full_messages_for(:comment).first %>
+        </p>
+      <% end %>
     </section>
 
     <div class="button-row" style="justify-content: center">

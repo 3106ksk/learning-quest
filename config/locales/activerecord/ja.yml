@@ -24,6 +24,8 @@
           learning_skill_id: 今週の学習スキル
           expectation: 期待する変化
           expectation_note: 期待する変化の具体的な内容
+          feeling: 実感
+          comment: ひと言
       errors:
         models:
           weekly_reflection:
@@ -34,6 +36,8 @@
                 not_in_goal_settings: は、この目標で使う学習スキルから選んでください
               expectation:
                 inclusion: を選んでください
+              feeling:
+                blank: を選んでください
           study_record:
             attributes:
               learning_skill_id:

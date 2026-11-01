@@ -16,6 +16,11 @@ class WeeklyReflectionsController < ApplicationController
 
   def show
     @weekly_reflection = @goal.weekly_reflections.find(params[:id])
+    @weekly_study = WeeklyStudyAggregator.call(
+      goal: @goal,
+      week_start_on: @weekly_reflection.week_start_on,
+      learning_skill: @weekly_reflection.learning_skill
+    )
   end
 
   def create

@@ -25,4 +25,97 @@
       </div>
     </dl>
   </section>
+
+  <section aria-labelledby="weekly-study-title" style="margin-top: var(--space-5)">
+    <h2 id="weekly-study-title" class="section-title"><%= t(".study_heading") %></h2>
+
+    <dl class="definition-list">
+      <div class="definition-row">
+        <dt></dt>
+        <dd style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4)">
+          <div>
+            <p class="small"><%= t(".previous_week") %></p>
+            <% if @weekly_study[:previous_week_exists] %>
+              <p><%= weekly_reflection_period(@weekly_reflection.week_start_on.prev_week) %></p>
+            <% else %>
+              <p><%= t(".no_previous_week") %></p>
+            <% end %>
+          </div>
+          <div>
+            <p class="small"><%= t(".current_week") %></p>
+            <p><%= weekly_reflection_period(@weekly_reflection.week_start_on) %></p>
+          </div>
+        </dd>
+      </div>
+      <div class="definition-row">
+        <dt><%= t(".study_count_label") %></dt>
+        <dd style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4)">
+          <span class="num">
+            <% if @weekly_study[:previous_week_exists] %>
+              <%= t(".times", count: @weekly_study[:previous][:study_count]) %>
+            <% end %>
+          </span>
+          <span class="num"><%= t(".times", count: @weekly_study[:current][:study_count]) %></span>
+        </dd>
+      </div>
+      <div class="definition-row">
+        <dt><%= t(".study_days_label") %></dt>
+        <dd style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4)">
+          <span class="num">
+            <% if @weekly_study[:previous_week_exists] %>
+              <%= t(".days", count: @weekly_study[:previous][:study_days]) %>
+            <% end %>
+          </span>
+          <span class="num"><%= t(".days", count: @weekly_study[:current][:study_days]) %></span>
+        </dd>
+      </div>
+      <div class="definition-row">
+        <dt><%= t(".selected_count_label") %></dt>
+        <dd style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4)">
+          <span class="num">
+            <% if @weekly_study[:previous_week_exists] %>
+              <%= t(".times", count: @weekly_study[:previous][:selected_count]) %>
+            <% end %>
+          </span>
+          <span class="num"><%= t(".times", count: @weekly_study[:current][:selected_count]) %></span>
+        </dd>
+      </div>
+    </dl>
+
+    <h3 style="margin-top: var(--space-5)"><%= t(".breakdown_heading", skill: @weekly_reflection.learning_skill.name) %></h3>
+
+    <h4 class="small" style="margin-top: var(--space-3)"><%= t(".focus_heading") %></h4>
+    <dl class="definition-list">
+      <% @weekly_study[:current][:focus].each do |option, count| %>
+        <div class="definition-row">
+          <dt><%= option.label %></dt>
+          <dd style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4)">
+            <span class="num">
+              <% if @weekly_study[:previous_week_exists] %>
+                <%= t(".times", count: @weekly_study[:previous][:focus][option]) %>
+              <% end %>
+            </span>
+            <span class="num"><%= t(".times", count: count) %></span>
+          </dd>
+        </div>
+      <% end %>
+    </dl>
+
+    <h4 class="small" style="margin-top: var(--space-3)"><%= t(".challenge_heading") %></h4>
+    <dl class="definition-list">
+      <% @weekly_study[:current][:challenge].each do |option, count| %>
+        <div class="definition-row">
+          <dt><%= option.label %></dt>
+          <dd style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4)">
+            <span class="num">
+              <% if @weekly_study[:previous_week_exists] %>
+                <%= t(".times", count: @weekly_study[:previous][:challenge][option]) %>
+              <% end %>
+            </span>
+            <span class="num"><%= t(".times", count: count) %></span>
+          </dd>
+        </div>
+      <% end %>
+    </dl>
+  </section>
 </div>

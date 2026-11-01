@@ -118,4 +118,52 @@
       <% end %>
     </dl>
   </section>
+
+  <%= form_with model: @weekly_reflection,
+        url: goal_weekly_reflection_review_path(@goal, @weekly_reflection),
+        method: :patch,
+        class: "form-stack",
+        style: "margin-top: var(--space-5)" do |form| %>
+    <section class="goal-card">
+      <fieldset class="m-0 min-w-0 border-0 p-0">
+        <legend class="skill-select-legend">
+          <span class="skill-select-eyebrow" aria-hidden="true">1</span>
+          <h2>
+            <% if @weekly_reflection.expectation_undecided? %>
+              <%= t(".feeling_question_undecided", skill: @weekly_reflection.learning_skill.name) %>
+            <% else %>
+              <%= t(".feeling_question", expectation: t("enums.weekly_reflection.expectation.#{@weekly_reflection.expectation}")) %>
+            <% end %>
+          </h2>
+        </legend>
+
+        <div class="choice-list">
+          <% WeeklyReflection.feelings.keys.each do |value| %>
+            <%= form.radio_button :feeling, value, class: "choice-input" %>
+            <%= form.label :feeling, value: value, class: "choice-row" do %>
+              <span class="choice-mark" aria-hidden="true"></span>
+              <span><%= t("enums.weekly_reflection.feeling.#{value}") %></span>
+            <% end %>
+          <% end %>
+        </div>
+      </fieldset>
+    </section>
+
+    <section class="goal-card">
+      <div class="skill-select-legend">
+        <span class="skill-select-eyebrow" aria-hidden="true">2</span>
+        <%= form.label :comment, t(".comment_heading"), class: "field-label" %>
+      </div>
+      <p class="small" id="comment-help" style="margin-bottom: var(--space-2)"><%= t(".comment_help") %></p>
+      <%= form.text_area :comment,
+            rows: 4,
+            maxlength: 200,
+            class: "field-control",
+            aria: { describedby: "comment-help" } %>
+    </section>
+
+    <div class="button-row" style="justify-content: center">
+      <%= form.submit t(".submit"), class: "btn btn-primary" %>
+    </div>
+  <% end %>
 </div>

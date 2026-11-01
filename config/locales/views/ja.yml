@@ -145,6 +145,11 @@ ja:
       breakdown_heading: "『%{skill}』を選んだ回の内訳"
       focus_heading: 集中
       challenge_heading: チャレンジ
+      feeling_question: "『%{expectation}』という変化は、今週感じられましたか？"
+      feeling_question_undecided: "今週、『%{skill}』を使ってみて、変化は感じられましたか？"
+      comment_heading: 使ってみて、気づいたことはありますか？
+      comment_help: 任意・200字まで
+      submit: この週を振り返る
     create:
       danger: この目標は既に完了しています
   reviews:
@@ -233,6 +238,10 @@ ja:
         focus: 集中して取り組みたい
         challenge: 決めた内容に取り組みたい
         undecided: まだ決めていない
+      feeling:
+        felt: 感じられた
+        not_much: あまり感じられなかった
+        unsure: まだわからない
     goal:
       status:
         active: 進行中

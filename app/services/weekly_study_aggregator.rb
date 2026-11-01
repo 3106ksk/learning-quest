@@ -21,7 +21,9 @@ class WeeklyStudyAggregator
 
     {
       current: aggregate_week(current, focus_options, challenge_options),
-      previous: aggregate_week(previous, focus_options, challenge_options)
+      previous: aggregate_week(previous, focus_options, challenge_options),
+      previous_week_exists: goal.created_at < week_start_on.in_time_zone,
+      week_finished: Time.current >= week_start_on.next_week.in_time_zone
     }
   end
 

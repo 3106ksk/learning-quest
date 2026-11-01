@@ -19,6 +19,7 @@ class WeeklyReflection < ApplicationRecord
 
   validates :week_start_on, presence: true, uniqueness: { scope: :goal_id }
   validates :expectation_note, :comment, length: { maximum: 200 }
+  validates :feeling, presence: true, if: -> { reflected_at.present? }
   validate :learning_skill_in_goal_settings, on: :create
 
   def self.current_week_start_on

@@ -114,6 +114,16 @@ ja:
   weekly_reflections:
     index:
       title: 週の振り返り
+      previous_week_notice: "%{period} の週を、まだ振り返っていません"
+      review: この週を振り返る
+      current_week_empty: "今週（%{period}）の学習スキルと期待する変化は、まだ決めていません"
+      decide: 今週の学習スキルと期待する変化を決める
+      current_week_heading: 今週（ここまで）
+      expectation: "期待する変化：%{expectation}"
+      past_weeks_heading: これまでの週
+      past_weeks_empty: これまでの週は、まだありません
+      reflected: 振り返り済み
+      not_reflected: まだ振り返っていない
     new:
       title: 今週の学習スキルと期待する変化を決める
       description: 週の終わりに、期待した変化を感じられたかを振り返ります

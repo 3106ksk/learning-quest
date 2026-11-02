@@ -26,6 +26,13 @@ class WeeklyReflection < ApplicationRecord
     Date.current.beginning_of_week
   end
 
+  def skill_total
+    week_start_ons = goal.weekly_reflections.where(learning_skill_id: learning_skill_id, week_start_on: ..week_start_on).pluck(:week_start_on)
+    count = goal.study_records.evaluated.where(learning_skill_id: learning_skill_id, started_at: week_start_ons.map { |date| date.in_time_zone.all_week }).count
+
+    { weeks: week_start_ons.size, count: count }
+  end
+
   private
 
   def learning_skill_in_goal_settings

@@ -2,6 +2,7 @@ ja:
   date:
     formats:
       record: "%-m/%-d"
+      record_weekday: "%-m/%-d（%a）"
       completed: "%Y年%-m月%-d日"
   time:
     formats:

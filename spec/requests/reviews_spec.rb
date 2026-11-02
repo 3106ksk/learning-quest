@@ -17,7 +17,7 @@ RSpec.describe "Reviews", type: :request do
 
   describe "PATCH /goals/:goal_id/weekly_reflections/:weekly_reflection_id/review" do
     context "進行中の目標で実感とひと言を送った場合" do
-      it "実感・ひと言・振り返った日時を保存し、その週の画面へ303で移る" do
+      it "実感・ひと言・振り返った日時を保存し、その週の結果の画面へ303で移る" do
         travel_to Time.zone.local(2026, 11, 4, 12, 0, 0) do
           patch goal_weekly_reflection_review_path(goal, weekly_reflection), params: { weekly_reflection: valid_params }
 
@@ -26,7 +26,7 @@ RSpec.describe "Reviews", type: :request do
           expect(weekly_reflection.comment).to eq("迷いにくくなった気がする")
           expect(weekly_reflection.reflected_at).to eq(Time.zone.local(2026, 11, 4, 12, 0, 0))
           expect(response).to have_http_status(:see_other)
-          expect(response).to redirect_to(goal_weekly_reflection_path(goal, weekly_reflection))
+          expect(response).to redirect_to(goal_weekly_reflection_review_path(goal, weekly_reflection))
         end
       end
     end
@@ -152,6 +152,63 @@ RSpec.describe "Reviews", type: :request do
         expect(response).to redirect_to(goal_weekly_reflection_path(goal, weekly_reflection))
         expect(flash[:danger]).to eq("完了した目標では変更できません")
         expect(weekly_reflection.reload.feeling).to be_nil
+      end
+    end
+  end
+
+  describe "GET /goals/:goal_id/weekly_reflections/:weekly_reflection_id/review" do
+    let(:weekly_reflection) do
+      create(
+        :weekly_reflection,
+        goal: goal,
+        learning_skill: learning_skill,
+        week_start_on: Date.new(2026, 11, 2),
+        feeling: "felt",
+        reflected_at: Time.zone.local(2026, 11, 4, 12, 0, 0)
+      )
+    end
+
+    context "他人の目標の場合" do
+      it "404を返す" do
+        other_reflection = create(:weekly_reflection)
+
+        get goal_weekly_reflection_review_path(other_reflection.goal, other_reflection)
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context "自分の目標URLに別の目標の週のIDを指定した場合" do
+      it "404を返す" do
+        another_goal = create(:goal, :completed, user: user)
+        another_reflection = create(:weekly_reflection, goal: another_goal)
+
+        get goal_weekly_reflection_review_path(goal, another_reflection)
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context "実感を保存していない週の場合" do
+      let(:weekly_reflection) do
+        create(:weekly_reflection, goal: goal, learning_skill: learning_skill, week_start_on: Date.new(2026, 11, 2))
+      end
+
+      it "その週の画面へ303で移る" do
+        get goal_weekly_reflection_review_path(goal, weekly_reflection)
+
+        expect(response).to have_http_status(:see_other)
+        expect(response).to redirect_to(goal_weekly_reflection_path(goal, weekly_reflection))
+      end
+    end
+
+    context "完了した目標の、振り返り済みの週の場合" do
+      let(:goal) { create(:goal, :completed, user: user) }
+
+      it "200で結果の画面を表示する" do
+        get goal_weekly_reflection_review_path(goal, weekly_reflection)
+
+        expect(response).to have_http_status(:ok)
       end
     end
   end

@@ -47,22 +47,6 @@ RSpec.describe "Weekly reflections", type: :request do
       end
     end
 
-    context "前の週の分がまだ振り返っていない場合" do
-      it "前の週の案内と、その週の画面への「この週を振り返る」を表示する" do
-        travel_to Time.zone.local(2026, 11, 4, 12, 0, 0) do
-          previous_week = create(:weekly_reflection, goal: goal, learning_skill: learning_skill, week_start_on: Date.new(2026, 10, 26))
-
-          get goal_weekly_reflections_path(goal)
-
-          expect(response).to have_http_status(:ok)
-          document = response.parsed_body
-          review_links = document.css("a").select { |link| link.text.strip == "この週を振り返る" }.map { |link| link["href"] }
-          expect(document.text).to include("10/26〜11/1 の週を、まだ振り返っていません")
-          expect(review_links).to eq([ goal_weekly_reflection_path(goal, previous_week) ])
-        end
-      end
-    end
-
     context "前の週の案内を出さない場合" do
       it "前の週が振り返り済みなら、案内を出さない" do
         travel_to Time.zone.local(2026, 11, 4, 12, 0, 0) do
@@ -79,7 +63,7 @@ RSpec.describe "Weekly reflections", type: :request do
 
           expect(response).to have_http_status(:ok)
           document = response.parsed_body
-          review_links = document.css("a").select { |link| link.text.strip == "この週を振り返る" }.map { |link| link["href"] }
+          review_links = document.css("a").select { |link| link.text.strip == "振り返る" }.map { |link| link["href"] }
           expect(document.text).not_to include("まだ振り返っていません")
           expect(review_links).to eq([])
         end
@@ -91,7 +75,7 @@ RSpec.describe "Weekly reflections", type: :request do
 
           expect(response).to have_http_status(:ok)
           document = response.parsed_body
-          review_links = document.css("a").select { |link| link.text.strip == "この週を振り返る" }.map { |link| link["href"] }
+          review_links = document.css("a").select { |link| link.text.strip == "振り返る" }.map { |link| link["href"] }
           expect(document.text).not_to include("まだ振り返っていません")
           expect(review_links).to eq([])
         end
@@ -105,7 +89,7 @@ RSpec.describe "Weekly reflections", type: :request do
 
           expect(response).to have_http_status(:ok)
           document = response.parsed_body
-          review_links = document.css("a").select { |link| link.text.strip == "この週を振り返る" }.map { |link| link["href"] }
+          review_links = document.css("a").select { |link| link.text.strip == "振り返る" }.map { |link| link["href"] }
           expect(document.text).not_to include("まだ振り返っていません")
           expect(review_links).to eq([])
         end
@@ -124,7 +108,7 @@ RSpec.describe "Weekly reflections", type: :request do
     end
 
     context "今週の分がある場合" do
-      it "今週の学習スキル名と、今週の画面への「この週を振り返る」を表示し、今週はこれまでの週に並べない" do
+      it "今週の学習スキル名と、今週の画面への「振り返る」を表示し、今週はこれまでの週に並べない" do
         travel_to Time.zone.local(2026, 11, 4, 12, 0, 0) do
           current_week = create(:weekly_reflection, goal: goal, learning_skill: learning_skill, week_start_on: Date.new(2026, 11, 2))
 
@@ -132,7 +116,7 @@ RSpec.describe "Weekly reflections", type: :request do
 
           expect(response).to have_http_status(:ok)
           document = response.parsed_body
-          review_links = document.css("a").select { |link| link.text.strip == "この週を振り返る" }.map { |link| link["href"] }
+          review_links = document.css("a").select { |link| link.text.strip == "振り返る" }.map { |link| link["href"] }
           past_week_links = document.css("section[aria-labelledby='past-weeks-title'] li a").map { |link| link["href"] }
           expect(document.text).to include(learning_skill.name)
           expect(review_links).to eq([ goal_weekly_reflection_path(goal, current_week) ])
@@ -182,7 +166,7 @@ RSpec.describe "Weekly reflections", type: :request do
 
           expect(response).to have_http_status(:ok)
           document = response.parsed_body
-          review_links = document.css("a").select { |link| link.text.strip == "この週を振り返る" }.map { |link| link["href"] }
+          review_links = document.css("a").select { |link| link.text.strip == "振り返る" }.map { |link| link["href"] }
           past_week_links = document.css("section[aria-labelledby='past-weeks-title'] li a").map { |link| link["href"] }
           expect(past_week_links).to eq([
             goal_weekly_reflection_path(goal, current_week),

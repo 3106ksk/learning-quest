@@ -6,7 +6,6 @@ class WeeklyReflectionsController < ApplicationController
   def index
     week_start_on = WeeklyReflection.current_week_start_on
     @current_weekly_reflection = @goal.weekly_reflections.find_by(week_start_on: week_start_on)
-    @previous_weekly_reflection = @goal.weekly_reflections.find_by(week_start_on: week_start_on.prev_week, reflected_at: nil)
 
     past_weekly_reflections = @goal.weekly_reflections.includes(:learning_skill).order(week_start_on: :desc)
     if @goal.active?

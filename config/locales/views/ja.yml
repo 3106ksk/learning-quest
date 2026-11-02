@@ -112,6 +112,18 @@ ja:
       reflections_description: 1週間ごとに、使った学習スキルを振り返る
       reflections_unavailable: 目標を決めると、週の振り返りを始められます
   weekly_reflections:
+    index:
+      title: 週の振り返り
+      previous_week_notice: "%{period} の週を、まだ振り返っていません"
+      review: この週を振り返る
+      current_week_empty: "今週（%{period}）の学習スキルと期待する変化は、まだ決めていません"
+      decide: 今週の学習スキルと期待する変化を決める
+      current_week_heading: 今週（ここまで）
+      expectation: "期待する変化：%{expectation}"
+      past_weeks_heading: これまでの週
+      past_weeks_empty: これまでの週は、まだありません
+      reflected: 振り返り済み
+      not_reflected: まだ振り返っていない
     new:
       title: 今週の学習スキルと期待する変化を決める
       description: 週の終わりに、期待した変化を感じられたかを振り返ります
@@ -161,6 +173,7 @@ ja:
       week_suffix: の週
       continuation_heading: 続けてきたこと
       trends_heading: 記録から見つかった傾向
+      record_link: この週の記録を見る
       trend_labels:
         study_count: 学習回数
         study_days: 学習した日
@@ -220,6 +233,8 @@ ja:
       destroy_confirm: "「%{name}」と、紐づく学習記録%{count}件を削除します。この操作は取り消せません。"
       destroy_confirm_without_records: "「%{name}」を削除します。この操作は取り消せません。"
       new_goal: 次の目標を設定する
+      reflections_title: 週の振り返り
+      reflections_description: 1週間ごとに、使った学習スキルを振り返る
     edit:
       title: 目標を編集する
       name: 目標名

@@ -3,6 +3,19 @@ class WeeklyReflectionsController < ApplicationController
   before_action :ensure_active, only: [ :new, :create ]
   before_action :set_skill_settings, only: [ :new, :create ]
 
+  def index
+    week_start_on = WeeklyReflection.current_week_start_on
+    @current_weekly_reflection = @goal.weekly_reflections.find_by(week_start_on: week_start_on)
+    @previous_weekly_reflection = @goal.weekly_reflections.find_by(week_start_on: week_start_on.prev_week, reflected_at: nil)
+
+    past_weekly_reflections = @goal.weekly_reflections.includes(:learning_skill).order(week_start_on: :desc)
+    if @goal.active?
+      @past_weekly_reflections = past_weekly_reflections.where(week_start_on: ...week_start_on)
+    else
+      @past_weekly_reflections = past_weekly_reflections
+    end
+  end
+
   def new
     week_start_on = WeeklyReflection.current_week_start_on
     @weekly_reflection = @goal.weekly_reflections.find_by(week_start_on: week_start_on)

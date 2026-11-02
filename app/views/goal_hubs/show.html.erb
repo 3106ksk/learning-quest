@@ -46,7 +46,7 @@
     <% end %>
 
     <% if @current_goal %>
-      <%= link_to new_goal_weekly_reflection_path(@current_goal), class: "goal-hub-link-card" do %>
+      <%= link_to goal_weekly_reflections_path(@current_goal), class: "goal-hub-link-card" do %>
         <svg class="goal-hub-link-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <rect x="3" y="5" width="18" height="16" rx="2" />
           <path d="M16 3v4M8 3v4M3 11h18m-12 5 2 2 4-4" />

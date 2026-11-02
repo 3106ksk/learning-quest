@@ -52,9 +52,12 @@ class WeeklyTrendDeterminer
     elsif previous_total < MINIMUM_SELECTED_COUNT || current_total < MINIMUM_SELECTED_COUNT
       { kind: kind, status: :too_few, previous_total: previous_total, current_total: current_total }
     else
-      option = current.keys.max_by { |o| ratio_difference(previous[o], previous_total, current[o], current_total) }
+      option = current.keys.max_by do |o|
+        change = ratio_change(previous[o], previous_total, current[o], current_total)
+        [ change.abs, change ]
+      end
 
-      if ratio_difference(previous[option], previous_total, current[option], current_total) >= CHANGE_THRESHOLD
+      if ratio_change(previous[option], previous_total, current[option], current_total).abs >= CHANGE_THRESHOLD
         { kind: kind, status: :changed, option: option,
           previous_total: previous_total, previous_count: previous[option],
           current_total: current_total, current_count: current[option] }
@@ -64,7 +67,7 @@ class WeeklyTrendDeterminer
     end
   end
 
-  def ratio_difference(previous_count, previous_total, current_count, current_total)
-    ((Rational(previous_count, previous_total) - Rational(current_count, current_total)) * 100).abs
+  def ratio_change(previous_count, previous_total, current_count, current_total)
+    (Rational(current_count, current_total) - Rational(previous_count, previous_total)) * 100
   end
 end

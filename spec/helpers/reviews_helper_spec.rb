@@ -67,6 +67,19 @@ RSpec.describe ReviewsHelper, type: :helper do
       end
     end
 
+    context "学習回数・日数がどちらも前週なしの場合" do
+      it "1件にまとめ、前週と比べない理由の文を返す" do
+        trends = [
+          { kind: :study_count, status: :no_previous },
+          { kind: :study_days, status: :no_previous }
+        ]
+
+        expect(helper.review_trend_items(trends, weekly_reflection)).to eq([
+          { label: "学習回数・日数", sentence: "この目標は今週から始めたため、前週とは比べていません。" }
+        ])
+      end
+    end
+
     context "集中の内訳が変化した場合" do
       it "変化した選択肢と、前週・今週の何回中何回かの文を返す" do
         option = build_stubbed(:focus_option, label: "途中で集中が切れたが取り組めた")

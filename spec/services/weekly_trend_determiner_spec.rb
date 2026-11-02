@@ -79,6 +79,120 @@ RSpec.describe WeeklyTrendDeterminer do
     end
   end
 
+  describe "集中・チャレンジの内訳" do
+    context "前週に目標が無い場合" do
+      let(:previous_week_exists) { false }
+      let(:current) { week(focus: [ 1, 1, 1 ]) }
+
+      it "前週なしになる" do
+        expect(result[:focus]).to eq({ kind: :focus, status: :no_previous })
+      end
+    end
+
+    context "今週、工夫を選んだ回が0回の場合" do
+      let(:previous) { week(focus: [ 2, 2, 1 ]) }
+      let(:current) { week(focus: [ 0, 0, 0 ]) }
+
+      it "記録が少ないより先に、工夫を選んだ回なしになる" do
+        expect(result[:focus]).to eq({ kind: :focus, status: :no_selection })
+      end
+    end
+
+    context "前週の工夫を選んだ回が2回の場合" do
+      let(:previous) { week(focus: [ 1, 1, 0 ]) }
+      let(:current) { week(focus: [ 2, 2, 1 ]) }
+
+      it "記録が少ないとして、前週と今週の回数を返す" do
+        expect(result[:focus]).to eq({ kind: :focus, status: :too_few, previous_total: 2, current_total: 5 })
+      end
+    end
+
+    context "前週も今週も工夫を選んだ回が3回の場合" do
+      let(:previous) { week(focus: [ 1, 1, 1 ]) }
+      let(:current) { week(focus: [ 1, 1, 1 ]) }
+
+      it "記録が少ないにならず、割合で比べる" do
+        expect(result[:focus]).to eq({ kind: :focus, status: :unchanged, previous_total: 3, current_total: 3 })
+      end
+    end
+
+    context "割合の差がちょうど35ポイントの場合（前週12回中7回、今週15回中14回）" do
+      let(:previous) { week(focus: [ 7, 3, 2 ]) }
+      let(:current) { week(focus: [ 14, 0, 1 ]) }
+
+      it "変化として、選択肢と前週・今週の何回中何回を返す" do
+        expect(result[:focus]).to eq(
+          {
+            kind: :focus,
+            status: :changed,
+            option: focus_options[0],
+            previous_total: 12,
+            previous_count: 7,
+            current_total: 15,
+            current_count: 14
+          }
+        )
+      end
+    end
+
+    context "割合の差が35ポイント未満の場合（前週4回中2回、今週13回中2回）" do
+      let(:previous) { week(focus: [ 2, 1, 1 ]) }
+      let(:current) { week(focus: [ 2, 6, 5 ]) }
+
+      it "変わらないとして、前週と今週の回数を返す" do
+        expect(result[:focus]).to eq({ kind: :focus, status: :unchanged, previous_total: 4, current_total: 13 })
+      end
+    end
+
+    context "減った方向に35ポイント以上の場合（前週3回中3回、今週3回中1回）" do
+      let(:previous) { week(focus: [ 3, 0, 0 ]) }
+      let(:current) { week(focus: [ 1, 1, 1 ]) }
+
+      it "変化として、減った選択肢を返す" do
+        expect(result[:focus]).to eq(
+          {
+            kind: :focus,
+            status: :changed,
+            option: focus_options[0],
+            previous_total: 3,
+            previous_count: 3,
+            current_total: 3,
+            current_count: 1
+          }
+        )
+      end
+    end
+
+    context "対象週が終わっていない場合" do
+      let(:week_finished) { false }
+      let(:previous) { week(focus: [ 7, 3, 2 ]) }
+      let(:current) { week(focus: [ 14, 0, 1 ]) }
+
+      it "週の途中でも前週と比べる" do
+        expect(result[:focus]).to include(status: :changed, option: focus_options[0])
+      end
+    end
+
+    context "チャレンジの内訳の場合" do
+      let(:previous) { week(focus: [ 7, 3, 2 ]) }
+      let(:current) { week(focus: [ 14, 0, 1 ]) }
+
+      it "集中と同じルールで判定する" do
+        expect(result[:challenge]).to eq(
+          {
+            kind: :challenge,
+            status: :changed,
+            option: challenge_options[0],
+            previous_total: 12,
+            previous_count: 7,
+            current_total: 15,
+            current_count: 14
+          }
+        )
+      end
+    end
+  end
+
   def week(study_count: 0, study_days: 0, focus: [ 0, 0, 0 ], challenge: focus)
     {
       study_count: study_count,

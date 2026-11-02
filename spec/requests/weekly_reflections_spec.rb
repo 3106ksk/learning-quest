@@ -18,6 +18,210 @@ RSpec.describe "Weekly reflections", type: :request do
     sign_in(user)
   end
 
+  describe "GET /goals/:goal_id/weekly_reflections" do
+    context "進行中の目標の場合" do
+      it "200で一覧を表示する" do
+        get goal_weekly_reflections_path(goal)
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context "他人の目標の場合" do
+      it "404を返す" do
+        other_goal = create(:goal)
+
+        get goal_weekly_reflections_path(other_goal)
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context "完了した目標の場合" do
+      let(:goal) { create(:goal, :completed, user: user) }
+
+      it "200で一覧を表示する" do
+        get goal_weekly_reflections_path(goal)
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context "前の週の分がまだ振り返っていない場合" do
+      it "前の週の案内と、その週の画面への「この週を振り返る」を表示する" do
+        travel_to Time.zone.local(2026, 11, 4, 12, 0, 0) do
+          previous_week = create(:weekly_reflection, goal: goal, learning_skill: learning_skill, week_start_on: Date.new(2026, 10, 26))
+
+          get goal_weekly_reflections_path(goal)
+
+          expect(response).to have_http_status(:ok)
+          document = response.parsed_body
+          review_links = document.css("a").select { |link| link.text.strip == "この週を振り返る" }.map { |link| link["href"] }
+          expect(document.text).to include("10/26〜11/1 の週を、まだ振り返っていません")
+          expect(review_links).to eq([ goal_weekly_reflection_path(goal, previous_week) ])
+        end
+      end
+    end
+
+    context "前の週の案内を出さない場合" do
+      it "前の週が振り返り済みなら、案内を出さない" do
+        travel_to Time.zone.local(2026, 11, 4, 12, 0, 0) do
+          create(
+            :weekly_reflection,
+            goal: goal,
+            learning_skill: learning_skill,
+            week_start_on: Date.new(2026, 10, 26),
+            feeling: "felt",
+            reflected_at: Time.zone.local(2026, 10, 31, 12, 0, 0)
+          )
+
+          get goal_weekly_reflections_path(goal)
+
+          expect(response).to have_http_status(:ok)
+          document = response.parsed_body
+          review_links = document.css("a").select { |link| link.text.strip == "この週を振り返る" }.map { |link| link["href"] }
+          expect(document.text).not_to include("まだ振り返っていません")
+          expect(review_links).to eq([])
+        end
+      end
+
+      it "前の週の分が無ければ、案内を出さない" do
+        travel_to Time.zone.local(2026, 11, 4, 12, 0, 0) do
+          get goal_weekly_reflections_path(goal)
+
+          expect(response).to have_http_status(:ok)
+          document = response.parsed_body
+          review_links = document.css("a").select { |link| link.text.strip == "この週を振り返る" }.map { |link| link["href"] }
+          expect(document.text).not_to include("まだ振り返っていません")
+          expect(review_links).to eq([])
+        end
+      end
+
+      it "2週前だけまだ振り返っていなければ、案内を出さない" do
+        travel_to Time.zone.local(2026, 11, 4, 12, 0, 0) do
+          create(:weekly_reflection, goal: goal, learning_skill: learning_skill, week_start_on: Date.new(2026, 10, 19))
+
+          get goal_weekly_reflections_path(goal)
+
+          expect(response).to have_http_status(:ok)
+          document = response.parsed_body
+          review_links = document.css("a").select { |link| link.text.strip == "この週を振り返る" }.map { |link| link["href"] }
+          expect(document.text).not_to include("まだ振り返っていません")
+          expect(review_links).to eq([])
+        end
+      end
+    end
+
+    context "今週の分が無い場合" do
+      it "決める画面へのリンクを表示する" do
+        travel_to Time.zone.local(2026, 11, 4, 12, 0, 0) do
+          get goal_weekly_reflections_path(goal)
+
+          expect(response).to have_http_status(:ok)
+          expect(response.parsed_body.at_css("a[href='#{new_goal_weekly_reflection_path(goal)}']")&.text&.strip).to eq("今週の学習スキルと期待する変化を決める")
+        end
+      end
+    end
+
+    context "今週の分がある場合" do
+      it "今週の学習スキル名と、今週の画面への「この週を振り返る」を表示し、今週はこれまでの週に並べない" do
+        travel_to Time.zone.local(2026, 11, 4, 12, 0, 0) do
+          current_week = create(:weekly_reflection, goal: goal, learning_skill: learning_skill, week_start_on: Date.new(2026, 11, 2))
+
+          get goal_weekly_reflections_path(goal)
+
+          expect(response).to have_http_status(:ok)
+          document = response.parsed_body
+          review_links = document.css("a").select { |link| link.text.strip == "この週を振り返る" }.map { |link| link["href"] }
+          past_week_links = document.css("section[aria-labelledby='past-weeks-title'] li a").map { |link| link["href"] }
+          expect(document.text).to include(learning_skill.name)
+          expect(review_links).to eq([ goal_weekly_reflection_path(goal, current_week) ])
+          expect(past_week_links).to eq([])
+        end
+      end
+    end
+
+    context "これまでの週が複数ある場合" do
+      it "週の新しい順に並べる" do
+        travel_to Time.zone.local(2026, 11, 4, 12, 0, 0) do
+          older_week = create(:weekly_reflection, goal: goal, learning_skill: learning_skill, week_start_on: Date.new(2026, 10, 19))
+          newer_week = create(:weekly_reflection, goal: goal, learning_skill: learning_skill, week_start_on: Date.new(2026, 10, 26))
+
+          get goal_weekly_reflections_path(goal)
+
+          expect(response).to have_http_status(:ok)
+          past_week_links = response.parsed_body.css("section[aria-labelledby='past-weeks-title'] li a").map { |link| link["href"] }
+          expect(past_week_links).to eq([
+            goal_weekly_reflection_path(goal, newer_week),
+            goal_weekly_reflection_path(goal, older_week)
+          ])
+        end
+      end
+    end
+
+    context "これまでの週が0件の場合" do
+      it "「これまでの週は、まだありません」を表示する" do
+        travel_to Time.zone.local(2026, 11, 4, 12, 0, 0) do
+          get goal_weekly_reflections_path(goal)
+
+          expect(response).to have_http_status(:ok)
+          expect(response.parsed_body.at_css("section[aria-labelledby='past-weeks-title']")&.text).to include("これまでの週は、まだありません")
+        end
+      end
+    end
+
+    context "完了した目標で、今週の分とまだ振り返っていない前の週の分がある場合" do
+      let(:goal) { create(:goal, :completed, user: user) }
+
+      it "今週も行に並べ、案内・今週の枠・決めるボタンを出さない" do
+        travel_to Time.zone.local(2026, 11, 4, 12, 0, 0) do
+          previous_week = create(:weekly_reflection, goal: goal, learning_skill: learning_skill, week_start_on: Date.new(2026, 10, 26))
+          current_week = create(:weekly_reflection, goal: goal, learning_skill: learning_skill, week_start_on: Date.new(2026, 11, 2))
+
+          get goal_weekly_reflections_path(goal)
+
+          expect(response).to have_http_status(:ok)
+          document = response.parsed_body
+          review_links = document.css("a").select { |link| link.text.strip == "この週を振り返る" }.map { |link| link["href"] }
+          past_week_links = document.css("section[aria-labelledby='past-weeks-title'] li a").map { |link| link["href"] }
+          expect(past_week_links).to eq([
+            goal_weekly_reflection_path(goal, current_week),
+            goal_weekly_reflection_path(goal, previous_week)
+          ])
+          expect(review_links).to eq([])
+          expect(document.at_css("a[href='#{new_goal_weekly_reflection_path(goal)}']")).to be_nil
+          expect(document.text).not_to include("まだ振り返っていません")
+          expect(document.text).not_to include("今週（ここまで）")
+        end
+      end
+    end
+
+    context "振り返り済みの週とまだの週がある場合" do
+      it "振り返り済みの行は結果の画面へ、まだの行はその週の画面へ移る" do
+        travel_to Time.zone.local(2026, 11, 4, 12, 0, 0) do
+          reflected_week = create(
+            :weekly_reflection,
+            goal: goal,
+            learning_skill: learning_skill,
+            week_start_on: Date.new(2026, 10, 19),
+            feeling: "felt",
+            reflected_at: Time.zone.local(2026, 10, 24, 12, 0, 0)
+          )
+          unreflected_week = create(:weekly_reflection, goal: goal, learning_skill: learning_skill, week_start_on: Date.new(2026, 10, 26))
+
+          get goal_weekly_reflections_path(goal)
+
+          expect(response).to have_http_status(:ok)
+          past_week_links = response.parsed_body.css("section[aria-labelledby='past-weeks-title'] li a").map { |link| link["href"] }
+          expect(past_week_links).to eq([
+            goal_weekly_reflection_path(goal, unreflected_week),
+            goal_weekly_reflection_review_path(goal, reflected_week)
+          ])
+        end
+      end
+    end
+  end
+
   describe "GET /goals/:goal_id/weekly_reflections/new" do
     context "進行中の目標に新しく週のリフレクションを作成する場合" do
       it "200で入力フォームを表示する" do

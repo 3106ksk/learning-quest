@@ -3,20 +3,7 @@
 <div class="page-wide">
   <div class="week-form">
     <h1 class="sr-only"><%= t(".heading") %></h1>
-    <ol class="week-flow">
-      <li class="week-flow-now" aria-current="step">
-        <span class="week-flow-num" aria-hidden="true">1</span>
-        <span><%= t(".flow_choose") %><small><%= t(".flow_choose_note") %></small></span>
-      </li>
-      <li>
-        <span class="week-flow-num" aria-hidden="true">2</span>
-        <span><%= t(".flow_use") %><small><%= t(".flow_use_note") %></small></span>
-      </li>
-      <li>
-        <span class="week-flow-num" aria-hidden="true">3</span>
-        <span><%= t(".flow_reflect") %><small><%= t(".flow_reflect_note") %></small></span>
-      </li>
-    </ol>
+    <%= render "weekly_reflections/flow", current: 1 %>
 
     <%= form_with model: [ @goal, @weekly_reflection ], class: "form-stack" do |form| %>
       <section class="goal-card"

@@ -113,6 +113,13 @@ ja:
       reflections_description: 1週間ごとに、使った学習スキルを振り返る
       reflections_unavailable: 目標を決めると、スキルの振り返りを始められます
   weekly_reflections:
+    flow:
+      choose: 選ぶ
+      choose_note: 学習スキルと期待する変化
+      use: 1週間、使う
+      use_note: いつもの学習で
+      reflect: 週末に、振り返る
+      reflect_note: 感じられたかを答える
     index:
       title: スキルの振り返り
       review: 振り返る
@@ -135,12 +142,6 @@ ja:
       choose_one: "%{count}つから1つ選ぶ"
       skill_settings_link: この目標で使う学習スキルを選ぶ →
       skills_empty: まだありません
-      flow_choose: 選ぶ
-      flow_choose_note: 学習スキルと期待する変化
-      flow_use: 1週間、使う
-      flow_use_note: いつもの学習で
-      flow_reflect: 週末に、振り返る
-      flow_reflect_note: 感じられたかを答える
       expectation_question: どう変わってほしいですか？
       note_label: 具体的には？
       note_help: 任意・200字まで
@@ -149,30 +150,34 @@ ja:
       danger: この目標は既に完了しています
     show:
       title: スキルの振り返り
-      week_suffix: の週
       skill_label: 今週の学習スキル
       expectation_label: 期待する変化
       note_label: 具体的に
-      study_heading: 週の記録
+      study_heading: この週の記録
       previous_week: 前週
       current_week: 今週
       no_previous_week: この目標は今週から始めました
+      scope_all: 学習全体
+      scope_skill: このスキル
       study_count_label: 学習回数
-      study_days_label: 学習した日数
-      selected_count_label: この学習スキルを選んだ回
-      times: "%{count}回"
-      days: "%{count}日"
-      breakdown_heading: "『%{skill}』を選んだ回の内訳"
+      study_days_label: 学習した日
+      selected_count_label: 選んだ回
+      unit_times: 回
+      unit_days: 日
+      breakdown_heading: このスキルを選んだ回のうち
       focus_heading: 集中
       challenge_heading: チャレンジ
+      relevant: 期待する変化に関係
+      choose_one: "%{count}つから1つ選ぶ"
       feeling_question: "『%{expectation}』という変化は、今週感じられましたか？"
       feeling_question_undecided: "今週、『%{skill}』を使ってみて、変化は感じられましたか？"
-      comment_heading: 使ってみて、気づいたことはありますか？
+      comment_heading: 使ってみて、気づいたことは？
       comment_help: 任意・200字まで
-      submit: この週を振り返る
+      submit: 振り返る
       review_heading: 振り返り
       feeling_label: 実感
       comment_label: ひと言
+      completed_notice: 完了した目標では、振り返りを残せません
     create:
       danger: この目標は既に完了しています
   reviews:

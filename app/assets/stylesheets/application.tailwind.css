@@ -3128,4 +3128,213 @@
       display: none;
     }
   }
+
+  /*
+   * 週の振り返る画面（#340。完成形はキャンバス page-63「振り返る画面 設計案（統一版）」）。
+   * 緑の枠＝今週の事実（試したこと・記録）、白＝答える面。
+   */
+  .week-flow-done {
+    color: var(--color-green-600);
+  }
+
+  .week-flow-done .week-flow-num {
+    border-color: var(--color-green-600);
+    color: var(--color-green-600);
+  }
+
+  .week-band-periods {
+    margin-left: auto;
+    color: var(--color-green-600);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .week-stats-body {
+    padding: 22px 28px;
+  }
+
+  .week-label-skill {
+    background: var(--color-kincha-500);
+  }
+
+  .week-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .week-stat,
+  .week-bd {
+    border: 1.5px solid rgba(38, 36, 31, 0.16);
+    border-radius: 16px;
+    background: #fff;
+  }
+
+  .week-stat-hi,
+  .week-bd-hi {
+    border: 2px solid var(--color-kincha-500);
+    background: rgba(224, 184, 90, 0.12);
+  }
+
+  .week-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 14px 18px 16px;
+  }
+
+  .week-stat-title {
+    font-size: 16px;
+    font-weight: 900;
+  }
+
+  .week-stat-nums {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+  }
+
+  .week-stat-nums b {
+    margin-left: 6px;
+    font-family: var(--font-mono);
+    font-weight: 900;
+  }
+
+  .week-stat-nums small,
+  .week-bd-now small {
+    margin-left: 2px;
+    color: var(--color-kincha-600);
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .week-stat-prev {
+    color: var(--color-ink-500);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .week-stat-prev b {
+    color: var(--color-ink-400);
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .week-stat-now {
+    color: var(--color-ink-900);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .week-stat-now b {
+    font-size: 34px;
+  }
+
+  .week-breakdown-caption {
+    margin: 20px 0 10px;
+    color: var(--color-ink-600);
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  .week-breakdown {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .week-bd {
+    padding: 14px 18px 16px;
+  }
+
+  .week-bd-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .week-bd-relevant {
+    margin-left: auto;
+    color: var(--color-kincha-600);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .week-bd-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 70px 86px;
+    align-items: center;
+    gap: 8px;
+    border-top: 1px solid rgba(38, 36, 31, 0.08);
+    padding: 8px 0;
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  .week-bd-cols {
+    border-top: 0;
+    padding: 0 0 2px;
+    color: var(--color-ink-500);
+    font-size: 11px;
+  }
+
+  .week-bd-cols span:not(:first-child),
+  .week-bd-prev,
+  .week-bd-now {
+    text-align: right;
+  }
+
+  .week-bd-prev {
+    color: var(--color-ink-400);
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .week-bd-now {
+    font-size: 18px;
+    font-weight: 900;
+  }
+
+  .week-choices-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .week-choices-3 .week-choice {
+    padding: 14px 46px 14px 14px;
+    font-size: 15px;
+  }
+
+  .week-notice-text {
+    color: var(--color-ink-600);
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  @media (max-width: 767px) {
+    .week-stat-grid,
+    .week-breakdown,
+    .week-choices-3 {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .week-band-periods {
+      width: 100%;
+      margin-left: 0;
+    }
+
+    .week-current-band:has(.week-band-periods) {
+      flex-wrap: wrap;
+    }
+
+    .week-stats-body {
+      padding: 16px;
+    }
+
+    .week-bd-row {
+      grid-template-columns: minmax(0, 1fr) 44px 58px;
+      gap: 6px;
+    }
+  }
 }

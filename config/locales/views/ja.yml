@@ -173,6 +173,7 @@ ja:
       week_suffix: の週
       continuation_heading: 続けてきたこと
       trends_heading: 記録から見つかった傾向
+      record_link: この週の記録を見る
       trend_labels:
         study_count: 学習回数
         study_days: 学習した日

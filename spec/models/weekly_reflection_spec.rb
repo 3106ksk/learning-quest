@@ -80,4 +80,94 @@ RSpec.describe WeeklyReflection, type: :model do
       end
     end
   end
+
+  describe "#skill_total" do
+    let(:goal) { create(:goal) }
+    let(:learning_skill) { create(:goal_skill_setting, goal: goal).learning_skill }
+    let(:weekly_reflection) do
+      create(:weekly_reflection, goal: goal, learning_skill: learning_skill, week_start_on: Date.new(2026, 10, 19))
+    end
+
+    context "この学習スキルの最初の週の場合" do
+      it "週数1と、その週にこの学習スキルを選んだ回数を返す" do
+        create_evaluated_record(started_at: Time.zone.local(2026, 10, 20, 9, 0, 0))
+        create_evaluated_record(started_at: Time.zone.local(2026, 10, 21, 9, 0, 0))
+
+        expect(weekly_reflection.skill_total).to eq({ weeks: 1, count: 2 })
+      end
+    end
+
+    context "同じ学習スキルの週が2つある場合" do
+      it "2週と、2週の回数の合計を返す" do
+        create(:weekly_reflection, goal: goal, learning_skill: learning_skill, week_start_on: Date.new(2026, 10, 12))
+        create_evaluated_record(started_at: Time.zone.local(2026, 10, 13, 9, 0, 0))
+        create_evaluated_record(started_at: Time.zone.local(2026, 10, 20, 9, 0, 0))
+        create_evaluated_record(started_at: Time.zone.local(2026, 10, 20, 21, 0, 0))
+
+        expect(weekly_reflection.skill_total).to eq({ weeks: 2, count: 3 })
+      end
+    end
+
+    context "ほかの学習スキルの週と、ほかの目標の週がある場合" do
+      it "それらの週を数えない" do
+        other_skill = create(:goal_skill_setting, goal: goal).learning_skill
+        create(:weekly_reflection, goal: goal, learning_skill: other_skill, week_start_on: Date.new(2026, 10, 12))
+        create_evaluated_record(started_at: Time.zone.local(2026, 10, 13, 9, 0, 0), learning_skill: other_skill)
+
+        other_goal = create(:goal, :completed, user: goal.user)
+        create(:goal_skill_setting, goal: other_goal, learning_skill: learning_skill)
+        create(:weekly_reflection, goal: other_goal, learning_skill: learning_skill, week_start_on: Date.new(2026, 10, 12))
+        create_evaluated_record(started_at: Time.zone.local(2026, 10, 13, 9, 0, 0), goal: other_goal)
+        create_evaluated_record(started_at: Time.zone.local(2026, 10, 20, 9, 0, 0), goal: other_goal)
+
+        create_evaluated_record(started_at: Time.zone.local(2026, 10, 20, 9, 0, 0))
+
+        expect(weekly_reflection.skill_total).to eq({ weeks: 1, count: 1 })
+      end
+    end
+
+    context "この週より先の週の行がある場合" do
+      it "先の週を数えない" do
+        create(:weekly_reflection, goal: goal, learning_skill: learning_skill, week_start_on: Date.new(2026, 10, 26))
+        create_evaluated_record(started_at: Time.zone.local(2026, 10, 20, 9, 0, 0))
+        create_evaluated_record(started_at: Time.zone.local(2026, 10, 27, 9, 0, 0))
+
+        expect(weekly_reflection.skill_total).to eq({ weeks: 1, count: 1 })
+      end
+    end
+
+    context "評価前・ほかの学習スキル・対象の週の外の学習がある場合" do
+      it "数えない" do
+        other_skill = create(:goal_skill_setting, goal: goal).learning_skill
+        create_evaluated_record(started_at: Time.zone.local(2026, 10, 20, 9, 0, 0))
+        create_evaluated_record(started_at: Time.zone.local(2026, 10, 22, 9, 0, 0), learning_skill: other_skill)
+        create_evaluated_record(started_at: Time.zone.local(2026, 10, 18, 23, 59, 59))
+        create_evaluated_record(started_at: Time.zone.local(2026, 10, 26, 0, 0, 0))
+        create(
+          :study_record,
+          user: goal.user,
+          goal: goal,
+          learning_skill: learning_skill,
+          started_at: Time.zone.local(2026, 10, 21, 9, 0, 0),
+          status: :awaiting_evaluation
+        )
+
+        expect(weekly_reflection.skill_total).to eq({ weeks: 1, count: 1 })
+      end
+    end
+  end
+
+  private
+
+  def create_evaluated_record(started_at:, goal: self.goal, learning_skill: self.learning_skill)
+    create(
+      :study_record,
+      user: goal.user,
+      goal: goal,
+      learning_skill: learning_skill,
+      started_at: started_at,
+      status: :evaluated,
+      rank: :a
+    )
+  end
 end

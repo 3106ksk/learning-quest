@@ -23,7 +23,7 @@ Rails.application.routes.draw do
 
     resources :goal_skill_settings, only: [ :index, :create, :destroy ], as: :skill_settings, path: "skill_settings"
     resources :weekly_reflections, only: [ :new, :create, :show ] do
-      resource :review, only: :update
+      resource :review, only: [ :show, :update ]
     end
   end
 

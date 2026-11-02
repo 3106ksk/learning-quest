@@ -1,5 +1,30 @@
 <% content_for :title, t(".title") %>
 
 <div class="page-wide">
-  <h1 class="section-title"><%= t(".title") %></h1>
+  <section class="goal-card" aria-labelledby="review-title">
+    <header>
+      <p class="skill-select-eyebrow">
+        <%= weekly_reflection_period(@weekly_reflection.week_start_on) %><%= t(".week_suffix") %>
+      </p>
+      <h1 id="review-title" class="goal-card-title" style="margin-top: var(--space-3); overflow-wrap: anywhere"><%= @weekly_reflection.learning_skill.name %></h1>
+    </header>
+  </section>
+
+  <section aria-labelledby="continuation-title" style="margin-top: var(--space-5)">
+    <h2 id="continuation-title" class="section-title"><%= t(".continuation_heading") %></h2>
+    <p><%= review_continuation_sentence(@weekly_reflection, selected_count: @weekly_study[:current][:selected_count], skill_total: @skill_total) %></p>
+  </section>
+
+  <section aria-labelledby="trends-title" style="margin-top: var(--space-5)">
+    <h2 id="trends-title" class="section-title"><%= t(".trends_heading") %></h2>
+
+    <dl class="definition-list">
+      <% review_trend_items(@trends, @weekly_reflection).each do |item| %>
+        <div class="definition-row">
+          <dt><%= item[:label] %></dt>
+          <dd><%= item[:sentence] %></dd>
+        </div>
+      <% end %>
+    </dl>
+  </section>
 </div>

@@ -5,6 +5,14 @@ class ReviewsController < ApplicationController
   before_action :ensure_reflected, only: :show
 
   def show
+    @weekly_study = WeeklyStudyAggregator.call(
+      goal: @goal,
+      week_start_on: @weekly_reflection.week_start_on,
+      learning_skill: @weekly_reflection.learning_skill
+    )
+    trends = WeeklyTrendDeterminer.call(weekly_study: @weekly_study)
+    @trends = WeeklyTrendSelector.call(trends: trends, expectation: @weekly_reflection.expectation)
+    @skill_total = @weekly_reflection.skill_total
   end
 
   def update

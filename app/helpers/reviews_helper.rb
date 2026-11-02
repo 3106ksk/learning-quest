@@ -2,8 +2,12 @@ module ReviewsHelper
   COUNT_KINDS = [ :study_count, :study_days ].freeze
 
   def review_trend_items(trends, weekly_reflection)
-    if trends.map { |trend| trend[:status] } == [ :in_progress, :in_progress ]
+    statuses = trends.map { |trend| trend[:status] }
+
+    if statuses == [ :in_progress, :in_progress ]
       [ { label: t("reviews.show.trend_labels.study_count_and_days"), sentence: review_in_progress_sentence(trends, weekly_reflection) } ]
+    elsif statuses == [ :no_previous, :no_previous ]
+      [ { label: t("reviews.show.trend_labels.study_count_and_days"), sentence: t("reviews.show.trends.no_previous") } ]
     else
       trends.map { |trend| { label: review_trend_label(trend), sentence: review_trend_sentence(trend, weekly_reflection) } }
     end

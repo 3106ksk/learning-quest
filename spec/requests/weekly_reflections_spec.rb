@@ -102,7 +102,7 @@ RSpec.describe "Weekly reflections", type: :request do
           get goal_weekly_reflections_path(goal)
 
           expect(response).to have_http_status(:ok)
-          expect(response.parsed_body.at_css("a[href='#{new_goal_weekly_reflection_path(goal)}']")&.text&.strip).to eq("今週の学習スキルと期待する変化を決める")
+          expect(response.parsed_body.at_css("a[href='#{new_goal_weekly_reflection_path(goal)}']")&.text&.strip).to eq("決める")
         end
       end
     end

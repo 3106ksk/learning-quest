@@ -116,8 +116,8 @@ ja:
     index:
       title: スキルの振り返り
       review: 振り返る
-      current_week_empty: "今週（%{period}）の学習スキルと期待する変化は、まだ決めていません"
-      decide: 今週の学習スキルと期待する変化を決める
+      current_week_empty: まだ決めていません
+      decide: 決める
       week_suffix: の週
       skill_label: 今週の学習スキル
       expectation_label: 期待する変化

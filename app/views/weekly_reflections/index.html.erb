@@ -36,7 +36,13 @@
       </section>
     <% else %>
       <section class="week-empty" style="margin-top: var(--space-5)">
-        <p><%= t(".current_week_empty", period: weekly_reflection_period(WeeklyReflection.current_week_start_on)) %></p>
+        <p class="week-empty-text">
+          <span class="week-medal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+          </span>
+          <span class="week-period num"><%= weekly_reflection_period_with_weekday(WeeklyReflection.current_week_start_on) %></span>
+          <span class="week-empty-state"><%= t(".current_week_empty") %></span>
+        </p>
         <%= link_to t(".decide"), new_goal_weekly_reflection_path(@goal), class: "btn btn-primary" %>
       </section>
     <% end %>

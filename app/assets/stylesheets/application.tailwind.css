@@ -2634,9 +2634,16 @@
     padding: 22px 26px;
   }
 
-  .week-empty p {
-    font-size: 17px;
-    font-weight: 900;
+  .week-empty-text {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .week-empty-state {
+    color: var(--color-ink-500);
+    font-size: 14px;
+    font-weight: 800;
   }
 
   .week-list {
@@ -2734,10 +2741,6 @@
       align-items: stretch;
       gap: 12px;
       padding: 16px;
-    }
-
-    .week-empty p {
-      font-size: 15px;
     }
 
     .week-current-band {

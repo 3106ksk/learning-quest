@@ -19,16 +19,12 @@ class WeeklyTrendDeterminer
     week_finished = weekly_study[:week_finished]
     previous_selected_count = weekly_study[:previous][:selected_count]
     current_selected_count = weekly_study[:current][:selected_count]
-    previous_focus = weekly_study[:previous][:focus].map { |f, n| [ f.label, n ] }
-    current_focus = weekly_study[:current][:focus].map { |f, n| [ f.label, n ] }
-    previous_challenge = weekly_study[:previous][:challenge].map { |c, n| [ c.label, n ] }
-    current_challenge = weekly_study[:current][:challenge].map { |c, n| [ c.label, n ] }
 
     {
       study_count: judge_count(:study_count, previous_study_count, current_study_count, previous_week_exists, week_finished),
       study_days: judge_count(:study_days, previous_study_days, current_study_days, previous_week_exists, week_finished),
-      focus: judge_breakdown(previous_focus, current_focus, previous_selected_count, current_selected_count, previous_week_exists),
-      challenge: judge_breakdown(previous_challenge, current_challenge, previous_selected_count, current_selected_count, previous_week_exists)
+      focus: judge_breakdown(:focus, weekly_study[:previous][:focus], weekly_study[:current][:focus], previous_selected_count, current_selected_count, previous_week_exists),
+      challenge: judge_breakdown(:challenge, weekly_study[:previous][:challenge], weekly_study[:current][:challenge], previous_selected_count, current_selected_count, previous_week_exists)
     }
   end
 
@@ -48,23 +44,22 @@ class WeeklyTrendDeterminer
     end
   end
 
-  def judge_breakdown(previous, current, previous_selected_count, current_selected_count, previous_week_exists)
+  def judge_breakdown(kind, previous, current, previous_total, current_total, previous_week_exists)
     if !previous_week_exists
-      { status: :no_previous }
-    elsif current_selected_count == 0
-      { status: :no_selection }
-    elsif previous_selected_count < MINIMUM_SELECTED_COUNT || current_selected_count < MINIMUM_SELECTED_COUNT
-      { status: :too_few }
+      { kind: kind, status: :no_previous }
+    elsif current_total == 0
+      { kind: kind, status: :no_selection }
+    elsif previous_total < MINIMUM_SELECTED_COUNT || current_total < MINIMUM_SELECTED_COUNT
+      { kind: kind, status: :too_few, previous_total: previous_total, current_total: current_total }
     else
-      largest = previous.zip(current).max_by do |(_, previous_count), (_, current_count)|
-        ratio_difference(previous_count, previous_selected_count, current_count, current_selected_count)
-      end
-      (label, previous_count), (_, current_count) = largest
+      option = current.keys.max_by { |o| ratio_difference(previous[o], previous_total, current[o], current_total) }
 
-      if ratio_difference(previous_count, previous_selected_count, current_count, current_selected_count) >= CHANGE_THRESHOLD
-        { status: :changed, previous: [ label, previous_count ], current: [ label, current_count ] }
+      if ratio_difference(previous[option], previous_total, current[option], current_total) >= CHANGE_THRESHOLD
+        { kind: kind, status: :changed, option: option,
+          previous_total: previous_total, previous_count: previous[option],
+          current_total: current_total, current_count: current[option] }
       else
-        { status: :unchanged, previous: [ label, previous_count ], current: [ label, current_count ] }
+        { kind: kind, status: :unchanged, previous_total: previous_total, current_total: current_total }
       end
     end
   end

@@ -156,6 +156,8 @@ ja:
     create:
       danger: この目標は既に完了しています
   reviews:
+    show:
+      title: 週の振り返り
     update:
       danger: 完了した目標では変更できません
   goal_skill_settings:

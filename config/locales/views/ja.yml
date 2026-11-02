@@ -130,18 +130,22 @@ ja:
       completed_goal: 完了した目標
     new:
       title: 今週の学習スキルと期待する変化を決める
-      description: 週の終わりに、期待した変化を感じられたかを振り返ります
-      goal_label: 進行中の目標
-      skill_heading: 今週の学習スキル
-      skill_description: 今週効果を試したい学習スキルを選択
+      heading: この1週間に試す学習スキルを決めます
+      skill_question: 今週、どの学習スキルを試しますか？
+      choose_one: "%{count}つから1つ選ぶ"
       skill_settings_link: この目標で使う学習スキルを選ぶ →
       skills_empty: まだありません
-      expectation_heading: 期待する変化
-      expectation_description: この学習スキルを使って、どう変わってほしいか
-      note_label: 期待する変化を、具体的に書くなら
+      flow_choose: 選ぶ
+      flow_choose_note: 学習スキルと期待する変化
+      flow_use: 1週間、使う
+      flow_use_note: いつもの学習で
+      flow_reflect: 週末に、振り返る
+      flow_reflect_note: 感じられたかを答える
+      expectation_question: どう変わってほしいですか？
+      note_label: 具体的には？
       note_help: 任意・200字まで
       note_placeholder: 例：学習中に、次に何をするかで迷いにくくしたい
-      submit: 学習スキルと期待する変化を決める
+      submit: 決める
       danger: この目標は既に完了しています
     show:
       title: スキルの振り返り

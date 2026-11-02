@@ -2796,4 +2796,336 @@
       display: none;
     }
   }
+
+  /*
+   * 週の決める画面（#340。完成形はキャンバス page-62 の「3 学習スキルと期待する変化を決める」）。
+   */
+  .week-form {
+    width: min(100%, 960px);
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .week-form .goal-card {
+    padding: 32px 36px;
+  }
+
+  .week-flow {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    border: var(--border-hair);
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.06);
+    list-style: none;
+  }
+
+  .week-flow li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-left: 1px solid rgba(38, 36, 31, 0.08);
+    padding: 18px 24px;
+    color: var(--color-ink-500);
+    font-size: 15px;
+    font-weight: 800;
+  }
+
+  .week-flow li:first-child {
+    border-left: 0;
+  }
+
+  .week-flow small {
+    display: block;
+    margin-top: 2px;
+    font-size: 12px;
+    font-weight: 700;
+    opacity: 0.85;
+  }
+
+  .week-flow-num {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    flex: none;
+    place-items: center;
+    border: 2px solid rgba(38, 36, 31, 0.28);
+    border-radius: 50%;
+    font-size: 15px;
+    font-weight: 900;
+  }
+
+  .week-flow-now {
+    background: rgba(45, 93, 75, 0.09);
+    color: var(--color-green-600);
+  }
+
+  .week-flow-now .week-flow-num {
+    border-color: var(--color-green-600);
+    background: var(--color-green-600);
+    color: #fff;
+  }
+
+  .week-submit {
+    min-width: 280px;
+    min-height: 60px;
+    border-radius: 14px;
+    font-size: 18px;
+  }
+
+  .week-panel-head {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: var(--space-4);
+    padding: 0;
+  }
+
+  .week-panel-title {
+    min-width: 0;
+    font-family: var(--font-sans);
+    font-size: 22px;
+    font-weight: 900;
+  }
+
+  .week-panel-count {
+    display: inline-flex;
+    height: 30px;
+    align-items: center;
+    margin-left: auto;
+    border: 1.5px solid rgba(38, 36, 31, 0.28);
+    border-radius: 999px;
+    padding: 0 14px;
+    color: var(--color-ink-600);
+    font-size: 13px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .week-radio {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 26px;
+    height: 26px;
+    border: 2px solid rgba(38, 36, 31, 0.32);
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .skill-card-input:checked + .week-skill-card .week-radio,
+  .week-choice-input:checked + .week-choice .week-radio {
+    border-color: var(--color-green-600);
+    background: var(--color-green-600);
+  }
+
+  .skill-card-input:checked + .week-skill-card .week-radio::after,
+  .week-choice-input:checked + .week-choice .week-radio::after {
+    content: "✓";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 900;
+  }
+
+  .week-panel-head + .group-error {
+    margin-bottom: var(--space-3);
+  }
+
+  /* 学習開始のカードの光（放射状のグラデーション）は使わない。電球は平らな kincha の塗り（基準25・§3.7） */
+  .week-skill-card .skill-card-face {
+    height: 72px;
+    justify-content: flex-start;
+    background: #fff;
+    padding-left: 14px;
+    box-shadow: inset 0 -4px 0 rgba(38, 36, 31, 0.14);
+  }
+
+  .week-skill-card .skill-card-bulb {
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    border: 2px solid rgba(38, 36, 31, 0.22);
+    border-radius: 50%;
+    background: #fff;
+    color: var(--color-ink-400);
+  }
+
+  .skill-card-input:checked + .week-skill-card .skill-card-face {
+    background: #fff;
+    box-shadow: inset 0 -4px 0 #e0b85a;
+  }
+
+  .skill-card-input:checked + .week-skill-card .skill-card-bulb {
+    border-color: var(--color-kincha-500);
+    background: var(--color-kincha-500);
+    color: #fff;
+    box-shadow: 0 0 0 3px rgba(169, 122, 47, 0.18);
+  }
+
+  .week-skill-card .skill-card-name {
+    padding: 14px 16px 16px;
+    font-size: 16px;
+    font-weight: 900;
+  }
+
+  .week-choices {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .week-choice-input {
+    position: absolute;
+    opacity: 0;
+  }
+
+  .week-choice {
+    position: relative;
+    display: flex;
+    min-height: 76px;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid rgba(38, 36, 31, 0.18);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.82);
+    padding: 14px 56px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.5;
+    cursor: pointer;
+  }
+
+  .week-choice-input:checked + .week-choice {
+    border: 2px solid var(--color-green-600);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(45, 93, 75, 0.12), 0 10px 24px rgba(45, 93, 75, 0.14);
+  }
+
+  .week-choice .week-radio {
+    top: 50%;
+    right: 18px;
+    margin-top: -13px;
+  }
+
+  .week-choice-input:focus-visible + .week-choice {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  .week-note {
+    margin-top: var(--space-5);
+    border-top: 1px solid rgba(38, 36, 31, 0.08);
+    padding-top: var(--space-4);
+  }
+
+  .week-note-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-2);
+  }
+
+  .week-note-head .field-label {
+    margin-bottom: 0;
+    color: var(--color-ink-900);
+    font-size: 17px;
+    font-weight: 900;
+    letter-spacing: 0;
+  }
+
+  .week-note-hint {
+    color: var(--color-ink-500);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .week-note .field-control {
+    font-size: 16px;
+  }
+
+  @media (max-width: 767px) {
+    .week-submit {
+      width: 100%;
+    }
+
+    .week-panel-head {
+      flex-wrap: wrap;
+      gap: 8px 12px;
+    }
+
+    .week-panel-title {
+      flex: 1 1 100%;
+      font-size: 20px;
+    }
+
+    .week-panel-count {
+      margin-left: 0;
+    }
+
+    .week-form .goal-card {
+      padding: 24px 20px;
+    }
+
+    .week-form .skill-cards {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .week-skill-card {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .week-skill-card .skill-card-face {
+      width: 72px;
+      height: 64px;
+      flex: none;
+      justify-content: center;
+      padding-left: 0;
+    }
+
+    .week-skill-card .skill-card-name {
+      -webkit-line-clamp: unset;
+      flex: 1;
+      padding: 12px 56px 12px 12px;
+    }
+
+    .week-skill-card .week-radio {
+      top: 50%;
+      margin-top: -13px;
+    }
+
+    .week-choices {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 8px;
+    }
+
+    .week-note-head {
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .week-flow li {
+      flex-direction: column;
+      gap: 6px;
+      padding: 12px 8px;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .week-flow small {
+      display: none;
+    }
+  }
 }

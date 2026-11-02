@@ -173,6 +173,44 @@ RSpec.describe WeeklyTrendDeterminer do
       end
     end
 
+    context "複数の選択肢が35ポイント以上変化した場合（前週10回中0・2・8回、今週10回中5・3・2回）" do
+      let(:previous) { week(focus: [ 0, 2, 8 ]) }
+      let(:current) { week(focus: [ 5, 3, 2 ]) }
+
+      it "差が一番大きい選択肢を返す" do
+        expect(result[:focus]).to eq(
+          {
+            kind: :focus,
+            status: :changed,
+            option: focus_options[2],
+            previous_total: 10,
+            previous_count: 8,
+            current_total: 10,
+            current_count: 2
+          }
+        )
+      end
+    end
+
+    context "差が同じ選択肢が2つある場合（前週6回中3・3・0回、今週6回中0・3・3回）" do
+      let(:previous) { week(focus: [ 3, 3, 0 ]) }
+      let(:current) { week(focus: [ 0, 3, 3 ]) }
+
+      it "今週に増えた方の選択肢を返す" do
+        expect(result[:focus]).to eq(
+          {
+            kind: :focus,
+            status: :changed,
+            option: focus_options[2],
+            previous_total: 6,
+            previous_count: 0,
+            current_total: 6,
+            current_count: 3
+          }
+        )
+      end
+    end
+
     context "チャレンジの内訳の場合" do
       let(:previous) { week(focus: [ 7, 3, 2 ]) }
       let(:current) { week(focus: [ 14, 0, 1 ]) }

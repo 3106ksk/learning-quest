@@ -158,6 +158,30 @@ ja:
   reviews:
     show:
       title: 週の振り返り
+      trend_labels:
+        study_count: 学習回数
+        study_days: 学習した日
+        focus: 集中
+        challenge: チャレンジ
+        study_count_and_days: 学習回数・日数
+      trends:
+        study_count:
+          changed: "この目標の学習は、前週（%{previous_period}）%{previous}回、今週（%{current_period}）%{current}回でした。"
+          unchanged: "この目標の学習は、前週も今週も%{current}回でした。"
+        study_days:
+          changed: "学習した日は、前週（%{previous_period}）%{previous}日、今週（%{current_period}）%{current}日でした。"
+          unchanged: "学習した日は、前週も今週も%{current}日でした。"
+        in_progress: "今週はまだ途中のため、学習回数・日数は週が終わってから前週と比べます。今週（%{period}）は、ここまで%{study_count}回・%{study_days}日です。"
+        no_previous: この目標は今週から始めたため、前週とは比べていません。
+        breakdown:
+          changed: "「%{skill}」を選んだ回の「%{option}」は、前週%{previous_total}回中%{previous_count}回、今週%{current_total}回中%{current_count}回でした。"
+          unchanged: "「%{skill}」を選んだ回の%{kind}は、前週（%{previous_total}回）と今週（%{current_total}回）で大きな違いはありませんでした。"
+          too_few: "「%{skill}」を選んだ回は、前週%{previous_total}回、今週%{current_total}回でした。どちらの週も3回以上あるときに、前週と比べます。"
+          no_selection: "%{kind}の様子は、この学習スキルを選んだ回があるときに前週と比べます。"
+      continuation:
+        selected: "「%{skill}」を今週は%{count}回選びました。"
+        not_selected: "今週は「%{skill}」を選んだ学習はありませんでした。"
+        total: "振り返りの対象にしてから、通算%{weeks}週・%{count}回です。"
     update:
       danger: 完了した目標では変更できません
   goal_skill_settings:

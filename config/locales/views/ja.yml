@@ -112,6 +112,8 @@ ja:
       reflections_description: 1週間ごとに、使った学習スキルを振り返る
       reflections_unavailable: 目標を決めると、週の振り返りを始められます
   weekly_reflections:
+    index:
+      title: 週の振り返り
     new:
       title: 今週の学習スキルと期待する変化を決める
       description: 週の終わりに、期待した変化を感じられたかを振り返ります

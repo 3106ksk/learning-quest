@@ -8,12 +8,12 @@
 
     <% t('.sections').each do |section| %>
       <section style="margin-top: var(--space-6)">
-        <h2><%= section[:heading] %></h2>
+        <h2 class="legal-heading"><%= section[:heading] %></h2>
         <% section[:body]&.each do |paragraph| %>
           <p style="margin-top: var(--space-3)"><%= paragraph %></p>
         <% end %>
         <% if section[:items] %>
-          <ul style="margin-top: var(--space-3)">
+          <ul class="legal-list" style="margin-top: var(--space-3)">
             <% section[:items].each do |item| %>
               <li><%= item %></li>
             <% end %>

@@ -904,6 +904,22 @@
    * フッター（v3 §3.16）。application レイアウトの body だけ縦の flex にして main を伸ばし、
    * 画面が短いときは下端、長いときは本文の後ろに置く。focus レイアウトには当てない。
    */
+  /* 利用規約・プライバシーポリシーの見出しと箇条書き（v3 §2.2 セクション見出し 16–18px/900）。 */
+  .legal-heading {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    font-weight: 900;
+  }
+
+  .legal-list {
+    padding-left: 1.5em;
+    list-style: disc;
+  }
+
+  .legal-list > li + li {
+    margin-top: var(--space-1);
+  }
+
   .app-layout {
     display: flex;
     min-height: 100vh;

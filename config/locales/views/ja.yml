@@ -32,6 +32,10 @@ ja:
       nav_study: 学習する
       nav_goals: 目標
       nav_learning_skills: 学習スキル
+    footer:
+      terms: 利用規約
+      privacy: プライバシーポリシー
+      signature: © 2026 きづき
     study_record_summary:
       title: 今回の学習
       started_at: 開始日時

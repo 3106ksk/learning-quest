@@ -73,6 +73,12 @@ ja:
       cta_primary: 無料で始める
       cta_login: ログイン
       footer_signature: きづき KIZUKI
+    terms:
+      title: 利用規約
+      updated_at: "最終更新日: 2026年11月◯日"
+    privacy:
+      title: プライバシーポリシー
+      updated_at: "最終更新日: 2026年11月◯日"
   sessions:
     new:
       title: ログイン

@@ -901,6 +901,62 @@
   }
 
   /*
+   * フッター（v3 §3.16）。application レイアウトの body だけ縦の flex にして main を伸ばし、
+   * 画面が短いときは下端、長いときは本文の後ろに置く。focus レイアウトには当てない。
+   */
+  /* 利用規約・プライバシーポリシーの見出しと箇条書き（v3 §2.2 セクション見出し 16–18px/900）。 */
+  .legal-heading {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    font-weight: 900;
+  }
+
+  .legal-list {
+    padding-left: 1.5em;
+    list-style: disc;
+  }
+
+  .legal-list > li + li {
+    margin-top: var(--space-1);
+  }
+
+  .app-layout {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  .app-layout > main {
+    flex: 1;
+  }
+
+  .footer {
+    border-top: var(--border-hair);
+    padding: var(--space-5) var(--page-pad-pc);
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .footer nav {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-5);
+  }
+
+  .footer p {
+    margin: var(--space-2) 0 0;
+    color: var(--color-ink-600);
+  }
+
+  @media (max-width: 767px) {
+    .footer {
+      padding-inline: var(--page-pad-mobile);
+      font-size: 11px;
+    }
+  }
+
+  /*
    * 認証後ページの共通シェル（STUDY-01ほか）。prototype/components.css .page の
    * 移植。内容は単一カラム（最大640px・中央）——欄外注カラムは2026-07-17に全廃
    * （visual-design-spec.md §3.7）。中央寄せは既存の .form-shell を併用する。

@@ -1,8 +1,14 @@
 class StaticPagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: :home
+  skip_before_action :authenticate_user!, only: %i[home terms privacy]
   before_action :redirect_authenticated_users, only: :home
 
   def home
+  end
+
+  def terms
+  end
+
+  def privacy
   end
 
   private

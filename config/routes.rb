@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: "users/registrations" }
   root "static_pages#home"
+  get "terms" => "static_pages#terms", as: :terms
+  get "privacy" => "static_pages#privacy", as: :privacy
 
   resources :study_records, only: [ :new, :create, :show ] do
     member do

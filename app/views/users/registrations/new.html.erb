@@ -82,6 +82,12 @@
         </div>
 
         <%= f.submit t(".submit"), class: "btn btn-primary" %>
+
+        <p class="small">
+          <%= t(".consent_html",
+                terms: link_to(t("shared.footer.terms"), terms_path),
+                privacy: link_to(t("shared.footer.privacy"), privacy_path)) %>
+        </p>
       <% end %>
 
       <div class="auth-form-links">

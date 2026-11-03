@@ -70,7 +70,7 @@
   --border-control: 1px solid var(--color-line-control);
   --focus-ring: 3px solid var(--color-green-600);
 
-  --nav-width: 220px;
+  --header-height: 64px;
 
   --text-display-size: clamp(56px, 12vw, 88px);
   --text-display-line: 1.05;
@@ -80,6 +80,7 @@
 @layer base {
   html {
     min-width: 0;
+    scroll-padding-top: var(--header-height);
     background: var(--color-paper);
     color: var(--color-ink-900);
     font-family: var(--font-sans);
@@ -538,7 +539,7 @@
 
   .lp-hero {
     display: grid;
-    min-height: calc(100vh - 72px);
+    min-height: calc(100vh - var(--header-height));
     place-items: center;
     padding: var(--space-8) var(--page-pad-mobile);
   }
@@ -741,28 +742,7 @@
     line-height: 1.6;
   }
 
-  /*
-   * 公開ヘッダー（LP・登録・ログイン・パスワード再設定の未認証全画面共通）。
-   * prototype/components.css .public-header/.public-actions/.brand の移植
-   * （--paper系トークンを本ファイルの--color-*命名に合わせて置換）。
-   */
-  .public-header {
-    display: flex;
-    min-height: 72px;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
-    border-bottom: var(--border-hair);
-    padding: var(--space-3) max(var(--page-pad-mobile), calc((100% - var(--content-max)) / 2));
-  }
-
-  .public-actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-3);
-  }
-
+  /* LP本文のアプリ名。LPの作り直し（RELEASE-8）まで残す。 */
   .brand {
     display: inline-flex;
     min-height: 44px;
@@ -775,70 +755,80 @@
     text-decoration: none;
   }
 
-  .public-actions > a:not(.btn) {
-    display: inline-flex;
-    min-height: 44px;
-    align-items: center;
-  }
-
   /*
-   * 認証後サイドバー（PC）。prototype/components.css .app-shell/.side-nav/
-   * .nav-list/.nav-link/.account-label/.nav-icon の移植（--paper系トークンを
-   * 本ファイルの--color-*命名に合わせて置換）。
+   * ヘッダー（ログイン前後で共通の帯）。visual-design-spec-v3.md §3.11（2026-11-03 #355）。
+   * 書体はヘッダーの中だけ Noto Sans JP（--font-sans と h1, h2 の明朝体は画面の棚卸しで扱う）。
    */
-  .app-shell {
-    min-height: 100vh;
-    padding-left: var(--nav-width);
-  }
-
-  .side-nav {
-    position: fixed;
-    inset: 0 auto 0 0;
-    z-index: 10;
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 5;
     display: flex;
-    width: var(--nav-width);
-    flex-direction: column;
-    border-right: var(--border-hair);
-    background: var(--color-paper);
-    padding: var(--space-6) var(--space-5);
+    height: var(--header-height);
+    align-items: stretch;
+    gap: var(--space-6);
+    border-bottom: var(--border-hair);
+    background: #fff;
+    padding: 0 var(--page-pad-pc);
+    font-family: "Noto Sans JP", var(--font-sans);
   }
 
-  .nav-list {
-    padding: 0;
-    margin: var(--space-7) 0 0;
-    list-style: none;
+  .header > :last-child {
+    margin-left: auto;
   }
 
-  .nav-link {
-    position: relative;
+  .header-brand {
     display: flex;
-    min-height: 44px;
     align-items: center;
-    gap: var(--space-3);
-    padding: var(--space-2) var(--space-3);
-    color: var(--color-ink-600);
-    font-size: 14px;
+    color: var(--color-ink-900);
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
     text-decoration: none;
   }
 
-  .nav-link:hover {
+  .header > nav {
+    display: flex;
+  }
+
+  .header-list {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .header-list > li {
+    display: flex;
+  }
+
+  .header-list > li > .btn {
+    align-self: center;
+  }
+
+  .header-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    border-bottom: 3px solid transparent;
+    padding: 0 var(--space-3);
+    color: var(--color-ink-600);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .header-link:hover {
     background: var(--color-green-tint);
   }
 
-  .nav-link[aria-current="page"] {
-    color: var(--color-green-600);
-    font-weight: 600;
+  .header-link[aria-current="page"] {
+    border-bottom-color: var(--color-green-600);
+    color: var(--color-ink-900);
+    font-weight: 800;
   }
 
-  .nav-link[aria-current="page"]::before {
-    content: "";
-    position: absolute;
-    inset: 8px auto 8px -24px;
-    width: 2px;
-    background: var(--color-green-600);
-  }
-
-  .nav-icon {
+  .header-icon {
     width: 20px;
     height: 20px;
     flex: 0 0 20px;
@@ -848,19 +838,66 @@
     stroke-width: 1.5;
   }
 
-  .nav-link[aria-current="page"] .nav-icon,
-  .nav-link.study .nav-icon {
+  .header-link[aria-current="page"] .header-icon {
     fill: currentColor;
   }
 
-  .account-label {
-    margin-top: auto;
-    display: inline-flex;
+  .header-account-area {
+    display: flex;
     align-items: center;
-    gap: var(--space-3);
-    color: var(--color-ink-500);
-    font-size: 12px;
+    gap: var(--space-4);
+  }
+
+  .header-account {
+    color: var(--color-ink-600);
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .header-logout {
+    padding: var(--space-2);
+    color: var(--color-error-600);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .header-login {
+    display: inline-flex;
+    min-height: 44px;
+    align-self: center;
+    align-items: center;
+    padding-inline: var(--space-4);
+    color: var(--color-ink-900);
+    font-weight: 700;
     text-decoration: none;
+  }
+
+  @media (max-width: 767px) {
+    .header {
+      gap: var(--space-2);
+      padding-inline: var(--page-pad-mobile);
+    }
+
+    .header-brand {
+      font-size: 16px;
+    }
+
+    .header-link {
+      flex-direction: column;
+      justify-content: center;
+      gap: 2px;
+      padding: 0 var(--space-1);
+      font-size: 11px;
+    }
+
+    .header-account {
+      display: none;
+    }
+
+    .header-logout {
+      font-size: 12px;
+    }
   }
 
   /*
@@ -1740,7 +1777,7 @@
   .page-wide {
     width: min(100%, calc(1100px + (var(--page-pad-pc) * 2)));
     display: flex;
-    min-height: 100vh;
+    min-height: calc(100vh - var(--header-height));
     flex-direction: column;
     margin-inline: auto;
     padding: 40px var(--page-pad-pc);

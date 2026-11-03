@@ -27,14 +27,11 @@ ja:
     header:
       brand: きづき
       login: ログイン
-      sign_up: 無料で始める
-    sidebar:
-      brand: きづき
+      sign_up: アカウント作成
       logout: ログアウト
+      nav_study: 学習する
       nav_goals: 目標
       nav_learning_skills: 学習スキル
-      nav_study: 学習する
-      nav_settings: 設定
     study_record_summary:
       title: 今回の学習
       started_at: 開始日時

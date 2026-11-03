@@ -387,6 +387,7 @@ ja:
       new:
         title: 新規アカウント作成
         submit: 登録する
+        consent_html: 登録すると、%{terms}と%{privacy}に同意したものとみなします
         password_hint: "%{count}文字以上で入力してください"
         to_login_notice: アカウントをお持ちの方は
         to_login: ログイン

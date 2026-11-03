@@ -539,7 +539,7 @@
 
   .lp-hero {
     display: grid;
-    min-height: calc(100vh - 72px);
+    min-height: calc(100vh - var(--header-height));
     place-items: center;
     padding: var(--space-8) var(--page-pad-mobile);
   }
@@ -1777,7 +1777,7 @@
   .page-wide {
     width: min(100%, calc(1100px + (var(--page-pad-pc) * 2)));
     display: flex;
-    min-height: 100vh;
+    min-height: calc(100vh - var(--header-height));
     flex-direction: column;
     margin-inline: auto;
     padding: 40px var(--page-pad-pc);

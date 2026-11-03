@@ -1,73 +1,83 @@
 <% content_for :title, t(".title") %>
 
 <div class="page-wide">
-  <header>
-    <p class="skill-select-eyebrow" style="overflow-wrap: anywhere"><%= @goal.name %></p>
-    <h1 class="goal-card-title" style="margin-top: var(--space-2)"><%= t(".title") %></h1>
-  </header>
-
-  <% if @goal.active? && @previous_weekly_reflection %>
-    <section class="goal-card" style="margin-top: var(--space-5)">
-      <div class="goal-card-overview">
-        <p><%= t(".previous_week_notice", period: weekly_reflection_period(@previous_weekly_reflection.week_start_on)) %></p>
-        <div class="goal-card-actions">
-          <%= link_to t(".review"), goal_weekly_reflection_path(@goal, @previous_weekly_reflection), class: "btn btn-primary" %>
-        </div>
-      </div>
-    </section>
-  <% end %>
+  <h1 class="sr-only"><%= t(".title") %></h1>
 
   <% if @goal.active? %>
     <% if @current_weekly_reflection %>
-      <section class="goal-card" style="margin-top: var(--space-5)">
-        <p class="skill-select-eyebrow"><%= t(".current_week_heading") %></p>
-        <div class="goal-card-overview" style="margin-top: var(--space-3)">
-          <div class="goal-card-heading" style="gap: var(--space-1)">
-            <p class="small"><%= weekly_reflection_period(@current_weekly_reflection.week_start_on) %></p>
-            <h2 style="overflow-wrap: anywhere"><%= @current_weekly_reflection.learning_skill.name %></h2>
-            <p class="small"><%= t(".expectation", expectation: t("enums.weekly_reflection.expectation.#{@current_weekly_reflection.expectation}")) %></p>
-          </div>
-          <div class="goal-card-actions">
-            <%= link_to t(".review"), goal_weekly_reflection_path(@goal, @current_weekly_reflection), class: "btn btn-secondary" %>
-          </div>
+      <section class="week-current" aria-labelledby="current-week-title" style="margin-top: var(--space-5)">
+        <div class="week-current-band">
+          <span class="week-medal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/><path d="M8.5 14.5l2.2 2.2 4.3-4.4"/></svg>
+          </span>
+          <h2 id="current-week-title" class="week-period num"><%= weekly_reflection_period_with_weekday(@current_weekly_reflection.week_start_on) %><%= t(".week_suffix") %></h2>
+        </div>
+        <div class="week-current-body">
+          <dl class="week-current-detail">
+            <div class="week-current-row">
+              <dt><span class="week-label"><%= t(".skill_label") %></span></dt>
+              <dd class="week-current-skill">
+                <span class="week-bulb"><%= render "shared/bulb_icon", css_class: "week-bulb-icon" %></span>
+                <span style="overflow-wrap: anywhere"><%= @current_weekly_reflection.learning_skill.name %></span>
+              </dd>
+            </div>
+            <div class="week-current-row">
+              <dt><span class="week-label"><%= t(".expectation_label") %></span></dt>
+              <dd>
+                <p class="week-expectation"><%= t("enums.weekly_reflection.expectation.#{@current_weekly_reflection.expectation}") %></p>
+                <% if @current_weekly_reflection.expectation_note.present? %>
+                  <p class="week-expectation-note" style="white-space: pre-wrap; overflow-wrap: anywhere"><%= t(".note_label") %>：<%= @current_weekly_reflection.expectation_note %></p>
+                <% end %>
+              </dd>
+            </div>
+          </dl>
+          <%= link_to t(".review"), goal_weekly_reflection_path(@goal, @current_weekly_reflection), class: "btn btn-secondary" %>
         </div>
       </section>
     <% else %>
-      <section class="goal-card" style="margin-top: var(--space-5); border-style: dashed">
-        <div class="goal-card-overview">
-          <p><%= t(".current_week_empty", period: weekly_reflection_period(WeeklyReflection.current_week_start_on)) %></p>
-          <div class="goal-card-actions">
-            <%= link_to t(".decide"), new_goal_weekly_reflection_path(@goal),
-                  class: "btn #{@previous_weekly_reflection ? 'btn-secondary' : 'btn-primary'}" %>
-          </div>
-        </div>
+      <section class="week-empty" style="margin-top: var(--space-5)">
+        <p class="week-empty-text">
+          <span class="week-medal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+          </span>
+          <span class="week-period num"><%= weekly_reflection_period_with_weekday(WeeklyReflection.current_week_start_on) %></span>
+          <span class="week-empty-state"><%= t(".current_week_empty") %></span>
+        </p>
+        <%= link_to t(".decide"), new_goal_weekly_reflection_path(@goal), class: "btn btn-primary" %>
       </section>
     <% end %>
   <% end %>
 
-  <section class="goal-card" aria-labelledby="past-weeks-title" style="margin-top: var(--space-5)">
-    <h2 id="past-weeks-title" class="section-title skill-select-eyebrow"><%= t(".past_weeks_heading") %></h2>
+  <section class="goal-card week-list" aria-labelledby="past-weeks-title" style="margin-top: var(--space-5)">
+    <div class="week-list-head">
+      <h2 id="past-weeks-title" class="week-list-heading"><%= t(".past_weeks_heading") %></h2>
+      <% if @goal.completed? %>
+        <span class="week-done-tag"><%= t(".completed_goal") %></span>
+      <% end %>
+    </div>
 
     <% if @past_weekly_reflections.any? %>
-      <ul class="ledger">
+      <ul class="week-rows">
         <% @past_weekly_reflections.each do |weekly_reflection| %>
           <% path = weekly_reflection.reflected_at.present? ?
                goal_weekly_reflection_review_path(@goal, weekly_reflection) :
                goal_weekly_reflection_path(@goal, weekly_reflection) %>
           <li>
-            <%= link_to path, class: "ledger-row" do %>
-              <span class="ledger-body">
-                <strong class="num"><%= weekly_reflection_period(weekly_reflection.week_start_on) %></strong>
-                <span style="overflow-wrap: anywhere"><%= weekly_reflection.learning_skill.name %></span>
-                <span class="small"><%= t("enums.weekly_reflection.expectation.#{weekly_reflection.expectation}") %></span>
+            <%= link_to path, class: "week-row" do %>
+              <span class="week-row-period num"><%= weekly_reflection_period_with_weekday(weekly_reflection.week_start_on) %></span>
+              <span class="week-row-skill">
+                <span class="week-bulb"><%= render "shared/bulb_icon", css_class: "week-bulb-icon" %></span>
+                <span><%= weekly_reflection.learning_skill.name %></span>
               </span>
-              <span class="ledger-meta">
+              <span class="week-row-expectation"><%= t("enums.weekly_reflection.expectation.#{weekly_reflection.expectation}") %></span>
+              <span class="week-row-state">
                 <% if weekly_reflection.reflected_at.present? %>
-                  <span class="card-badge badge-active"><%= t(".reflected") %></span>
+                  <span class="week-tag week-tag-reflected"><%= t(".reflected") %></span>
                 <% else %>
-                  <span class="card-badge badge-completed"><%= t(".not_reflected") %></span>
+                  <span class="week-tag"><%= @goal.completed? ? t(".not_reflected_completed") : t(".not_reflected") %></span>
                 <% end %>
               </span>
+              <span class="week-row-chevron" aria-hidden="true">›</span>
             <% end %>
           </li>
         <% end %>

@@ -2,6 +2,7 @@ ja:
   date:
     formats:
       record: "%-m/%-d"
+      record_weekday: "%-m/%-d（%a）"
       completed: "%Y年%-m月%-d日"
   time:
     formats:
@@ -108,72 +109,93 @@ ja:
       skills_title: この目標で使う学習スキル
       skills_description: スキルの使用を設定する
       skills_unavailable: 目標を設定すると、使う学習スキルを選べます
-      reflections_title: 週の振り返り
+      reflections_title: スキルの振り返り
       reflections_description: 1週間ごとに、使った学習スキルを振り返る
-      reflections_unavailable: 目標を決めると、週の振り返りを始められます
+      reflections_unavailable: 目標を決めると、スキルの振り返りを始められます
   weekly_reflections:
+    flow:
+      choose: 選ぶ
+      choose_note: 学習スキルと期待する変化
+      use: 1週間、使う
+      use_note: いつもの学習で
+      reflect: 週末に、振り返る
+      reflect_note: 感じられたかを答える
     index:
-      title: 週の振り返り
-      previous_week_notice: "%{period} の週を、まだ振り返っていません"
-      review: この週を振り返る
-      current_week_empty: "今週（%{period}）の学習スキルと期待する変化は、まだ決めていません"
-      decide: 今週の学習スキルと期待する変化を決める
-      current_week_heading: 今週（ここまで）
-      expectation: "期待する変化：%{expectation}"
-      past_weeks_heading: これまでの週
-      past_weeks_empty: これまでの週は、まだありません
-      reflected: 振り返り済み
-      not_reflected: まだ振り返っていない
-    new:
-      title: 今週の学習スキルと期待する変化を決める
-      description: 週の終わりに、期待した変化を感じられたかを振り返ります
-      goal_label: 進行中の目標
-      skill_heading: 今週の学習スキル
-      skill_description: 今週効果を試したい学習スキルを選択
-      skill_settings_link: この目標で使う学習スキルを選ぶ →
-      skills_empty: まだありません
-      expectation_heading: 期待する変化
-      expectation_description: この学習スキルを使って、どう変わってほしいか
-      note_label: 期待する変化を、具体的に書くなら
-      note_help: 任意・200字まで
-      note_placeholder: 例：学習中に、次に何をするかで迷いにくくしたい
-      submit: 学習スキルと期待する変化を決める
-      danger: この目標は既に完了しています
-    show:
-      title: 週の振り返り
+      title: スキルの振り返り
+      review: 振り返る
+      current_week_empty: まだ決めていません
+      decide: 決める
       week_suffix: の週
       skill_label: 今週の学習スキル
       expectation_label: 期待する変化
       note_label: 具体的に
-      study_heading: 週の記録
+      past_weeks_heading: これまでの週
+      past_weeks_empty: これまでの週は、まだありません
+      reflected: 振り返り済み
+      not_reflected: まだ振り返っていない
+      not_reflected_completed: 振り返っていない
+      completed_goal: 完了した目標
+    new:
+      title: 今週の学習スキルと期待する変化を決める
+      heading: この1週間に試す学習スキルを決めます
+      skill_question: 今週、どの学習スキルを試しますか？
+      choose_one: "%{count}つから1つ選ぶ"
+      skill_settings_link: この目標で使う学習スキルを選ぶ →
+      skills_empty: まだありません
+      expectation_question: どう変わってほしいですか？
+      note_label: 具体的には？
+      note_help: 任意・200字まで
+      note_placeholder: 例：学習中に、次に何をするかで迷いにくくしたい
+      submit: 決める
+      danger: この目標は既に完了しています
+    show:
+      title: スキルの振り返り
+      skill_label: 今週の学習スキル
+      expectation_label: 期待する変化
+      note_label: 具体的に
+      study_heading: この週の記録
       previous_week: 前週
       current_week: 今週
       no_previous_week: この目標は今週から始めました
+      scope_all: 学習全体
+      scope_skill: このスキル
       study_count_label: 学習回数
-      study_days_label: 学習した日数
-      selected_count_label: この学習スキルを選んだ回
-      times: "%{count}回"
-      days: "%{count}日"
-      breakdown_heading: "『%{skill}』を選んだ回の内訳"
+      study_days_label: 学習した日
+      selected_count_label: 選んだ回
+      unit_times: 回
+      unit_days: 日
+      breakdown_heading: このスキルを選んだ回のうち
       focus_heading: 集中
       challenge_heading: チャレンジ
+      relevant: 期待する変化に関係
+      choose_one: "%{count}つから1つ選ぶ"
       feeling_question: "『%{expectation}』という変化は、今週感じられましたか？"
       feeling_question_undecided: "今週、『%{skill}』を使ってみて、変化は感じられましたか？"
-      comment_heading: 使ってみて、気づいたことはありますか？
+      comment_heading: 使ってみて、気づいたことは？
       comment_help: 任意・200字まで
-      submit: この週を振り返る
+      submit: 振り返る
       review_heading: 振り返り
       feeling_label: 実感
       comment_label: ひと言
+      completed_notice: 完了した目標では、振り返りを残せません
     create:
       danger: この目標は既に完了しています
   reviews:
     show:
-      title: 週の振り返り
-      week_suffix: の週
-      continuation_heading: 続けてきたこと
+      title: スキルの振り返り
+      expectation_label: 期待する変化
+      previous_week: 前週
+      current_week: 今週
       trends_heading: 記録から見つかった傾向
-      record_link: この週の記録を見る
+      count_heading: 使った回数
+      list_button: スキルの振り返りへ
+      verdicts:
+        changed: 記録に違いが見られます
+        unchanged: 大きな違いは見られません
+        too_few: 記録が少ないため比べていません
+        no_previous: 前週がないため比べていません
+        no_selection: 今週はこのスキルの記録がありません
+        in_progress: 週が終わってから比べます
       trend_labels:
         study_count: 学習回数
         study_days: 学習した日
@@ -233,7 +255,7 @@ ja:
       destroy_confirm: "「%{name}」と、紐づく学習記録%{count}件を削除します。この操作は取り消せません。"
       destroy_confirm_without_records: "「%{name}」を削除します。この操作は取り消せません。"
       new_goal: 次の目標を設定する
-      reflections_title: 週の振り返り
+      reflections_title: スキルの振り返り
       reflections_description: 1週間ごとに、使った学習スキルを振り返る
     edit:
       title: 目標を編集する

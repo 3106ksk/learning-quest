@@ -202,13 +202,31 @@ RSpec.describe "Reviews", type: :request do
       end
     end
 
-    context "完了した目標の、振り返り済みの週の場合" do
-      let(:goal) { create(:goal, :completed, user: user) }
-
-      it "200で結果の画面を表示する" do
+    context "進行中の目標の、振り返り済みの週の場合" do
+      it "傾向・使った回数・週の一覧へ戻るボタンを表示し、次の週を決める欄は出さない" do
         get goal_weekly_reflection_review_path(goal, weekly_reflection)
 
         expect(response).to have_http_status(:ok)
+        expect(response.body).to include("記録から見つかった傾向")
+        expect(response.body).to include("使った回数")
+        expect(response.body).not_to include("きづきの比較")
+        expect(response.body).not_to include("続けてきたこと")
+        expect(response.body).to include("スキルの振り返りへ")
+        expect(response.body).to include(goal_weekly_reflections_path(goal))
+        expect(response.body).not_to include("次の週を決める")
+        expect(response.body).not_to include("見る・直す")
+        expect(response.body).not_to include("数えているのは")
+      end
+    end
+
+    context "完了した目標の、振り返り済みの週の場合" do
+      let(:goal) { create(:goal, :completed, user: user) }
+
+      it "週の一覧へ戻るボタンを出す" do
+        get goal_weekly_reflection_review_path(goal, weekly_reflection)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include("スキルの振り返りへ")
       end
     end
   end

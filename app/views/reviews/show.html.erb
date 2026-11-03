@@ -1,34 +1,48 @@
 <% content_for :title, t(".title") %>
+<% previous_exists = @weekly_study[:previous_week_exists] %>
 
 <div class="page-wide">
-  <section class="goal-card" aria-labelledby="review-title">
-    <header>
-      <p class="skill-select-eyebrow">
-        <%= weekly_reflection_period(@weekly_reflection.week_start_on) %><%= t(".week_suffix") %>
-      </p>
-      <h1 id="review-title" class="goal-card-title" style="margin-top: var(--space-3); overflow-wrap: anywhere"><%= @weekly_reflection.learning_skill.name %></h1>
-    </header>
-  </section>
+  <div class="week-form week-result">
+    <h1 class="sr-only"><%= t(".title") %></h1>
 
-  <section aria-labelledby="continuation-title" style="margin-top: var(--space-5)">
-    <h2 id="continuation-title" class="section-title"><%= t(".continuation_heading") %></h2>
-    <p><%= review_continuation_sentence(@weekly_reflection, selected_count: @weekly_study[:current][:selected_count], skill_total: @skill_total) %></p>
-  </section>
-
-  <section aria-labelledby="trends-title" style="margin-top: var(--space-5)">
-    <h2 id="trends-title" class="section-title"><%= t(".trends_heading") %></h2>
-
-    <dl class="definition-list">
-      <% review_trend_items(@trends, @weekly_reflection).each do |item| %>
-        <div class="definition-row">
-          <dt><%= item[:label] %></dt>
-          <dd><%= item[:sentence] %></dd>
+    <section class="week-current" aria-labelledby="trends-title">
+      <div class="week-current-band week-result-band">
+        <span class="week-medal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>
+        </span>
+        <h2 id="trends-title" class="week-period num"><%= t(".trends_heading") %></h2>
+      </div>
+      <div class="week-current-body week-result-body">
+        <p class="week-result-periods num">
+          <% if previous_exists %>
+            <%= t(".previous_week") %> <%= weekly_reflection_period(@weekly_reflection.week_start_on.prev_week) %>　／
+          <% end %>
+          <%= t(".current_week") %> <%= weekly_reflection_period(@weekly_reflection.week_start_on) %>
+        </p>
+        <div class="week-result-context">
+          <span class="week-bulb week-bulb-sm"><%= render "shared/bulb_icon", css_class: "week-bulb-icon" %></span>
+          <span class="week-result-skill"><%= @weekly_reflection.learning_skill.name %></span>
+          <span class="week-result-expectation"><%= t(".expectation_label") %>：<%= t("enums.weekly_reflection.expectation.#{@weekly_reflection.expectation}") %></span>
         </div>
-      <% end %>
-    </dl>
-  </section>
+        <% review_trend_items(@trends, @weekly_reflection).each do |item| %>
+          <div class="week-result-item">
+            <span class="week-label"><%= item[:label] %></span>
+            <p class="week-verdict"><%= item[:verdict] %></p>
+            <p class="week-result-sentence"><%= item[:sentence] %></p>
+          </div>
+        <% end %>
+      </div>
+    </section>
 
-  <div class="button-row" style="margin-top: var(--space-5)">
-    <%= link_to t(".record_link"), goal_weekly_reflection_path(@goal, @weekly_reflection), class: "btn btn-text" %>
+    <section class="goal-card week-result-count" aria-labelledby="continuation-title">
+      <h2 id="continuation-title" class="week-panel-title"><%= t(".count_heading") %></h2>
+      <% review_continuation_lines(@weekly_reflection, selected_count: @weekly_study[:current][:selected_count], skill_total: @skill_total).each do |line| %>
+        <p class="week-result-sentence"><%= line %></p>
+      <% end %>
+    </section>
+
+    <div class="week-result-actions">
+      <%= link_to t(".list_button"), goal_weekly_reflections_path(@goal), class: "btn btn-primary week-submit" %>
+    </div>
   </div>
 </div>

@@ -2482,4 +2482,955 @@
     }
 
   }
+
+  /*
+   * 週の一覧（#340。完成形はキャンバス page-62 の「2 週の一覧」）。
+   * 今週の枠・これまでの週の行。
+   */
+  .week-done-tag {
+    border: 1px solid rgba(169, 122, 47, 0.45);
+    border-radius: 999px;
+    background: #fff;
+    padding: 3px 10px;
+    color: var(--color-kincha-600);
+    font-size: 11px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .week-current {
+    overflow: hidden;
+    border: 2px solid var(--color-green-600);
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.06);
+  }
+
+  .week-current-band {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(45, 93, 75, 0.09);
+    padding: 12px 28px;
+    color: var(--color-green-600);
+  }
+
+  .week-current-band .week-period {
+    color: var(--color-green-600);
+    font-size: 15px;
+    font-weight: 800;
+  }
+
+  .week-medal {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    flex: none;
+    place-items: center;
+    border: 1.5px solid var(--color-green-600);
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 0 3px #fff inset;
+  }
+
+  .week-medal svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .week-current-body {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 20px 28px 22px;
+  }
+
+  .week-period {
+    color: var(--color-ink-600);
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  .week-current-detail {
+    min-width: 0;
+    flex: 1;
+    margin: 0;
+  }
+
+  .week-current-row {
+    display: grid;
+    grid-template-columns: 170px minmax(0, 1fr);
+    align-items: center;
+    gap: 16px;
+    padding: 14px 0;
+  }
+
+  .week-current-row + .week-current-row {
+    border-top: 1px solid rgba(38, 36, 31, 0.08);
+  }
+
+  .week-current-row dd {
+    margin: 0;
+  }
+
+  .week-label {
+    display: inline-flex;
+    height: 28px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--color-ink-900);
+    padding: 0 14px;
+    color: var(--color-paper);
+    font-size: 12px;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+
+  .week-current-skill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 22px;
+    font-weight: 900;
+  }
+
+  .week-expectation {
+    font-size: 17px;
+    font-weight: 900;
+  }
+
+  .week-expectation-note {
+    margin-top: 4px;
+    color: var(--color-ink-600);
+    font-size: 13px;
+  }
+
+  .week-bulb {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    flex: none;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--color-kincha-500);
+    color: #fff;
+    box-shadow: 0 0 0 3px rgba(169, 122, 47, 0.18);
+  }
+
+  .week-bulb-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .week-empty {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    border: 1.5px dashed rgba(38, 36, 31, 0.26);
+    border-radius: 20px;
+    padding: 22px 26px;
+  }
+
+  .week-empty-text {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .week-empty-state {
+    color: var(--color-ink-500);
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  .week-list {
+    padding: 8px 26px;
+  }
+
+  .week-list-head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin: 12px 0 4px;
+  }
+
+  .week-list-heading {
+    margin: 0;
+    color: var(--color-kincha-600);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+  }
+
+  .week-rows {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .week-rows li + li {
+    border-top: 1px solid rgba(38, 36, 31, 0.08);
+  }
+
+  .week-row {
+    display: grid;
+    grid-template-columns: 210px minmax(0, 1fr) 230px 160px 20px;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 4px;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .week-row-period {
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  .week-row-skill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+  }
+
+  .week-row-skill .week-bulb {
+    width: 26px;
+    height: 26px;
+  }
+
+  .week-row-skill .week-bulb-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .week-row-expectation {
+    color: var(--color-ink-600);
+    font-size: 13px;
+  }
+
+  .week-tag {
+    display: inline-block;
+    border: 1px solid rgba(38, 36, 31, 0.14);
+    border-radius: 999px;
+    background: #fff;
+    padding: 3px 10px;
+    color: var(--color-ink-600);
+    font-size: 11px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .week-tag-reflected {
+    border-color: rgba(45, 93, 75, 0.35);
+    color: var(--color-green-600);
+  }
+
+  .week-row-chevron {
+    color: var(--color-ink-500);
+  }
+
+  @media (max-width: 767px) {
+    .week-empty {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+      padding: 16px;
+    }
+
+    .week-current-band {
+      padding: 12px 16px;
+    }
+
+    .week-current-row {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 8px;
+    }
+
+    .week-current-body {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 16px;
+      padding: 16px;
+    }
+
+    .week-list {
+      padding: 8px 16px;
+    }
+
+    .week-row {
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas:
+        "period period"
+        "skill skill"
+        "expectation state";
+      gap: 6px 8px;
+      padding: 12px 0;
+    }
+
+    .week-row-period {
+      grid-area: period;
+      color: var(--color-ink-600);
+      font-size: 12.5px;
+    }
+
+    .week-row-skill {
+      grid-area: skill;
+    }
+
+    .week-row-expectation {
+      grid-area: expectation;
+      font-size: 12px;
+    }
+
+    .week-row-state {
+      grid-area: state;
+    }
+
+    .week-row-chevron {
+      display: none;
+    }
+  }
+
+  /*
+   * 週の決める画面（#340。完成形はキャンバス page-62 の「3 学習スキルと期待する変化を決める」）。
+   */
+  .week-form {
+    width: min(100%, 960px);
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .week-form .goal-card {
+    padding: 32px 36px;
+  }
+
+  .week-flow {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    border: var(--border-hair);
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.06);
+    list-style: none;
+  }
+
+  .week-flow li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-left: 1px solid rgba(38, 36, 31, 0.08);
+    padding: 18px 24px;
+    color: var(--color-ink-500);
+    font-size: 15px;
+    font-weight: 800;
+  }
+
+  .week-flow li:first-child {
+    border-left: 0;
+  }
+
+  .week-flow small {
+    display: block;
+    margin-top: 2px;
+    font-size: 12px;
+    font-weight: 700;
+    opacity: 0.85;
+  }
+
+  .week-flow-num {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    flex: none;
+    place-items: center;
+    border: 2px solid rgba(38, 36, 31, 0.28);
+    border-radius: 50%;
+    font-size: 15px;
+    font-weight: 900;
+  }
+
+  .week-flow-now {
+    background: rgba(45, 93, 75, 0.09);
+    color: var(--color-green-600);
+  }
+
+  .week-flow-now .week-flow-num {
+    border-color: var(--color-green-600);
+    background: var(--color-green-600);
+    color: #fff;
+  }
+
+  .week-submit {
+    min-width: 280px;
+    min-height: 60px;
+    border-radius: 14px;
+    font-size: 18px;
+  }
+
+  .week-panel-head {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: var(--space-4);
+    padding: 0;
+  }
+
+  .week-panel-title {
+    min-width: 0;
+    font-family: var(--font-sans);
+    font-size: 22px;
+    font-weight: 900;
+  }
+
+  .week-panel-count {
+    display: inline-flex;
+    height: 30px;
+    align-items: center;
+    margin-left: auto;
+    border: 1.5px solid rgba(38, 36, 31, 0.28);
+    border-radius: 999px;
+    padding: 0 14px;
+    color: var(--color-ink-600);
+    font-size: 13px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .week-radio {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 26px;
+    height: 26px;
+    border: 2px solid rgba(38, 36, 31, 0.32);
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .skill-card-input:checked + .week-skill-card .week-radio,
+  .week-choice-input:checked + .week-choice .week-radio {
+    border-color: var(--color-green-600);
+    background: var(--color-green-600);
+  }
+
+  .skill-card-input:checked + .week-skill-card .week-radio::after,
+  .week-choice-input:checked + .week-choice .week-radio::after {
+    content: "✓";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 900;
+  }
+
+  .week-panel-head + .group-error {
+    margin-bottom: var(--space-3);
+  }
+
+  /* 学習開始のカードの光（放射状のグラデーション）は使わない。電球は平らな kincha の塗り（基準25・§3.7） */
+  .week-skill-card .skill-card-face {
+    height: 72px;
+    justify-content: flex-start;
+    background: #fff;
+    padding-left: 14px;
+    box-shadow: inset 0 -4px 0 rgba(38, 36, 31, 0.14);
+  }
+
+  .week-skill-card .skill-card-bulb {
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    border: 2px solid rgba(38, 36, 31, 0.22);
+    border-radius: 50%;
+    background: #fff;
+    color: var(--color-ink-400);
+  }
+
+  .skill-card-input:checked + .week-skill-card .skill-card-face {
+    background: #fff;
+    box-shadow: inset 0 -4px 0 #e0b85a;
+  }
+
+  .skill-card-input:checked + .week-skill-card .skill-card-bulb {
+    border-color: var(--color-kincha-500);
+    background: var(--color-kincha-500);
+    color: #fff;
+    box-shadow: 0 0 0 3px rgba(169, 122, 47, 0.18);
+  }
+
+  .week-skill-card .skill-card-name {
+    padding: 14px 16px 16px;
+    font-size: 16px;
+    font-weight: 900;
+  }
+
+  .week-choices {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .week-choice-input {
+    position: absolute;
+    opacity: 0;
+  }
+
+  .week-choice {
+    position: relative;
+    display: flex;
+    min-height: 76px;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid rgba(38, 36, 31, 0.18);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.82);
+    padding: 14px 56px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.5;
+    cursor: pointer;
+  }
+
+  .week-choice-input:checked + .week-choice {
+    border: 2px solid var(--color-green-600);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(45, 93, 75, 0.12), 0 10px 24px rgba(45, 93, 75, 0.14);
+  }
+
+  .week-choice .week-radio {
+    top: 50%;
+    right: 18px;
+    margin-top: -13px;
+  }
+
+  .week-choice-input:focus-visible + .week-choice {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  .week-note {
+    margin-top: var(--space-5);
+    border-top: 1px solid rgba(38, 36, 31, 0.08);
+    padding-top: var(--space-4);
+  }
+
+  .week-note-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-2);
+  }
+
+  .week-note-head .field-label {
+    margin-bottom: 0;
+    color: var(--color-ink-900);
+    font-size: 17px;
+    font-weight: 900;
+    letter-spacing: 0;
+  }
+
+  .week-note-hint {
+    color: var(--color-ink-500);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .week-note .field-control {
+    font-size: 16px;
+  }
+
+  @media (max-width: 767px) {
+    .week-submit {
+      width: 100%;
+    }
+
+    .week-panel-head {
+      flex-wrap: wrap;
+      gap: 8px 12px;
+    }
+
+    .week-panel-title {
+      flex: 1 1 100%;
+      font-size: 20px;
+    }
+
+    .week-panel-count {
+      margin-left: 0;
+    }
+
+    .week-form .goal-card {
+      padding: 24px 20px;
+    }
+
+    .week-form .skill-cards {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .week-skill-card {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .week-skill-card .skill-card-face {
+      width: 72px;
+      height: 64px;
+      flex: none;
+      justify-content: center;
+      padding-left: 0;
+    }
+
+    .week-skill-card .skill-card-name {
+      -webkit-line-clamp: unset;
+      flex: 1;
+      padding: 12px 56px 12px 12px;
+    }
+
+    .week-skill-card .week-radio {
+      top: 50%;
+      margin-top: -13px;
+    }
+
+    .week-choices {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 8px;
+    }
+
+    .week-note-head {
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .week-flow li {
+      flex-direction: column;
+      gap: 6px;
+      padding: 12px 8px;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .week-flow small {
+      display: none;
+    }
+  }
+
+  /*
+   * 週の振り返る画面（#340。完成形はキャンバス page-63「振り返る画面 設計案（統一版）」）。
+   * 緑の枠＝今週の事実（試したこと・記録）、白＝答える面。
+   */
+  .week-flow-done {
+    color: var(--color-green-600);
+  }
+
+  .week-flow-done .week-flow-num {
+    border-color: var(--color-green-600);
+    color: var(--color-green-600);
+  }
+
+  .week-band-periods {
+    margin-left: auto;
+    color: var(--color-green-600);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .week-stats-body {
+    padding: 22px 28px;
+  }
+
+  .week-label-skill {
+    background: var(--color-kincha-500);
+  }
+
+  .week-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .week-stat,
+  .week-bd {
+    border: 1.5px solid rgba(38, 36, 31, 0.16);
+    border-radius: 16px;
+    background: #fff;
+  }
+
+  .week-stat-hi,
+  .week-bd-hi {
+    border: 2px solid var(--color-kincha-500);
+    background: rgba(224, 184, 90, 0.12);
+  }
+
+  .week-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 14px 18px 16px;
+  }
+
+  .week-stat-title {
+    font-size: 16px;
+    font-weight: 900;
+  }
+
+  .week-stat-nums {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+  }
+
+  .week-stat-nums b {
+    margin-left: 6px;
+    font-family: var(--font-mono);
+    font-weight: 900;
+  }
+
+  .week-stat-nums small,
+  .week-bd-now small {
+    margin-left: 2px;
+    color: var(--color-kincha-600);
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .week-stat-prev {
+    color: var(--color-ink-500);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .week-stat-prev b {
+    color: var(--color-ink-400);
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .week-stat-now {
+    color: var(--color-ink-900);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .week-stat-now b {
+    font-size: 34px;
+  }
+
+  .week-breakdown-caption {
+    margin: 20px 0 10px;
+    color: var(--color-ink-600);
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  .week-breakdown {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .week-bd {
+    padding: 14px 18px 16px;
+  }
+
+  .week-bd-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .week-bd-relevant {
+    margin-left: auto;
+    color: var(--color-kincha-600);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .week-bd-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 70px 86px;
+    align-items: center;
+    gap: 8px;
+    border-top: 1px solid rgba(38, 36, 31, 0.08);
+    padding: 8px 0;
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  .week-bd-cols {
+    border-top: 0;
+    padding: 0 0 2px;
+    color: var(--color-ink-500);
+    font-size: 11px;
+  }
+
+  .week-bd-cols span:not(:first-child),
+  .week-bd-prev,
+  .week-bd-now {
+    text-align: right;
+  }
+
+  .week-bd-prev {
+    color: var(--color-ink-400);
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .week-bd-now {
+    font-size: 18px;
+    font-weight: 900;
+  }
+
+  .week-choices-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .week-choices-3 .week-choice {
+    padding: 14px 46px 14px 14px;
+    font-size: 15px;
+  }
+
+  .week-notice-text {
+    color: var(--color-ink-600);
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  /* 結果の画面（#340。完成形はキャンバス page-69 の L3：傾向を主役に・中央配置） */
+  .week-result {
+    gap: 32px;
+    text-align: center;
+  }
+
+  .week-result-band {
+    justify-content: center;
+  }
+
+  .week-result-body {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding-top: 16px;
+  }
+
+  .week-result-periods {
+    padding-bottom: 12px;
+    color: var(--color-ink-600);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .week-result-context {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px 12px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(38, 36, 31, 0.12);
+  }
+
+  .week-bulb-sm {
+    width: 26px;
+    height: 26px;
+  }
+
+  .week-bulb-sm .week-bulb-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .week-result-skill {
+    font-size: 16px;
+    font-weight: 900;
+    overflow-wrap: anywhere;
+  }
+
+  .week-result-expectation {
+    color: var(--color-ink-600);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .week-result-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 22px 8px;
+  }
+
+  .week-result-item + .week-result-item {
+    border-top: 1px solid rgba(38, 36, 31, 0.08);
+  }
+
+  .week-result-sentence {
+    max-width: 720px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+  }
+
+  .week-verdict {
+    margin: 6px 0 2px;
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1.4;
+  }
+
+  .week-result-count .week-panel-title {
+    margin-bottom: var(--space-3);
+  }
+
+  .week-result-actions {
+    display: flex;
+    justify-content: center;
+  }
+
+  @media (max-width: 767px) {
+    .week-stat-grid,
+    .week-breakdown,
+    .week-choices-3 {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .week-band-periods {
+      width: 100%;
+      margin-left: 0;
+    }
+
+    .week-current-band:has(.week-band-periods) {
+      flex-wrap: wrap;
+    }
+
+    .week-stats-body {
+      padding: 16px;
+    }
+
+    .week-result-row dt {
+      padding-top: 0;
+    }
+
+    .week-bd-row {
+      grid-template-columns: minmax(0, 1fr) 44px 58px;
+      gap: 6px;
+    }
+  }
 }

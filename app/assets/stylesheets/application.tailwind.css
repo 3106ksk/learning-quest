@@ -3312,6 +3312,98 @@
     font-weight: 800;
   }
 
+  /* 結果の画面（#340。完成形はキャンバス page-69 の L3：傾向を主役に・中央配置） */
+  .week-result {
+    gap: 32px;
+    text-align: center;
+  }
+
+  .week-result-band {
+    justify-content: center;
+  }
+
+  .week-result-body {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding-top: 16px;
+  }
+
+  .week-result-periods {
+    padding-bottom: 12px;
+    color: var(--color-ink-600);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .week-result-context {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px 12px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(38, 36, 31, 0.12);
+  }
+
+  .week-bulb-sm {
+    width: 26px;
+    height: 26px;
+  }
+
+  .week-bulb-sm .week-bulb-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .week-result-skill {
+    font-size: 16px;
+    font-weight: 900;
+    overflow-wrap: anywhere;
+  }
+
+  .week-result-expectation {
+    color: var(--color-ink-600);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .week-result-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 22px 8px;
+  }
+
+  .week-result-item + .week-result-item {
+    border-top: 1px solid rgba(38, 36, 31, 0.08);
+  }
+
+  .week-result-sentence {
+    max-width: 720px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+  }
+
+  .week-verdict {
+    margin: 6px 0 2px;
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1.4;
+  }
+
+  .week-result-count .week-panel-title {
+    margin-bottom: var(--space-3);
+  }
+
+  .week-result-actions {
+    display: flex;
+    justify-content: center;
+  }
+
   @media (max-width: 767px) {
     .week-stat-grid,
     .week-breakdown,
@@ -3330,6 +3422,10 @@
 
     .week-stats-body {
       padding: 16px;
+    }
+
+    .week-result-row dt {
+      padding-top: 0;
     }
 
     .week-bd-row {

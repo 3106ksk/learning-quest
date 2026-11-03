@@ -14,7 +14,7 @@ RSpec.describe ReviewsHelper, type: :helper do
         trends = [ { kind: :study_count, status: :changed, previous: 4, current: 5 } ]
 
         expect(helper.review_trend_items(trends, weekly_reflection)).to eq([
-          { label: "学習回数", sentence: "この目標の学習は、前週（10/12〜10/18）4回、今週（10/19〜10/25）5回でした。" }
+          { label: "学習回数", verdict: "記録に違いが見られます", sentence: "この目標の学習は、前週（10/12〜10/18）4回、今週（10/19〜10/25）5回でした。" }
         ])
       end
     end
@@ -24,7 +24,7 @@ RSpec.describe ReviewsHelper, type: :helper do
         trends = [ { kind: :study_count, status: :unchanged, previous: 4, current: 4 } ]
 
         expect(helper.review_trend_items(trends, weekly_reflection)).to eq([
-          { label: "学習回数", sentence: "この目標の学習は、前週も今週も4回でした。" }
+          { label: "学習回数", verdict: "大きな違いは見られません", sentence: "この目標の学習は、前週も今週も4回でした。" }
         ])
       end
     end
@@ -34,7 +34,7 @@ RSpec.describe ReviewsHelper, type: :helper do
         trends = [ { kind: :study_days, status: :changed, previous: 2, current: 3 } ]
 
         expect(helper.review_trend_items(trends, weekly_reflection)).to eq([
-          { label: "学習した日", sentence: "学習した日は、前週（10/12〜10/18）2日、今週（10/19〜10/25）3日でした。" }
+          { label: "学習した日", verdict: "記録に違いが見られます", sentence: "学習した日は、前週（10/12〜10/18）2日、今週（10/19〜10/25）3日でした。" }
         ])
       end
     end
@@ -44,7 +44,7 @@ RSpec.describe ReviewsHelper, type: :helper do
         trends = [ { kind: :study_days, status: :unchanged, previous: 3, current: 3 } ]
 
         expect(helper.review_trend_items(trends, weekly_reflection)).to eq([
-          { label: "学習した日", sentence: "学習した日は、前週も今週も3日でした。" }
+          { label: "学習した日", verdict: "大きな違いは見られません", sentence: "学習した日は、前週も今週も3日でした。" }
         ])
       end
     end
@@ -59,7 +59,7 @@ RSpec.describe ReviewsHelper, type: :helper do
         travel_to Time.zone.local(2026, 10, 21, 12, 0, 0) do
           expect(helper.review_trend_items(trends, weekly_reflection)).to eq([
             {
-              label: "学習回数・日数",
+              label: "学習回数・日数", verdict: "週が終わってから比べます",
               sentence: "今週はまだ途中のため、学習回数・日数は週が終わってから前週と比べます。今週（10/19〜10/21）は、ここまで3回・2日です。"
             }
           ])
@@ -75,7 +75,7 @@ RSpec.describe ReviewsHelper, type: :helper do
         ]
 
         expect(helper.review_trend_items(trends, weekly_reflection)).to eq([
-          { label: "学習回数・日数", sentence: "この目標は今週から始めたため、前週とは比べていません。" }
+          { label: "学習回数・日数", verdict: "前週がないため比べていません", sentence: "この目標は今週から始めたため、前週とは比べていません。" }
         ])
       end
     end
@@ -92,7 +92,7 @@ RSpec.describe ReviewsHelper, type: :helper do
 
         expect(helper.review_trend_items(trends, weekly_reflection)).to eq([
           {
-            label: "集中",
+            label: "集中", verdict: "記録に違いが見られます",
             sentence: "「問題を解く前に制限時間を決める」を選んだ回の「途中で集中が切れたが取り組めた」は、前週4回中1回、今週5回中4回でした。"
           }
         ])
@@ -105,7 +105,7 @@ RSpec.describe ReviewsHelper, type: :helper do
 
         expect(helper.review_trend_items(trends, weekly_reflection)).to eq([
           {
-            label: "集中",
+            label: "集中", verdict: "大きな違いは見られません",
             sentence: "「問題を解く前に制限時間を決める」を選んだ回の集中は、前週（4回）と今週（5回）で大きな違いはありませんでした。"
           }
         ])
@@ -118,7 +118,7 @@ RSpec.describe ReviewsHelper, type: :helper do
 
         expect(helper.review_trend_items(trends, weekly_reflection)).to eq([
           {
-            label: "チャレンジ",
+            label: "チャレンジ", verdict: "記録が少ないため比べていません",
             sentence: "「問題を解く前に制限時間を決める」を選んだ回は、前週2回、今週5回でした。どちらの週も3回以上あるときに、前週と比べます。"
           }
         ])
@@ -130,7 +130,7 @@ RSpec.describe ReviewsHelper, type: :helper do
         trends = [ { kind: :focus, status: :no_previous } ]
 
         expect(helper.review_trend_items(trends, weekly_reflection)).to eq([
-          { label: "集中", sentence: "この目標は今週から始めたため、前週とは比べていません。" }
+          { label: "集中", verdict: "前週がないため比べていません", sentence: "この目標は今週から始めたため、前週とは比べていません。" }
         ])
       end
     end
@@ -140,7 +140,7 @@ RSpec.describe ReviewsHelper, type: :helper do
         trends = [ { kind: :focus, status: :no_selection } ]
 
         expect(helper.review_trend_items(trends, weekly_reflection)).to eq([
-          { label: "集中", sentence: "集中の様子は、この学習スキルを選んだ回があるときに前週と比べます。" }
+          { label: "集中", verdict: "今週はこのスキルの記録がありません", sentence: "集中の様子は、この学習スキルを選んだ回があるときに前週と比べます。" }
         ])
       end
     end
@@ -150,9 +150,26 @@ RSpec.describe ReviewsHelper, type: :helper do
         trends = [ { kind: :challenge, status: :no_selection } ]
 
         expect(helper.review_trend_items(trends, weekly_reflection)).to eq([
-          { label: "チャレンジ", sentence: "チャレンジの様子は、この学習スキルを選んだ回があるときに前週と比べます。" }
+          { label: "チャレンジ", verdict: "今週はこのスキルの記録がありません", sentence: "チャレンジの様子は、この学習スキルを選んだ回があるときに前週と比べます。" }
         ])
       end
+    end
+  end
+
+  describe "#review_continuation_lines" do
+    it "通算がある場合は、今週の文と通算の文を別の行として返す" do
+      lines = helper.review_continuation_lines(weekly_reflection, selected_count: 4, skill_total: { weeks: 2, count: 7 })
+
+      expect(lines).to eq([
+        "「問題を解く前に制限時間を決める」を今週は4回選びました。",
+        "振り返りの対象にしてから、通算2週・7回です。"
+      ])
+    end
+
+    it "最初の週は、今週の文だけを返す" do
+      lines = helper.review_continuation_lines(weekly_reflection, selected_count: 3, skill_total: { weeks: 1, count: 3 })
+
+      expect(lines).to eq([ "「問題を解く前に制限時間を決める」を今週は3回選びました。" ])
     end
   end
 

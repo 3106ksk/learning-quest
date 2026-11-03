@@ -5,28 +5,36 @@ module ReviewsHelper
     statuses = trends.map { |trend| trend[:status] }
 
     if statuses == [ :in_progress, :in_progress ]
-      [ { label: t("reviews.show.trend_labels.study_count_and_days"), sentence: review_in_progress_sentence(trends, weekly_reflection) } ]
+      [ { label: t("reviews.show.trend_labels.study_count_and_days"), verdict: review_verdict(:in_progress), sentence: review_in_progress_sentence(trends, weekly_reflection) } ]
     elsif statuses == [ :no_previous, :no_previous ]
-      [ { label: t("reviews.show.trend_labels.study_count_and_days"), sentence: t("reviews.show.trends.no_previous") } ]
+      [ { label: t("reviews.show.trend_labels.study_count_and_days"), verdict: review_verdict(:no_previous), sentence: t("reviews.show.trends.no_previous") } ]
     else
-      trends.map { |trend| { label: review_trend_label(trend), sentence: review_trend_sentence(trend, weekly_reflection) } }
+      trends.map { |trend| { label: review_trend_label(trend), verdict: review_verdict(trend[:status]), sentence: review_trend_sentence(trend, weekly_reflection) } }
     end
   end
 
   def review_continuation_sentence(weekly_reflection, selected_count:, skill_total:)
+    review_continuation_lines(weekly_reflection, selected_count: selected_count, skill_total: skill_total).join
+  end
+
+  def review_continuation_lines(weekly_reflection, selected_count:, skill_total:)
     skill = weekly_reflection.learning_skill.name
-    sentence =
+    first =
       if selected_count.positive?
         t("reviews.show.continuation.selected", skill: skill, count: selected_count)
       else
         t("reviews.show.continuation.not_selected", skill: skill)
       end
-    return sentence if skill_total[:weeks] < 2
+    return [ first ] if skill_total[:weeks] < 2
 
-    sentence + t("reviews.show.continuation.total", weeks: skill_total[:weeks], count: skill_total[:count])
+    [ first, t("reviews.show.continuation.total", weeks: skill_total[:weeks], count: skill_total[:count]) ]
   end
 
   private
+
+  def review_verdict(status)
+    t("reviews.show.verdicts.#{status}")
+  end
 
   def review_trend_label(trend)
     t("reviews.show.trend_labels.#{trend[:kind]}")

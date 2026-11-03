@@ -183,10 +183,19 @@ ja:
   reviews:
     show:
       title: スキルの振り返り
-      week_suffix: の週
-      continuation_heading: 続けてきたこと
+      expectation_label: 期待する変化
+      previous_week: 前週
+      current_week: 今週
       trends_heading: 記録から見つかった傾向
-      record_link: この週の記録を見る
+      count_heading: 使った回数
+      list_button: スキルの振り返りへ
+      verdicts:
+        changed: 記録に違いが見られます
+        unchanged: 大きな違いは見られません
+        too_few: 記録が少ないため比べていません
+        no_previous: 前週がないため比べていません
+        no_selection: 今週はこのスキルの記録がありません
+        in_progress: 週が終わってから比べます
       trend_labels:
         study_count: 学習回数
         study_days: 学習した日

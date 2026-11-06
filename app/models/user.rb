@@ -2,7 +2,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :validatable
 
-  has_many :sessions, dependent: :destroy
   has_many :study_records, dependent: :destroy
   has_many :goals, dependent: :destroy
   has_many :learning_skills, dependent: :destroy

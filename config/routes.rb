@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { registrations: "users/registrations" }
+  devise_for :users,
+             controllers: { registrations: "users/registrations" },
+             skip: [ :passwords, :registrations ]
+
+  devise_scope :user do
+    get "users/sign_up" => "users/registrations#new", as: :new_user_registration
+    post "users" => "users/registrations#create", as: :user_registration
+  end
   root "static_pages#home"
   get "terms" => "static_pages#terms", as: :terms
   get "privacy" => "static_pages#privacy", as: :privacy

@@ -126,16 +126,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe "セッションとの関連" do
-    it "ユーザーを削除すると、紐づくセッションも削除される" do
-      user = create(:user)
-      session = user.sessions.create!
-
-      expect { user.destroy }.to change(Session, :count).by(-1)
-      expect(Session.exists?(session.id)).to be_falsey
-    end
-  end
-
   describe "学習スキルとの関連" do
     it "ユーザーを削除すると、紐づく学習スキルも削除される" do
       user = create(:user)

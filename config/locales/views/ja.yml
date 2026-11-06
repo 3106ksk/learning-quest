@@ -25,7 +25,7 @@ ja:
       password_confirmation: パスワード（確認）
   shared:
     header:
-      brand: きづき
+      brand: MySkillLab
       login: ログイン
       sign_up: アカウント作成
       logout: ログアウト
@@ -35,7 +35,7 @@ ja:
     footer:
       terms: 利用規約
       privacy: プライバシーポリシー
-      signature: © 2026 きづき
+      signature: © 2026 MySkillLab
     study_record_summary:
       title: 今回の学習
       started_at: 開始日時
@@ -114,8 +114,8 @@ ja:
         title: 成果がすぐに出なくても、積み重ねた工夫は、あなたの学び方になります。
     terms:
       title: 利用規約
-      updated_at: "最終更新日: 2026年11月3日"
-      intro: この利用規約（以下「本規約」）は、学習の記録と振り返りのサービス「きづき」（以下「本サービス」）の利用条件を定めるものです。本サービスを利用する方は、本規約に同意したものとみなします。
+      updated_at: "最終更新日: 2026年11月6日"
+      intro: この利用規約（以下「本規約」）は、学習の記録と振り返りのサービス「MySkillLab」（以下「本サービス」）の利用条件を定めるものです。本サービスを利用する方は、本規約に同意したものとみなします。
       sections:
         - heading: 第1条 利用登録
           items:
@@ -151,8 +151,8 @@ ja:
             - 本サービスで預かる個人情報は、別に定める「プライバシーポリシー」にしたがって取り扱います。
     privacy:
       title: プライバシーポリシー
-      updated_at: "最終更新日: 2026年11月3日"
-      intro: 「きづき」（以下「本サービス」）は、利用者から預かる情報を、このプライバシーポリシーにしたがって取り扱います。
+      updated_at: "最終更新日: 2026年11月6日"
+      intro: 「MySkillLab」（以下「本サービス」）は、利用者から預かる情報を、このプライバシーポリシーにしたがって取り扱います。
       sections:
         - heading: 1. 集める情報
           body:

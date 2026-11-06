@@ -537,62 +537,378 @@
     }
   }
 
+  /* LP（v3 §9 #47）。主ボタンはアプリと共通の深緑、冒頭と締めは淡い緑の面。 */
+  .lp-sprite {
+    position: absolute;
+    width: 0;
+    height: 0;
+  }
+
+  .lp-hero,
+  .lp-closing {
+    background: #edf7ee;
+  }
+
   .lp-hero {
     display: grid;
-    min-height: calc(100vh - var(--header-height));
     place-items: center;
-    padding: var(--space-8) var(--page-pad-mobile);
+    padding: var(--space-8) var(--page-pad-mobile) var(--space-7);
+    text-align: center;
   }
 
   .lp-hero-inner {
-    max-width: var(--column-main-max);
+    max-width: 860px;
   }
 
-  .lp-section {
-    max-width: var(--column-main-max);
-    margin-inline: auto;
-    border-top: var(--border-hair);
-    padding: var(--space-8) var(--page-pad-mobile);
+  .lp-brand {
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1.25;
+  }
+
+  .lp-headline {
+    margin-top: var(--space-4);
+    font-family: "Noto Sans JP", var(--font-sans);
+    font-size: clamp(24px, 3.6vw, 38px);
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    word-break: auto-phrase;
+  }
+
+  .lp-lead {
+    max-width: 640px;
+    margin: var(--space-4) auto 0;
+    color: var(--color-ink-600);
+    line-height: 1.9;
+    word-break: auto-phrase;
   }
 
   .lp-cta-row {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--space-4);
+    justify-content: center;
+    gap: var(--space-3);
     margin-top: var(--space-6);
   }
 
-  .lp-mini {
-    max-width: 360px;
-    margin-top: var(--space-5);
-    border: var(--border-hair);
-    border-radius: var(--radius-box);
+  .lp-cta-row .btn {
+    padding-inline: var(--space-5);
+  }
+
+  .lp-cta-note {
+    margin: var(--space-2) auto 0;
+    color: var(--color-ink-600);
+    font-size: 13px;
+  }
+
+  .lp-btn-secondary {
+    border: 1px solid var(--color-line-control);
+    background: transparent;
+    color: var(--color-ink-900);
+  }
+
+  .lp-btn-secondary:hover {
+    background: rgba(38, 36, 31, 0.06);
+    color: var(--color-ink-900);
+  }
+
+  .lp-consent {
+    margin-top: var(--space-4);
+    color: var(--color-ink-600);
+    font-size: 13px;
+  }
+
+  .lp-consent a,
+  .lp-feature-body a {
+    color: var(--color-ink-900);
+    text-decoration: underline;
+  }
+
+  .lp-section {
+    max-width: var(--content-max);
+    margin-inline: auto;
+    border-top: var(--border-hair);
+    padding: var(--space-7) var(--page-pad-mobile);
+  }
+
+  .lp-section-title {
+    font-family: "Noto Sans JP", var(--font-sans);
+    font-size: clamp(20px, 2.4vw, 28px);
+    font-weight: 700;
+    line-height: 1.5;
+    text-align: center;
+    text-wrap: balance;
+    word-break: auto-phrase;
+  }
+
+  .lp-label {
+    display: inline-flex;
+    align-items: center;
+    min-height: 26px;
+    border-radius: 999px;
+    background: var(--color-ink-900);
+    padding-inline: 12px;
+    color: var(--color-paper);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .lp-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .lp-two {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5);
+    margin-top: var(--space-6);
+  }
+
+  .lp-panel {
+    border: 1px solid #d3cec6;
+    border-radius: 12px;
+    background: #fff;
+    padding: var(--space-5) 28px var(--space-2);
+  }
+
+  .lp-panel .lp-label {
+    margin-bottom: var(--space-1);
+  }
+
+  .lp-item {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: var(--space-4);
+    border-top: var(--border-hair);
+    padding-block: 20px;
+  }
+
+  .lp-item:first-of-type {
+    border-top: 0;
+  }
+
+  .lp-item-icon {
+    margin: 0;
+  }
+
+  .lp-panel-service .lp-item-icon {
+    color: var(--color-ink-600);
+  }
+
+  .lp-card,
+  .lp-flow-card {
+    border: 1px solid #d3cec6;
+    border-radius: 12px;
+    background: #fff;
     padding: var(--space-5);
   }
 
-  .lp-mini-center {
+  .lp-card-title {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
+    text-wrap: balance;
+    word-break: auto-phrase;
+  }
+
+  .lp-card-body {
+    margin-top: var(--space-2);
+    color: var(--color-ink-600);
+    font-size: 14px;
+    line-height: 1.85;
+  }
+
+  /* ⑤ 使い方：ジグザグのフロー。行の高さを固定し、中央の曲線は背景のタイルで描く */
+  .lp-flow {
+    --lp-row: 230px;
+    position: relative;
+    display: grid;
+    width: min(100%, 920px);
+    margin: var(--space-6) auto 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .lp-flow::before {
+    content: "";
+    position: absolute;
+    top: calc(var(--lp-row) / 2);
+    bottom: calc(var(--lp-row) / 2);
+    left: 50%;
+    width: 80px;
+    transform: translateX(-50%);
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='230' viewBox='0 0 80 230'%3E%3Cpath d='M40 0V30C72 90 8 140 40 200V230' fill='none' stroke='%23b9b3a8' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") repeat-y center top / 80px 230px;
+  }
+
+  .lp-flow-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 44px minmax(0, 1fr);
+    column-gap: var(--space-5);
+    align-items: center;
+    height: var(--lp-row);
+  }
+
+  .lp-flow-card {
+    grid-row: 1;
+    grid-column: 1;
+    min-height: 150px;
+  }
+
+  .lp-flow-row:nth-child(even) .lp-flow-card {
+    grid-column: 3;
+  }
+
+  .lp-flow-node {
+    grid-row: 1;
+    grid-column: 2;
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--color-ink-900);
+    color: var(--color-paper);
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .lp-flow-icon {
+    display: block;
+    width: 44px;
+    height: 44px;
+    margin-bottom: var(--space-3);
+    color: var(--color-ink-900);
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .lp-feature-body {
+    max-width: 640px;
+    margin: var(--space-4) auto 0;
+    color: var(--color-ink-600);
+    line-height: 1.8;
+    text-align: center;
+    word-break: auto-phrase;
+  }
+
+  /* ⑥ 傾向ミニカード：期待のラベル＋一言＋前週→今週 */
+  .lp-trend-grid {
+    margin-top: var(--space-6);
+  }
+
+  .lp-trend-phrase {
+    margin-top: var(--space-4);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.5;
+    text-wrap: balance;
+    word-break: auto-phrase;
+  }
+
+  .lp-trend-bars {
+    display: grid;
+    gap: 10px;
+    margin: var(--space-4) 0 0;
+  }
+
+  .lp-trend-bar {
+    display: grid;
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 10px;
+    align-items: center;
+    color: var(--color-ink-600);
+    font-size: 12px;
+  }
+
+  .lp-trend-bar dt {
+    margin: 0;
+  }
+
+  .lp-trend-bar dd {
+    position: relative;
+    height: 10px;
+    margin: 0;
+    border-radius: 999px;
+    background: rgba(38, 36, 31, 0.08);
+  }
+
+  .lp-trend-bar dd span {
+    position: absolute;
+    inset: 0 auto 0 0;
+    border-radius: 999px;
+    background: var(--color-ink-900);
+    opacity: 0.28;
+  }
+
+  .lp-trend-bar-current {
+    color: var(--color-ink-900);
+    font-weight: 700;
+  }
+
+  .lp-trend-bar-current dd span {
+    opacity: 1;
+  }
+
+  .lp-closing {
+    max-width: none;
     text-align: center;
   }
 
-  .lp-timer-value {
-    font-family: var(--font-mono);
-    font-variant-numeric: tabular-nums;
-    font-size: 32px;
-    line-height: 1.2;
+  .lp-closing-title {
+    max-width: 640px;
+    margin-inline: auto;
+    font-family: "Noto Sans JP", var(--font-sans);
+    font-size: clamp(18px, 2.2vw, 24px);
+    font-weight: 700;
+    line-height: 1.6;
+    text-wrap: balance;
+    word-break: auto-phrase;
   }
 
-  .lp-timer-bar {
-    width: 62%;
-    height: 2px;
-    margin: var(--space-3) auto 0;
-    background: var(--color-line-control);
-  }
+  @media (max-width: 767px) {
+    .lp-card-grid,
+    .lp-two {
+      grid-template-columns: 1fr;
+    }
 
-  @media (max-width: 600px) {
-    .lp-hero {
-      min-height: auto;
-      padding-block: var(--space-7);
+    .lp-flow::before {
+      display: none;
+    }
+
+    .lp-flow-row {
+      grid-template-columns: 44px minmax(0, 1fr);
+      height: auto;
+      margin-bottom: var(--space-4);
+      align-items: start;
+    }
+
+    .lp-flow-node,
+    .lp-flow-row:nth-child(even) .lp-flow-card,
+    .lp-flow-card {
+      grid-row: 1;
+    }
+
+    .lp-flow-node {
+      grid-column: 1;
+    }
+
+    .lp-flow-card,
+    .lp-flow-row:nth-child(even) .lp-flow-card {
+      grid-column: 2;
     }
   }
 

@@ -1,95 +1,143 @@
 <% content_for(:title, "#{t('.brand')} — #{t('.headline')}") %>
 
+<svg class="lp-sprite" aria-hidden="true" focusable="false">
+  <symbol id="lp-ic1" viewBox="0 0 120 120">
+    <path d="M30 22 L82 20 Q87 20 87 25 L89 95 Q89 100 84 100 L35 102 Q30 102 30 97 Z"/>
+    <path d="M23 38h14M23 54h14M23 70h14M23 86h14"/>
+    <path d="M46 40h28M46 54h28M46 68h18"/>
+    <path d="M74 96 L97 46 L107 51 L84 101 Z"/>
+    <path d="M74 96 L70 110 L84 101"/>
+    <path d="M97 46 L101 38 L111 43 L107 51"/>
+  </symbol>
+  <symbol id="lp-ic2" viewBox="0 0 120 120">
+    <path d="M60 20 a27 27 0 0 0 -15 49.5 c4 3 6 7 6 12 h18 c0 -5 2 -9 6 -12 A27 27 0 0 0 60 20 z"/>
+    <path d="M52 90h16M54 98h12"/>
+    <path d="M52 46 q4 9 8 0 q4 9 8 0"/>
+    <path d="M60 6v7M22 22l5 5M98 22l-5 5M10 52h7M103 52h7"/>
+  </symbol>
+  <symbol id="lp-ic3" viewBox="0 0 120 120">
+    <circle cx="58" cy="68" r="32"/>
+    <path d="M50 26h16M58 26v10M90 36l7 -7"/>
+    <path d="M58 68V48M58 68l14 9"/>
+    <path d="M58 42v3M58 94v3M30 68h3M83 68h3"/>
+    <path d="M100 78l8 -8 5 5 -8 8z M96 90l-3 8 8 -3"/>
+  </symbol>
+  <symbol id="lp-ic4" viewBox="0 0 120 120">
+    <circle cx="46" cy="82" r="24"/>
+    <path d="M36 80h.01M56 80h.01"/>
+    <path d="M38 92 q8 5 16 0"/>
+    <path d="M30 70 q7 -5 14 0M50 68 q6 -3 12 1"/>
+    <path d="M66 62 a3 3 0 1 0 .01 0M74 50 a5 5 0 1 0 .01 0"/>
+    <path d="M70 12 q-16 0 -16 15 q0 15 17 15 q15 0 15 -13 q0 -17 -16 -17 z"/>
+    <path d="M64 24 q0 -7 7 -7 q7 0 7 6 q0 4 -7 7 v3 M71 38h.01"/>
+  </symbol>
+  <symbol id="lp-ic5" viewBox="0 0 120 120">
+    <path d="M14 100h58M22 100V76M36 100V58M50 100V68"/>
+    <circle cx="78" cy="48" r="23"/>
+    <path d="M95 65 l15 17"/>
+    <path d="M68 52 l7 -8 6 5 7 -10"/>
+  </symbol>
+  <symbol id="lp-pc1" viewBox="0 0 120 120"><path d="M34 18h52M34 102h52"/><path d="M40 18v14q0 14 20 28q20 -14 20 -28V18"/><path d="M40 102V88q0 -14 20 -28q20 14 20 28v14"/><path d="M52 90q8 -6 16 0"/></symbol>
+  <symbol id="lp-pc2" viewBox="0 0 120 120"><circle cx="52" cy="52" r="30" stroke-dasharray="6 7"/><path d="M75 75l28 28"/><path d="M44 46q0 -8 8 -8q8 0 8 7q0 5 -8 8v4M52 66h.01"/></symbol>
+  <symbol id="lp-pc3" viewBox="0 0 120 120"><rect x="14" y="40" width="82" height="42" rx="8"/><path d="M100 54h6v14h-6"/><path d="M24 50v22"/><path d="M60 100l10 -14M72 100l10 -14"/></symbol>
+  <symbol id="lp-pc4" viewBox="0 0 120 120"><path d="M16 30l34 -6 6 34 -34 6z"/><path d="M66 20l36 8 -8 34 -34 -8z"/><path d="M40 70l30 -4 4 30 -32 6z"/><path d="M26 40l14 -3M76 34l16 4M50 80l14 -2"/></symbol>
+  <symbol id="lp-pc5" viewBox="0 0 120 120"><path d="M16 32h88M16 60h88M16 88h88"/><circle cx="36" cy="32" r="8"/><circle cx="76" cy="60" r="8"/><circle cx="52" cy="88" r="8"/></symbol>
+  <symbol id="lp-pc6" viewBox="0 0 120 120"><rect x="16" y="26" width="88" height="76" rx="10"/><path d="M16 46h88M38 16v18M82 16v18"/><path d="M32 62l10 10M42 62l-10 10M52 62l10 10M62 62l-10 10"/><path d="M78 64h14v14H78z" stroke-dasharray="4 4"/></symbol>
+</svg>
+
 <section class="lp-hero" aria-labelledby="hero-title">
   <div class="lp-hero-inner">
-    <p class="brand"><%= t('.brand') %></p>
+    <p class="lp-brand"><%= t('.brand') %></p>
 
-    <h1 id="hero-title" style="margin-top: var(--space-4)"><%= t('.headline') %></h1>
+    <h1 id="hero-title" class="lp-headline"><%= t('.headline') %></h1>
 
-    <p class="caption" style="margin-top: var(--space-3)">
-      <%= t('.caption') %>
-    </p>
-
-    <p class="small" style="margin-top: var(--space-5); white-space: pre-line"><%= t('.body') %></p>
+    <p class="lp-lead"><%= t('.lead') %></p>
 
     <div class="lp-cta-row">
-      <%= link_to t('.cta_primary'), new_user_registration_path, class: "btn btn-primary" %>
-      <%= link_to t('.cta_login'), new_user_session_path %>
+      <%= link_to t('.cta_primary'), new_user_registration_path,
+            class: "btn btn-primary", aria: { describedby: "lp-hero-cta-note" } %>
+      <%= link_to t('.cta_login'), new_user_session_path, class: "btn lp-btn-secondary" %>
     </div>
+
+    <p id="lp-hero-cta-note" class="lp-cta-note"><%= t('.cta_note') %></p>
+
+    <p class="lp-consent">
+      <%= t('.consent_html',
+            terms: link_to(t('shared.footer.terms'), terms_path),
+            privacy: link_to(t('shared.footer.privacy'), privacy_path)) %>
+    </p>
   </div>
 </section>
 
-<section class="lp-section" aria-labelledby="study-title">
-  <h2 id="study-title">
-    <%= t(".study.title_html", minutes: tag.span(5, class: "num")) %>
-  </h2>
-  <p style="margin-top: var(--space-4)"><%= t(".study.body") %></p>
+<section class="lp-section" aria-labelledby="problems-title">
+  <h2 id="problems-title" class="lp-section-title"><%= t('.problems.title') %></h2>
 
-  <div class="lp-mini lp-mini-center" aria-hidden="true">
-    <p class="lp-timer-value">04:32</p>
-    <div class="lp-timer-bar"></div>
-  </div>
-</section>
-
-<section class="lp-section" aria-labelledby="evaluation-title">
-  <h2 id="evaluation-title"><%= t(".evaluation.title") %></h2>
-  <p style="margin-top: var(--space-4)"><%= t(".evaluation.body") %></p>
-
-  <div class="stamp-stage" aria-hidden="true">
-    <%= render "shared/rank_stamp", rank: "b", size_class: "stamp-size-l" %>
-  </div>
-
-  <p class="small">
-    <%= t(".evaluation.note_html", axes: tag.span(3, class: "num")) %>
-  </p>
-</section>
-
-<section class="lp-section" aria-labelledby="history-title">
-  <h2 id="history-title"><%= t(".history.title") %></h2>
-  <p style="margin-top: var(--space-4)"><%= t(".history.body") %></p>
-
-  <div class="lp-mini" aria-hidden="true">
-    <p class="section-title"><span class="num">7/4</span></p>
-    <div class="ledger" style="margin-top: var(--space-3)">
-      <div class="ledger-row">
-        <span class="ledger-body">
-          <span class="rank-inline">
-            <%= render "shared/rank_stamp", rank: "b", size_class: "stamp-size-s" %>
-            <strong>英単語を<span class="num">10</span>個復習</strong>
-          </span>
-          <span class="small">予定<span class="num">15</span>分 / 実際<span class="num">13</span>分</span>
-        </span>
-
-        <span class="ledger-meta">
-          <time datetime="2026-07-04T20:10">20:10</time>
-        </span>
+  <div class="lp-two">
+    <% %i[learner service].each do |group| %>
+      <div class="lp-panel lp-panel-<%= group %>">
+        <span class="lp-label"><%= t(".problems.#{group}.label") %></span>
+        <% t(".problems.#{group}.items").each_with_index do |item, index| %>
+          <div class="lp-item">
+            <svg class="lp-flow-icon lp-item-icon" viewBox="0 0 120 120" aria-hidden="true"><use href="#lp-pc<%= (group == :learner ? 0 : 3) + index + 1 %>"/></svg>
+            <div>
+              <h3 class="lp-card-title"><%= item[:title] %></h3>
+              <p class="lp-card-body"><%= item[:body] %></p>
+            </div>
+          </div>
+        <% end %>
       </div>
-    </div>
-  </div>
-</section>
-
-<section class="lp-section" aria-labelledby="principles-title">
-  <h2 id="principles-title"><%= t(".principles.title") %></h2>
-
-  <div class="ledger" style="margin-top: var(--space-5)">
-    <% t(".principles.items").each do |item| %>
-      <div class="ledger-row"><span><%= item %></span></div>
     <% end %>
   </div>
 </section>
 
-<section class="lp-section" aria-labelledby="origin-title">
-  <h2 id="origin-title"><%= t(".origin.title") %></h2>
-  <p style="margin-top: var(--space-4)"><%= t(".origin.body") %></p>
-  <p style="margin-top: var(--space-4)"><%= t(".origin.vision") %></p>
+<section class="lp-section" aria-labelledby="steps-title">
+  <h2 id="steps-title" class="lp-section-title"><%= t('.steps.title') %></h2>
+
+  <ol class="lp-flow">
+    <% t('.steps.items').each_with_index do |item, index| %>
+      <li class="lp-flow-row">
+        <div class="lp-flow-card">
+          <svg class="lp-flow-icon" viewBox="0 0 120 120" aria-hidden="true"><use href="#lp-ic<%= index + 1 %>"/></svg>
+          <h3 class="lp-card-title"><%= item[:title] %></h3>
+          <p class="lp-card-body"><%= item[:body] %></p>
+        </div>
+        <span class="lp-flow-node num" aria-hidden="true"><%= index + 1 %></span>
+      </li>
+    <% end %>
+  </ol>
 </section>
 
-<section class="lp-section" aria-labelledby="final-cta-title">
-  <h2 id="final-cta-title">
-    <%= t(".final_cta.title_html", minutes: tag.span(5, class: "num")) %>
-  </h2>
+<section class="lp-section" aria-labelledby="trend-title">
+  <h2 id="trend-title" class="lp-section-title"><%= t('.trend.title') %></h2>
+  <p class="lp-feature-body"><%= t('.trend.body') %></p>
 
-  <div class="lp-cta-row">
-    <%= link_to t(".cta_primary"), new_user_registration_path, class: "btn btn-primary" %>
+  <ul class="lp-card-grid lp-trend-grid">
+    <% t('.trend.items').each do |item| %>
+      <li class="lp-card">
+        <span class="lp-label"><%= item[:label] %></span>
+        <p class="lp-trend-phrase"><%= item[:phrase] %></p>
+        <dl class="lp-trend-bars">
+          <div class="lp-trend-bar">
+            <dt><%= t('.trend.previous') %> <%= item[:previous] %></dt>
+            <dd><span style="width: <%= item[:previous_width] %>%"></span></dd>
+          </div>
+          <div class="lp-trend-bar lp-trend-bar-current">
+            <dt><%= t('.trend.current') %> <%= item[:current] %></dt>
+            <dd><span style="width: <%= item[:current_width] %>%"></span></dd>
+          </div>
+        </dl>
+      </li>
+    <% end %>
+  </ul>
+</section>
+
+<section class="lp-section lp-closing" aria-labelledby="closing-title">
+  <h2 id="closing-title" class="lp-closing-title"><%= t('.closing.title') %></h2>
+
+  <div class="lp-cta-row lp-cta-row-center">
+    <%= link_to t('.cta_primary'), new_user_registration_path,
+          class: "btn btn-primary", aria: { describedby: "lp-closing-cta-note" } %>
   </div>
+
+  <p id="lp-closing-cta-note" class="lp-cta-note"><%= t('.cta_note') %></p>
 </section>

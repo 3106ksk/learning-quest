@@ -5,7 +5,8 @@
   --color-*: initial;
 
   /* Paper */
-  --color-paper: #faf9f5;
+  --color-paper: #f4faf3;
+  --color-paper-lp: #faf9f5;
   --color-paper-line: rgba(38, 36, 31, 0.12);
   --color-paper-line-strong: rgba(38, 36, 31, 0.26);
   --color-line-control: rgba(38, 36, 31, 0.52);
@@ -34,7 +35,7 @@
 
   /* Type */
   --font-serif: "Hiragino Mincho ProN", "Yu Mincho", YuMincho, serif;
-  --font-sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", YuGothic, Meiryo, sans-serif;
+  --font-sans: "Noto Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", YuGothic, Meiryo, sans-serif;
   --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, monospace;
 
   /* Shape（--radius-*は@themeの通常の名前付き名前空間なので安全に上書きできる） */
@@ -66,6 +67,7 @@
   --page-pad-mobile: 20px;
 
   --border-hair: 1px solid var(--color-paper-line);
+  --border-card: 1px solid #d3cec6;
   --border-box: 1px solid var(--color-paper-line-strong);
   --border-control: 1px solid var(--color-line-control);
   --focus-ring: 3px solid var(--color-green-600);
@@ -84,6 +86,11 @@
     background: var(--color-paper);
     color: var(--color-ink-900);
     font-family: var(--font-sans);
+  }
+
+  html:has(.lp-hero) {
+    --color-paper: var(--color-paper-lp);
+    --font-sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", YuGothic, Meiryo, sans-serif;
   }
 
   body {
@@ -110,8 +117,8 @@
   h1,
   h2 {
     margin-block: 0;
-    font-family: var(--font-serif);
-    font-weight: 600;
+    font-family: var(--font-sans);
+    font-weight: 700;
     letter-spacing: 0.02em;
   }
 
@@ -133,10 +140,9 @@
   }
 
   .goal-card {
-    border: var(--border-hair);
-    border-radius: 20px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: #fff;
-    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.06);
     padding: var(--space-6);
   }
 
@@ -145,8 +151,8 @@
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-4);
-    border: 1px dashed var(--color-line-control);
-    border-radius: 20px;
+    border: var(--border-card);
+    border-radius: 12px;
     padding: var(--space-5);
   }
 
@@ -166,20 +172,18 @@
     align-items: center;
     gap: var(--space-4);
     min-height: 96px;
-    border: var(--border-hair);
-    border-radius: 20px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: #fff;
-    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.06);
     padding: var(--space-5);
     color: var(--color-ink-900);
     text-decoration: none;
-    transition: border-color 160ms ease, box-shadow 160ms ease, color 160ms ease;
+    transition: border-color 160ms ease, color 160ms ease;
   }
 
   a.goal-hub-link-card:hover {
     border-color: var(--color-green-600);
     color: var(--color-green-700);
-    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.09);
     text-decoration: none;
   }
 
@@ -231,10 +235,9 @@
 
   .goal-new-card {
     overflow: hidden;
-    border: var(--border-hair);
-    border-radius: 20px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: #fff;
-    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.06);
   }
 
   .goal-new-error {
@@ -319,10 +322,9 @@
 
   .study-start-form {
     min-width: 0;
-    border: var(--border-hair);
-    border-radius: 20px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: #fff;
-    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.06);
     padding: var(--space-6);
   }
 
@@ -366,8 +368,8 @@
   }
 
   .study-start-empty-goal {
-    border: 1px dashed var(--color-line-control);
-    border-radius: 20px;
+    border: var(--border-card);
+    border-radius: 12px;
     padding: var(--space-5);
   }
 
@@ -397,8 +399,8 @@
     .study-start-columns .study-start-side-column {
       grid-column: 2;
       grid-row: 1;
-      border: var(--border-hair);
-      border-radius: 20px;
+      border: var(--border-card);
+      border-radius: 12px;
       background: rgba(255, 255, 255, 0.5);
       padding: var(--space-5);
     }
@@ -651,7 +653,7 @@
     border-radius: 999px;
     background: var(--color-ink-900);
     padding-inline: 12px;
-    color: var(--color-paper);
+    color: var(--color-paper-lp);
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.04em;
@@ -778,7 +780,7 @@
     justify-content: center;
     border-radius: 999px;
     background: var(--color-ink-900);
-    color: var(--color-paper);
+    color: var(--color-paper-lp);
     font-size: 18px;
     font-weight: 700;
   }
@@ -1064,7 +1066,7 @@
     min-height: 44px;
     align-items: center;
     color: var(--color-ink-900);
-    font-family: var(--font-serif);
+    font-family: var(--font-sans);
     font-size: 20px;
     font-weight: 600;
     letter-spacing: 0.08em;
@@ -1073,7 +1075,6 @@
 
   /*
    * ヘッダー（ログイン前後で共通の帯）。visual-design-spec-v3.md §3.11（2026-11-03 #355）。
-   * 書体はヘッダーの中だけ Noto Sans JP（--font-sans と h1, h2 の明朝体は画面の棚卸しで扱う）。
    */
   .header {
     position: sticky;
@@ -1328,8 +1329,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 1.5px solid var(--color-line-control);
-    border-radius: 14px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: #fff;
     cursor: pointer;
   }
@@ -1445,7 +1446,7 @@
     overflow: hidden;
     /* 選択中に太さが変わって内容がずれないよう、常に2px */
     border: 2px solid rgba(38, 36, 31, 0.16);
-    border-radius: 16px;
+    border-radius: 12px;
     background: #fff;
     color: var(--color-ink-900);
     cursor: pointer;
@@ -1524,7 +1525,7 @@
     display: block;
     min-height: 150px;
     border: 1.5px dashed rgba(38, 36, 31, 0.24);
-    border-radius: 16px;
+    border-radius: 12px;
   }
 
   .skill-card-slot.is-empty {
@@ -1571,10 +1572,6 @@
       gap: 8px;
     }
 
-    .skill-card {
-      border-radius: 12px;
-    }
-
     .skill-card-face {
       height: 64px;
     }
@@ -1595,7 +1592,6 @@
 
     .skill-card-slot {
       min-height: 116px;
-      border-radius: 12px;
     }
   }
 
@@ -2184,10 +2180,9 @@
   .goal-skill-settings-selected {
     margin-bottom: 28px;
     padding: 28px;
-    border: var(--border-hair);
-    border-radius: 24px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: #fff;
-    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.055);
   }
 
   .goal-skill-settings-selected-header {
@@ -2227,11 +2222,6 @@
   .goal-skill-settings-selected-tiles.dex-tiles {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
-  }
-
-  .goal-skill-settings-selected-tiles .dex-tile,
-  .goal-skill-settings-selected-tiles .dex-empty-tile {
-    border-radius: 20px;
   }
 
   .goal-skill-settings-selected-tiles .dex-tile-face {
@@ -2316,6 +2306,8 @@
 
   .goal-skill-settings-selected-tiles .dex-empty-tile {
     min-height: 164px;
+    border: var(--border-card);
+    border-radius: 12px;
   }
 
   .goal-skill-settings-selected-tiles .dex-empty-face {
@@ -2369,7 +2361,7 @@
   }
 
   .skill-dex-add {
-    transition: border-color 200ms, box-shadow 200ms;
+    transition: border-color 200ms;
   }
 
   .skill-dex-add:is(:hover, :focus-visible) {
@@ -2413,10 +2405,9 @@
     min-width: 0;
     flex-direction: column;
     overflow: hidden;
-    border: var(--border-hair);
-    border-radius: 24px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: #fff;
-    box-shadow: 0 12px 32px rgba(38, 36, 31, 0.08);
   }
 
   .goal-dex-hero-face,
@@ -2481,10 +2472,9 @@
     align-items: flex-start;
     gap: 12px;
     padding: 28px;
-    border: var(--border-hair);
-    border-radius: 24px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: rgba(255, 255, 255, 0.7);
-    box-shadow: 0 12px 32px rgba(38, 36, 31, 0.06);
   }
 
   .goal-dex-empty-title {
@@ -2555,21 +2545,30 @@
     display: block;
     min-width: 0;
     overflow: hidden;
-    border: 1px solid rgba(38, 36, 31, 0.1);
-    border-radius: 0;
     background: rgba(255, 255, 255, 0.64);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 6px 18px rgba(38, 36, 31, 0.055);
     color: inherit;
     text-decoration: none;
-    transition: border-color 200ms, box-shadow 200ms, transform 200ms;
     -webkit-backdrop-filter: blur(10px) saturate(1.15);
     backdrop-filter: blur(10px) saturate(1.15);
+  }
+
+  .goal-dex-tile {
+    border: var(--border-card);
+    border-radius: 12px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    transition: border-color 200ms, transform 200ms;
+  }
+
+  .dex-tile {
+    border: var(--border-card);
+    border-radius: 12px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    transition: border-color 200ms, transform 200ms;
   }
 
   .goal-dex-tile:hover,
   .dex-tile:hover {
     border-color: rgba(138, 98, 36, 0.35);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 10px 24px rgba(38, 36, 31, 0.1);
     color: inherit;
     transform: translateY(-2px);
   }
@@ -2579,7 +2578,7 @@
     z-index: 1;
     overflow: visible;
     border: 2px solid var(--color-green-600);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 0 0 4px rgba(45, 93, 75, 0.12), 0 10px 24px rgba(38, 36, 31, 0.1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 0 0 4px rgba(45, 93, 75, 0.12);
     transform: translateY(-3px);
   }
 
@@ -2665,6 +2664,7 @@
     flex-direction: column;
     overflow: hidden;
     border: 1.5px dashed rgba(38, 36, 31, 0.24);
+    border-radius: 12px;
     background: rgba(255, 255, 255, 0.18);
     color: var(--color-ink-500);
     text-decoration: none;
@@ -2706,6 +2706,7 @@
     flex-direction: column;
     overflow: hidden;
     border: 1.5px dashed rgba(38, 36, 31, 0.22);
+    border-radius: 12px;
     background: rgba(255, 255, 255, 0.08);
     box-shadow: none;
   }
@@ -2815,7 +2816,6 @@
       display: grid;
       grid-template-columns: 112px minmax(0, 1fr);
       grid-template-rows: minmax(128px, auto) auto;
-      border-radius: 20px;
     }
 
     .goal-dex-hero-face,
@@ -2909,10 +2909,9 @@
 
   .week-current {
     overflow: hidden;
-    border: 2px solid var(--color-green-600);
-    border-radius: 20px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: #fff;
-    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.06);
   }
 
   .week-current-band {
@@ -3038,8 +3037,8 @@
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    border: 1.5px dashed rgba(38, 36, 31, 0.26);
-    border-radius: 20px;
+    border: var(--border-card);
+    border-radius: 12px;
     padding: 22px 26px;
   }
 
@@ -3227,10 +3226,9 @@
     overflow: hidden;
     padding: 0;
     margin: 0;
-    border: var(--border-hair);
-    border-radius: 20px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: #fff;
-    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.06);
     list-style: none;
   }
 
@@ -3283,7 +3281,7 @@
   .week-submit {
     min-width: 280px;
     min-height: 60px;
-    border-radius: 14px;
+    border-radius: 12px;
     font-size: 18px;
   }
 
@@ -3404,8 +3402,8 @@
     min-height: 76px;
     align-items: center;
     justify-content: center;
-    border: 1.5px solid rgba(38, 36, 31, 0.18);
-    border-radius: 16px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: rgba(255, 255, 255, 0.82);
     padding: 14px 56px;
     text-align: center;
@@ -3418,7 +3416,7 @@
   .week-choice-input:checked + .week-choice {
     border: 2px solid var(--color-green-600);
     background: #fff;
-    box-shadow: 0 0 0 4px rgba(45, 93, 75, 0.12), 0 10px 24px rgba(45, 93, 75, 0.14);
+    box-shadow: 0 0 0 4px rgba(45, 93, 75, 0.12);
   }
 
   .week-choice .week-radio {
@@ -3572,10 +3570,15 @@
     gap: 14px;
   }
 
-  .week-stat,
+  .week-stat {
+    border: var(--border-card);
+    border-radius: 12px;
+    background: #fff;
+  }
+
   .week-bd {
-    border: 1.5px solid rgba(38, 36, 31, 0.16);
-    border-radius: 16px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: #fff;
   }
 

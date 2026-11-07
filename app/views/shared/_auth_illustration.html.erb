@@ -1,0 +1,22 @@
+<%# 登録・ログインのカードの小見出しに添える線画のイラスト。name: flask（新規アカウント作成）/ think（ログイン）。緑の差し色は1か所 %>
+<svg class="auth-illustration" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <% case name %>
+  <% when "flask" %>
+    <path d="M19 6h10M21 6v13L9 39a3 3 0 0 0 2.6 4.5h24.8A3 3 0 0 0 39 39L27 19V6" />
+    <g class="auth-illustration-accent">
+      <path d="M14.5 31h19" />
+      <circle cx="22" cy="36" r="1.4" />
+      <circle cx="28" cy="34" r="1" />
+    </g>
+  <% when "think" %>
+    <circle cx="19" cy="29" r="14" />
+    <path d="M14 26h.01M24 26h.01" stroke-width="3.2" />
+    <path d="M15 34.5c2.5 1.2 5.5 1.2 8 0" />
+    <path d="M13 21.5l3-1.6M25 21.5l-3-1.6" stroke-width="1.6" />
+    <g class="auth-illustration-accent">
+      <circle cx="38" cy="10" r="6" />
+      <circle cx="31.5" cy="17.5" r="1.9" />
+      <circle cx="29" cy="21" r="1" />
+    </g>
+  <% end %>
+</svg>

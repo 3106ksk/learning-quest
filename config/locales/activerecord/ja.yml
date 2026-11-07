@@ -4,12 +4,12 @@
         user: ユーザー
       attributes:
         user:
-          account_name: アカウント名
-          email: E-mailアドレス
+          account_name: 表示名
+          email: メールアドレス
           email_address: E-mailアドレス
           name: ユーザー名
           password: パスワード
-          password_confirmation: パスワード確認
+          password_confirmation: パスワード（確認）
         goal:
           name: 目標名
         study_record:

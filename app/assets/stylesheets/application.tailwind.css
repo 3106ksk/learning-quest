@@ -5,7 +5,7 @@
   --color-*: initial;
 
   /* Paper */
-  --color-paper: #faf9f5;
+  --color-paper: #f4faf3;
   --color-paper-lp: #faf9f5;
   --color-paper-line: rgba(38, 36, 31, 0.12);
   --color-paper-line-strong: rgba(38, 36, 31, 0.26);
@@ -86,6 +86,10 @@
     background: var(--color-paper);
     color: var(--color-ink-900);
     font-family: var(--font-sans);
+  }
+
+  html:has(.lp-hero) {
+    --color-paper: var(--color-paper-lp);
   }
 
   body {

@@ -140,10 +140,9 @@
   }
 
   .goal-card {
-    border: var(--border-hair);
-    border-radius: 20px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: #fff;
-    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.06);
     padding: var(--space-6);
   }
 
@@ -152,8 +151,8 @@
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-4);
-    border: 1px dashed var(--color-line-control);
-    border-radius: 20px;
+    border: var(--border-card);
+    border-radius: 12px;
     padding: var(--space-5);
   }
 
@@ -173,20 +172,18 @@
     align-items: center;
     gap: var(--space-4);
     min-height: 96px;
-    border: var(--border-hair);
-    border-radius: 20px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: #fff;
-    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.06);
     padding: var(--space-5);
     color: var(--color-ink-900);
     text-decoration: none;
-    transition: border-color 160ms ease, box-shadow 160ms ease, color 160ms ease;
+    transition: border-color 160ms ease, color 160ms ease;
   }
 
   a.goal-hub-link-card:hover {
     border-color: var(--color-green-600);
     color: var(--color-green-700);
-    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.09);
     text-decoration: none;
   }
 
@@ -238,10 +235,9 @@
 
   .goal-new-card {
     overflow: hidden;
-    border: var(--border-hair);
-    border-radius: 20px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: #fff;
-    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.06);
   }
 
   .goal-new-error {
@@ -2375,7 +2371,7 @@
   }
 
   .skill-dex-add {
-    transition: border-color 200ms, box-shadow 200ms;
+    transition: border-color 200ms;
   }
 
   .skill-dex-add:is(:hover, :focus-visible) {
@@ -2419,10 +2415,9 @@
     min-width: 0;
     flex-direction: column;
     overflow: hidden;
-    border: var(--border-hair);
-    border-radius: 24px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: #fff;
-    box-shadow: 0 12px 32px rgba(38, 36, 31, 0.08);
   }
 
   .goal-dex-hero-face,
@@ -2487,10 +2482,9 @@
     align-items: flex-start;
     gap: 12px;
     padding: 28px;
-    border: var(--border-hair);
-    border-radius: 24px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: rgba(255, 255, 255, 0.7);
-    box-shadow: 0 12px 32px rgba(38, 36, 31, 0.06);
   }
 
   .goal-dex-empty-title {
@@ -2821,7 +2815,6 @@
       display: grid;
       grid-template-columns: 112px minmax(0, 1fr);
       grid-template-rows: minmax(128px, auto) auto;
-      border-radius: 20px;
     }
 
     .goal-dex-hero-face,

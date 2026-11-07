@@ -2180,10 +2180,9 @@
   .goal-skill-settings-selected {
     margin-bottom: 28px;
     padding: 28px;
-    border: var(--border-hair);
-    border-radius: 24px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: #fff;
-    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.055);
   }
 
   .goal-skill-settings-selected-header {
@@ -2223,11 +2222,6 @@
   .goal-skill-settings-selected-tiles.dex-tiles {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
-  }
-
-  .goal-skill-settings-selected-tiles .dex-tile,
-  .goal-skill-settings-selected-tiles .dex-empty-tile {
-    border-radius: 20px;
   }
 
   .goal-skill-settings-selected-tiles .dex-tile-face {
@@ -2312,6 +2306,8 @@
 
   .goal-skill-settings-selected-tiles .dex-empty-tile {
     min-height: 164px;
+    border: var(--border-card);
+    border-radius: 12px;
   }
 
   .goal-skill-settings-selected-tiles .dex-empty-face {
@@ -2549,23 +2545,36 @@
     display: block;
     min-width: 0;
     overflow: hidden;
-    border: 1px solid rgba(38, 36, 31, 0.1);
-    border-radius: 0;
     background: rgba(255, 255, 255, 0.64);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 6px 18px rgba(38, 36, 31, 0.055);
     color: inherit;
     text-decoration: none;
-    transition: border-color 200ms, box-shadow 200ms, transform 200ms;
     -webkit-backdrop-filter: blur(10px) saturate(1.15);
     backdrop-filter: blur(10px) saturate(1.15);
+  }
+
+  .goal-dex-tile {
+    border: 1px solid rgba(38, 36, 31, 0.1);
+    border-radius: 0;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 6px 18px rgba(38, 36, 31, 0.055);
+    transition: border-color 200ms, box-shadow 200ms, transform 200ms;
+  }
+
+  .dex-tile {
+    border: var(--border-card);
+    border-radius: 12px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    transition: border-color 200ms, transform 200ms;
   }
 
   .goal-dex-tile:hover,
   .dex-tile:hover {
     border-color: rgba(138, 98, 36, 0.35);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 10px 24px rgba(38, 36, 31, 0.1);
     color: inherit;
     transform: translateY(-2px);
+  }
+
+  .goal-dex-tile:hover {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 10px 24px rgba(38, 36, 31, 0.1);
   }
 
   .goal-dex-tile.is-selected {

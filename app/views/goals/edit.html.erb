@@ -2,19 +2,13 @@
 
 <div class="page-wide">
   <%= turbo_frame_tag @goal do %>
-    <section class="goal-card" aria-labelledby="goal-edit-title">
-      <%= form_with model: @goal, style: "margin-top: var(--space-5)" do |form| %>
-        <div class="goal-card-controls">
-          <% if @goal.errors[:name].any? %>
-            <p class="group-error">
-              <%= @goal.errors.full_messages_for(:name).join(", ") %>
-            </p>
-          <% end %>
-          <%= form.text_field :name,
-                maxlength: 100,
-                class: "field-control" %>
-          <%= form.submit t(".submit"), class: "btn btn-primary" %>
+    <section class="goal-form-card goal-form-card--edit" aria-label="<%= t(".title") %>">
+      <%= form_with model: @goal, class: "goal-form" do |form| %>
+        <%= render "name_field", form: form, goal: @goal, show_error: true %>
+
+        <div class="goal-form-actions is-split">
           <%= link_to t(".cancel"), goal_path(@goal), class: "btn btn-ghost" %>
+          <%= form.submit t(".submit"), class: "btn btn-primary" %>
         </div>
       <% end %>
     </section>

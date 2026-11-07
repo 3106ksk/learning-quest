@@ -361,7 +361,6 @@ ja:
       reflections_description: 1週間ごとに、使った学習スキルを振り返る
     edit:
       title: 目標を編集する
-      name: 目標名
       submit: 更新する
       cancel: キャンセル
       danger: 完了した目標は編集できません
@@ -373,13 +372,16 @@ ja:
       success: 目標を削除しました
     create:
       success: 目標を設定しました
-    new:
-      title: 目標を設定
-      name: 目標名
-      name_placeholder: 例：TOEIC 800点を目指す
-      name_errors:
+    name_field:
+      label: 目標名
+      aux: 必須・100文字まで
+      placeholder: 例：TOEIC 800点を目指す
+      errors:
         blank: 目標名を入力してください。
         too_long: 目標名は100文字以内で入力してください。
+    new:
+      status: 新しい目標
+      title: 目標を設定
       submit: 目標を設定する
       active_goal_error: 進行中の目標があるため、新しい目標は設定できません。
       view_active_goal: 進行中の目標を見る →

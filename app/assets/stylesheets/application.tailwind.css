@@ -6,6 +6,7 @@
 
   /* Paper */
   --color-paper: #faf9f5;
+  --color-paper-lp: #faf9f5;
   --color-paper-line: rgba(38, 36, 31, 0.12);
   --color-paper-line-strong: rgba(38, 36, 31, 0.26);
   --color-line-control: rgba(38, 36, 31, 0.52);
@@ -66,6 +67,7 @@
   --page-pad-mobile: 20px;
 
   --border-hair: 1px solid var(--color-paper-line);
+  --border-card: 1px solid #d3cec6;
   --border-box: 1px solid var(--color-paper-line-strong);
   --border-control: 1px solid var(--color-line-control);
   --focus-ring: 3px solid var(--color-green-600);
@@ -651,7 +653,7 @@
     border-radius: 999px;
     background: var(--color-ink-900);
     padding-inline: 12px;
-    color: var(--color-paper);
+    color: var(--color-paper-lp);
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.04em;
@@ -778,7 +780,7 @@
     justify-content: center;
     border-radius: 999px;
     background: var(--color-ink-900);
-    color: var(--color-paper);
+    color: var(--color-paper-lp);
     font-size: 18px;
     font-weight: 700;
   }

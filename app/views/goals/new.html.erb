@@ -9,37 +9,16 @@
     </div>
   <% end %>
 
-  <% name_has_error = @goal.errors[:name].any? && !active_goal_error %>
-  <% name_error_type = @goal.errors.details[:name].find { |error| [ :blank, :too_long ].include?(error[:error]) }&.fetch(:error, nil) %>
+  <section class="goal-form-card" aria-labelledby="goal-new-title">
+    <p class="goal-form-status"><%= t(".status") %></p>
+    <h1 id="goal-new-title" class="goal-form-title"><%= t(".title") %></h1>
 
-  <section class="goal-new-card" aria-labelledby="goal-new-title">
-    <div class="goal-new-face face-active" aria-hidden="true">
-      <svg class="goal-card-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M5 21 10.5 3" />
-        <path d="M10.5 4c3.3.3 5.5 3 8.5 3.5l-2.7 8.3c-3-.3-5.2-3-8.5-3.5z" />
-      </svg>
-    </div>
+    <%= form_with model: @goal, class: "goal-form" do |form| %>
+      <%= render "name_field", form: form, goal: @goal, show_error: !active_goal_error %>
 
-    <div class="goal-new-body">
-      <h1 id="goal-new-title"><%= t(".title") %></h1>
-
-      <%= form_with model: @goal, class: "goal-new-form" do |form| %>
-        <div>
-          <%= form.label :name, t(".name"), class: "field-label" %>
-          <%= form.text_field :name,
-                maxlength: 100,
-                placeholder: t(".name_placeholder"),
-                class: "field-control#{' has-error' if name_has_error}",
-                aria: { invalid: ("true" if name_has_error), describedby: ("goal-name-error" if name_has_error) } %>
-          <% if name_has_error %>
-            <p id="goal-name-error" class="group-error"><%= t(".name_errors.#{name_error_type}") %></p>
-          <% end %>
-        </div>
-
-        <div class="goal-new-actions">
-          <%= form.submit t(".submit"), class: "btn btn-primary" %>
-        </div>
-      <% end %>
-    </div>
+      <div class="goal-form-actions">
+        <%= form.submit t(".submit"), class: "btn btn-primary" %>
+      </div>
+    <% end %>
   </section>
 </div>

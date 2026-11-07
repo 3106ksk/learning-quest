@@ -420,14 +420,16 @@ ja:
   users:
     registrations:
       new:
+        eyebrow: 試して、残す
         title: 新規アカウント作成
         submit: 登録する
         consent_html: 登録すると、%{terms}と%{privacy}に同意したものとみなします
-        password_hint: "%{count}文字以上で入力してください"
+        password_aux: "%{count}文字以上"
         to_login_notice: アカウントをお持ちの方は
         to_login: ログイン
     sessions:
       new:
+        eyebrow: 試して、残す
         title: ログイン
         submit: ログイン
         to_registration_notice: アカウントをお持ちでない方は

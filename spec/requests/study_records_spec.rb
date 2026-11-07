@@ -165,7 +165,7 @@ RSpec.describe "StudyRecords", type: :request do
       end
 
       context "保存に失敗して422で再表示する場合" do
-        it "今回やることが空でも選んだ学習スキルのラジオを選択状態で表示する" do
+        it "学習内容が空でも選んだ学習スキルのラジオを選択状態で表示する" do
           skill = create(:learning_skill, user: user)
           create(:goal_skill_setting, goal: goal, learning_skill: skill)
 

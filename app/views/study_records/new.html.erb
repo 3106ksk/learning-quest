@@ -1,13 +1,6 @@
 <% content_for :title, t(".title") %>
 <%= turbo_frame_tag "study-form" do %>
   <div class="page-wide">
-    <% if @study_record.errors[:goal_id].any? %>
-      <div class="error-banner study-start-error" role="alert">
-        <p><%= t(".goal_required") %></p>
-        <%= link_to t(".set_goal_link"), new_goal_path, data: { turbo_frame: "_top" } %>
-      </div>
-    <% end %>
-
     <% if @study_record.errors.of_kind?(:learning_skill_id, :not_in_goal_settings) && @current_goal %>
       <div class="error-banner study-start-error" role="alert">
         <p><%= t(".skill_not_found") %></p>
@@ -15,112 +8,135 @@
       </div>
     <% end %>
 
-    <div class="study-start-columns">
-      <aside class="study-start-side-column" aria-label="<%= @current_goal ? t('.current_goal') : t('.goal') %>">
-        <% if @current_goal %>
-          <section class="goal-card study-start-goal-card">
-            <div class="grid-card-face face-active">
-              <svg class="goal-card-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M5 21 10.5 3" />
-                <path d="M10.5 4c3.3.3 5.5 3 8.5 3.5l-2.7 8.3c-3-.3-5.2-3-8.5-3.5z" />
-              </svg>
-              <span class="card-badge badge-active"><%= t("enums.goal.status.active") %></span>
-            </div>
-            <p class="goal-card-title"><%= @current_goal.name %></p>
-          </section>
-          <%= link_to t(".view_goal"), goal_path(@current_goal), class: "study-start-goal-link", data: { turbo_frame: "_top" } %>
-        <% else %>
-          <section class="study-start-empty-goal">
-            <p class="study-start-empty-title"><%= t(".goal_unset") %></p>
-            <p class="study-start-empty-description"><%= t(".goal_required_description") %></p>
-            <%= link_to t(".set_goal"), new_goal_path, class: "btn btn-secondary", data: { turbo_frame: "_top" } %>
-          </section>
-        <% end %>
-      </aside>
-
-      <div class="study-start-form">
-      <%= form_with model: @study_record, url: study_records_path,  data: { turbo_frame: "_top"}, class: "form-stack" do |form| %>
-        <% if @study_record.errors[:user_id].any? %>
-          <p class="group-error" role="alert">
-            すでに学習中の記録があります
+    <div class="study-start">
+      <% if @current_goal %>
+        <section class="study-goal-bar" aria-label="<%= t(".current_goal") %>">
+          <div class="study-goal-bar-body">
+            <p class="study-goal-bar-status"><%= t("enums.goal.status.active") %></p>
+            <p class="study-goal-bar-name"><%= @current_goal.name %></p>
+          </div>
+          <p class="study-goal-bar-since">
+            <time class="num" datetime="<%= @current_goal.created_at.to_date.iso8601 %>"><%= l(@current_goal.created_at.to_date, format: :record) %></time>
+            <%= t(".goal_since") %>
           </p>
-        <% end %>
-
-        <fieldset>
-          <legend class="field-label">時間を選ぶ</legend>
-          <% if @study_record.errors[:planned_minutes].any? %>
-            <p class="group-error">
-              <%= @study_record.errors.full_messages_for(:planned_minutes).first %>
-            </p>
-          <% end %>
-
-          <div class="segments">
-            <% StudyRecord::ALLOWED_PLANNED_MINUTES.each do |minutes| %>
-              <%= form.radio_button :planned_minutes, minutes, class: "segment-input" %>
-              <%= form.label :planned_minutes, value: minutes, class: "segment-label" do %>
-                <span class="num"><%= minutes %></span><span class="segment-unit">分</span>
-              <% end %>
-            <% end %>
+        </section>
+      <% else %>
+        <section class="study-goal-bar is-unset" aria-label="<%= t(".goal") %>">
+          <div class="study-goal-bar-body">
+            <p class="study-goal-bar-status"><%= t(".goal_unset_status") %></p>
+            <p class="study-goal-bar-name"><%= t(".goal_unset") %></p>
+            <p class="study-goal-bar-description"><%= t(".goal_required_description") %></p>
           </div>
-        </fieldset>
-
-        <div>
-          <%= form.label :activity, class: "field-label" %>
-          <%= form.text_field :activity,
-                maxlength: 100,
-                placeholder: "例: 英単語を10個復習",
-                class: "field-control#{' has-error' if @study_record.errors[:activity].any?}" %>
-          <% if @study_record.errors[:activity].any? %>
-            <p class="group-error">
-              <%= @study_record.errors.full_messages_for(:activity).first %>
-            </p>
-          <% end %>
-        </div>
-
-        <% skill_settings = @skill_settings.to_a %>
-        <fieldset class="skill-select">
-          <legend class="skill-select-legend">
-            <span class="skill-select-eyebrow" aria-hidden="true"><%= t(".skill_eyebrow") %></span>
-            <span class="field-label"><%= t(".skill_label") %></span>
-            <span class="skill-select-optional"><%= t(".skill_optional") %></span>
-          </legend>
-
-          <div class="skill-cards">
-            <% skill_settings.each do |setting| %>
-              <%= form.radio_button :learning_skill_id, setting.learning_skill_id, class: "skill-card-input" %>
-              <%= form.label :learning_skill_id, value: setting.learning_skill_id, class: "skill-card" do %>
-                <span class="skill-card-face"><%= render "shared/bulb_icon", css_class: "skill-card-bulb" %></span>
-                <span class="skill-card-mark"><%= t(".skill_equipped") %></span>
-                <span class="skill-card-name"><%= setting.learning_skill.name %></span>
-                <span class="skill-card-band" aria-hidden="true"></span>
-              <% end %>
-            <% end %>
-
-            <% [GoalSkillSetting::MAX_PER_GOAL - skill_settings.size, 0].max.times do %>
-              <span class="skill-card-slot" aria-hidden="true"></span>
-            <% end %>
-          </div>
-
-          <% if skill_settings.any? %>
-            <div class="skill-select-none">
-              <%= form.radio_button :learning_skill_id, "", class: "skill-none-input" %>
-              <%= form.label :learning_skill_id, t(".skill_none"), value: "", class: "skill-none-label" %>
-            </div>
-          <% end %>
-
-          <% if @current_goal && skill_settings.empty? %>
-            <%= link_to t(".skill_settings_link"), goal_skill_settings_path(@current_goal),
-                  class: "skill-select-link", data: { turbo_frame: "_top" } %>
-          <% end %>
-        </fieldset>
-
-        <div class="study-start-actions">
-          <%= form.submit t(".submit"),
-                data: { turbo_submits_with: t(".submitting") },
-                class: "btn btn-primary disabled:cursor-not-allowed disabled:opacity-60" %>
-        </div>
+          <%= link_to t(".set_goal"), new_goal_path, class: "btn btn-secondary study-goal-bar-action", data: { turbo_frame: "_top" } %>
+        </section>
       <% end %>
-      </div>
+
+      <%= form_with model: @study_record, url: study_records_path, data: { turbo_frame: "_top" }, class: "study-start-form" do |form| %>
+        <%# 目標が無いときは、入力と［開始する］をまとめて無効にする（目標の設定へ進む導線だけを残す） %>
+        <%= tag.fieldset class: "study-start-fieldset", disabled: @current_goal.nil? do %>
+          <% if @study_record.errors[:user_id].any? %>
+            <p class="group-error" role="alert">
+              すでに学習中の記録があります
+            </p>
+          <% end %>
+
+          <div class="study-start-panels">
+            <fieldset class="study-panel">
+              <legend class="study-panel-head">
+                <span class="study-panel-label">
+                  <span class="study-panel-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="13.5" r="6.5"/><path d="M12 13.5V9.5M12 7V4M9.5 4h5"/></svg>
+                  </span>
+                  <%= t(".minutes_label") %>
+                </span>
+                <span class="study-panel-aux"><%= t(".minutes_aux", count: StudyRecord::ALLOWED_PLANNED_MINUTES.size) %></span>
+              </legend>
+              <% if @study_record.errors[:planned_minutes].any? %>
+                <p class="group-error study-panel-error">
+                  <%= @study_record.errors.full_messages_for(:planned_minutes).first %>
+                </p>
+              <% end %>
+
+              <div class="study-minutes">
+                <% StudyRecord::ALLOWED_PLANNED_MINUTES.each do |minutes| %>
+                  <%= form.radio_button :planned_minutes, minutes, class: "study-minute-input" %>
+                  <%= form.label :planned_minutes, value: minutes, class: "study-minute" do %>
+                    <span class="num"><%= minutes %></span><span class="study-minute-unit">分</span>
+                  <% end %>
+                <% end %>
+              </div>
+            </fieldset>
+
+            <div class="study-panel">
+              <div class="study-panel-head">
+                <%= form.label :activity, class: "study-panel-label" do %>
+                  <span class="study-panel-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M4 20l1-4L16.5 4.5a2 2 0 0 1 3 3L8 19z"/><path d="M14.5 6.5l3 3"/></svg>
+                  </span>
+                  <%= StudyRecord.human_attribute_name(:activity) %>
+                <% end %>
+                <span class="study-panel-aux"><%= t(".activity_aux") %></span>
+              </div>
+              <%= form.text_field :activity,
+                    maxlength: 100,
+                    placeholder: "例: 英単語を10個復習",
+                    class: "field-control study-activity-input#{' has-error' if @study_record.errors[:activity].any?}" %>
+              <% if @study_record.errors[:activity].any? %>
+                <p class="group-error">
+                  <%= @study_record.errors.full_messages_for(:activity).first %>
+                </p>
+              <% end %>
+            </div>
+
+            <% skill_settings = @skill_settings.to_a %>
+            <fieldset class="study-panel">
+              <legend class="study-panel-head">
+                <span class="study-panel-label">
+                  <span class="study-panel-icon" aria-hidden="true">
+                    <%= render "shared/bulb_icon", css_class: "study-panel-bulb" %>
+                  </span>
+                  <%= t(".skill_label") %>
+                </span>
+                <span class="study-panel-aux"><%= t(".skill_aux") %></span>
+              </legend>
+
+              <div class="study-skill-rows">
+                <% skill_settings.each do |setting| %>
+                  <%= form.radio_button :learning_skill_id, setting.learning_skill_id, class: "study-skill-input" %>
+                  <%= form.label :learning_skill_id, value: setting.learning_skill_id, class: "study-skill-row" do %>
+                    <span class="study-skill-icon"><%= render "shared/bulb_icon", css_class: "study-skill-bulb" %></span>
+                    <span class="study-skill-name"><%= setting.learning_skill.name %></span>
+                    <span class="study-skill-radio" aria-hidden="true"></span>
+                  <% end %>
+                <% end %>
+
+                <% [GoalSkillSetting::MAX_PER_GOAL - skill_settings.size, 0].max.times do %>
+                  <span class="study-skill-slot" aria-hidden="true"></span>
+                <% end %>
+
+                <% if skill_settings.any? %>
+                  <%= form.radio_button :learning_skill_id, "", class: "study-skill-input" %>
+                  <%= form.label :learning_skill_id, value: "", class: "study-skill-row is-none" do %>
+                    <span class="study-skill-name"><%= t(".skill_none") %></span>
+                    <span class="study-skill-radio" aria-hidden="true"></span>
+                  <% end %>
+                <% end %>
+              </div>
+
+              <% if @current_goal && skill_settings.empty? %>
+                <%= link_to t(".skill_settings_link"), goal_skill_settings_path(@current_goal),
+                      class: "study-skill-link", data: { turbo_frame: "_top" } %>
+              <% end %>
+            </fieldset>
+          </div>
+
+          <div class="study-start-actions">
+            <%= form.submit t(".submit"),
+                  data: { turbo_submits_with: t(".submitting") },
+                  class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      <% end %>
     </div>
   </div>
 <% end %>

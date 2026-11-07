@@ -458,19 +458,19 @@ ja:
     new:
       current_goal: 現在の目標
       goal: 目標
+      goal_since: から
+      goal_unset_status: 未設定
       goal_unset: 目標未設定
       goal_required_description: 学習を始めるには、目標の設定が必要です。
-      goal_required: まずは目標を設定してください。
       set_goal: 目標を設定する
-      set_goal_link: 目標を設定する →
-      view_goal: 目標を見る →
       title: 学習を始める
       submit: 開始する
       submitting: 開始しています…
-      skill_eyebrow: EQUIP
-      skill_label: 今回装備する学習スキル
-      skill_optional: 任意
-      skill_equipped: 装備中
+      minutes_label: 時間
+      minutes_aux: "%{count}つから1つ"
+      activity_aux: 必須・100文字まで
+      skill_label: 今回使う学習スキル
+      skill_aux: 任意・1つ
       skill_none: スキルを使用しない
       skill_settings_link: この目標で使う学習スキルを選べます
       skill_not_found: 選んだ学習スキルが見つかりません。もう一度選び直してください。

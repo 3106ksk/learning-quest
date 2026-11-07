@@ -2911,10 +2911,9 @@
 
   .week-current {
     overflow: hidden;
-    border: 2px solid var(--color-green-600);
-    border-radius: 20px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: #fff;
-    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.06);
   }
 
   .week-current-band {
@@ -3040,8 +3039,8 @@
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    border: 1.5px dashed rgba(38, 36, 31, 0.26);
-    border-radius: 20px;
+    border: var(--border-card);
+    border-radius: 12px;
     padding: 22px 26px;
   }
 
@@ -3229,10 +3228,9 @@
     overflow: hidden;
     padding: 0;
     margin: 0;
-    border: var(--border-hair);
-    border-radius: 20px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: #fff;
-    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.06);
     list-style: none;
   }
 
@@ -3285,7 +3283,7 @@
   .week-submit {
     min-width: 280px;
     min-height: 60px;
-    border-radius: 14px;
+    border-radius: 12px;
     font-size: 18px;
   }
 
@@ -3406,8 +3404,8 @@
     min-height: 76px;
     align-items: center;
     justify-content: center;
-    border: 1.5px solid rgba(38, 36, 31, 0.18);
-    border-radius: 16px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: rgba(255, 255, 255, 0.82);
     padding: 14px 56px;
     text-align: center;
@@ -3420,7 +3418,7 @@
   .week-choice-input:checked + .week-choice {
     border: 2px solid var(--color-green-600);
     background: #fff;
-    box-shadow: 0 0 0 4px rgba(45, 93, 75, 0.12), 0 10px 24px rgba(45, 93, 75, 0.14);
+    box-shadow: 0 0 0 4px rgba(45, 93, 75, 0.12);
   }
 
   .week-choice .week-radio {
@@ -3574,10 +3572,15 @@
     gap: 14px;
   }
 
-  .week-stat,
-  .week-bd {
+  .week-stat {
     border: 1.5px solid rgba(38, 36, 31, 0.16);
     border-radius: 16px;
+    background: #fff;
+  }
+
+  .week-bd {
+    border: var(--border-card);
+    border-radius: 12px;
     background: #fff;
   }
 

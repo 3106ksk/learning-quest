@@ -1891,152 +1891,346 @@
     }
   }
 
-  /*
-   * 評価送信ボタンの中央寄せ（STUDY-03）。screen-specifications.md §8.1の
-   * ワイヤーフレームが中央配置で描かれているため、それに合わせる。
-   * .button-row自体は左寄せが既定（プロトタイプ全画面で共通）なので、
-   * timer.htmlの `class="button-row timer-actions"` と同じモディファイア方式で
-   * この画面だけに限定する。
-   */
-  .evaluation-actions {
-    justify-content: center;
-  }
-
-  /*
-   * 着手セクション（STUDY-03）。見出し「着手」と説明文を縦の中心線で揃え、
-   * 送信ボタンの中央配置と紙面の軸を合わせる。
-   * 下罫線は visual-screen-wireframes.md §8 が着手と集中/チャレンジの間に
-   * 引いている区切り線。カードではなく罫線で面を分ける原則
-   * （visual-design-spec.md）に従い --border-hair を使う。
-   */
-  .evaluation-start {
-    border-bottom: var(--border-hair);
-    padding-bottom: var(--space-6);
-    text-align: center;
-  }
-
-  /*
-   * ふみ（文鳥・線画）。prototype/components.css .fumi/.fumi-eye/.fumi-s の
-   * 移植（visual-design-spec.md §3.10）。塗りなし・stroke 1.5px・線端butt・
-   * 単色currentColor。.fumi-l/.fumi-linkはMANUAL系専用のためSTUDY-03では
-   * 移植しない。
-   */
-  .fumi {
-    display: inline-block;
-    vertical-align: -5px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.5;
-    stroke-linecap: butt;
-    color: var(--color-ink-900);
-  }
-
-  .fumi .fumi-eye {
-    fill: currentColor;
-    stroke: none;
-  }
-
-  .fumi-s {
-    width: 22px;
-    height: 22px;
-  }
-
-  /*
-   * ふみの問い（STUDY-03）。prototype/reflect.html（MANUAL-03検証の問い手）の
-   * 前例に倣い、線画を本文の先頭・同じ行内に置く。§3.10の右下配置は
-   * メモ署名（手紙の結び）用途のルールで、「問いかけ」の場面はこちらの
-   * 前例が別に成立している。
-   */
-  .evaluation-prompt .fumi {
-    margin-right: var(--space-2);
-  }
-
-  .choice-list {
-    border-top: var(--border-hair);
-  }
-
+  /* 週の振り返りの選択肢が使う（ラジオを隠してラベルで選ぶ） */
   .choice-input {
     position: absolute;
     opacity: 0;
   }
 
-  .choice-row {
-    position: relative;
+  /*
+   * 評価の入力（STUDY-03）。#368 デザイン v4 の画面ごとの例外として PostHog 型
+   * （角丸6px・小さな見出し＋四角いアイコン・選択肢は灰色の帯の中で白く持ち上がる）。
+   * 学習開始（#367）の時間の帯と同じ選び方にそろえる。
+   */
+  .evaluation {
     display: grid;
-    grid-template-columns: 20px 1fr;
+    gap: var(--space-4);
+    /* 中身の幅を760pxにする（左右の余白は外側に足す） */
+    width: min(100%, calc(760px + var(--page-pad-mobile) * 2));
+    margin: 0 auto;
+    padding: 56px var(--page-pad-mobile) 72px;
+  }
+
+  /* 完了カード：左＝終えた事実と実時間（この画面の見せ場）／右＝学習内容・予定時間・学習スキル */
+  .evaluation-done {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    border: 1px solid #c8cbc0;
+    border-radius: 6px;
+    background: #fff;
+  }
+
+  .evaluation-done-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 22px 26px 24px;
+  }
+
+  .evaluation-done-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    color: var(--color-green-600);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+  }
+
+  .evaluation-done-check {
+    display: inline-flex;
+    width: 26px;
+    height: 26px;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background: var(--color-green-600);
+    color: #fff;
+  }
+
+  .evaluation-done-check svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .evaluation-done-minutes {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin: 16px 0 0;
+  }
+
+  .evaluation-done-minutes .num {
+    color: #23251d;
+    font-size: 60px;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .evaluation-done-unit {
+    color: var(--color-kincha-600);
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .evaluation-done-facts {
+    margin: 0;
+    border-left: 1px solid #dcdfd2;
+    padding: 6px 26px;
+  }
+
+  .evaluation-done-row {
+    display: flex;
+    min-height: 54px;
+    align-items: center;
+    gap: var(--space-4);
+    border-top: 1px solid #dcdfd2;
+    padding: 10px 0;
+  }
+
+  .evaluation-done-row:first-child {
+    border-top: 0;
+  }
+
+  .evaluation-done-key {
+    display: inline-flex;
+    flex: 0 0 92px;
+    align-items: center;
+    gap: 8px;
+    color: #6c6e63;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+
+  .evaluation-done-icon {
+    display: inline-flex;
+    width: 22px;
+    height: 22px;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #c8cbc0;
+    border-radius: 5px;
+    background: #eef0ea;
+    color: #4d4f46;
+  }
+
+  .evaluation-done-icon svg {
+    width: 13px;
+    height: 13px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .evaluation-done-value {
+    min-width: 0;
+    margin: 0;
+    color: #23251d;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  /* 質問 */
+  .evaluation-question {
+    margin-top: var(--space-3);
+    text-align: center;
+  }
+
+  .evaluation-question-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 900;
+    line-height: 1.5;
+  }
+
+  .evaluation-question-help {
+    margin: 4px 0 0;
+    color: var(--color-ink-600);
+    font-size: 13px;
+  }
+
+  .evaluation-form {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  /* 集中・チャレンジの面（見出しは学習開始の面と同じ形） */
+  .evaluation-panel {
+    min-width: 0;
+    margin: 0;
+    border: 1px solid #c8cbc0;
+    border-radius: 6px;
+    background: #fff;
+    padding: 20px var(--space-5) var(--space-5);
+  }
+
+  .evaluation-panel-head {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
     gap: var(--space-3);
-    border-bottom: var(--border-hair);
-    padding: var(--space-4);
+    float: left;
+    margin: 0 0 var(--space-4);
+    border-bottom: 1px solid #dcdfd2;
+    padding: 0 0 10px;
+  }
+
+  .evaluation-panel-head + * {
+    clear: both;
+  }
+
+  .evaluation-panel-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #4d4f46;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+  }
+
+  .evaluation-panel-icon {
+    display: inline-flex;
+    width: 26px;
+    height: 26px;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #c8cbc0;
+    border-radius: 6px;
+    background: #eef0ea;
+    color: var(--color-ink-900);
+  }
+
+  .evaluation-panel-icon svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .evaluation-panel-aux {
+    color: #6c6e63;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .evaluation-panel-error {
+    margin: 0 0 var(--space-3);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  /* 選択肢：灰色の帯の中で、選んだものだけ白く持ち上がる（枠2px深緑＋右上に✓） */
+  .evaluation-choices {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    border-radius: 6px;
+    background: #eef0ea;
+    padding: 6px;
+  }
+
+  .evaluation-choices.has-error {
+    box-shadow: inset 0 0 0 2px var(--color-error-600);
+  }
+
+  .evaluation-choice-input {
+    position: absolute;
+    opacity: 0;
+  }
+
+  .evaluation-choice {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    padding: 14px 14px 16px;
     cursor: pointer;
   }
 
-  .choice-input:focus-visible + .choice-row {
+  .evaluation-choice-label {
+    padding-right: 16px;
+    color: #4d4f46;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+
+  .evaluation-choice-description {
+    color: #6c6e63;
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .evaluation-choice-input:checked + .evaluation-choice {
+    border-color: var(--color-green-600);
+    background: #fff;
+  }
+
+  .evaluation-choice-input:checked + .evaluation-choice .evaluation-choice-label {
+    color: var(--color-green-600);
+  }
+
+  .evaluation-choice-input:checked + .evaluation-choice::after {
+    position: absolute;
+    top: 9px;
+    right: 11px;
+    content: "✓";
+    color: var(--color-green-600);
+    font-size: 13px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .evaluation-choice-input:focus-visible + .evaluation-choice {
     outline: var(--focus-ring);
     outline-offset: 2px;
   }
 
-  .choice-input:checked + .choice-row {
-    border-left: 2px solid var(--color-green-600);
-    background: var(--color-green-tint);
+  /* ［記録する］は中央 */
+  .evaluation-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-2);
   }
 
-  .choice-mark {
-    width: 16px;
-    height: 16px;
-    border: var(--border-control);
-    border-radius: 50%;
-    margin-top: 5px;
-  }
-
-  .choice-input:checked + .choice-row .choice-mark {
-    border: 4px solid var(--color-green-600);
-  }
-
-  .choice-list.has-error {
-    border-top-color: var(--color-error-600);
-  }
-
-  .choice-list.has-error .choice-row {
-    border-bottom-color: var(--color-error-600);
-  }
-
-  /*
-   * margin-topはプロトタイプの--space-6から--space-7へ広げている。
-   * 着手セクションに下罫線を足した分（プロトタイプには無い）、
-   * 罫線と集中/チャレンジの間に余白が要るため。
-   */
-  .eval-columns {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-6);
-    margin-top: var(--space-7);
-  }
-
-  .eval-columns fieldset {
-    border: 0;
-    padding: 0;
-    margin: 0;
-  }
-
-  /*
-   * 集中/チャレンジの見出しを着手（.evaluation-start）と同じ中央寄せに揃える。
-   * legendだけを対象にし、fieldset自体には掛けない——choice-list（選択肢の
-   * ラベル・補足文）まで中央寄せが継承されると、左寄せの罫線リスト行という
-   * 意匠が崩れるため。
-   */
-  .eval-columns legend {
-    width: 100%;
-    margin-bottom: var(--space-4);
-    text-align: center;
+  .evaluation-actions .btn {
+    min-height: 50px;
+    border-radius: 6px;
+    padding: 0 48px;
   }
 
   @media (max-width: 767px) {
-    .eval-columns {
+    .evaluation-done,
+    .evaluation-choices {
       grid-template-columns: 1fr;
-      gap: var(--space-7);
+    }
+
+    .evaluation-done-facts {
+      border-top: 1px solid #dcdfd2;
+      border-left: 0;
     }
   }
-  
 
   .stamp {
     display: inline-block;

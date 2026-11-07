@@ -1,3 +1,7 @@
-<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="256" cy="256" r="256" fill="red"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#FAF9F5"/>
+  <g transform="translate(6.4 7.2) scale(1.0667)" fill="none" stroke="#26241F" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <g stroke="#2D5D4B"><path d="M14.5 31h19"/><circle cx="22" cy="36" r="1.4"/><circle cx="28" cy="34" r="1"/></g>
+    <path d="M19 6h10M21 6v13L9 39a3 3 0 0 0 2.6 4.5h24.8A3 3 0 0 0 39 39L27 19V6"/>
+  </g>
 </svg>

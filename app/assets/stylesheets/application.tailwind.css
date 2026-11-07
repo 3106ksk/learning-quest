@@ -284,16 +284,9 @@
   }
 
   .goal-new-actions,
-  .skill-form-actions,
-  .study-start-actions {
+  .skill-form-actions {
     display: flex;
     justify-content: flex-end;
-  }
-
-  .study-start-actions {
-    margin-top: var(--space-5);
-    border-top: var(--border-hair);
-    padding-top: var(--space-5);
   }
 
   @media (max-width: 767px) {
@@ -316,20 +309,17 @@
     }
   }
 
-  .study-start-columns {
+  /*
+   * 学習開始（STUDY-01）。#367 デザイン v4 の画面ごとの例外として PostHog 型
+   * （角丸6px・小さな見出し＋四角いアイコン・灰色の帯の中で白く持ち上がる時間・行で選ぶ学習スキル）。
+   * 目標一覧・週の振り返りとクラスを共有しない。
+   */
+  .study-start {
+    display: grid;
+    gap: var(--space-4);
     width: 100%;
-  }
-
-  .study-start-form {
-    min-width: 0;
-    border: var(--border-card);
-    border-radius: 12px;
-    background: #fff;
-    padding: var(--space-6);
-  }
-
-  .study-start-form .field-control {
-    background: #fff;
+    max-width: 760px;
+    margin: 0 auto;
   }
 
   .study-start-error {
@@ -337,42 +327,15 @@
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space-2) var(--space-4);
-    margin-bottom: var(--space-5);
+    max-width: 760px;
+    margin: 0 auto var(--space-4);
   }
 
   .study-start-error p {
     margin: 0;
   }
 
-  .study-start-side-column {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-    min-width: 0;
-  }
-
-  .study-start-goal-card {
-    overflow: hidden;
-    padding: 0;
-  }
-
-  .study-start-goal-card .goal-card-title {
-    margin: 0;
-    padding: var(--space-5);
-    font-size: 22px;
-    overflow-wrap: anywhere;
-  }
-
-  .study-start-goal-link {
-    align-self: flex-end;
-  }
-
-  .study-start-empty-goal {
-    border: var(--border-card);
-    border-radius: 12px;
-    padding: var(--space-5);
-  }
-
+  /* 目標のハブの空状態が使う */
   .study-start-empty-title {
     margin: 0;
     font-family: var(--font-sans);
@@ -381,41 +344,382 @@
     line-height: 1.4;
   }
 
-  .study-start-empty-description {
-    margin: var(--space-2) 0 var(--space-4);
+  /* 目標の札：左の帯で状態を示す（進行中＝深緑／未設定＝灰） */
+  .study-goal-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3) var(--space-4);
+    border: var(--border-card);
+    border-left: 5px solid var(--color-green-600);
+    border-radius: 6px;
+    background: #fff;
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .study-goal-bar.is-unset {
+    border-left-color: #8f948a;
+  }
+
+  .study-goal-bar-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .study-goal-bar-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    color: var(--color-green-600);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .study-goal-bar-status::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .study-goal-bar.is-unset .study-goal-bar-status {
+    color: var(--color-ink-600);
+  }
+
+  .study-goal-bar.is-unset .study-goal-bar-status::before {
+    background: #8f948a;
+  }
+
+  .study-goal-bar-name {
+    margin: 2px 0 0;
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  .study-goal-bar-description {
+    margin: 2px 0 0;
     color: var(--color-ink-600);
     font-size: 13px;
-    line-height: 1.6;
   }
 
-  @media (min-width: 768px) {
-    .study-start-columns {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 340px);
-      align-items: stretch;
-      gap: var(--space-5);
-    }
-
-    .study-start-columns .study-start-side-column {
-      grid-column: 2;
-      grid-row: 1;
-      border: var(--border-card);
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.5);
-      padding: var(--space-5);
-    }
-
-    .study-start-columns .study-start-form {
-      grid-column: 1;
-      grid-row: 1;
-    }
+  .study-goal-bar-since {
+    flex: none;
+    margin: 0;
+    color: var(--color-ink-600);
+    font-size: 13px;
+    font-weight: 700;
   }
 
-  @media (max-width: 767px) {
-    .study-start-columns .study-start-form {
-      margin-top: var(--space-5);
-      padding: var(--space-5);
-    }
+  /* .btn（あとに定義）の角丸12pxより優先する */
+  .btn.study-goal-bar-action {
+    flex: none;
+    min-height: 40px;
+    border-radius: 6px;
+    padding: 0 var(--space-5);
+    font-size: 14px;
+  }
+
+  /* 目標が無いときは fieldset ごと無効になる。面は薄く残し、操作できないことを見せる */
+  .study-start-fieldset {
+    min-width: 0;
+    margin: 0;
+    border: 0;
+    padding: 0;
+  }
+
+  .study-start-panels {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .study-start-fieldset:disabled .study-start-panels {
+    opacity: 0.45;
+  }
+
+  .study-panel {
+    min-width: 0;
+    margin: 0;
+    border: 1px solid #c8cbc0;
+    border-radius: 6px;
+    background: #fff;
+    padding: 20px var(--space-5) var(--space-5);
+  }
+
+  /* 面の見出し：小さな字間広めの文字＋四角いアイコン、補足は右端、下に細い線 */
+  .study-panel-head {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin: 0 0 var(--space-4);
+    border-bottom: 1px solid #dcdfd2;
+    padding: 0 0 10px;
+  }
+
+  /* legend を枠の線の上に載せず、面の中の1行として置く */
+  legend.study-panel-head {
+    float: left;
+  }
+
+  legend.study-panel-head + * {
+    clear: both;
+  }
+
+  .study-panel-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    color: #4d4f46;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+  }
+
+  .study-panel-icon {
+    display: inline-flex;
+    width: 26px;
+    height: 26px;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #c8cbc0;
+    border-radius: 6px;
+    background: #eef0ea;
+    color: var(--color-ink-900);
+  }
+
+  .study-panel-icon svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .study-panel-aux {
+    color: #6c6e63;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .study-panel-error {
+    margin: 0 0 var(--space-3);
+  }
+
+  /* 時間：灰色の帯の中で、選んだものだけ白く持ち上がる（枠2px深緑＋左上に✓） */
+  .study-minutes {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    border-radius: 6px;
+    background: #eef0ea;
+    padding: 6px;
+  }
+
+  .study-minute-input,
+  .study-skill-input {
+    position: absolute;
+    opacity: 0;
+  }
+
+  .study-minute {
+    position: relative;
+    display: flex;
+    height: 64px;
+    align-items: baseline;
+    justify-content: center;
+    gap: 4px;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    padding-top: 16px;
+    color: #4d4f46;
+    cursor: pointer;
+  }
+
+  .study-minute .num {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .study-minute-unit {
+    color: var(--color-kincha-600);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .study-minute-input:checked + .study-minute {
+    border-color: var(--color-green-600);
+    background: #fff;
+    color: var(--color-green-600);
+  }
+
+  .study-minute-input:checked + .study-minute::before {
+    position: absolute;
+    top: 5px;
+    left: 8px;
+    content: "✓";
+    font-size: 12px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .study-minute-input:focus-visible + .study-minute,
+  .study-skill-input:focus-visible + .study-skill-row {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  /* 学習内容。.field-control（あとに定義）の枠・角丸・地より優先する */
+  .field-control.study-activity-input {
+    min-height: 40px;
+    border: 1px solid #c8cbc0;
+    border-radius: 6px;
+    background: #fff;
+    padding: 0 12px;
+    font-size: 15px;
+  }
+
+  .field-control.study-activity-input:focus {
+    border: 2px solid var(--color-green-600);
+    outline: none;
+    padding: 0 11px;
+  }
+
+  .field-control.study-activity-input.has-error {
+    border: 2px solid var(--color-error-600);
+    padding: 0 11px;
+  }
+
+  /* 学習スキル：行（電球の四角・名前・ラジオの丸）。選択中は深緑の枠2px＋淡い緑の地 */
+  .study-skill-rows {
+    display: grid;
+    gap: 8px;
+  }
+
+  .study-skill-row {
+    display: flex;
+    min-height: 52px;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid #c8cbc0;
+    border-radius: 6px;
+    background: #fff;
+    padding: 8px 14px;
+    cursor: pointer;
+  }
+
+  .study-skill-icon {
+    display: inline-flex;
+    width: 30px;
+    height: 30px;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #c8cbc0;
+    border-radius: 6px;
+    background: #eef0ea;
+    color: #6c6e63;
+  }
+
+  .study-skill-bulb {
+    width: 17px;
+    height: 17px;
+  }
+
+  .study-skill-name {
+    flex: 1;
+    min-width: 0;
+    color: #23251d;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  .study-skill-radio {
+    width: 20px;
+    height: 20px;
+    flex: none;
+    border: 2px solid #b6b7af;
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .study-skill-input:checked + .study-skill-row {
+    border: 2px solid var(--color-green-600);
+    background: #e9f2ed;
+    padding: 7px 13px;
+  }
+
+  .study-skill-input:checked + .study-skill-row .study-skill-icon {
+    border-color: var(--color-green-600);
+    background: #fff;
+    color: var(--color-green-600);
+  }
+
+  /* ラジオの点（白の内側の輪で、深緑の丸を点に見せる） */
+  .study-skill-input:checked + .study-skill-row .study-skill-radio {
+    border-color: var(--color-green-600);
+    background: var(--color-green-600);
+    box-shadow: inset 0 0 0 3px #fff;
+  }
+
+  /* 「スキルを使用しない」：点線の行 */
+  .study-skill-row.is-none {
+    border-style: dashed;
+    background: transparent;
+  }
+
+  .study-skill-row.is-none .study-skill-name {
+    color: #6c6e63;
+    font-weight: 500;
+  }
+
+  .study-skill-input:checked + .study-skill-row.is-none {
+    border-style: solid;
+  }
+
+  .study-skill-slot {
+    display: block;
+    min-height: 52px;
+    border: 1.5px dashed #c8cbc0;
+    border-radius: 6px;
+  }
+
+  .study-skill-link {
+    display: inline-block;
+    margin-top: var(--space-3);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  /* ［開始する］は面の下の中央。目標が無いときは灰色 */
+  .study-start-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-4);
+  }
+
+  .study-start-actions .btn {
+    min-height: 50px;
+    border-radius: 6px;
+    padding: 0 40px;
+  }
+
+  .study-start-actions .btn:disabled {
+    border-color: #c9cdc5;
+    background: #c9cdc5;
+    color: #fff;
+    cursor: not-allowed;
   }
 
   .goal-card-title {
@@ -1307,125 +1611,9 @@
   }
 
   /*
-   * 時間選択（5/15/25/50分）の数字タイル。visual-design-spec-v3.md §3.10。
-   * 選択状態は色だけでなく、枠線の太さと::beforeのチェックマークでも示す
-   * （色単独伝達の禁止）。緑の塗りつぶしにはしない（開始ボタンと主役が並ぶため）。
+   * 学習スキルのカード。週の振り返り（.week-skill-card）が使う。
+   * 学習開始は #367 で専用の行（.study-skill-*）に移した。
    */
-  .segments {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 10px;
-  }
-
-  .segment-input {
-    position: absolute;
-    opacity: 0;
-  }
-
-  .segment-label {
-    position: relative;
-    display: flex;
-    min-height: 84px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: var(--border-card);
-    border-radius: 12px;
-    background: #fff;
-    cursor: pointer;
-  }
-
-  .segment-label .num {
-    font-size: 32px;
-    font-weight: 900;
-    line-height: 1.1;
-  }
-
-  .segment-unit {
-    margin-top: 2px;
-    color: var(--color-kincha-600);
-    font-size: 12px;
-    font-weight: 800;
-    line-height: 1.2;
-  }
-
-  .segment-input:checked + .segment-label {
-    border-width: 2px;
-    border-color: var(--color-green-600);
-    background: var(--color-green-tint);
-  }
-
-  .segment-input:checked + .segment-label .num {
-    color: var(--color-green-600);
-  }
-
-  .segment-input:checked + .segment-label::before {
-    position: absolute;
-    top: 6px;
-    left: 9px;
-    content: "✓";
-    color: var(--color-green-600);
-    font-size: 12px;
-    font-weight: 900;
-    line-height: 1;
-  }
-
-  /* 選択中も、キーボード操作時のフォーカスリングと同じ外枠を付ける（マウスでも同じ見た目にする） */
-  .segment-input:checked + .segment-label,
-  .segment-input:focus-visible + .segment-label {
-    outline: var(--focus-ring);
-    outline-offset: 2px;
-    z-index: 1;
-  }
-
-  @media (max-width: 767px) {
-    .segments {
-      gap: 8px;
-    }
-
-    .segment-label .num {
-      font-size: 28px;
-    }
-  }
-
-  /*
-   * 学習スキルの選択（装備）。visual-design-spec-v3.md §5.2 要素5。
-   * 未選択のあいだは無彩色で静かに保ち、選んだ瞬間にだけ光が現れる（見せ場の分担）。
-   * 選択中は色だけでなく、枠の色・「装備中」の印でも示す（色単独伝達の禁止）。
-   */
-  /* 上余白は他の項目（--space-5）より広くし、カード群を別のまとまりとして見せる */
-  .skill-select {
-    min-width: 0;
-    margin-top: var(--space-6);
-    padding: 0;
-    border: 0;
-  }
-
-  .skill-select-legend {
-    display: flex;
-    align-items: baseline;
-    gap: var(--space-2);
-    margin-bottom: var(--space-3);
-    padding: 0;
-  }
-
-  .skill-select-legend .field-label {
-    margin-bottom: 0;
-  }
-
-  .skill-select-eyebrow {
-    color: var(--color-kincha-500);
-    font-size: 11px;
-    font-weight: 900;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-  }
-
-  .skill-select-optional {
-    color: var(--color-ink-500);
-    font-size: 12px;
-  }
-
   .skill-cards {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1433,8 +1621,7 @@
   }
 
   /* ラジオは時間タイルと同じく隠す（グリッドのセルを取らない） */
-  .skill-card-input,
-  .skill-none-input {
+  .skill-card-input {
     position: absolute;
     opacity: 0;
   }
@@ -1478,12 +1665,6 @@
     -webkit-box-orient: vertical;
   }
 
-  /* 「この目標で◯回」の帯。数字は集計の issue で入れる（高さだけ確保） */
-  .skill-card-band {
-    display: block;
-    min-height: 27px;
-  }
-
   .skill-card-input:checked + .skill-card {
     border-color: var(--color-ink-900);
     box-shadow: 0 10px 24px rgba(38, 36, 31, 0.1);
@@ -1496,27 +1677,7 @@
     color: var(--color-ink-900);
   }
 
-  .skill-card-mark {
-    display: none;
-  }
-
-  .skill-card-input:checked + .skill-card .skill-card-mark {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    display: block;
-    padding: 3px 9px;
-    border-radius: 999px;
-    background: linear-gradient(135deg, #f6e2b0 0%, #d9ad55 55%, #b88a35 100%);
-    box-shadow: 0 2px 6px rgba(138, 98, 36, 0.35);
-    color: var(--color-ink-900);
-    font-size: 10px;
-    font-weight: 900;
-    letter-spacing: 0.08em;
-  }
-
-  .skill-card-input:focus-visible + .skill-card,
-  .skill-none-input:focus-visible + .skill-none-label {
+  .skill-card-input:focus-visible + .skill-card {
     outline: var(--focus-ring);
     outline-offset: 2px;
   }
@@ -1536,28 +1697,6 @@
     color: var(--color-ink-500);
     font-size: 13px;
     font-weight: 700;
-  }
-
-  .skill-select-none {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 10px;
-  }
-
-  /* 「スキルを使用しない」: リンクの見た目。未選択（空のラジオが選択中）のときは灰色 */
-  .skill-none-label {
-    color: var(--color-green-600);
-    font-size: 13px;
-    font-weight: 700;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    cursor: pointer;
-  }
-
-  .skill-none-input:checked + .skill-none-label {
-    color: var(--color-ink-400);
-    text-decoration: none;
-    cursor: default;
   }
 
   .skill-select-link {
@@ -1584,10 +1723,6 @@
     .skill-card-name {
       padding: 8px 8px 2px;
       font-size: 12px;
-    }
-
-    .skill-card-band {
-      min-height: 20px;
     }
 
     .skill-card-slot {

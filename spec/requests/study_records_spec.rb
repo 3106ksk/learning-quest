@@ -46,7 +46,7 @@ RSpec.describe "StudyRecords", type: :request do
       }.not_to change(StudyRecord, :count)
 
       expect(response).to have_http_status(:unprocessable_content)
-      expect(response.body).to include("RSpecの学習", "まずは目標を設定してください。")
+      expect(response.body).to include("RSpecの学習")
     end
 
     %w[paused awaiting_evaluation].each do |status|
@@ -165,7 +165,7 @@ RSpec.describe "StudyRecords", type: :request do
       end
 
       context "保存に失敗して422で再表示する場合" do
-        it "今回やることが空でも選んだ学習スキルのラジオを選択状態で表示する" do
+        it "学習内容が空でも選んだ学習スキルのラジオを選択状態で表示する" do
           skill = create(:learning_skill, user: user)
           create(:goal_skill_setting, goal: goal, learning_skill: skill)
 
@@ -181,7 +181,7 @@ RSpec.describe "StudyRecords", type: :request do
           assert_select "input[name='study_record[learning_skill_id]'][value='#{skill.id}'][checked]", count: 1
         end
 
-        it "目標がなく学習スキルIDを送っても目標のバナーだけを表示する" do
+        it "目標がなく学習スキルIDを送っても、学習スキルのバナーは表示しない" do
           skill = create(:learning_skill, user: user)
           create(:goal_skill_setting, goal: goal, learning_skill: skill)
           goal.complete!
@@ -197,7 +197,6 @@ RSpec.describe "StudyRecords", type: :request do
           }.not_to change(StudyRecord, :count)
 
           expect(response).to have_http_status(:unprocessable_content)
-          expect(response.body).to include("まずは目標を設定してください。")
           expect(response.body).not_to include("選んだ学習スキルが見つかりません。")
         end
 

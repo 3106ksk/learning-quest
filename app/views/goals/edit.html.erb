@@ -6,7 +6,7 @@
       <%= form_with model: @goal, class: "goal-form" do |form| %>
         <%= render "name_field", form: form, goal: @goal, show_error: true %>
 
-        <div class="goal-form-actions is-split">
+        <div class="goal-form-actions">
           <%= link_to t(".cancel"), goal_path(@goal), class: "btn btn-ghost" %>
           <%= form.submit t(".submit"), class: "btn btn-primary" %>
         </div>

@@ -233,76 +233,166 @@
     }
   }
 
-  .goal-new-card {
-    overflow: hidden;
-    border: var(--border-card);
-    border-radius: 12px;
-    background: #fff;
-  }
-
+  /*
+   * 目標の設定と編集（#377 GOAL-21）。学習開始の目標の札と同じく、左に深緑の帯を持つ白い面。
+   * 目標名の欄（goals/_name_field）は PostHog 型（小さな見出し＋四角いアイコン・角丸6px）で、設定と編集で同じ形。
+   */
   .goal-new-error {
-    margin-bottom: var(--space-5);
+    width: min(100%, 760px);
+    margin: 0 auto var(--space-4);
   }
 
   .goal-new-error p {
     margin: 0;
   }
 
-  .goal-new-face.face-active {
-    position: relative;
-    height: 120px;
-    overflow: hidden;
-    background: radial-gradient(circle at 78% 18%, rgba(45, 93, 75, 0.28), transparent 42%),
-      radial-gradient(circle at 18% 90%, rgba(169, 122, 47, 0.18), transparent 40%),
-      rgba(45, 93, 75, 0.12);
-  }
-
-  .goal-new-face.face-non {
-    position: relative;
-    height: 120px;
-    overflow: hidden;
-  }
-
-  .goal-new-body {
-    width: min(100%, 704px);
+  .goal-form-card {
+    width: min(100%, 760px);
     margin-inline: auto;
-    padding: var(--space-6);
+    border: 1px solid #c8cbc0;
+    border-left: 5px solid var(--color-green-600);
+    border-radius: 6px;
+    background: #fff;
+    padding: 22px 28px 24px;
   }
 
-  .goal-new-body h1 {
+  /* 編集は目標詳細の中でカードと入れ替わるので、幅は詳細に合わせる */
+  .goal-form-card--edit {
+    width: 100%;
+  }
+
+  .goal-form-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     margin: 0;
-    font-family: var(--font-sans);
-    font-size: 18px;
-    font-weight: 900;
+    color: var(--color-green-600);
+    font-size: 12px;
+    font-weight: 800;
   }
 
-  .goal-new-form,
+  .goal-form-status::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .goal-form-title {
+    margin: 4px 0 18px;
+    font-size: 20px;
+    font-weight: 800;
+  }
+
+  .goal-name-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+    border-bottom: 1px solid #dcdfd2;
+    padding-bottom: 10px;
+  }
+
+  .goal-name-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    color: #4d4f46;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+  }
+
+  .goal-name-icon {
+    display: inline-flex;
+    width: 26px;
+    height: 26px;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #c8cbc0;
+    border-radius: 6px;
+    background: #eef0ea;
+    color: var(--color-ink-900);
+  }
+
+  .goal-name-icon svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .goal-name-aux {
+    color: #6c6e63;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  /* .field-control（あとに定義）の枠・角丸・地より優先する */
+  .field-control.goal-name-input {
+    min-height: 40px;
+    border: 1px solid #c8cbc0;
+    border-radius: 6px;
+    background: #fff;
+    padding: 0 12px;
+    font-size: 15px;
+  }
+
+  .field-control.goal-name-input:focus {
+    border: 2px solid var(--color-green-600);
+    outline: none;
+    padding: 0 11px;
+  }
+
+  .field-control.goal-name-input.has-error {
+    border: 2px solid var(--color-error-600);
+    padding: 0 11px;
+  }
+
+  .goal-name-error {
+    margin-top: var(--space-2);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .goal-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    margin-top: 22px;
+    border-top: 1px solid #dcdfd2;
+    padding-top: 18px;
+  }
+
+  .goal-form-actions .btn {
+    min-height: 46px;
+    border-radius: 6px;
+    padding: 0 28px;
+  }
+
   .skill-form {
     display: grid;
     gap: var(--space-5);
     margin-top: var(--space-5);
   }
 
-  .goal-new-actions,
   .skill-form-actions {
     display: flex;
     justify-content: flex-end;
   }
 
   @media (max-width: 767px) {
-    .goal-new-face.face-active {
-      height: 90px;
-    }
-
-    .goal-new-face.face-non {
-      height: 90px;
-    }
-
-    .goal-new-body {
+    .goal-form-card {
       padding: var(--space-5);
     }
 
-    .goal-new-actions .btn,
     .skill-form-actions .btn,
     .study-start-actions .btn {
       width: 100%;
@@ -753,35 +843,9 @@
     gap: var(--space-3);
   }
 
-  .goal-card-controls {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-3);
-  }
-
-  .goal-card-controls .field-control {
-    width: auto;
-    min-width: 0;
-    flex: 1;
-  }
-
-  .goal-card-controls .group-error {
-    order: -1;
-    flex-basis: 100%;
-  }
-
-  .goal-card-controls .btn {
-    flex-shrink: 0;
-  }
-
   @media (max-width: 767px) {
     .goal-card {
       padding: var(--space-5);
-    }
-
-    .goal-card-controls .field-control {
-      flex-basis: 100%;
     }
 
     .goal-card-overview {

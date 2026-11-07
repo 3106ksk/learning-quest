@@ -424,7 +424,6 @@ ja:
         title: 新規アカウント作成
         submit: 登録する
         consent_html: 登録すると、%{terms}と%{privacy}に同意したものとみなします
-        account_name_aux: ほかの人には表示されません
         password_aux: "%{count}文字以上"
         to_login_notice: アカウントをお持ちの方は
         to_login: ログイン

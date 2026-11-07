@@ -794,36 +794,129 @@
   }
 
   /*
-   * 認証フォームは、入力欄の幅を画面全体ではなくカード内の本文幅で決める。
-   * 罫線・余白・紙色は既存トークンだけで構成し、カード調の影や丸みは加えない。
+   * 登録・ログインのカード（#369 デザイン v4。visual-design-spec-v3.md §5.13）。
+   * 440px・中央の白いカード。先頭に線画のイラストと小見出し「試して、残す」、
+   * 項目のラベルの左に線画のアイコン、補足は右端。入力欄とボタンは角丸8px。
    */
   .auth-form-card {
-    width: min(100%, 480px);
-    border: var(--border-box);
-    border-radius: var(--radius-box);
+    width: min(100%, 440px);
+    border: var(--border-card);
+    border-radius: 12px;
+    background: #fff;
     margin-inline: auto;
-    padding: var(--space-6);
-  }
-
-  .auth-form-card--session {
-    margin-top: var(--space-7);
+    padding: 36px 36px 30px;
   }
 
   .auth-form-card > * + * {
     margin-top: var(--space-5);
   }
 
+  .auth-form-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .auth-illustration {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    color: var(--color-ink-900);
+  }
+
+  /* 緑の差し色は1か所 */
+  .auth-illustration-accent {
+    stroke: var(--color-green-600);
+  }
+
+  .auth-form-eyebrow-text {
+    margin: 0;
+    color: var(--color-ink-600);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .auth-form-card > .auth-form-eyebrow + .auth-form-title {
+    margin-top: var(--space-2);
+  }
+
+  /* フォームの共有の .section の上の線は引かない（タイトルの下にそのまま項目を並べる） */
+  .auth-form-card .section {
+    border-top: 0;
+    padding-top: 0;
+  }
+
   .auth-form-title {
-    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+
+  .auth-form-card .error-banner {
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .auth-field-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-2);
+  }
+
+  .auth-field-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-ink-900);
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .auth-field-icon {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    color: var(--color-ink-600);
+  }
+
+  .auth-field-aux {
+    color: var(--color-ink-500);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .auth-form-card .field-control {
+    min-height: 48px;
+    border: 1px solid #8f8a7d;
+    border-radius: 8px;
+    background: #fff;
+    padding: 0 14px;
+    font-size: 15px;
+  }
+
+  .auth-form-card .field-control.has-error {
+    border: 2px solid var(--color-error-600);
+    padding: 0 13px;
+  }
+
+  .auth-form-card .group-error {
+    font-size: 13px;
+    font-weight: 700;
   }
 
   .auth-form-card .btn-primary {
     width: 100%;
+    min-height: 50px;
+    border-radius: 8px;
   }
 
   .auth-form-links {
     border-top: var(--border-hair);
-    padding-top: var(--space-5);
+    padding-top: var(--space-4);
     text-align: center;
   }
 

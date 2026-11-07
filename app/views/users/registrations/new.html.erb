@@ -20,7 +20,6 @@
               <%= render "shared/auth_icon", name: "person" %>
               <%= User.human_attribute_name(:account_name) %>
             <% end %>
-            <span class="auth-field-aux"><%= t(".account_name_aux") %></span>
           </div>
           <%= f.text_field :account_name,
                            autofocus: true,

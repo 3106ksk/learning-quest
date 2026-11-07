@@ -4,7 +4,7 @@
         user: ユーザー
       attributes:
         user:
-          account_name: 表示名
+          account_name: ユーザー名
           email: メールアドレス
           email_address: E-mailアドレス
           name: ユーザー名

@@ -35,7 +35,7 @@
 
   /* Type */
   --font-serif: "Hiragino Mincho ProN", "Yu Mincho", YuMincho, serif;
-  --font-sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", YuGothic, Meiryo, sans-serif;
+  --font-sans: "Noto Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", YuGothic, Meiryo, sans-serif;
   --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, monospace;
 
   /* Shape（--radius-*は@themeの通常の名前付き名前空間なので安全に上書きできる） */
@@ -90,6 +90,7 @@
 
   html:has(.lp-hero) {
     --color-paper: var(--color-paper-lp);
+    --font-sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", YuGothic, Meiryo, sans-serif;
   }
 
   body {
@@ -116,8 +117,8 @@
   h1,
   h2 {
     margin-block: 0;
-    font-family: var(--font-serif);
-    font-weight: 600;
+    font-family: var(--font-sans);
+    font-weight: 700;
     letter-spacing: 0.02em;
   }
 
@@ -1070,7 +1071,7 @@
     min-height: 44px;
     align-items: center;
     color: var(--color-ink-900);
-    font-family: var(--font-serif);
+    font-family: var(--font-sans);
     font-size: 20px;
     font-weight: 600;
     letter-spacing: 0.08em;
@@ -1079,7 +1080,6 @@
 
   /*
    * ヘッダー（ログイン前後で共通の帯）。visual-design-spec-v3.md §3.11（2026-11-03 #355）。
-   * 書体はヘッダーの中だけ Noto Sans JP（--font-sans と h1, h2 の明朝体は画面の棚卸しで扱う）。
    */
   .header {
     position: sticky;

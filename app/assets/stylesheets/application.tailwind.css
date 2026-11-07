@@ -322,10 +322,9 @@
 
   .study-start-form {
     min-width: 0;
-    border: var(--border-hair);
-    border-radius: 20px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: #fff;
-    box-shadow: 0 8px 24px rgba(38, 36, 31, 0.06);
     padding: var(--space-6);
   }
 
@@ -369,8 +368,8 @@
   }
 
   .study-start-empty-goal {
-    border: 1px dashed var(--color-line-control);
-    border-radius: 20px;
+    border: var(--border-card);
+    border-radius: 12px;
     padding: var(--space-5);
   }
 
@@ -400,8 +399,8 @@
     .study-start-columns .study-start-side-column {
       grid-column: 2;
       grid-row: 1;
-      border: var(--border-hair);
-      border-radius: 20px;
+      border: var(--border-card);
+      border-radius: 12px;
       background: rgba(255, 255, 255, 0.5);
       padding: var(--space-5);
     }
@@ -1330,8 +1329,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 1.5px solid var(--color-line-control);
-    border-radius: 14px;
+    border: var(--border-card);
+    border-radius: 12px;
     background: #fff;
     cursor: pointer;
   }
@@ -1447,7 +1446,7 @@
     overflow: hidden;
     /* 選択中に太さが変わって内容がずれないよう、常に2px */
     border: 2px solid rgba(38, 36, 31, 0.16);
-    border-radius: 16px;
+    border-radius: 12px;
     background: #fff;
     color: var(--color-ink-900);
     cursor: pointer;
@@ -1526,7 +1525,7 @@
     display: block;
     min-height: 150px;
     border: 1.5px dashed rgba(38, 36, 31, 0.24);
-    border-radius: 16px;
+    border-radius: 12px;
   }
 
   .skill-card-slot.is-empty {
@@ -1573,10 +1572,6 @@
       gap: 8px;
     }
 
-    .skill-card {
-      border-radius: 12px;
-    }
-
     .skill-card-face {
       height: 64px;
     }
@@ -1597,7 +1592,6 @@
 
     .skill-card-slot {
       min-height: 116px;
-      border-radius: 12px;
     }
   }
 

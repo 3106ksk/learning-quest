@@ -476,6 +476,14 @@ ja:
       skill_not_found: 選んだ学習スキルが見つかりません。もう一度選び直してください。
       skill_check_link: 学習スキルを確かめる →
   evaluations:
+    new:
+      done: 学習を終えました
+      planned_minutes: 予定時間
+      learning_skill: 学習スキル
+      question: 今回の学習は、どのような時間でしたか。
+      question_help: 実感に近いものを1つずつ選んでください。
+      choose_one: "%{count}つから1つ"
+      submit: 記録する
     show:
       actions:
         study_again: もう一度学習する

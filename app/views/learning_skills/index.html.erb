@@ -6,18 +6,25 @@
       <% if @learning_skill&.errors&.any? %>
         <%= render "learning_skills/form", learning_skill: @learning_skill %>
       <% else %>
-        <%= link_to new_learning_skill_path, class: "dex-hero skill-dex-add" do %>
-          <div class="dex-hero-face face-non skill-dex-add-face" aria-hidden="true">＋</div>
-          <div class="dex-hero-body">
-            <p class="dex-hero-name"><%= t(".new_skill") %></p>
-          </div>
+        <%= link_to new_learning_skill_path, class: "skill-add-card" do %>
+          <%= render "shared/skill_illustration" %>
+          <span class="skill-add-title"><%= t(".new_skill") %></span>
+          <span class="skill-add-description"><%= t(".new_skill_description") %></span>
+          <span class="skill-add-button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+            <%= t(".add") %>
+          </span>
         <% end %>
       <% end %>
     <% end %>
 
-    <section class="dex-list" aria-labelledby="learning-skills-heading">
-      <div class="dex-list-header">
-        <h2 id="learning-skills-heading" class="panel-eyebrow"><%= t(".eyebrow") %></h2>
+    <section class="dex-list skill-list" aria-labelledby="learning-skills-heading">
+      <div class="skill-list-header">
+        <h2 id="learning-skills-heading" class="skill-list-heading">
+          <span class="skill-list-heading-icon" aria-hidden="true"><%= render "shared/bulb_icon", css_class: nil %></span>
+          <%= t(".eyebrow") %>
+        </h2>
+        <p class="skill-list-count"><%= t(".count", count: @learning_skills.size) %></p>
       </div>
 
       <%= render "learning_skills/tiles", learning_skills: @learning_skills %>

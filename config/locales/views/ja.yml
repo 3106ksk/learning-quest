@@ -393,10 +393,14 @@ ja:
       title: 学習スキル
       eyebrow: 登録済み
       new_skill: 学習スキルの登録
+      new_skill_description: 試したい工夫を1つずつ登録します
+      add: 登録する
+      count: "%{count}件"
     new:
       title: 学習スキルを登録
     form:
       name: 学習スキル名
+      name_aux: 必須・100文字まで
       name_placeholder: 例：問題を解く前に制限時間を決める
       name_errors:
         blank: 学習スキル名を入力してください

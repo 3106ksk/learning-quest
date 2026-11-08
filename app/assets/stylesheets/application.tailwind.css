@@ -3379,6 +3379,289 @@
   }
 
   /*
+   * 目標一覧（#378 GOAL-20）。状態（進行中・完了）を左の帯の色と文字で示す。学習開始の目標の札と同じ形。
+   * 上の .goal-dex-* は学習スキル一覧（.dex-*）とセレクタを共有しているので、目標一覧だけをここで上書きする
+   * （共有のルールの片付けは本リリース後）。選択の印は墨の輪＋▼（深緑は「進行中」の色なので使わない）。
+   */
+  .goal-dex-hero.is-active,
+  .goal-dex-tile.is-active {
+    --goal-state: var(--color-green-600);
+    --goal-state-tint: #e9f2ed;
+  }
+
+  .goal-dex-hero.is-completed,
+  .goal-dex-tile.is-completed {
+    --goal-state: var(--color-kincha-500);
+    --goal-state-tint: #f6efe0;
+  }
+
+  .goal-dex-hero,
+  .goal-dex-empty {
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    border: 1px solid #c8cbc0;
+    border-left: 5px solid var(--goal-state, #8f948a);
+    border-radius: 6px;
+    background: #fff;
+    padding: 22px 24px;
+  }
+
+  .goal-dex-hero-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .goal-dex-medal {
+    display: inline-flex;
+    width: 52px;
+    height: 52px;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--goal-state);
+    border-radius: 8px;
+    background: var(--goal-state-tint);
+    color: var(--goal-state);
+  }
+
+  .goal-dex-hero.is-completed .goal-dex-medal {
+    color: var(--color-kincha-600);
+  }
+
+  .goal-dex-medal svg {
+    width: 28px;
+    height: 28px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .goal-dex-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    color: var(--goal-state, var(--color-ink-600));
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .goal-dex-status::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--goal-state, #8f948a);
+  }
+
+  .goal-dex-hero .goal-dex-hero-name,
+  .goal-dex-empty .goal-dex-empty-title {
+    margin: 18px 0 0;
+    font-family: var(--font-sans);
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  .goal-dex-empty .goal-dex-empty-title {
+    margin-top: 4px;
+  }
+
+  .goal-dex-hero .goal-dex-hero-date {
+    margin: 4px 0 0;
+    color: var(--color-ink-600);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .goal-dex-hero .goal-dex-hero-link,
+  .goal-dex-empty .goal-dex-empty-link {
+    align-self: flex-end;
+    margin-top: auto;
+    min-height: 40px;
+    border-radius: 6px;
+  }
+
+  /* 大きなカードを一覧と同じ高さまで伸ばし、［詳細を見る］を下に置く */
+  .goal-dex.has-selection,
+  .goal-dex.is-empty {
+    align-items: stretch;
+  }
+
+  .goal-dex-hero .goal-dex-hero-link {
+    margin-top: auto;
+  }
+
+  .goal-dex-hero .goal-dex-hero-date {
+    margin-bottom: var(--space-5);
+  }
+
+  .goal-dex-list {
+    border: 1px solid #c8cbc0;
+    border-radius: 6px;
+    background: #fff;
+    padding: 20px 24px 24px;
+  }
+
+  .goal-dex-list .goal-dex-list-header {
+    align-items: center;
+    margin-bottom: var(--space-4);
+    border-bottom: 1px solid #dcdfd2;
+    padding-bottom: 10px;
+  }
+
+  .goal-dex-heading {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    color: #4d4f46;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+  }
+
+  .goal-dex-heading-icon {
+    display: inline-flex;
+    width: 26px;
+    height: 26px;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #c8cbc0;
+    border-radius: 6px;
+    background: #eef0ea;
+    color: var(--color-ink-900);
+  }
+
+  .goal-dex-heading-icon svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .goal-dex-list .goal-dex-tally b {
+    font-size: 18px;
+    font-weight: 800;
+  }
+
+  .goal-dex-list .goal-dex-tiles {
+    gap: 10px;
+    padding-top: 6px;
+  }
+
+  .goal-dex-list .goal-dex-tile {
+    display: flex;
+    min-height: 96px;
+    flex-direction: column;
+    gap: 8px;
+    overflow: visible;
+    border: 1px solid #c8cbc0;
+    border-left: 4px solid var(--goal-state);
+    border-radius: 6px;
+    background: #fff;
+    padding: 12px 12px 12px 14px;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .goal-dex-list .goal-dex-tile:hover {
+    border-color: #a9ab9f;
+    border-left-color: var(--goal-state);
+    transform: none;
+  }
+
+  .goal-dex-list .goal-dex-tile.is-selected {
+    border: 1px solid #c8cbc0;
+    border-left: 4px solid var(--goal-state);
+    box-shadow: none;
+    outline: 3px solid var(--color-ink-900);
+    outline-offset: 3px;
+    transform: none;
+  }
+
+  .goal-dex-list .goal-dex-tile.is-selected::before {
+    top: -18px;
+    border-top-color: var(--color-ink-900);
+  }
+
+  .goal-dex-tile-status {
+    margin: 0;
+    color: var(--goal-state);
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .goal-dex-tile.is-completed .goal-dex-tile-status {
+    color: var(--color-kincha-600);
+  }
+
+  .goal-dex-list .goal-dex-tile-title {
+    display: -webkit-box;
+    overflow: hidden;
+    color: var(--color-ink-900);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.5;
+    white-space: normal;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .goal-dex-tile-date {
+    margin: auto 0 0;
+    color: #6c6e63;
+    font-size: 11px;
+  }
+
+  .goal-dex-list .goal-dex-next-tile {
+    min-height: 96px;
+    justify-content: center;
+    border: 1.5px dashed #b6b7af;
+    border-radius: 6px;
+    background: transparent;
+  }
+
+  /* 文言に「＋」があるので、大きな＋の顔は出さない */
+  .goal-dex-list .goal-dex-next-tile {
+    align-items: center;
+  }
+
+  .goal-dex-list .goal-dex-next-face {
+    display: none;
+  }
+
+  .goal-dex-list .goal-dex-next-label {
+    padding: 0;
+    color: var(--color-ink-600);
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .goal-dex-list .goal-dex-empty-tile {
+    min-height: 96px;
+    border: 1.5px dashed #d3d5cc;
+    border-radius: 6px;
+    background: transparent;
+  }
+
+  .goal-dex-list .goal-dex-empty-tile > * {
+    display: none;
+  }
+
+  /*
    * 週の一覧（#340。完成形はキャンバス page-62 の「2 週の一覧」）。
    * 今週の枠・これまでの週の行。
    */

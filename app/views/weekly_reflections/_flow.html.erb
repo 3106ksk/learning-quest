@@ -1,0 +1,9 @@
+<ol class="week-flow">
+  <% [ [ :choose, 1 ], [ :use, 2 ], [ :reflect, 3 ] ].each do |key, step| %>
+    <%= tag.li class: ("week-flow-done" if step < current) || ("week-flow-now" if step == current),
+          aria: { current: ("step" if step == current) } do %>
+      <span class="week-flow-num" aria-hidden="true"><%= step < current ? "✓" : step %></span>
+      <span><%= t(".#{key}") %><small><%= t(".#{key}_note") %></small></span>
+    <% end %>
+  <% end %>
+</ol>

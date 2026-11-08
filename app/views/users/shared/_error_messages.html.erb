@@ -1,0 +1,5 @@
+<% if resource.errors.any? %>
+  <div id="error_explanation" class="error-banner" role="alert" data-turbo-temporary>
+    <%= t("errors.form.invalid") %>
+  </div>
+<% end %>

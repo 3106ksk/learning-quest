@@ -1,5 +1,5 @@
 module ApplicationHelper
-  def nav_current(target_controller)
-    "page" if controller_name == target_controller
+  def nav_current(*target_controllers)
+    "page" if target_controllers.include?(controller_name)
   end
 end

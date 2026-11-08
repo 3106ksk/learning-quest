@@ -1,0 +1,24 @@
+<% content_for :title, t(".title") %>
+
+<div class="page-wide">
+  <% active_goal_error = @goal.errors[:user_id].any? %>
+  <% if active_goal_error %>
+    <div class="error-banner banner-action goal-new-error" role="alert">
+      <p><%= t(".active_goal_error") %></p>
+      <%= link_to t(".view_active_goal"), goals_path %>
+    </div>
+  <% end %>
+
+  <section class="goal-form-card" aria-labelledby="goal-new-title">
+    <p class="goal-form-status"><%= t(".status") %></p>
+    <h1 id="goal-new-title" class="goal-form-title"><%= t(".title") %></h1>
+
+    <%= form_with model: @goal, class: "goal-form" do |form| %>
+      <%= render "name_field", form: form, goal: @goal, show_error: !active_goal_error %>
+
+      <div class="goal-form-actions">
+        <%= form.submit t(".submit"), class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </section>
+</div>

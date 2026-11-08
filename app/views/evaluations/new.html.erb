@@ -1,105 +1,120 @@
-<div class="page">
-  <div class="form-shell">
-    <section aria-labelledby="evaluation-prompt-title">
-      <h2 id="evaluation-prompt-title" class="evaluation-prompt">
-        <svg class="fumi fumi-s" viewBox="0 0 32 32" aria-hidden="true">
-          <path d="M6 19c0-6.5 4.5-11 10.5-11 4.5 0 8 3.2 8 7.5 0 5.5-4.5 9.5-10.5 9.5-1.6 0-3.2-.3-4.6-1"/>
-          <path d="M24.2 13.5l3.8-1.2-2.8 3"/>
-          <circle class="fumi-eye" cx="21.5" cy="13.5" r="1"/>
-          <path d="M6.5 20.5L2 24.5M7.5 23L3.5 27"/>
-          <path d="M13 25.5v3.5M17.5 25.8v3.2"/>
-          <path d="M12 14.5c2.5-1 5.5-1 8 .5"/>
-        </svg>
-        今回の学習は、どのような時間でしたか。
-      </h2>
-      <p class="small" style="margin-top: var(--space-2)">実感に近いものを1つずつ選んでください。</p>
-      <p class="caption" style="margin-top: var(--space-2)">この振り返りは、ふみが読む記録になります。</p>
-    </section>
+<div class="evaluation">
+  <section class="evaluation-done" aria-label="<%= t(".done") %>">
+    <div class="evaluation-done-main">
+      <p class="evaluation-done-status">
+        <span class="evaluation-done-check" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+        </span>
+        <%= t(".done") %>
+      </p>
+      <p class="evaluation-done-minutes">
+        <span class="num"><%= @study_record.actual_minutes %></span><span class="evaluation-done-unit">分</span>
+      </p>
+    </div>
 
-    <header style="margin-top: var(--space-5)">
-      <dl class="definition-list">
-        <div class="definition-row">
-          <dt>学習した内容</dt>
-          <dd><%= @study_record.activity %></dd>
-        </div>
-        <div class="definition-row">
-          <dt>予定時間</dt>
-          <dd class="num"><%= @study_record.planned_minutes %>分</dd>
-        </div>
-        <div class="definition-row">
-          <dt>実時間</dt>
-          <dd class="num"><%= @study_record.actual_minutes %>分</dd>
-        </div>
-      </dl>
-    </header>
-
-    <section class="section" style="margin-top: var(--space-5)">
-      <section class="evaluation-start" aria-labelledby="start-title">
-        <h2 id="start-title">着手</h2>
-        <p style="margin-top: var(--space-2)">
-          学習を開始したことは自動で記録されています
-        </p>
-      </section>
-
-      <%= form_with model: @evaluation, url: study_record_evaluation_path(@study_record) do |form| %>
-        <% if @evaluation.errors[:base].any? %>
-          <p class="group-error" role="alert">
-            <%= @evaluation.errors.full_messages_for(:base).first %>
-          </p>
-        <% end %>
-
-        <div class="eval-columns">
-          <fieldset<%= ' aria-describedby="focus-option-error"'.html_safe if @evaluation.errors[:focus_option].any? %>>
-            <legend><h2>集中</h2></legend>
-
-            <% if @evaluation.errors[:focus_option].any? %>
-              <p class="group-error" id="focus-option-error" role="alert">
-                <%= @evaluation.errors.full_messages_for(:focus_option).first %>
-              </p>
-            <% end %>
-
-            <div class="choice-list<%= ' has-error' if @evaluation.errors[:focus_option].any? %>">
-              <% @focus_options.each do |option| %>
-                <%= form.radio_button :focus_option_id, option.id, class: "choice-input" %>
-                <%= form.label :focus_option_id, value: option.id, class: "choice-row" do %>
-                  <span class="choice-mark" aria-hidden="true"></span>
-                  <span>
-                    <strong><%= option.label %></strong><br>
-                    <span class="small"><%= option.description %></span>
-                  </span>
-                <% end %>
-              <% end %>
-            </div>
-          </fieldset>
-
-          <fieldset<%= ' aria-describedby="challenge-option-error"'.html_safe if @evaluation.errors[:challenge_option].any? %>>
-            <legend><h2>チャレンジ</h2></legend>
-
-            <% if @evaluation.errors[:challenge_option].any? %>
-              <p class="group-error" id="challenge-option-error" role="alert">
-                <%= @evaluation.errors.full_messages_for(:challenge_option).first %>
-              </p>
-            <% end %>
-
-            <div class="choice-list<%= ' has-error' if @evaluation.errors[:challenge_option].any? %>">
-              <% @challenge_options.each do |option| %>
-                <%= form.radio_button :challenge_option_id, option.id, class: "choice-input" %>
-                <%= form.label :challenge_option_id, value: option.id, class: "choice-row" do %>
-                  <span class="choice-mark" aria-hidden="true"></span>
-                  <span>
-                    <strong><%= option.label %></strong><br>
-                    <span class="small"><%= option.description %></span>
-                  </span>
-                <% end %>
-              <% end %>
-            </div>
-          </fieldset>
-        </div>
-
-        <div class="button-row evaluation-actions" style="margin-top: var(--space-7)">
-          <%= form.submit class: "btn btn-primary" %>
+    <dl class="evaluation-done-facts">
+      <div class="evaluation-done-row">
+        <dt class="evaluation-done-key">
+          <span class="evaluation-done-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 20l1-4L16.5 4.5a2 2 0 0 1 3 3L8 19z"/><path d="M14.5 6.5l3 3"/></svg>
+          </span>
+          <%= StudyRecord.human_attribute_name(:activity) %>
+        </dt>
+        <dd class="evaluation-done-value"><%= @study_record.activity %></dd>
+      </div>
+      <div class="evaluation-done-row">
+        <dt class="evaluation-done-key">
+          <span class="evaluation-done-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="13.5" r="6.5"/><path d="M12 13.5V9.5M12 7V4M9.5 4h5"/></svg>
+          </span>
+          <%= t(".planned_minutes") %>
+        </dt>
+        <dd class="evaluation-done-value num"><%= @study_record.planned_minutes %>分</dd>
+      </div>
+      <% if @study_record.learning_skill %>
+        <div class="evaluation-done-row">
+          <dt class="evaluation-done-key">
+            <span class="evaluation-done-icon" aria-hidden="true">
+              <%= render "shared/bulb_icon", css_class: "evaluation-done-bulb" %>
+            </span>
+            <%= t(".learning_skill") %>
+          </dt>
+          <dd class="evaluation-done-value"><%= @study_record.learning_skill.name %></dd>
         </div>
       <% end %>
-    </section>
+    </dl>
+  </section>
+
+  <div class="evaluation-question">
+    <h1 class="evaluation-question-title"><%= t(".question") %></h1>
+    <p class="evaluation-question-help"><%= t(".question_help") %></p>
   </div>
+
+  <%= form_with model: @evaluation, url: study_record_evaluation_path(@study_record), class: "evaluation-form" do |form| %>
+    <% if @evaluation.errors[:base].any? %>
+      <p class="group-error" role="alert">
+        <%= @evaluation.errors.full_messages_for(:base).first %>
+      </p>
+    <% end %>
+
+    <%= tag.fieldset class: "evaluation-panel", aria: { describedby: ("focus-option-error" if @evaluation.errors[:focus_option].any?) } do %>
+      <legend class="evaluation-panel-head">
+        <span class="evaluation-panel-label">
+          <span class="evaluation-panel-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".6"/></svg>
+          </span>
+          <%= Evaluation.human_attribute_name(:focus_option) %>
+        </span>
+        <span class="evaluation-panel-aux"><%= t(".choose_one", count: @focus_options.size) %></span>
+      </legend>
+
+      <% if @evaluation.errors[:focus_option].any? %>
+        <p class="group-error evaluation-panel-error" id="focus-option-error" role="alert">
+          <%= @evaluation.errors.full_messages_for(:focus_option).first %>
+        </p>
+      <% end %>
+
+      <div class="evaluation-choices<%= ' has-error' if @evaluation.errors[:focus_option].any? %>">
+        <% @focus_options.each do |option| %>
+          <%= form.radio_button :focus_option_id, option.id, class: "evaluation-choice-input" %>
+          <%= form.label :focus_option_id, value: option.id, class: "evaluation-choice" do %>
+            <span class="evaluation-choice-label"><%= option.label %></span>
+            <span class="evaluation-choice-description"><%= option.description %></span>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%= tag.fieldset class: "evaluation-panel", aria: { describedby: ("challenge-option-error" if @evaluation.errors[:challenge_option].any?) } do %>
+      <legend class="evaluation-panel-head">
+        <span class="evaluation-panel-label">
+          <span class="evaluation-panel-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M5 21 10.5 3"/><path d="M10.5 4c3.3.3 5.5 3 8.5 3.5l-2.7 8.3c-3-.3-5.2-3-8.5-3.5z"/></svg>
+          </span>
+          <%= Evaluation.human_attribute_name(:challenge_option) %>
+        </span>
+        <span class="evaluation-panel-aux"><%= t(".choose_one", count: @challenge_options.size) %></span>
+      </legend>
+
+      <% if @evaluation.errors[:challenge_option].any? %>
+        <p class="group-error evaluation-panel-error" id="challenge-option-error" role="alert">
+          <%= @evaluation.errors.full_messages_for(:challenge_option).first %>
+        </p>
+      <% end %>
+
+      <div class="evaluation-choices<%= ' has-error' if @evaluation.errors[:challenge_option].any? %>">
+        <% @challenge_options.each do |option| %>
+          <%= form.radio_button :challenge_option_id, option.id, class: "evaluation-choice-input" %>
+          <%= form.label :challenge_option_id, value: option.id, class: "evaluation-choice" do %>
+            <span class="evaluation-choice-label"><%= option.label %></span>
+            <span class="evaluation-choice-description"><%= option.description %></span>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="evaluation-actions">
+      <%= form.submit t(".submit"), class: "btn btn-primary" %>
+    </div>
+  <% end %>
 </div>

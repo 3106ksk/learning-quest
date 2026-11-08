@@ -25,11 +25,4 @@ RSpec.describe "StaticPages", type: :request do
       end
     end
   end
-
-  def sign_in(user)
-    post session_path, params: {
-      email_address: user.email_address,
-      password: "Password123!"
-    }
-  end
 end

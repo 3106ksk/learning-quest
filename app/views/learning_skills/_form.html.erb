@@ -1,0 +1,32 @@
+<% name_has_error = learning_skill.errors[:name].any? %>
+<% name_error_type = learning_skill.errors.details[:name].find { |error| [ :blank, :too_long, :taken ].include?(error[:error]) }&.fetch(:error, nil) %>
+
+<section class="skill-form-card" aria-label="<%= t('learning_skills.new.title') %>">
+  <%= render "shared/skill_illustration" %>
+  <h2 class="skill-form-title"><%= t("learning_skills.index.new_skill") %></h2>
+
+  <%= form_with model: learning_skill, data: { turbo_frame: "_top" }, class: "skill-form" do |form| %>
+    <div class="skill-name-field">
+      <div class="skill-name-head">
+        <%= form.label :name, class: "skill-name-label" do %>
+          <span class="skill-name-icon" aria-hidden="true"><%= render "shared/bulb_icon", css_class: nil %></span>
+          <%= t(".name") %>
+        <% end %>
+        <span class="skill-name-aux"><%= t(".name_aux") %></span>
+      </div>
+      <%= form.text_field :name,
+            maxlength: 100,
+            placeholder: t(".name_placeholder"),
+            class: "field-control skill-name-input#{' has-error' if name_has_error}",
+            aria: { invalid: ("true" if name_has_error), describedby: ("learning-skill-name-error" if name_has_error) } %>
+      <% if name_has_error %>
+        <p id="learning-skill-name-error" class="group-error skill-name-error"><%= t(".name_errors.#{name_error_type}") %></p>
+      <% end %>
+    </div>
+
+    <div class="skill-form-actions">
+      <%= link_to t(".cancel"), learning_skills_path, class: "btn btn-ghost" %>
+      <%= form.submit t(".submit"), class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</section>

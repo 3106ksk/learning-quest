@@ -1,0 +1,457 @@
+require "rails_helper"
+
+RSpec.describe "Goals", type: :request do
+  include ActiveSupport::Testing::TimeHelpers
+
+  describe "GET /goals (index)" do
+    context "ログイン済みの場合" do
+      let(:user) { create(:user) }
+
+      before do
+        sign_in(user)
+      end
+
+      it "他ユーザーの目標を表示しない" do
+        own_goal = create(:goal, user: user, name: "自分の目標")
+        other_users_goal = create(:goal, :completed, name: "他ユーザーの目標")
+
+        get goals_path
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include(own_goal.name)
+        expect(response.body).not_to include(other_users_goal.name)
+      end
+
+      it "他ユーザーのgoal_idを指定しても自分の初期選択の目標を表示する" do
+        own_goal = create(:goal, user: user, name: "自分の進行中の目標")
+        other_user = create(:user)
+        other_users_goal = create(:goal, user: other_user, name: "他ユーザーだけの目標")
+
+        get goals_path(goal_id: other_users_goal.id)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).not_to include(other_users_goal.name)
+
+        frame = response.parsed_body.at_css("turbo-frame#goal-dex")
+        expect(frame.at_css(".goal-dex-hero-name").text).to eq(own_goal.name)
+
+        selected_tiles = frame.css('.goal-dex-tile[aria-current="true"]')
+        expect(selected_tiles.size).to eq(1)
+        expect(selected_tiles.first["href"]).to eq(goals_path(goal_id: own_goal.id))
+      end
+
+      it "進行中の目標、完了日の新しい順の完了目標の順に表示する" do
+        active_goal = create(:goal, user: user, name: "進行中の目標")
+        older_completed_goal = create(
+          :goal,
+          :completed,
+          user: user,
+          name: "以前に完了した目標",
+          completed_at: 2.days.ago
+        )
+        newer_completed_goal = create(
+          :goal,
+          :completed,
+          user: user,
+          name: "最近完了した目標",
+          completed_at: 1.day.ago
+        )
+
+        get goals_path
+
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body.css(".goal-dex-tile-title").map(&:text)).to eq([
+          active_goal.name,
+          newer_completed_goal.name,
+          older_completed_goal.name
+        ])
+      end
+
+      it "goal_idで指定した目標を左に表示し、タイルを選択状態にする" do
+        create(:goal, user: user, name: "先頭の目標")
+        selected_goal = create(:goal, :completed, user: user, name: "選択した目標")
+
+        get goals_path(goal_id: selected_goal.id)
+
+        expect(response).to have_http_status(:ok)
+
+        frame = response.parsed_body.at_css("turbo-frame#goal-dex")
+        expect(frame).to be_present
+        expect(frame.at_css(".goal-dex-hero-name").text).to eq(selected_goal.name)
+
+        selected_tile = frame.at_css(".goal-dex-tile[aria-current='true']")
+        expect(selected_tile).to be_present
+        expect(selected_tile["href"]).to eq(goals_path(goal_id: selected_goal.id))
+        expect(selected_tile["data-turbo-frame"]).to eq("goal-dex")
+        expect(selected_tile["data-turbo-action"]).to eq("advance")
+        expect(selected_tile["class"]).to include("is-selected")
+      end
+
+      it "目標が0件のとき、目標未設定の案内と目標設定画面へのリンクを表示する" do
+        get goals_path
+
+        expect(response).to have_http_status(:ok)
+
+        document = response.parsed_body
+        empty_state = document.at_css(".goal-dex-empty")
+        expect(empty_state).to be_present
+        expect(empty_state.at_css("h1").text).to eq("目標未設定")
+        expect(empty_state.text).to include("学習を始めるには、目標の設定が必要です。")
+        expect(empty_state.at_css("a[href='#{new_goal_path}']").text).to eq("目標を設定する")
+        expect(document.at_css(".goal-dex-tally").text.squish).to eq("0目標 0完了")
+        next_goal = document.at_css(".goal-dex-next-tile[href='#{new_goal_path}']")
+        expect(next_goal).to be_present
+        expect(next_goal.text).to include("＋ 次の目標")
+      end
+
+      it "完了目標のみのとき、完了目標を左に表示する" do
+        completed_goal = create(:goal, :completed, user: user, name: "完了した目標")
+
+        get goals_path
+
+        expect(response).to have_http_status(:ok)
+
+        document = response.parsed_body
+        expect(document.at_css(".goal-dex-empty")).to be_nil
+        expect(document.at_css(".goal-dex-hero-name").text).to eq(completed_goal.name)
+        expect(document.at_css('.goal-dex-tile[aria-current="true"]')).to be_present
+      end
+    end
+  end
+
+  describe "GET /goals/new" do
+    context "未ログインの場合" do
+      it "ログイン画面へ遷移する" do
+        get new_goal_path
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    context "ログイン済みの場合" do
+      let(:user) { create(:user) }
+
+      before do
+        sign_in(user)
+      end
+
+      it "目標設定画面を表示する" do
+        get new_goal_path
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "目標名フォームを表示する" do
+        get new_goal_path
+
+        form = response.parsed_body.at_css("form[action='#{goals_path}']")
+
+        expect(form).to be_present
+        expect(form.at_css('input[name="goal[name]"]')).to be_present
+      end
+    end
+  end
+
+  describe "POST /goals" do
+    let(:user) { create(:user) }
+    let(:valid_params) do
+      {
+        goal: {
+          name: "Railsを習得する"
+        }
+      }
+    end
+
+    before do
+      sign_in(user)
+    end
+
+    context "有効な目標名の場合" do
+      it "ログインユーザーの進行中の目標を1件作成する" do
+        expect {
+          post goals_path, params: valid_params
+        }.to change { user.goals.active.count }.from(0).to(1)
+      end
+
+      it "学習開始画面へ遷移し、成功メッセージを設定する" do
+        post goals_path, params: valid_params
+
+        expect(response).to redirect_to(new_study_record_path)
+        expect(flash[:success]).to be_present
+      end
+    end
+
+    context "目標名が空の場合" do
+      it "目標を作成せず、目標設定画面を再表示する" do
+        expect {
+          post goals_path, params: { goal: { name: "" } }
+        }.not_to change(Goal, :count)
+
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(response.parsed_body.at_css('input[name="goal[name]"]')).to be_present
+      end
+    end
+
+    context "目標名が101文字の場合" do
+      it "目標を作成しない" do
+        expect {
+          post goals_path, params: { goal: { name: "あ" * 101 } }
+        }.not_to change(Goal, :count)
+      end
+    end
+
+    context "進行中の目標がすでにある場合" do
+      before do
+        create(:goal, user: user)
+      end
+
+      it "新しい目標を作成しない" do
+        expect {
+          post goals_path, params: valid_params
+        }.not_to change(Goal, :count)
+      end
+    end
+
+    context "別ユーザーのuser_idが送信された場合" do
+      it "user_idを無視し、ログインユーザーの目標を作成する" do
+        other_user = create(:user)
+        params = {
+          goal: valid_params[:goal].merge(user_id: other_user.id)
+        }
+
+        expect {
+          post goals_path, params: params
+        }.to change { user.goals.active.count }.by(1)
+
+        expect(other_user.goals.count).to eq(0)
+        expect(user.goals.active.last.user).to eq(user)
+      end
+    end
+  end
+
+  describe "GET /goals/:id (show)" do
+    let(:user) { create(:user) }
+
+    before do
+      sign_in(user)
+    end
+
+    context "自分の取り組み中の目標の場合" do
+      it "指定した目標名を表示する" do
+        goal = create(:goal, user: user, name: "Railsを習得する")
+
+        get goal_path(goal)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include(goal.name)
+      end
+    end
+
+    context "他ユーザーの目標の場合" do
+      it "目標の内容を表示しない" do
+        other_goal = create(:goal, name: "他ユーザーの目標")
+
+        get goal_path(other_goal)
+
+        expect(response).to have_http_status(:not_found)
+        expect(response.body).not_to include(other_goal.name)
+      end
+    end
+  end
+
+  describe "GET /goals/:id/edit (edit)" do
+    let(:user) { create(:user) }
+
+    before do
+      sign_in(user)
+    end
+
+    context "自分の取り組み中の目標の場合" do
+      it "Turbo Frame内に編集フォームを表示する" do
+        goal = create(:goal, user: user)
+        frame_id = ActionView::RecordIdentifier.dom_id(goal)
+
+        get edit_goal_path(goal)
+
+        expect(response).to have_http_status(:ok)
+
+        frame = response.parsed_body.at_css("turbo-frame##{frame_id}")
+        expect(frame).to be_present
+        expect(frame.at_css("form[action='#{goal_path(goal)}']")).to be_present
+        expect(frame.at_css('input[name="goal[name]"]')).to be_present
+      end
+    end
+
+    context "自分の完了済み目標の場合" do
+      it "目標ページへリダイレクトする" do
+        goal = create(:goal, :completed, user: user)
+
+        get edit_goal_path(goal)
+
+        expect(response).to have_http_status(:see_other)
+        expect(response).to redirect_to(goal_path(goal))
+      end
+    end
+
+    context "他ユーザーの目標の場合" do
+      it "404を返す" do
+        other_goal = create(:goal)
+
+        get edit_goal_path(other_goal)
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
+
+  describe "PATCH /goals/:id (update)" do
+    let(:user) { create(:user) }
+
+    before do
+      sign_in(user)
+    end
+
+    context "有効な目標名の場合" do
+      it "取り組み中の目標名を更新し、目標ページへリダイレクトする" do
+        goal = create(:goal, user: user, name: "変更前の目標")
+
+        expect {
+          patch goal_path(goal), params: { goal: { name: "変更後の目標" } }
+        }.to change { goal.reload.name }
+          .from("変更前の目標")
+          .to("変更後の目標")
+
+        expect(response).to have_http_status(:see_other)
+        expect(response).to redirect_to(goal_path(goal))
+      end
+    end
+
+    context "目標名が101文字の場合" do
+      it "目標名を変更せず、入力値とエラーを再表示する" do
+        goal = create(:goal, user: user, name: "変更前の目標")
+        invalid_name = "あ" * 101
+
+        expect {
+          patch goal_path(goal), params: { goal: { name: invalid_name } }
+        }.not_to change { goal.reload.name }
+
+        expect(response).to have_http_status(:unprocessable_content)
+
+        frame_id = ActionView::RecordIdentifier.dom_id(goal)
+        frame = response.parsed_body.at_css("turbo-frame##{frame_id}")
+        expect(frame).to be_present
+        expect(frame.text).to include("100文字")
+
+        input = frame.at_css('input[name="goal[name]"]')
+        expect(input["value"]).to eq(invalid_name)
+      end
+    end
+
+    context "自分の完了済み目標の場合" do
+      it "目標名を変更せず、目標ページへリダイレクトする" do
+        goal = create(:goal, :completed, user: user, name: "完了済みの目標")
+
+        expect {
+          patch goal_path(goal), params: { goal: { name: "変更後の目標" } }
+        }.not_to change { goal.reload.name }
+
+        expect(response).to have_http_status(:see_other)
+        expect(response).to redirect_to(goal_path(goal))
+      end
+    end
+
+    context "他ユーザーの目標の場合" do
+      it "目標名を変更せず、404を返す" do
+        other_goal = create(:goal, name: "他ユーザーの目標")
+
+        expect {
+          patch goal_path(other_goal), params: { goal: { name: "不正な変更" } }
+        }.not_to change { other_goal.reload.name }
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
+
+  describe "PATCH /goals/:id/complete" do
+    let(:user) { create(:user) }
+
+    before do
+      sign_in(user)
+    end
+
+    it "進行中の目標を完了し、目標詳細画面へリダイレクトする" do
+      goal = create(:goal, user: user)
+      completed_at = Time.zone.local(2026, 9, 20, 12, 0, 0)
+
+      travel_to(completed_at) { patch complete_goal_path(goal) }
+
+      expect(goal.reload).to be_completed
+      expect(goal.completed_at).to eq(completed_at)
+      expect(response).to have_http_status(:see_other)
+      expect(response).to redirect_to(goal_path(goal))
+      expect(flash[:success]).to be_nil
+    end
+
+    it "完了済みの目標を再度完了せず、失敗通知付きで目標詳細画面へリダイレクトする" do
+      completed_at = Time.zone.local(2026, 9, 19, 12, 0, 0)
+      goal = create(:goal, :completed, user: user, completed_at: completed_at)
+
+      patch complete_goal_path(goal)
+
+      expect(goal.reload.status).to eq("completed")
+      expect(goal.completed_at).to eq(completed_at)
+      expect(response).to have_http_status(:see_other)
+      expect(response).to redirect_to(goal_path(goal))
+      expect(flash[:danger]).to eq("この目標はすでに完了しています")
+    end
+  end
+
+  describe "DELETE /goals/:id" do
+    let(:user) { create(:user) }
+
+    before do
+      sign_in(user)
+    end
+
+    context "自分の進行中の目標の場合" do
+      it "目標を削除し、成功通知付きで目標一覧へリダイレクトする" do
+        goal = create(:goal, user: user)
+
+        expect {
+          delete goal_path(goal)
+        }.to change(Goal, :count).by(-1)
+
+        expect(response).to have_http_status(:see_other)
+        expect(response).to redirect_to(goals_path)
+        expect(flash[:success]).to eq("目標を削除しました")
+      end
+    end
+
+    context "自分の完了済み目標の場合" do
+      it "目標を削除し、目標一覧へリダイレクトする" do
+        goal = create(:goal, :completed, user: user)
+
+        expect {
+          delete goal_path(goal)
+        }.to change(Goal, :count).by(-1)
+
+        expect(response).to have_http_status(:see_other)
+        expect(response).to redirect_to(goals_path)
+      end
+    end
+
+    context "他ユーザーの目標の場合" do
+      it "目標を削除せず、404を返す" do
+        other_goal = create(:goal)
+
+        expect {
+          delete goal_path(other_goal)
+        }.not_to change(Goal, :count)
+
+        expect(response).to have_http_status(:not_found)
+        expect(Goal.exists?(other_goal.id)).to be(true)
+      end
+    end
+  end
+end

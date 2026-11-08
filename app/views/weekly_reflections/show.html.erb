@@ -1,0 +1,188 @@
+<% content_for :title, t(".title") %>
+<% highlight = weekly_study_highlight(@weekly_reflection.expectation) %>
+<% previous_exists = @weekly_study[:previous_week_exists] %>
+
+<div class="page-wide">
+  <div class="week-form">
+    <h1 class="sr-only"><%= t(".title") %></h1>
+
+    <% if @goal.active? %>
+      <%= render "weekly_reflections/flow", current: 3 %>
+    <% end %>
+
+    <section class="week-current">
+      <div class="week-current-body">
+        <dl class="week-current-detail">
+          <div class="week-current-row">
+            <dt><span class="week-label"><%= t(".skill_label") %></span></dt>
+            <dd class="week-current-skill">
+              <span class="week-bulb"><%= render "shared/bulb_icon", css_class: "week-bulb-icon" %></span>
+              <span style="overflow-wrap: anywhere"><%= @weekly_reflection.learning_skill.name %></span>
+            </dd>
+          </div>
+          <div class="week-current-row">
+            <dt><span class="week-label"><%= t(".expectation_label") %></span></dt>
+            <dd>
+              <p class="week-expectation"><%= t("enums.weekly_reflection.expectation.#{@weekly_reflection.expectation}") %></p>
+              <% if @weekly_reflection.expectation_note.present? %>
+                <p class="week-expectation-note" style="white-space: pre-wrap; overflow-wrap: anywhere"><%= t(".note_label") %>：<%= @weekly_reflection.expectation_note %></p>
+              <% end %>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="week-current" aria-labelledby="weekly-study-title">
+      <div class="week-current-band">
+        <span class="week-medal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>
+        </span>
+        <h2 id="weekly-study-title" class="week-period num"><%= t(".study_heading") %></h2>
+        <span class="week-band-periods num">
+          <% if previous_exists %>
+            <%= t(".previous_week") %> <%= weekly_reflection_period(@weekly_reflection.week_start_on.prev_week) %>　／
+          <% else %>
+            <%= t(".no_previous_week") %>　／
+          <% end %>
+          <%= t(".current_week") %> <%= weekly_reflection_period(@weekly_reflection.week_start_on) %>
+        </span>
+      </div>
+      <div class="week-stats-body">
+        <div class="week-stat-grid">
+          <% [
+               [ :scope_all, false, :study_count_label, :study_count, :unit_times ],
+               [ :scope_all, false, :study_days_label, :study_days, :unit_days ],
+               [ :scope_skill, true, :selected_count_label, :selected_count, :unit_times ]
+             ].each do |scope, skill_scope, label, key, unit| %>
+            <div class="week-stat<%= ' week-stat-hi' if highlight[:totals] %>">
+              <span class="week-label<%= ' week-label-skill' if skill_scope %>"><%= t(".#{scope}") %></span>
+              <p class="week-stat-title"><%= t(".#{label}") %></p>
+              <div class="week-stat-nums">
+                <% if previous_exists %>
+                  <div class="week-stat-prev"><%= t(".previous_week") %><b><%= @weekly_study[:previous][key] %></b><small><%= t(".#{unit}") %></small></div>
+                <% end %>
+                <div class="week-stat-now"><%= t(".current_week") %><b><%= @weekly_study[:current][key] %></b><small><%= t(".#{unit}") %></small></div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <p class="week-breakdown-caption"><%= t(".breakdown_heading") %></p>
+        <div class="week-breakdown">
+          <% [ [ :focus, t(".focus_heading") ], [ :challenge, t(".challenge_heading") ] ].each do |key, heading| %>
+            <div class="week-bd<%= ' week-bd-hi' if highlight[key] %>">
+              <div class="week-bd-head">
+                <span class="week-label"><%= heading %></span>
+                <% if highlight[key] %>
+                  <span class="week-bd-relevant"><%= t(".relevant") %></span>
+                <% end %>
+              </div>
+              <div class="week-bd-row week-bd-cols">
+                <span></span>
+                <span><%= t(".previous_week") if previous_exists %></span>
+                <span><%= t(".current_week") %></span>
+              </div>
+              <% @weekly_study[:current][key].each do |option, count| %>
+                <div class="week-bd-row">
+                  <span><%= option.label %></span>
+                  <span class="week-bd-prev num"><%= @weekly_study[:previous][key][option] if previous_exists %></span>
+                  <span class="week-bd-now num"><%= count %><small><%= t(".unit_times") %></small></span>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+
+    <% if @goal.active? %>
+      <%= form_with model: @weekly_reflection,
+            url: goal_weekly_reflection_review_path(@goal, @weekly_reflection),
+            method: :patch,
+            class: "form-stack" do |form| %>
+        <section class="goal-card"
+          <% if @weekly_reflection.errors[:feeling].any? %>
+            style="border-color: var(--color-error-600)"
+          <% end %>
+        >
+          <fieldset class="m-0 min-w-0 border-0 p-0"
+            <% if @weekly_reflection.errors[:feeling].any? %>
+              aria-describedby="weekly-reflection-feeling-error" aria-invalid="true"
+            <% end %>
+          >
+            <legend class="week-panel-head">
+              <h2 class="week-panel-title">
+                <% if @weekly_reflection.expectation_undecided? %>
+                  <%= t(".feeling_question_undecided", skill: @weekly_reflection.learning_skill.name) %>
+                <% else %>
+                  <%= t(".feeling_question", expectation: t("enums.weekly_reflection.expectation.#{@weekly_reflection.expectation}")) %>
+                <% end %>
+              </h2>
+              <span class="week-panel-count"><%= t(".choose_one", count: WeeklyReflection.feelings.size) %></span>
+            </legend>
+            <% if @weekly_reflection.errors[:feeling].any? %>
+              <p class="group-error" id="weekly-reflection-feeling-error" role="alert">
+                <%= @weekly_reflection.errors.full_messages_for(:feeling).first %>
+              </p>
+            <% end %>
+
+            <div class="week-choices week-choices-3<%= ' has-error' if @weekly_reflection.errors[:feeling].any? %>">
+              <% WeeklyReflection.feelings.keys.each do |value| %>
+                <%= form.radio_button :feeling, value, class: "week-choice-input" %>
+                <%= form.label :feeling, value: value, class: "week-choice" do %>
+                  <%= t("enums.weekly_reflection.feeling.#{value}") %>
+                  <span class="week-radio" aria-hidden="true"></span>
+                <% end %>
+              <% end %>
+            </div>
+          </fieldset>
+
+          <div class="week-note">
+            <div class="week-note-head">
+              <%= form.label :comment, t(".comment_heading"), class: "field-label" %>
+              <span class="week-note-hint" id="comment-help"><%= t(".comment_help") %></span>
+            </div>
+            <%= form.text_area :comment,
+                  rows: 4,
+                  maxlength: 200,
+                  class: "field-control#{' has-error' if @weekly_reflection.errors[:comment].any?}",
+                  aria: {
+                    describedby: [ "comment-help", ("weekly-reflection-comment-error" if @weekly_reflection.errors[:comment].any?) ].compact.join(" "),
+                    invalid: ("true" if @weekly_reflection.errors[:comment].any?)
+                  } %>
+            <% if @weekly_reflection.errors[:comment].any? %>
+              <p class="group-error" id="weekly-reflection-comment-error" role="alert">
+                <%= @weekly_reflection.errors.full_messages_for(:comment).first %>
+              </p>
+            <% end %>
+          </div>
+        </section>
+
+        <div class="button-row" style="justify-content: center">
+          <%= form.submit t(".submit"), class: "btn btn-primary week-submit" %>
+        </div>
+      <% end %>
+    <% elsif @weekly_reflection.reflected_at.present? %>
+      <section class="goal-card" aria-labelledby="weekly-review-title">
+        <h2 id="weekly-review-title" class="week-panel-title" style="margin-bottom: var(--space-4)"><%= t(".review_heading") %></h2>
+        <dl class="week-current-detail">
+          <div class="week-current-row">
+            <dt><span class="week-label"><%= t(".feeling_label") %></span></dt>
+            <dd class="week-expectation"><%= t("enums.weekly_reflection.feeling.#{@weekly_reflection.feeling}") %></dd>
+          </div>
+          <% if @weekly_reflection.comment.present? %>
+            <div class="week-current-row">
+              <dt><span class="week-label"><%= t(".comment_label") %></span></dt>
+              <dd style="white-space: pre-wrap; overflow-wrap: anywhere"><%= @weekly_reflection.comment %></dd>
+            </div>
+          <% end %>
+        </dl>
+      </section>
+    <% else %>
+      <section class="goal-card">
+        <p class="week-notice-text"><%= t(".completed_notice") %></p>
+      </section>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="dex-tiles">
+  <% learning_skills.each do |learning_skill| %>
+    <% if local_assigns[:goal] %>
+      <% selected = local_assigns.fetch(:selected_ids, []).include?(learning_skill.id) %>
+      <div class="dex-tile skill-tile">
+        <div class="dex-tile-face <%= selected ? "face-in-use" : "face-non" %>">
+          <%= render "shared/bulb_icon", css_class: "dex-watermark" %>
+          <p class="dex-tile-title"><%= learning_skill.name %></p>
+          <% if selected %>
+            <span class="skill-in-use-mark skill-bulb-control" aria-hidden="true">
+              <%= render "shared/bulb_icon", css_class: nil %>
+            </span>
+            <span class="sr-only">この目標で使用中</span>
+          <% else %>
+            <%= button_to goal_skill_settings_path(goal), method: :post,
+                  params: { learning_skill: learning_skill.id },
+                  aria: { label: "#{learning_skill.name}をこの目標で使う" },
+                  form: { class: "skill-bulb-form" }, class: "skill-bulb-button skill-bulb-control" do %>
+              <%= render "shared/bulb_icon", css_class: nil %>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="dex-tile-body"></div>
+      </div>
+    <% else %>
+      <div class="dex-tile skill-tile skill-list-tile">
+        <span class="skill-tile-icon" aria-hidden="true"><%= render "shared/bulb_icon", css_class: nil %></span>
+        <p class="dex-tile-title"><%= learning_skill.name %></p>
+      </div>
+    <% end %>
+  <% end %>
+
+  <% learning_skill_tile_slots(learning_skills.size).times do %>
+    <div class="dex-empty-tile" aria-hidden="true">
+      <span class="dex-empty-face"></span>
+      <span class="dex-empty-label"></span>
+    </div>
+  <% end %>
+</div>

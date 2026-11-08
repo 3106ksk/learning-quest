@@ -1,0 +1,54 @@
+<% content_for :title, t(".title", goal_name: @goal.name) %>
+
+<div class="page-wide goal-skill-settings-page">
+  <header class="goal-skill-settings-header">
+    <%= link_to t(".back"), goal_hub_path, class: "goal-skill-settings-back" %>
+    <h1 class="goal-skill-settings-title"><%= t(".title", goal_name: @goal.name) %></h1>
+  </header>
+
+  <section class="goal-skill-settings-selected" aria-labelledby="selected-skills-heading">
+    <div class="goal-skill-settings-selected-header">
+      <h2 id="selected-skills-heading" class="goal-skill-settings-selected-title"><%= t(".selected_skills") %></h2>
+      <p class="goal-skill-settings-limit-note">
+        <%= render "shared/bulb_icon", css_class: "goal-skill-settings-limit-icon" %>
+        <%= t(".limit_note") %>
+      </p>
+    </div>
+
+    <div class="dex-tiles goal-skill-settings-selected-tiles">
+      <% @skill_settings.each do |skill_setting| %>
+        <% learning_skill = skill_setting.learning_skill %>
+        <div class="dex-tile skill-tile">
+          <div class="dex-tile-face face-in-use">
+            <%= render "shared/bulb_icon", css_class: "dex-watermark" %>
+            <p class="dex-tile-title"><%= learning_skill.name %></p>
+            <%= button_to goal_skill_setting_path(@goal, skill_setting), method: :delete,
+                  aria: { label: "#{learning_skill.name}をこの目標で使うのをやめる" },
+                  class: "skill-in-use-mark skill-unset-button" do %>
+              <%= render "shared/bulb_icon", css_class: nil %>
+            <% end %>
+          </div>
+          <div class="dex-tile-body"></div>
+        </div>
+      <% end %>
+
+      <% [GoalSkillSetting::MAX_PER_GOAL - @skill_settings.size, 0].max.times do %>
+        <div class="dex-empty-tile" aria-hidden="true">
+          <span class="dex-empty-face"></span>
+          <span class="dex-empty-label"></span>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="dex-list goal-skill-settings-list" aria-labelledby="goal-skill-settings-heading">
+    <div class="dex-list-header">
+      <h2 id="goal-skill-settings-heading" class="panel-eyebrow"><%= t(".eyebrow") %></h2>
+      <% if @learning_skills.empty? %>
+        <%= link_to t(".new_skill"), learning_skills_path, class: "btn btn-secondary" %>
+      <% end %>
+    </div>
+
+    <%= render "learning_skills/tiles", learning_skills: @learning_skills, goal: @goal, selected_ids: @selected_ids %>
+  </section>
+</div>

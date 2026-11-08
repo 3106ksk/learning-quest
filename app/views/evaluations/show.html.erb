@@ -14,8 +14,7 @@
     <%= render "shared/evaluation_breakdown", evaluation: @evaluation, rank: @study_record.rank %>
 
     <div class="button-row evaluation-result-actions">
-      <%= link_to t(".actions.history"), histories_path, class: "btn btn-primary" %>
-      <%= link_to t(".actions.study_again"), new_study_record_path, class: "btn btn-secondary" %>
+      <%= link_to t(".actions.study_again"), new_study_record_path, class: "btn btn-primary" %>
     </div>
   </div>
 </div>

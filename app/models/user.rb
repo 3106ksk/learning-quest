@@ -1,12 +1,11 @@
 class User < ApplicationRecord
-  has_secure_password
-  has_many :sessions, dependent: :destroy
-  has_many :study_records, dependent: :destroy
+  devise :database_authenticatable, :registerable,
+         :recoverable, :validatable
 
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  normalizes :email_address, with: ->(e) { e.strip.downcase }
-  validates :name, presence: true, length: { maximum: 50 }
-  validates :email_address, presence: true, length: { maximum: 255 },
-                    format: { with: VALID_EMAIL_REGEX },
-                    uniqueness: { case_sensitive: false }
+  has_many :study_records, dependent: :destroy
+  has_many :goals, dependent: :destroy
+  has_many :learning_skills, dependent: :destroy
+
+  validates :account_name, presence: true, length: { maximum: 50 }
+  validates :email, length: { maximum: 255 }
 end

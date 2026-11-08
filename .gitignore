@@ -27,9 +27,6 @@ out/
 .env.*
 !.env.example
 
-# Local reports
-docs/service-design/effort-growth-visualization-future-report.md
-
 # Ignore key files for decrypting credentials and more.
 /config/*.key
 

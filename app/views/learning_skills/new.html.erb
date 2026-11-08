@@ -1,0 +1,7 @@
+<% content_for :title, t(".title") %>
+
+<div class="page-wide">
+  <%= turbo_frame_tag "skill-form" do %>
+    <%= render "learning_skills/form", learning_skill: @learning_skill %>
+  <% end %>
+</div>

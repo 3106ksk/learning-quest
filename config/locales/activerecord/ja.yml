@@ -4,19 +4,44 @@
         user: ユーザー
       attributes:
         user:
+          account_name: ユーザー名
+          email: メールアドレス
           email_address: E-mailアドレス
           name: ユーザー名
           password: パスワード
-          password_confirmation: パスワード確認
+          password_confirmation: パスワード（確認）
+        goal:
+          name: 目標名
         study_record:
           planned_minutes: 学習時間
-          activity: 今回やること
+          activity: 学習内容
         evaluation:
           focus_option: 集中
           challenge_option: チャレンジ
           study_record_id: 学習記録
+        weekly_reflection:
+          learning_skill: 今週の学習スキル
+          learning_skill_id: 今週の学習スキル
+          expectation: 期待する変化
+          expectation_note: 期待する変化の具体的な内容
+          feeling: 実感
+          comment: ひと言
       errors:
         models:
+          weekly_reflection:
+            attributes:
+              learning_skill:
+                required: を選んでください
+              learning_skill_id:
+                not_in_goal_settings: は、この目標で使う学習スキルから選んでください
+              expectation:
+                inclusion: を選んでください
+              feeling:
+                blank: を選んでください
+          study_record:
+            attributes:
+              learning_skill_id:
+                not_in_goal_settings: は進行中の目標に使用設定してある学習スキルではありません
           evaluation:
             attributes:
               focus_option:
@@ -27,3 +52,7 @@
                 required: を選択してください
               study_record_id:
                 taken: はすでに評価済みです
+          goal_skill_setting:
+            attributes:
+              base:
+                too_many_skills: 設定できる学習スキルは%{count}件までです

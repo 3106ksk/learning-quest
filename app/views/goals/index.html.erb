@@ -1,0 +1,72 @@
+<% content_for :title, t(".title") %>
+
+<div class="page-wide goal-dex-page">
+  <%= turbo_frame_tag "goal-dex", class: "goal-dex#{@selected_goal ? ' has-selection' : ' is-empty'}" do %>
+    <% if @selected_goal %>
+      <section class="goal-dex-hero is-<%= @selected_goal.status %>" aria-labelledby="selected-goal-name">
+        <div class="goal-dex-hero-top">
+          <span class="goal-dex-medal is-<%= @selected_goal.status %>" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><% if @selected_goal.completed? %><path d="M5 12.5l4.5 4.5L19 7.5" /><% else %><path d="M5 21 10.5 3" /><path d="M10.5 4c3.3.3 5.5 3 8.5 3.5l-2.7 8.3c-3-.3-5.2-3-8.5-3.5z" /><% end %></svg>
+          </span>
+          <p class="goal-dex-status"><%= t("enums.goal.status.#{@selected_goal.status}") %></p>
+        </div>
+        <h1 id="selected-goal-name" class="goal-dex-hero-name"><%= @selected_goal.name %></h1>
+        <p class="goal-dex-hero-date"><%= goal_list_date(@selected_goal) %></p>
+        <%= link_to t(".view_goal"), goal_path(@selected_goal), class: "btn btn-secondary goal-dex-hero-link", data: { turbo_frame: "_top" } %>
+      </section>
+    <% else %>
+      <section class="goal-dex-empty" aria-labelledby="goal-unset-heading">
+        <p class="goal-dex-status"><%= t(".goal_unset_status") %></p>
+        <h1 id="goal-unset-heading" class="goal-dex-empty-title"><%= t(".goal_unset") %></h1>
+        <p class="goal-dex-empty-description"><%= t(".goal_unset_description") %></p>
+        <%= link_to t(".new_goal"), new_goal_path, class: "btn btn-secondary goal-dex-empty-link", data: { turbo_frame: "_top" } %>
+      </section>
+    <% end %>
+
+    <section class="goal-dex-list" aria-labelledby="goal-dex-heading">
+      <div class="goal-dex-list-header">
+        <h2 id="goal-dex-heading" class="goal-dex-heading">
+          <span class="goal-dex-heading-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 21 10.5 3" /><path d="M10.5 4c3.3.3 5.5 3 8.5 3.5l-2.7 8.3c-3-.3-5.2-3-8.5-3.5z" /></svg></span>
+          <%= t(".eyebrow") %>
+        </h2>
+        <p class="goal-dex-tally">
+          <span><b><%= @goals.count %></b><%= t(".goals_count") %></span>
+          <span><b><%= @goals.count(&:completed?) %></b><%= t(".completed_count") %></span>
+        </p>
+      </div>
+
+      <div class="goal-dex-tiles">
+        <% @goals.each do |goal| %>
+          <% selected = goal == @selected_goal %>
+          <%= link_to goals_path(goal_id: goal.id),
+                class: "goal-dex-tile is-#{goal.status}#{' is-selected' if selected}",
+                aria: ({ current: "true" } if selected),
+                data: { turbo_frame: "goal-dex", turbo_action: "advance" } do %>
+            <p class="goal-dex-tile-status"><%= t("enums.goal.status.#{goal.status}") %></p>
+            <p class="goal-dex-tile-title"><%= goal.name %></p>
+            <p class="goal-dex-tile-date"><%= goal_list_date(goal) %></p>
+          <% end %>
+        <% end %>
+
+        <% if @goals.none?(&:active?) %>
+          <%= link_to new_goal_path, class: "goal-dex-next-tile", data: { turbo_frame: "_top" } do %>
+            <span class="goal-dex-next-face" aria-hidden="true">＋</span>
+            <span class="goal-dex-next-label"><%= t(".next_goal") %></span>
+          <% end %>
+        <% else %>
+          <div class="goal-dex-next-tile">
+            <span class="goal-dex-next-face" aria-hidden="true">＋</span>
+            <span class="goal-dex-next-label"><%= t(".next_goal") %></span>
+          </div>
+        <% end %>
+
+        <% goal_tile_slots(@goals.size).times do %>
+          <div class="goal-dex-empty-tile" aria-hidden="true">
+            <span class="goal-dex-empty-face"></span>
+            <span class="goal-dex-empty-label"></span>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+</div>

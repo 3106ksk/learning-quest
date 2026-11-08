@@ -1,7 +1,15 @@
 Rails.application.routes.draw do
+  devise_for :users,
+             controllers: { registrations: "users/registrations" },
+             skip: [ :passwords, :registrations ]
+
+  devise_scope :user do
+    get "users/sign_up" => "users/registrations#new", as: :new_user_registration
+    post "users" => "users/registrations#create", as: :user_registration
+  end
   root "static_pages#home"
-  resource :session
-  resource :sign_up
+  get "terms" => "static_pages#terms", as: :terms
+  get "privacy" => "static_pages#privacy", as: :privacy
 
   resources :study_records, only: [ :new, :create, :show ] do
     member do
@@ -14,6 +22,21 @@ Rails.application.routes.draw do
   end
 
   resources :histories, only: [ :index, :show ]
+
+  resource :goal_hub, only: :show
+
+  resources :goals do
+    member do
+      patch :complete
+    end
+
+    resources :goal_skill_settings, only: [ :index, :create, :destroy ], as: :skill_settings, path: "skill_settings"
+    resources :weekly_reflections, only: [ :index, :new, :create, :show ] do
+      resource :review, only: [ :show, :update ]
+    end
+  end
+
+  resources :learning_skills, only: [ :index, :new, :create ]
 
   get "up" => "rails/health#show", as: :rails_health_check
 end

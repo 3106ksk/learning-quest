@@ -1,0 +1,48 @@
+<% content_for :title, t(".title") %>
+<% previous_exists = @weekly_study[:previous_week_exists] %>
+
+<div class="page-wide">
+  <div class="week-form week-result">
+    <h1 class="sr-only"><%= t(".title") %></h1>
+
+    <section class="week-current" aria-labelledby="trends-title">
+      <div class="week-current-band week-result-band">
+        <span class="week-medal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>
+        </span>
+        <h2 id="trends-title" class="week-period num"><%= t(".trends_heading") %></h2>
+      </div>
+      <div class="week-current-body week-result-body">
+        <p class="week-result-periods num">
+          <% if previous_exists %>
+            <%= t(".previous_week") %> <%= weekly_reflection_period(@weekly_reflection.week_start_on.prev_week) %>　／
+          <% end %>
+          <%= t(".current_week") %> <%= weekly_reflection_period(@weekly_reflection.week_start_on) %>
+        </p>
+        <div class="week-result-context">
+          <span class="week-bulb week-bulb-sm"><%= render "shared/bulb_icon", css_class: "week-bulb-icon" %></span>
+          <span class="week-result-skill"><%= @weekly_reflection.learning_skill.name %></span>
+          <span class="week-result-expectation"><%= t(".expectation_label") %>：<%= t("enums.weekly_reflection.expectation.#{@weekly_reflection.expectation}") %></span>
+        </div>
+        <% review_trend_items(@trends, @weekly_reflection).each do |item| %>
+          <div class="week-result-item">
+            <span class="week-label"><%= item[:label] %></span>
+            <p class="week-verdict"><%= item[:verdict] %></p>
+            <p class="week-result-sentence"><%= item[:sentence] %></p>
+          </div>
+        <% end %>
+      </div>
+    </section>
+
+    <section class="goal-card week-result-count" aria-labelledby="continuation-title">
+      <h2 id="continuation-title" class="week-panel-title"><%= t(".count_heading") %></h2>
+      <% review_continuation_lines(@weekly_reflection, selected_count: @weekly_study[:current][:selected_count], skill_total: @skill_total).each do |line| %>
+        <p class="week-result-sentence"><%= line %></p>
+      <% end %>
+    </section>
+
+    <div class="week-result-actions">
+      <%= link_to t(".list_button"), goal_weekly_reflections_path(@goal), class: "btn btn-primary week-submit" %>
+    </div>
+  </div>
+</div>

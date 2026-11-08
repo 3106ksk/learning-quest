@@ -2,10 +2,15 @@ ja:
   date:
     formats:
       record: "%-m/%-d"
+      record_weekday: "%-m/%-d（%a）"
+      completed: "%Y年%-m月%-d日"
   time:
     formats:
       record: "%-m/%-d %H:%M"
       clock: "%H:%M"
+  errors:
+    form:
+      invalid: 入力内容をご確認ください
   helpers:
     submit:
       create: カウントを作成する
@@ -20,15 +25,17 @@ ja:
       password_confirmation: パスワード（確認）
   shared:
     header:
-      brand: きづき
+      brand: MySkillLab
       login: ログイン
-      sign_up: 無料で始める
-    sidebar:
-      brand: きづき
+      sign_up: アカウント作成
       logout: ログアウト
-      nav_history: 履歴
       nav_study: 学習する
-      nav_settings: 設定
+      nav_goals: 目標
+      nav_learning_skills: 学習スキル
+    footer:
+      terms: 利用規約
+      privacy: プライバシーポリシー
+      signature: © 2026 MySkillLab
     study_record_summary:
       title: 今回の学習
       started_at: 開始日時
@@ -39,37 +46,138 @@ ja:
       title: 今回の努力の記録
   static_pages:
     home:
-      brand: きづき
-      headline: 学習時間だけでは見えない努力を、記録に残す。
-      caption: 着手・集中・チャレンジの3つで、その日の学習を振り返る。
-      body: |-
-        疲れていても始められた日も、集中が切れた日も。
-        時間の長さには写らない努力を記録します。
-      study:
-        title_html: "%{minutes}分から、始められる。"
-        body: 時間を選んで、学習する内容を書いて、始めるだけ。
-      evaluation:
-        title: 終わったら、選ぶだけ。
-        body: 学習に取り組んだかは自動で記録。集中とチャレンジを、実感に近いものから1つずつ選ぶだけ。その日の学習への姿勢をRankに変換
-        note_html: Rankは成績ではありません。今日の努力を%{axes}つの軸で要約した印です。
-      history:
-        title: 続けた分だけ、記録に残る。
-        body: いつ、どれくらい、どんな状態で取り組めたか。何度でも見返せます。
-      principles:
-        title: きづきが、しないこと。
-        items:
-          - 他人と比べること、ランキング
-          - 連続日数の強制。途切れても、戻ってくればいい
-          - Rank Cを「失敗」と呼ぶこと
-      origin:
-        title: なぜ「きづき」か。
-        body: 学習の記録が積み重なると、自分がどんなときに学べるのかが見えてきます。
-        vision: 気づくたびに、築かれていく——それが名前の由来であり、このサービスが目指している「じぶんの取扱説明書」です。
-      final_cta:
-        title_html: "最初の%{minutes}分から、<br>始めてみませんか。"
-      cta_primary: 無料で始める
+      brand: MySkillLab
+      headline: 毎日の学習の工夫を、見つけて、試して、残す。
+      lead: 成果がすぐに出なくても、日々の工夫は積み重なっています。試したやり方と、うまくいったやり方を残して、自分に合う学び方を育てます。
+      cta_primary: 学習の工夫を試してみる
       cta_login: ログイン
-      footer_signature: きづき KIZUKI
+      cta_note: まずは無料でアカウントを作成します。
+      consent_html: 登録すると、%{terms}と%{privacy}に同意したものとみなされます。
+      problems:
+        title: こんなことは、ありませんか？
+        learner:
+          label: 学習に取り組んでいて
+          items:
+            - title: 頑張っているのに、成果がすぐに見えない
+              body: 結果が出るまでには、時間がかかります。
+            - title: 成果だけで測ると、日々の工夫が見えない
+              body: 試したやり方や向き合ってきた積み重ねは、成果の数字には現れません。
+            - title: 落ち込んで、やる気が続かなくなる
+              body: 手応えを感じられないと、学習そのものが重くなります。
+        service:
+          label: これまでの学習アプリで
+          items:
+            - title: 学ぶ内容ごとに、記録がばらばらになる
+              body: 英単語、音読、英会話と、内容ごとに残す手間がかかります。全体の取り組みも見えません。
+            - title: 多機能すぎて、使いこなせない
+              body: 操作を覚える前に、やる気を失ってしまいます。
+            - title: 続けられない日に、罪悪感が出る
+              body: 継続日数を指標にするアプリは、忙しい人ほど負担になります。
+      steps:
+        title: 使い方は、5ステップ。
+        items:
+          - title: 目標と、試したい工夫を用意する
+            body: 目標を1つ決めます。「問題を解く前に制限時間を決める」など、試したい工夫は学習スキルとして登録します。
+          - title: 使う学習スキルを選ぶ
+            body: 目標ごとに、最大3つまで。選んだものが、学習を始めるときに使えるようになります。
+          - title: いつもの学習で、使う
+            body: 時間とやることを決めて、学習スキルを選んで学習。終わったら、集中とチャレンジを選ぶだけです。
+          - title: 1週間、試すものを決める
+            body: 週のはじめに、試す学習スキルと、期待する変化を選びます。
+          - title: 週末に振り返って、傾向を見る
+            body: 感じられたかを答えると、前の週との違いが一言で届きます。
+      trend:
+        title: 見たい変化に合わせて、傾向が一言で届く。
+        body: 期待する変化を選ぶと、前の週との違いが、このように見つかります。他人との比較も、連続日数の強制もありません。
+        previous: 前週
+        current: 今週
+        items:
+          - label: 始めやすく、続けやすくしたい
+            phrase: 学習した日が、増えました。
+            previous: 2日
+            current: 5日
+            previous_width: 40
+            current_width: 100
+          - label: 集中して取り組みたい
+            phrase: 集中できた回が、増えました。
+            previous: 3回中1回
+            current: 3回中3回
+            previous_width: 33
+            current_width: 100
+          - label: 決めた内容に取り組みたい
+            phrase: 決めた内容を超えて進めた回が、増えました。
+            previous: 3回中0回
+            current: 3回中2回
+            previous_width: 3
+            current_width: 67
+      closing:
+        title: 成果がすぐに出なくても、積み重ねた工夫は、あなたの学び方になります。
+    terms:
+      title: 利用規約
+      updated_at: "最終更新日: 2026年11月6日"
+      intro: この利用規約（以下「本規約」）は、学習の記録と振り返りのサービス「MySkillLab」（以下「本サービス」）の利用条件を定めるものです。本サービスを利用する方は、本規約に同意したものとみなします。
+      sections:
+        - heading: 第1条 利用登録
+          items:
+            - 本サービスの利用には、アカウント名・メールアドレス・パスワードの登録が必要です。
+            - 登録する情報は、正確なものを入力してください。
+            - パスワードは、ご自身の責任で管理してください。第三者に使わせたり、貸したりしないでください。
+            - 次の場合は、運営者が登録をお断りすることがあります。登録した情報に誤りや虚偽があるとき、過去に本規約に違反したことがあるとき、そのほか運営者が登録を適当でないと判断したとき。
+        - heading: 第2条 禁止事項
+          body:
+            - 次の行為をしないでください。
+          items:
+            - 法令または公序良俗に反する行為
+            - 他の人のアカウントを使う、または使おうとする行為
+            - 本サービスやサーバーに、不正にアクセスする行為、負荷をかける行為
+            - 本サービスの運営を妨げる行為
+            - 他の人の個人情報を、その人の同意なく入力する行為
+            - そのほか、運営者が不適切と判断する行為
+        - heading: 第3条 サービスの変更・停止
+          items:
+            - 運営者は、事前に知らせることなく、本サービスの内容を変更したり、提供を一時的に止めたり、終了したりすることがあります。
+            - 禁止事項に当たる行為があったときは、運営者は、その人の利用をお断りすることがあります。
+        - heading: 第4条 免責
+          items:
+            - 本サービスの自己評価（集中・チャレンジなど）や記録は、ご自身の振り返りのための目安です。学習の成果や効果を保証するものではありません。
+            - 本サービスは、現状のまま提供します。内容の正確さ・安全さ・継続して使えることを、運営者は保証しません。
+            - 本サービスの利用や、停止・変更・終了によって生じた損害について、運営者は、故意または重大な過失がある場合を除いて、責任を負いません。
+        - heading: 第5条 規約の変更
+          items:
+            - 運営者は、必要に応じて本規約を変更することがあります。
+            - 変更した規約は、このページに掲載した時点から効力を持ちます。変更後も本サービスを使い続けた場合は、変更後の規約に同意したものとみなします。
+        - heading: 第6条 個人情報の取扱い
+          body:
+            - 本サービスで預かる個人情報は、別に定める「プライバシーポリシー」にしたがって取り扱います。
+    privacy:
+      title: プライバシーポリシー
+      updated_at: "最終更新日: 2026年11月6日"
+      intro: 「MySkillLab」（以下「本サービス」）は、利用者から預かる情報を、このプライバシーポリシーにしたがって取り扱います。
+      sections:
+        - heading: 1. 集める情報
+          body:
+            - 利用者が入力した、または本サービスの利用にともなって記録される、次の情報を保存します。
+          items:
+            - アカウントの情報：メールアドレス、アカウント名、パスワード（暗号化して保存します。運営者が元のパスワードを見ることはできません）
+            - 目標と学習スキル：設定した目標、選んだ学習スキル
+            - 学習の記録：学習の開始・終了の時刻、学習した時間、今回やること
+            - 自己評価：集中・チャレンジの自己評価
+            - 週の振り返り：期待、期待の補足、実感、ひと言
+        - heading: 2. 使う目的
+          body:
+            - 集めた情報は、次の目的に使います。
+          items:
+            - 学習の記録と振り返りを、利用者本人に表示するため
+            - 本サービスを改善するため
+        - heading: 3. 保存先
+          body:
+            - 集めた情報は、国内外のクラウドサービスに保存します。
+        - heading: 4. 第三者への提供
+          body:
+            - 集めた情報は、法令による場合を除いて、利用者の同意なく第三者に提供しません。
+        - heading: 5. 方針の変更
+          body:
+            - このプライバシーポリシーは、必要に応じて変更することがあります。変更したときは、このページに掲載し、「最終更新日」を改めます。
   sessions:
     new:
       title: ログイン
@@ -85,12 +193,256 @@ ja:
       danger: メールアドレスまたはパスワードが正しくありません
   sign_ups:
     show:
-      title: ユーザー登録
+      title: 新規アカウント作成
       submit: 登録する
-      to_login_page: ログインページへ
+      to_login_notice: アカウントをお持ちの方は
+      to_login_page: ログイン
     create:
       success: ユーザー登録が完了しました
       danger: ユーザー登録に失敗しました
+  goal_hubs:
+    show:
+      title: 目標
+      detail: 詳細
+      empty_title: 進行中の目標はありません
+      set_goal: 目標を設定する
+      list_title: 目標一覧
+      list_description: これまでの目標を確認する
+      skills_title: この目標で使う学習スキル
+      skills_description: スキルの使用を設定する
+      skills_unavailable: 目標を設定すると、使う学習スキルを選べます
+      reflections_title: スキルの振り返り
+      reflections_description: 1週間ごとに、使った学習スキルを振り返る
+      reflections_unavailable: 目標を決めると、スキルの振り返りを始められます
+  weekly_reflections:
+    flow:
+      choose: 選ぶ
+      choose_note: 学習スキルと期待する変化
+      use: 1週間、使う
+      use_note: いつもの学習で
+      reflect: 週末に、振り返る
+      reflect_note: 感じられたかを答える
+    index:
+      title: スキルの振り返り
+      review: 振り返る
+      current_week_empty: まだ決めていません
+      decide: 決める
+      week_suffix: の週
+      skill_label: 今週の学習スキル
+      expectation_label: 期待する変化
+      note_label: 具体的に
+      past_weeks_heading: これまでの週
+      past_weeks_empty: これまでの週は、まだありません
+      reflected: 振り返り済み
+      not_reflected: まだ振り返っていない
+      not_reflected_completed: 振り返っていない
+      completed_goal: 完了した目標
+    new:
+      title: 今週の学習スキルと期待する変化を決める
+      heading: この1週間に試す学習スキルを決めます
+      skill_question: 今週、どの学習スキルを試しますか？
+      choose_one: "%{count}つから1つ選ぶ"
+      skill_settings_link: この目標で使う学習スキルを選ぶ →
+      skills_empty: まだありません
+      expectation_question: どう変わってほしいですか？
+      note_label: 具体的には？
+      note_help: 任意・200字まで
+      note_placeholder: 例：学習中に、次に何をするかで迷いにくくしたい
+      submit: 決める
+      danger: この目標は既に完了しています
+    show:
+      title: スキルの振り返り
+      skill_label: 今週の学習スキル
+      expectation_label: 期待する変化
+      note_label: 具体的に
+      study_heading: この週の記録
+      previous_week: 前週
+      current_week: 今週
+      no_previous_week: この目標は今週から始めました
+      scope_all: 学習全体
+      scope_skill: このスキル
+      study_count_label: 学習回数
+      study_days_label: 学習した日
+      selected_count_label: 選んだ回
+      unit_times: 回
+      unit_days: 日
+      breakdown_heading: このスキルを選んだ回のうち
+      focus_heading: 集中
+      challenge_heading: チャレンジ
+      relevant: 期待する変化に関係
+      choose_one: "%{count}つから1つ選ぶ"
+      feeling_question: "『%{expectation}』という変化は、今週感じられましたか？"
+      feeling_question_undecided: "今週、『%{skill}』を使ってみて、変化は感じられましたか？"
+      comment_heading: 使ってみて、気づいたことは？
+      comment_help: 任意・200字まで
+      submit: 振り返る
+      review_heading: 振り返り
+      feeling_label: 実感
+      comment_label: ひと言
+      completed_notice: 完了した目標では、振り返りを残せません
+    create:
+      danger: この目標は既に完了しています
+  reviews:
+    show:
+      title: スキルの振り返り
+      expectation_label: 期待する変化
+      previous_week: 前週
+      current_week: 今週
+      trends_heading: 記録から見つかった傾向
+      count_heading: 使った回数
+      list_button: スキルの振り返りへ
+      verdicts:
+        changed: 記録に違いが見られます
+        unchanged: 大きな違いは見られません
+        too_few: 記録が少ないため比べていません
+        no_previous: 前週がないため比べていません
+        no_selection: 今週はこのスキルの記録がありません
+        in_progress: 週が終わってから比べます
+      trend_labels:
+        study_count: 学習回数
+        study_days: 学習した日
+        focus: 集中
+        challenge: チャレンジ
+        study_count_and_days: 学習回数・日数
+      trends:
+        study_count:
+          changed: "この目標の学習は、前週（%{previous_period}）%{previous}回、今週（%{current_period}）%{current}回でした。"
+          unchanged: "この目標の学習は、前週も今週も%{current}回でした。"
+        study_days:
+          changed: "学習した日は、前週（%{previous_period}）%{previous}日、今週（%{current_period}）%{current}日でした。"
+          unchanged: "学習した日は、前週も今週も%{current}日でした。"
+        in_progress: "今週はまだ途中のため、学習回数・日数は週が終わってから前週と比べます。今週（%{period}）は、ここまで%{study_count}回・%{study_days}日です。"
+        no_previous: この目標は今週から始めたため、前週とは比べていません。
+        breakdown:
+          changed: "「%{skill}」を選んだ回の「%{option}」は、前週%{previous_total}回中%{previous_count}回、今週%{current_total}回中%{current_count}回でした。"
+          unchanged: "「%{skill}」を選んだ回の%{kind}は、前週（%{previous_total}回）と今週（%{current_total}回）で大きな違いはありませんでした。"
+          too_few: "「%{skill}」を選んだ回は、前週%{previous_total}回、今週%{current_total}回でした。どちらの週も3回以上あるときに、前週と比べます。"
+          no_selection: "%{kind}の様子は、この学習スキルを選んだ回があるときに前週と比べます。"
+      continuation:
+        selected: "「%{skill}」を今週は%{count}回選びました。"
+        not_selected: "今週は「%{skill}」を選んだ学習はありませんでした。"
+        total: "振り返りの対象にしてから、通算%{weeks}週・%{count}回です。"
+    update:
+      danger: 完了した目標では変更できません
+  goal_skill_settings:
+    create:
+      danger: 完了した目標の学習スキルは変更できません
+      too_many_skills: 設定できる学習スキルは3件までです
+    destroy:
+      danger: 完了した目標の学習スキルは変更できません
+    index:
+      title: "%{goal_name} の学習スキル"
+      back: ← 目標
+      eyebrow: 学習スキル一覧
+      selected_skills: 学習開始で選べるスキル
+      limit_note: 3件まで設定できます
+      new_skill: 学習スキルを登録する
+      danger: 完了した目標の学習スキルは変更できません
+  goals:
+    index:
+      title: 取り組んできた目標
+      eyebrow: 目標
+      new_goal: 目標を設定する
+      view_goal: 詳細を見る
+      goals_count: 目標
+      completed_count: 完了
+      goal_unset_status: 未設定
+      goal_unset: 目標未設定
+      goal_unset_description: 学習を始めるには、目標の設定が必要です。
+      next_goal: ＋ 次の目標
+      since: "%{date} から"
+      completed_on: "%{date} 完了"
+    show:
+      edit: 編集する
+      complete: 完了する
+      complete_confirm: "「%{name}」を完了しますか？"
+      destroy: 削除する
+      destroy_confirm: "「%{name}」と、紐づく学習記録%{count}件を削除します。この操作は取り消せません。"
+      destroy_confirm_without_records: "「%{name}」を削除します。この操作は取り消せません。"
+      new_goal: 次の目標を設定する
+      reflections_title: スキルの振り返り
+      reflections_description: 1週間ごとに、使った学習スキルを振り返る
+    edit:
+      title: 目標を編集する
+      submit: 更新する
+      cancel: キャンセル
+      danger: 完了した目標は編集できません
+    update:
+      danger: 完了した目標は編集できません
+    complete:
+      danger: この目標はすでに完了しています
+    destroy:
+      success: 目標を削除しました
+    create:
+      success: 目標を設定しました
+    name_field:
+      label: 目標名
+      aux: 必須・100文字まで
+      placeholder: 例：TOEIC 800点を目指す
+      errors:
+        blank: 目標名を入力してください。
+        too_long: 目標名は100文字以内で入力してください。
+    new:
+      status: 新しい目標
+      title: 目標を設定
+      submit: 目標を設定する
+      active_goal_error: 進行中の目標があるため、新しい目標は設定できません。
+      view_active_goal: 進行中の目標を見る →
+  learning_skills:
+    index:
+      title: 学習スキル
+      eyebrow: 登録済み
+      new_skill: 学習スキルの登録
+      new_skill_description: 試したい工夫を1つずつ登録します
+      add: 登録する
+      count: "%{count}件"
+    new:
+      title: 学習スキルを登録
+    form:
+      name: 学習スキル名
+      name_aux: 必須・100文字まで
+      name_placeholder: 例：問題を解く前に制限時間を決める
+      name_errors:
+        blank: 学習スキル名を入力してください
+        too_long: 100文字以内で入力してください
+        taken: 同じ名前の学習スキルがすでにあります
+      cancel: キャンセル
+      submit: 登録する
+    create:
+      success: 学習スキルを登録しました
+      danger: 同じ名前の学習スキルがすでにあります
+  enums:
+    weekly_reflection:
+      expectation:
+        easy_start: 始めやすく、続けやすくしたい
+        focus: 集中して取り組みたい
+        challenge: 決めた内容に取り組みたい
+        undecided: まだ決めていない
+      feeling:
+        felt: 感じられた
+        not_much: あまり感じられなかった
+        unsure: まだわからない
+    goal:
+      status:
+        active: 進行中
+        completed: 完了
+  users:
+    registrations:
+      new:
+        eyebrow: 試して、残す
+        title: 新規アカウント作成
+        submit: 登録する
+        consent_html: 登録すると、%{terms}と%{privacy}に同意したものとみなします
+        password_aux: "%{count}文字以上"
+        to_login_notice: アカウントをお持ちの方は
+        to_login: ログイン
+    sessions:
+      new:
+        eyebrow: 試して、残す
+        title: ログイン
+        submit: ログイン
+        to_registration_notice: アカウントをお持ちでない方は
+        to_registration: 登録する
   rank:
     stamp:
       label: RANK
@@ -113,8 +465,36 @@ ja:
       empty: 保存された学習記録はありません。
     show:
       not_found: その学習記録は見つかりませんでした。
+  study_records:
+    new:
+      current_goal: 現在の目標
+      goal: 目標
+      goal_since: から
+      goal_unset_status: 未設定
+      goal_unset: 目標未設定
+      goal_required_description: 学習を始めるには、目標の設定が必要です。
+      set_goal: 目標を設定する
+      title: 学習を始める
+      submit: 開始する
+      submitting: 開始しています…
+      minutes_label: 時間
+      minutes_aux: "%{count}つから1つ"
+      activity_aux: 必須・100文字まで
+      skill_label: 今回使う学習スキル
+      skill_aux: 任意・1つ
+      skill_none: スキルを使用しない
+      skill_settings_link: この目標で使う学習スキルを選べます
+      skill_not_found: 選んだ学習スキルが見つかりません。もう一度選び直してください。
+      skill_check_link: 学習スキルを確かめる →
   evaluations:
+    new:
+      done: 学習を終えました
+      planned_minutes: 予定時間
+      learning_skill: 学習スキル
+      question: 今回の学習は、どのような時間でしたか。
+      question_help: 実感に近いものを1つずつ選んでください。
+      choose_one: "%{count}つから1つ"
+      submit: 記録する
     show:
       actions:
-        history: 学習の記録を見る
         study_again: もう一度学習する

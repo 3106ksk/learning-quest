@@ -18,8 +18,9 @@ Rails.application.configure do
   # Configure public file server for tests with cache-control for performance.
   config.public_file_server.headers = { "cache-control" => "public, max-age=3600" }
 
-  # Show full error reports.
-  config.consider_all_requests_local = true
+  # 詳細なデバッグページはバックトレース上のソース（スペック自身を含む）を本文へ埋め込むため、
+  # レスポンス本文を検証するリクエストスペックが誤検知する。本番同様の静的エラーページを使う。
+  config.consider_all_requests_local = false
   config.cache_store = :null_store
 
   # Render exception templates for rescuable exceptions and raise for other exceptions.

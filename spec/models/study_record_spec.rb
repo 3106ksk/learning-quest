@@ -1,10 +1,95 @@
 require 'rails_helper'
 
 RSpec.describe StudyRecord, type: :model do
+  describe "目標との関連付け" do
+    let(:user) { create(:user) }
+    let(:goal) { create(:goal, user: user) }
+    let(:attributes) do
+      {
+        user: user,
+        planned_minutes: 25,
+        activity: "RSpecの学習",
+        started_at: Time.current,
+        status: :running
+      }
+    end
+
+    it "目標に紐づいて保存できる" do
+      study_record = described_class.create!(attributes.merge(goal: goal))
+
+      expect(study_record.reload.goal_id).to eq(goal.id)
+    end
+
+    it "目標がセットされていない場合は保存できない" do
+      study_record = described_class.new(attributes)
+
+      expect(study_record).to be_invalid
+      expect(study_record.errors[:goal_id]).to be_present
+    end
+  end
+
+  describe "学習スキルとの関連付け" do
+    let(:user) { create(:user) }
+    let(:goal) { create(:goal, user: user) }
+
+    it "学習スキルを選択せずに保存できる" do
+      study_record = create(:study_record, user: user, goal: goal, learning_skill: nil)
+      expect(study_record.reload.learning_skill_id).to be_nil
+    end
+
+    it "同じ利用者の学習スキルを紐づけて保存できる" do
+      learning_skill = create(:learning_skill, user: user)
+      create(:goal_skill_setting, goal: goal, learning_skill: learning_skill)
+      study_record = create(
+        :study_record,
+        user: user,
+        goal: goal,
+        learning_skill: learning_skill
+      )
+
+      expect(study_record.reload.learning_skill_id).to eq(learning_skill.id)
+    end
+
+    context "学習開始時に選んだ学習スキルの検証" do
+      it "学習開始時に目標へ使用設定していない学習スキルIDは無効になる" do
+        learning_skill = create(:learning_skill, user: user)
+        study_record = build(:study_record, user: user, goal: goal, learning_skill_id: learning_skill.id)
+
+        expect(study_record).to be_invalid
+        expect(study_record.errors[:learning_skill_id]).to be_present
+      end
+
+      it "学習開始後に使用設定を解除しても有効なままである" do
+        learning_skill = create(:learning_skill, user: user)
+        setting = create(:goal_skill_setting, goal: goal, learning_skill: learning_skill)
+        study_record = create(:study_record, user: user, goal: goal, learning_skill: learning_skill)
+
+        setting.destroy!
+
+        expect(study_record.valid?).to be(true)
+      end
+    end
+  end
+
+  describe "関連データの削除" do
+    context "学習記録の削除に成功した場合" do
+      it "紐づく評価も削除される" do
+        study_record = create(:study_record, status: :awaiting_evaluation)
+        create(:evaluation, study_record: study_record)
+
+        expect { study_record.destroy! }
+          .to change(StudyRecord, :count).by(-1)
+          .and change(Evaluation, :count).by(-1)
+      end
+    end
+  end
+
   describe "#mark_as_evaluated!" do
     it "評価待ち以外の学習記録は評価済みに変更できない" do
+      user = create(:user)
       study_record = described_class.create!(
-        user: create(:user),
+        user: user,
+        goal: create(:goal, user: user),
         planned_minutes: 25,
         activity: "RSpecの学習",
         started_at: Time.current,

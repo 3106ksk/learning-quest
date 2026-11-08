@@ -1,0 +1,56 @@
+<main class="public-page">
+  <div class="form-shell">
+    <section class="auth-form-card auth-form-card--session" aria-labelledby="session-title">
+      <div class="auth-form-eyebrow">
+        <%= render "shared/auth_illustration", name: "think" %>
+        <p class="auth-form-eyebrow-text"><%= t(".eyebrow") %></p>
+      </div>
+      <h1 id="session-title" class="auth-form-title"><%= t(".title") %></h1>
+
+      <% if flash[:alert].present? %>
+        <div class="error-banner" role="alert" data-turbo-temporary>
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+
+      <%= form_for(resource,
+                   as: resource_name,
+                   url: session_path(resource_name),
+                   html: { class: "section form-stack" }) do |f| %>
+        <div>
+          <div class="auth-field-head">
+            <%= f.label :email, class: "auth-field-label" do %>
+              <%= render "shared/auth_icon", name: "mail" %>
+              <%= User.human_attribute_name(:email) %>
+            <% end %>
+          </div>
+          <%= f.email_field :email,
+                            autofocus: true,
+                            autocomplete: "email",
+                            class: "field-control" %>
+        </div>
+
+        <div>
+          <div class="auth-field-head">
+            <%= f.label :password, class: "auth-field-label" do %>
+              <%= render "shared/auth_icon", name: "lock" %>
+              <%= User.human_attribute_name(:password) %>
+            <% end %>
+          </div>
+          <%= f.password_field :password,
+                               autocomplete: "current-password",
+                               class: "field-control" %>
+        </div>
+
+        <%= f.submit t(".submit"), class: "btn btn-primary" %>
+      <% end %>
+
+      <div class="auth-form-links">
+        <p class="small">
+          <%= t(".to_registration_notice") %>
+          <%= link_to t(".to_registration"), new_user_registration_path %>
+        </p>
+      </div>
+    </section>
+  </div>
+</main>

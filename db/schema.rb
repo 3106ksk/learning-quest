@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_03_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_06_014638) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -53,13 +53,34 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_03_000000) do
     t.check_constraint "point >= 1 AND point <= 3", name: "focus_options_point_range"
   end
 
-  create_table "sessions", force: :cascade do |t|
+  create_table "goal_skill_settings", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.string "ip_address"
+    t.bigint "goal_id", null: false
+    t.bigint "learning_skill_id", null: false
     t.datetime "updated_at", null: false
-    t.string "user_agent"
+    t.index ["goal_id", "learning_skill_id"], name: "index_goal_skill_settings_on_goal_id_and_learning_skill_id", unique: true
+    t.index ["goal_id"], name: "index_goal_skill_settings_on_goal_id"
+    t.index ["learning_skill_id"], name: "index_goal_skill_settings_on_learning_skill_id"
+  end
+
+  create_table "goals", force: :cascade do |t|
+    t.datetime "completed_at"
+    t.datetime "created_at", null: false
+    t.string "name", limit: 100, null: false
+    t.string "status", default: "active", null: false
+    t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_sessions_on_user_id"
+    t.index ["user_id"], name: "index_goals_on_active_user_id", unique: true, where: "((status)::text = 'active'::text)"
+    t.index ["user_id"], name: "index_goals_on_user_id"
+  end
+
+  create_table "learning_skills", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name", limit: 100, null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id", "name"], name: "index_learning_skills_on_user_id_and_name", unique: true
+    t.index ["user_id"], name: "index_learning_skills_on_user_id"
   end
 
   create_table "study_records", force: :cascade do |t|
@@ -69,6 +90,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_03_000000) do
     t.datetime "current_pause_started_at"
     t.datetime "ended_at"
     t.datetime "expires_at", null: false
+    t.bigint "goal_id"
+    t.bigint "learning_skill_id"
     t.integer "pause_count", default: 0, null: false
     t.integer "paused_seconds", default: 0, null: false
     t.integer "planned_minutes", null: false
@@ -77,6 +100,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_03_000000) do
     t.string "status", default: "running", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.index ["goal_id"], name: "index_study_records_on_goal_id"
+    t.index ["learning_skill_id"], name: "index_study_records_on_learning_skill_id"
     t.index ["user_id"], name: "index_study_records_on_active_user_id", unique: true, where: "((status)::text = ANY ((ARRAY['running'::character varying, 'paused'::character varying, 'awaiting_evaluation'::character varying])::text[]))"
     t.index ["user_id"], name: "index_study_records_on_user_id"
     t.check_constraint "planned_minutes = ANY (ARRAY[5, 15, 25, 50])", name: "planned_minutes_allowed_values"
@@ -85,17 +110,47 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_03_000000) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "account_name"
     t.datetime "created_at", null: false
-    t.string "email_address", null: false
-    t.string "name"
-    t.string "password_digest", null: false
+    t.string "email", limit: 255, default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.datetime "reset_password_sent_at"
+    t.string "reset_password_token"
     t.datetime "updated_at", null: false
-    t.index ["email_address"], name: "index_users_on_email_address", unique: true
+    t.index ["account_name"], name: "index_users_on_account_name", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "weekly_reflections", force: :cascade do |t|
+    t.string "comment", limit: 200
+    t.datetime "created_at", null: false
+    t.string "expectation", null: false
+    t.string "expectation_note", limit: 200
+    t.string "feeling"
+    t.bigint "goal_id", null: false
+    t.bigint "learning_skill_id", null: false
+    t.datetime "reflected_at"
+    t.datetime "updated_at", null: false
+    t.date "week_start_on", null: false
+    t.index ["goal_id", "week_start_on"], name: "index_weekly_reflections_on_goal_id_and_week_start_on", unique: true
+    t.index ["goal_id"], name: "index_weekly_reflections_on_goal_id"
+    t.index ["learning_skill_id"], name: "index_weekly_reflections_on_learning_skill_id"
+    t.check_constraint "(reflected_at IS NULL) = (feeling IS NULL)", name: "weekly_reflections_feeling_and_reflected_at_together"
+    t.check_constraint "expectation::text = ANY (ARRAY['easy_start'::character varying, 'focus'::character varying, 'challenge'::character varying, 'undecided'::character varying]::text[])", name: "weekly_reflections_expectation_allowed_values"
+    t.check_constraint "feeling::text = ANY (ARRAY['felt'::character varying, 'not_much'::character varying, 'unsure'::character varying]::text[])", name: "weekly_reflections_feeling_allowed_values"
   end
 
   add_foreign_key "evaluations", "challenge_options"
   add_foreign_key "evaluations", "focus_options"
   add_foreign_key "evaluations", "study_records"
-  add_foreign_key "sessions", "users"
+  add_foreign_key "goal_skill_settings", "goals"
+  add_foreign_key "goal_skill_settings", "learning_skills"
+  add_foreign_key "goals", "users"
+  add_foreign_key "learning_skills", "users"
+  add_foreign_key "study_records", "goals"
+  add_foreign_key "study_records", "learning_skills"
   add_foreign_key "study_records", "users"
+  add_foreign_key "weekly_reflections", "goals"
+  add_foreign_key "weekly_reflections", "learning_skills"
 end

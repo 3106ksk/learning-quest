@@ -1,0 +1,24 @@
+<%# 目標の設定と編集で共通の「目標名」の欄。ラベル・補足・入力欄・エラーの形をそろえる %>
+<% name_error_type = goal.errors.details[:name].find { |error| %i[blank too_long].include?(error[:error]) }&.fetch(:error, nil) %>
+<% has_error = show_error && goal.errors[:name].any? %>
+<div class="goal-name-field">
+  <div class="goal-name-head">
+    <%= form.label :name, class: "goal-name-label" do %>
+      <span class="goal-name-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M5 21 10.5 3" /><path d="M10.5 4c3.3.3 5.5 3 8.5 3.5l-2.7 8.3c-3-.3-5.2-3-8.5-3.5z" /></svg>
+      </span>
+      <%= t(".label") %>
+    <% end %>
+    <span class="goal-name-aux"><%= t(".aux") %></span>
+  </div>
+  <%= form.text_field :name,
+        maxlength: 100,
+        placeholder: t(".placeholder"),
+        class: "field-control goal-name-input#{' has-error' if has_error}",
+        aria: { invalid: ("true" if has_error), describedby: ("goal-name-error" if has_error) } %>
+  <% if has_error %>
+    <p id="goal-name-error" class="group-error goal-name-error">
+      <%= name_error_type ? t(".errors.#{name_error_type}") : goal.errors.full_messages_for(:name).first %>
+    </p>
+  <% end %>
+</div>

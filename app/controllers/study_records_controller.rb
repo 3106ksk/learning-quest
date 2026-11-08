@@ -2,13 +2,15 @@ class StudyRecordsController < ApplicationController
   layout "focus", only: :show
 
   before_action :set_study_record, only: %i[show pause resume complete]
+  before_action :set_current_goal, only: %i[new create]
+  before_action :set_learning_skills, only: %i[new create]
   before_action :ensure_running, only: :pause
   before_action :ensure_paused, only: :resume
   before_action :ensure_running_or_paused, only: :complete
   before_action :redirect_by_status, only: :show
 
   def new
-    active_record = Current.user.study_records.active.take
+    active_record = current_user.study_records.active.take
 
     if active_record
       destination = active_record.awaiting_evaluation? ? new_study_record_evaluation_path(active_record) : active_record
@@ -23,8 +25,8 @@ class StudyRecordsController < ApplicationController
   end
 
   def create
-    @study_record = Current.user.study_records.build(
-      study_record_params.merge(started_at: Time.current)
+    @study_record = current_user.study_records.build(
+      study_record_params.merge(started_at: Time.current, goal: @current_goal)
     )
 
     if @study_record.save
@@ -61,8 +63,18 @@ class StudyRecordsController < ApplicationController
 
   private
 
+  def set_current_goal
+    @current_goal = current_user.goals.active.take
+  end
+
+  def set_learning_skills
+    return unless @current_goal
+
+    @skill_settings = @current_goal.goal_skill_settings.includes(:learning_skill).order(created_at: :desc)
+  end
+
   def set_study_record
-    @study_record = Current.user.study_records.find(params[:id])
+    @study_record = current_user.study_records.find(params[:id])
   end
 
   def ensure_running
@@ -92,6 +104,6 @@ class StudyRecordsController < ApplicationController
   end
 
   def study_record_params
-    params.require(:study_record).permit(:planned_minutes, :activity, :status)
+    params.expect(study_record: [ :planned_minutes, :activity, :learning_skill_id ])
   end
 end

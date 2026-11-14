@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   add_flash_types :success, :danger
 
+  before_action :basic_authenticate, if: :basic_auth_enabled?
   before_action :authenticate_user!, unless: :devise_controller?
   before_action :configure_permitted_parameters, if: :devise_controller?
 
@@ -15,5 +16,16 @@ class ApplicationController < ActionController::Base
 
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(:sign_up, keys: [ :account_name ])
+    end
+
+  private
+
+    def basic_auth_enabled?
+      ENV["BASIC_AUTH_ENABLED"] == "true"
+    end
+
+    def basic_authenticate
+      http_basic_authenticate_or_request_with name: ENV.fetch("BASIC_AUTH_USER"),
+                                              password: ENV.fetch("BASIC_AUTH_PASSWORD")
     end
 end
